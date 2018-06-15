@@ -28,8 +28,6 @@ class Award(
 
 ) : BaseModel() {
 
-    fun getIconFilename(): String = "${getAwardType().getView()}-${getAwardDegree().name.toLowerCase()}.png"
-
     fun getAwardType(): AwardType = DictionaryUtils.valueOf(AwardType::class.java, awardTypeId)
 
     fun setAwardType(awardType: AwardType) {
