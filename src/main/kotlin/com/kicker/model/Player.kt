@@ -1,6 +1,8 @@
 package com.kicker.model
 
 import com.kicker.model.base.BaseModel
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.userdetails.UserDetails
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.OneToMany
@@ -14,7 +16,10 @@ import javax.persistence.Table
 class Player(
 
         @Column(name = "username", nullable = false, unique = true)
-        var username: String,
+        private var username: String,
+
+        @Column(name = "password", nullable = false)
+        private var password: String,
 
         @Column(name = "first_name", nullable = false)
         var firstName: String,
@@ -28,4 +33,28 @@ class Player(
         @OneToMany(mappedBy = "player")
         val awards: List<Award> = listOf()
 
-) : BaseModel()
+) : BaseModel(), UserDetails {
+
+    override fun getAuthorities(): MutableCollection<out GrantedAuthority> = mutableListOf()
+
+    override fun isEnabled(): Boolean = true
+
+    override fun getUsername(): String = username
+
+    override fun isCredentialsNonExpired(): Boolean = true
+
+    override fun getPassword(): String = password
+
+    override fun isAccountNonExpired(): Boolean = true
+
+    override fun isAccountNonLocked(): Boolean = true
+
+    fun setUsername(username: String) {
+        this.username = username
+    }
+
+    fun setPassword(password: String) {
+        this.password = password
+    }
+
+}

@@ -11,5 +11,5 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional(readOnly = true)
 class DefaultGameService(
-        private val gameRepository: GameRepository
-) : DefaultBaseService<Game, GameRepository>(gameRepository), GameService
+        private val repository: GameRepository
+) : DefaultBaseService<Game, GameRepository>(repository), GameService

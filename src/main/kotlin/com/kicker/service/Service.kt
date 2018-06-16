@@ -4,19 +4,26 @@ import com.kicker.model.Award
 import com.kicker.model.Game
 import com.kicker.model.Player
 import com.kicker.model.base.BaseModel
+import org.springframework.security.core.userdetails.UserDetailsService
 
 /**
  * @author Yauheni Efimenko
  */
 interface BaseService<T : BaseModel> {
 
-    fun get(id: Long): T?
+    fun get(id: Long): T
 
     fun save(model: T): T
 
 }
 
-interface PlayerService : BaseService<Player>
+interface PlayerService : BaseService<Player>, UserDetailsService {
+
+    fun getByUsername(username: String): Player?
+
+    fun update(player: Player): Player
+
+}
 
 interface GameService : BaseService<Game>
 

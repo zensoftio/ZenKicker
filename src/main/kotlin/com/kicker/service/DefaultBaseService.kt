@@ -14,7 +14,7 @@ abstract class DefaultBaseService<T : BaseModel, R : BaseRepository<T>>(
 ) : BaseService<T> {
 
     @Transactional(readOnly = true)
-    override fun get(id: Long): T? = repository.findById(id).get()
+    override fun get(id: Long): T = repository.findById(id).get()
 
     override fun save(model: T): T {
         Assert.isNull(model.id, "The new model cannot be with id!")

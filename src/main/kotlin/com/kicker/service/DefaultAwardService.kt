@@ -11,5 +11,5 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional(readOnly = true)
 class DefaultAwardService(
-        private val awardRepository: AwardRepository
-) : DefaultBaseService<Award, AwardRepository>(awardRepository), AwardService
+        private val repository: AwardRepository
+) : DefaultBaseService<Award, AwardRepository>(repository), AwardService
