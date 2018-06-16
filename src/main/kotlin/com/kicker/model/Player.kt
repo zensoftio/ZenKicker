@@ -3,10 +3,7 @@ package com.kicker.model
 import com.kicker.model.base.BaseModel
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.OneToMany
-import javax.persistence.Table
+import javax.persistence.*
 
 /**
  * @author Yauheni Efimenko
@@ -30,7 +27,7 @@ class Player(
         @Column(name = "active", nullable = false)
         var active: Boolean = false,
 
-        @OneToMany(mappedBy = "player")
+        @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
         val awards: List<Award> = listOf()
 
 ) : BaseModel(), UserDetails {
