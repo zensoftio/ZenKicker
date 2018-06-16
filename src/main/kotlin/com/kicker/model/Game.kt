@@ -36,7 +36,8 @@ class Game(
         @Column(name = "date", nullable = false, columnDefinition = "DATE")
         val date: LocalDateTime,
 
-        @Column(name = "reported_by", nullable = false)
-        val reportedBy: String
+        @ManyToOne
+        @JoinColumn(name = "reported_by", nullable = false)
+        val reportedBy: Player
 
 ) : BaseModel()

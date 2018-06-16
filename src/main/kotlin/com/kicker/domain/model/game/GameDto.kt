@@ -18,7 +18,7 @@ data class GameDto(
         val yellowGoals: Int,
         @field:JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
         val date: LocalDateTime,
-        val reportedBy: String
+        val reportedBy: PlayerDto
 ) {
     constructor(game: Game) : this(
             game.id,
@@ -29,6 +29,6 @@ data class GameDto(
             game.redTeamGoals,
             game.yellowTeamGoals,
             game.date,
-            game.reportedBy
+            PlayerDto(game.reportedBy)
     )
 }

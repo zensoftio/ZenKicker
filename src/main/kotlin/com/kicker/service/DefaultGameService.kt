@@ -31,7 +31,7 @@ class DefaultGameService(
                 ?: throw NotFoundPlayerException("The player with username ${request.yellowPlayer2} is not exist")
 
         val game = Game(redPlayer1, redPlayer2, yellowPlayer1, yellowPlayer2, request.redGoals!!, request.yellowGoals!!,
-                LocalDateTime.now(), currentPlayer.username)
+                LocalDateTime.now(), currentPlayer)
 
         return repository.save(game)
     }
