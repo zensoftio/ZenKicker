@@ -16,7 +16,7 @@ class UtilConfig {
     @Bean
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 
-    @Profile("")
+    @Profile("Put if need to clean")
     @Bean
     fun flywayMigrationStrategy(): FlywayMigrationStrategy {
         return FlywayMigrationStrategy { flyway ->
