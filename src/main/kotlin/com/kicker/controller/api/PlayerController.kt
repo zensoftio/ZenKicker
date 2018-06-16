@@ -1,6 +1,8 @@
 package com.kicker.controller.api
 
 import com.kicker.annotation.CurrentPlayer
+import com.kicker.domain.PageRequest
+import com.kicker.domain.PageResponse
 import com.kicker.domain.model.CreatePlayerRequest
 import com.kicker.domain.model.PlayerDto
 import com.kicker.domain.model.UpdatePlayerRequest
@@ -18,10 +20,16 @@ class PlayerController(
 ) {
 
     @GetMapping("/current")
-    fun getCurrent(@CurrentPlayer currentPlayer: Player): PlayerDto = PlayerDto(currentPlayer)
+    fun getCurrent(@CurrentPlayer currentPlayer: Player): PlayerDto {
+        return PlayerDto(currentPlayer)
+    }
 
     @GetMapping("/{userId}")
-    fun get(@PathVariable userId: Long, createPlayerRequest: CreatePlayerRequest): PlayerDto = PlayerDto(service.get(userId))
+    fun get(@PathVariable userId: Long): PlayerDto = PlayerDto(service.get(userId))
+
+    @GetMapping
+    fun getAll(pageRequest: PageRequest): PageResponse<PlayerDto> =
+            PageResponse(service.getAll(pageRequest).map { PlayerDto(it) })
 
     @PostMapping
     fun createPlayer(createPlayerRequest: CreatePlayerRequest) {

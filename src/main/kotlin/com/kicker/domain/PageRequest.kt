@@ -1,6 +1,5 @@
 package com.kicker.domain
 
-import org.springframework.data.domain.AbstractPageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import javax.validation.constraints.Max
@@ -9,25 +8,36 @@ import javax.validation.constraints.Min
 /**
  * @author Yauheni Efimenko
  */
-open class PageRequest(
-        @field:Min(value = 0) private var offset: Long = 0,
-        @field:Min(value = 1) @field:Max(100) private var limit: Int = 10
-) : AbstractPageRequest(offset.toInt() / limit + 1, limit) {
+class PageRequest(
+        @field:Min(value = 0) private var offset: Int = 0,
+        @field:Min(value = 1) @field:Max(100) private var limit: Int = 10,
+        private val sortBy: String = "id",
+        var sortDirection: Sort.Direction = Sort.Direction.ASC
+) : Pageable {
 
-    override fun next(): Pageable = PageRequest(offset + limit, limit)
+    override fun getPageNumber(): Int = (offset / limit + 1)
 
-    override fun getOffset(): Long = offset
+    override fun hasPrevious(): Boolean = offset > 0
 
-    override fun getSort(): Sort = Sort(Sort.Direction.ASC, "id")
+    override fun getSort(): Sort = Sort(sortDirection, sortBy)
 
-    override fun first(): Pageable = PageRequest(0, limit)
+    override fun next(): Pageable = PageRequest(offset + limit, limit, sortBy, sortDirection)
 
-    override fun previous(): PageRequest {
-        return if (offset == 0L) this else {
+    override fun getPageSize(): Int = limit
+
+    override fun getOffset(): Long = offset.toLong()
+
+    override fun first(): Pageable = PageRequest(0, limit, sortBy, sortDirection)
+
+    private fun previous(): Pageable {
+        if (hasPrevious()) {
             var newOffset = this.offset - limit
             if (newOffset < 0) newOffset = 0
-            PageRequest(newOffset, limit)
+            return PageRequest(newOffset, limit, sortBy, sortDirection)
         }
+        return first()
     }
+
+    override fun previousOrFirst(): Pageable = previous()
 
 }

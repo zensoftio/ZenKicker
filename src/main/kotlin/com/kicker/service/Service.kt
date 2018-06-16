@@ -4,6 +4,8 @@ import com.kicker.model.Award
 import com.kicker.model.Game
 import com.kicker.model.Player
 import com.kicker.model.base.BaseModel
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.security.core.userdetails.UserDetailsService
 
 /**
@@ -12,6 +14,10 @@ import org.springframework.security.core.userdetails.UserDetailsService
 interface BaseService<T : BaseModel> {
 
     fun get(id: Long): T
+
+    fun getAll(): List<T>
+
+    fun getAll(pageable: Pageable): Page<T>
 
     fun save(model: T): T
 
