@@ -23,7 +23,7 @@ abstract class DefaultBaseService<T : BaseModel, R : BaseRepository<T>>(
 
     @Transactional
     override fun save(model: T): T {
-        Assert.isNull(model.id, "The new model cannot be with id!")
+        Assert.isTrue(model.id == 0L, "The new model cannot be with id!")
         return repository.save(model)
     }
 

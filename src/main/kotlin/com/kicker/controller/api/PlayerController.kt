@@ -8,6 +8,7 @@ import com.kicker.domain.model.player.PlayerDto
 import com.kicker.domain.model.player.UpdatePlayerRequest
 import com.kicker.model.Player
 import com.kicker.service.PlayerService
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
@@ -17,7 +18,8 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("/api/players")
 class PlayerController(
-        private val service: PlayerService
+        private val service: PlayerService,
+        private val passwordEncoder: PasswordEncoder
 ) {
 
     @GetMapping("/current")
@@ -31,12 +33,14 @@ class PlayerController(
             PageResponse(service.getAll(pageRequest).map { PlayerDto(it) })
 
     @PostMapping
-    fun createPlayer(@Valid @RequestBody createPlayerRequest: CreatePlayerRequest) {
-        TODO()
+    fun createPlayer(@Valid @RequestBody createPlayerRequest: CreatePlayerRequest): PlayerDto {
+        createPlayerRequest.password = passwordEncoder.encode(createPlayerRequest.password)
+
+        return PlayerDto(service.save(createPlayerRequest))
     }
 
-    @PostMapping("/{userId}")
-    fun updatePlayer(@PathVariable userId: Long, @Valid @RequestBody updatePlayerRequest: UpdatePlayerRequest) {
+    @PutMapping
+    fun updatePlayer(@CurrentPlayer currentPlayer: Player, @Valid @RequestBody updatePlayerRequest: UpdatePlayerRequest) {
         TODO()
     }
 

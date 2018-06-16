@@ -1,5 +1,6 @@
 package com.kicker.service
 
+import com.kicker.domain.model.player.CreatePlayerRequest
 import com.kicker.model.Award
 import com.kicker.model.Game
 import com.kicker.model.Player
@@ -26,6 +27,8 @@ interface BaseService<T : BaseModel> {
 interface PlayerService : BaseService<Player>, UserDetailsService {
 
     fun getByUsername(username: String): Player?
+
+    fun save(createPlayerRequest: CreatePlayerRequest): Player
 
     fun update(player: Player): Player
 

@@ -1,5 +1,6 @@
 package com.kicker.model
 
+import com.kicker.domain.model.player.CreatePlayerRequest
 import com.kicker.model.base.BaseModel
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
@@ -52,6 +53,14 @@ class Player(
 
     fun setPassword(password: String) {
         this.password = password
+    }
+
+    companion object {
+        fun of(createPlayerRequest: CreatePlayerRequest): Player = Player(
+                createPlayerRequest.username!!,
+                createPlayerRequest.password!!,
+                createPlayerRequest.firstName!!,
+                createPlayerRequest.lastName!!)
     }
 
 }
