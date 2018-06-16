@@ -18,10 +18,10 @@ class Award(
         val player: Player,
 
         @Column(name = "award_type_id", nullable = false)
-        private var awardTypeId: Int,
+        private val awardTypeId: Int,
 
         @Column(name = "award_degree_id", nullable = false)
-        private var awardDegreeId: Int,
+        private val awardDegreeId: Int,
 
         @Column(name = "description", nullable = false)
         val description: String
@@ -30,14 +30,6 @@ class Award(
 
     fun getAwardType(): AwardType = DictionaryUtils.valueOf(AwardType::class.java, awardTypeId)
 
-    fun setAwardType(awardType: AwardType) {
-        this.awardTypeId = awardType.getId()
-    }
-
     fun getAwardDegree(): AwardDegree = DictionaryUtils.valueOf(AwardDegree::class.java, awardDegreeId)
-
-    fun setAwardDegree(awardDegree: AwardDegree) {
-        this.awardDegreeId = awardDegree.getId()
-    }
 
 }
