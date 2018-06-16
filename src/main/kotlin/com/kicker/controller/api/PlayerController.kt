@@ -32,18 +32,18 @@ class PlayerController(
             PageResponse(service.getAll(pageRequest).map { PlayerDto(it) })
 
     @PostMapping
-    fun createPlayer(@Valid @RequestBody createPlayerRequest: CreatePlayerRequest): PlayerDto =
-            PlayerDto(service.create(createPlayerRequest))
+    fun createPlayer(@Valid @RequestBody request: CreatePlayerRequest): PlayerDto =
+            PlayerDto(service.create(request))
 
     @PutMapping
     fun updateDataPlayer(@CurrentPlayer currentPlayer: Player,
-                         @Valid @RequestBody updateDataPlayerRequest: UpdateDataPlayerRequest): PlayerDto =
-            PlayerDto(service.updateData(currentPlayer, updateDataPlayerRequest))
+                         @Valid @RequestBody request: UpdateDataPlayerRequest): PlayerDto =
+            PlayerDto(service.updateData(currentPlayer, request))
 
 
     @PutMapping("/password-reset")
     fun updatePasswordPlayer(@CurrentPlayer currentPlayer: Player,
-                             @Valid @RequestBody updatePasswordPlayerRequest: UpdatePasswordPlayerRequest): PlayerDto =
-            PlayerDto(service.updatePassword(currentPlayer, updatePasswordPlayerRequest))
+                             @Valid @RequestBody request: UpdatePasswordPlayerRequest): PlayerDto =
+            PlayerDto(service.updatePassword(currentPlayer, request))
 
 }

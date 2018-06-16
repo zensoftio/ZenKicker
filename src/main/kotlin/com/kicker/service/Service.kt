@@ -1,5 +1,6 @@
 package com.kicker.service
 
+import com.kicker.domain.model.game.GameRegistrationRequest
 import com.kicker.domain.model.player.CreatePlayerRequest
 import com.kicker.domain.model.player.UpdateDataPlayerRequest
 import com.kicker.domain.model.player.UpdatePasswordPlayerRequest
@@ -30,14 +31,18 @@ interface PlayerService : BaseService<Player>, UserDetailsService {
 
     fun getByUsername(username: String): Player?
 
-    fun create(createPlayerRequest: CreatePlayerRequest): Player
+    fun create(request: CreatePlayerRequest): Player
 
-    fun updateData(currentPlayer: Player, updateDataPlayerRequest: UpdateDataPlayerRequest): Player
+    fun updateData(currentPlayer: Player, request: UpdateDataPlayerRequest): Player
 
-    fun updatePassword(currentPlayer: Player, updatePasswordPlayerRequest: UpdatePasswordPlayerRequest): Player
+    fun updatePassword(currentPlayer: Player, request: UpdatePasswordPlayerRequest): Player
 
 }
 
-interface GameService : BaseService<Game>
+interface GameService : BaseService<Game> {
+
+    fun gameRegistration(currentPlayer: Player, request: GameRegistrationRequest): Game
+
+}
 
 interface AwardService : BaseService<Award>

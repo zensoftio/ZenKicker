@@ -29,36 +29,36 @@ class DefaultPlayerService(
             ?: throw UsernameNotFoundException("User with username $username not found")
 
     @Transactional
-    override fun create(createPlayerRequest: CreatePlayerRequest): Player {
-        if (isExist(createPlayerRequest.username!!)) {
+    override fun create(request: CreatePlayerRequest): Player {
+        if (isExist(request.username!!)) {
             throw DuplicateUsernameException("The player with such username already exist")
         }
 
-        createPlayerRequest.password = passwordEncoder.encode(createPlayerRequest.password)
+        request.password = passwordEncoder.encode(request.password)
 
-        return super.save(Player.of(createPlayerRequest))
+        return super.save(Player.of(request))
     }
 
     @Transactional
-    override fun updateData(currentPlayer: Player, updateDataPlayerRequest: UpdateDataPlayerRequest): Player {
-        if (isExist(updateDataPlayerRequest.username!!)) {
+    override fun updateData(currentPlayer: Player, request: UpdateDataPlayerRequest): Player {
+        if (isExist(request.username!!)) {
             throw DuplicateUsernameException("The player with such username already exist")
         }
 
-        currentPlayer.username = updateDataPlayerRequest.username!!
-        currentPlayer.firstName = updateDataPlayerRequest.firstName!!
-        currentPlayer.lastName = updateDataPlayerRequest.lastName!!
+        currentPlayer.username = request.username!!
+        currentPlayer.firstName = request.firstName!!
+        currentPlayer.lastName = request.lastName!!
 
         return repository.save(currentPlayer)
     }
 
     @Transactional
-    override fun updatePassword(currentPlayer: Player, updatePasswordPlayerRequest: UpdatePasswordPlayerRequest): Player {
-        if (!passwordEncoder.matches(updatePasswordPlayerRequest.currentPassword, currentPlayer.password)) {
+    override fun updatePassword(currentPlayer: Player, request: UpdatePasswordPlayerRequest): Player {
+        if (!passwordEncoder.matches(request.currentPassword, currentPlayer.password)) {
             throw PasswordIncorrectException("Password is incorrect")
         }
 
-        currentPlayer.password = passwordEncoder.encode(updatePasswordPlayerRequest.newPassword)
+        currentPlayer.password = passwordEncoder.encode(request.newPassword)
 
         return repository.save(currentPlayer)
     }

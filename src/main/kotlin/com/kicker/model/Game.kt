@@ -17,7 +17,7 @@ class Game(
 
         @ManyToOne
         @JoinColumn(name = "red_player2_id", nullable = false)
-        val redlayer2: Player,
+        val redPlayer2: Player,
 
         @ManyToOne
         @JoinColumn(name = "yellow_player1_id", nullable = false)
