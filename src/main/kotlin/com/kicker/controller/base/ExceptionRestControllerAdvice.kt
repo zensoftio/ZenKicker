@@ -5,6 +5,7 @@ import com.kicker.domain.exception.ExceptionResponse
 import com.kicker.exception.service.ServiceException
 import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.NOT_FOUND
+import org.springframework.validation.BindException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
@@ -19,6 +20,12 @@ class ExceptionRestControllerAdvice {
     @ResponseStatus(code = BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun methodArgumentNotValidExceptionHandler(exception: MethodArgumentNotValidException): ExceptionResponse =
+            ExceptionResponse(BAD_REQUEST.value(), BAD_REQUEST.reasonPhrase,
+                    exception.bindingResult.allErrors.map { ErrorDto(it) })
+
+    @ResponseStatus(code = BAD_REQUEST)
+    @ExceptionHandler(BindException::class)
+    fun bindExceptionHandler(exception: BindException): ExceptionResponse =
             ExceptionResponse(BAD_REQUEST.value(), BAD_REQUEST.reasonPhrase,
                     exception.bindingResult.allErrors.map { ErrorDto(it) })
 

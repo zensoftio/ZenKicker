@@ -28,7 +28,7 @@ class PlayerController(
     fun get(@PathVariable userId: Long): PlayerDto = PlayerDto(service.get(userId))
 
     @GetMapping
-    fun getAll(pageRequest: PageRequest): PageResponse<PlayerDto> =
+    fun getAll(@Valid pageRequest: PageRequest): PageResponse<PlayerDto> =
             PageResponse(service.getAll(pageRequest).map { PlayerDto(it) })
 
     @PostMapping
