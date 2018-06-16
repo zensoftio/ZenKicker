@@ -11,12 +11,14 @@ import org.springframework.validation.ObjectError
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class ErrorDto(
         val code: String,
-        var field: String? = null
+        var field: String? = null,
+        var message: String? = null
 ) {
 
     constructor(error: ObjectError) : this(error.code ?: "500") {
         if (error is FieldError) {
             field = error.field
+            message = error.defaultMessage
         }
     }
 

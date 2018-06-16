@@ -9,6 +9,7 @@ import com.kicker.domain.model.player.UpdatePlayerRequest
 import com.kicker.model.Player
 import com.kicker.service.PlayerService
 import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 
 /**
  * @author Yauheni Efimenko
@@ -30,13 +31,13 @@ class PlayerController(
             PageResponse(service.getAll(pageRequest).map { PlayerDto(it) })
 
     @PostMapping
-    fun createPlayer(createPlayerRequest: CreatePlayerRequest) {
-
+    fun createPlayer(@Valid @RequestBody createPlayerRequest: CreatePlayerRequest) {
+        TODO()
     }
 
     @PostMapping("/{userId}")
-    fun updatePlayer(@PathVariable userId: Long, updatePlayerRequest: UpdatePlayerRequest) {
-
+    fun updatePlayer(@PathVariable userId: Long, @Valid @RequestBody updatePlayerRequest: UpdatePlayerRequest) {
+        TODO()
     }
 
 }

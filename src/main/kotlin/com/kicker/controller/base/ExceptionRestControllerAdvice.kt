@@ -22,11 +22,11 @@ class ExceptionRestControllerAdvice {
             ExceptionResponse(BAD_REQUEST.value(), BAD_REQUEST.reasonPhrase,
                     exception.bindingResult.allErrors.map { ErrorDto(it) })
 
-    @ResponseStatus(code = BAD_REQUEST)
-    @ExceptionHandler(BindException::class)
-    fun bindExceptionHandler(exception: BindException): ExceptionResponse =
-            ExceptionResponse(BAD_REQUEST.value(), BAD_REQUEST.reasonPhrase,
-                    exception.bindingResult.allErrors.map { ErrorDto(it) })
+//    @ResponseStatus(code = BAD_REQUEST)
+//    @ExceptionHandler(BindException::class)
+//    fun bindExceptionHandler(exception: BindException): ExceptionResponse =
+//            ExceptionResponse(BAD_REQUEST.value(), BAD_REQUEST.reasonPhrase,
+//                    exception.bindingResult.allErrors.map { ErrorDto(it) })
 
     @ResponseStatus(code = CONFLICT)
     @ExceptionHandler(DataIntegrityViolationException::class)
@@ -42,4 +42,5 @@ class ExceptionRestControllerAdvice {
     @ExceptionHandler(IllegalStateException::class)
     fun illegalStateExceptionHandler(exception: IllegalStateException): ExceptionResponse =
             ExceptionResponse(BAD_REQUEST.value(), exception.message ?: "Illegal State Exception")
+
 }
