@@ -1,6 +1,8 @@
 package com.kicker.service
 
 import com.kicker.domain.model.player.CreatePlayerRequest
+import com.kicker.domain.model.player.UpdateDataPlayerRequest
+import com.kicker.domain.model.player.UpdatePasswordPlayerRequest
 import com.kicker.model.Award
 import com.kicker.model.Game
 import com.kicker.model.Player
@@ -28,9 +30,11 @@ interface PlayerService : BaseService<Player>, UserDetailsService {
 
     fun getByUsername(username: String): Player?
 
-    fun save(createPlayerRequest: CreatePlayerRequest): Player
+    fun create(createPlayerRequest: CreatePlayerRequest): Player
 
-    fun update(player: Player): Player
+    fun updateData(currentPlayer: Player, updateDataPlayerRequest: UpdateDataPlayerRequest): Player
+
+    fun updatePassword(currentPlayer: Player, updatePasswordPlayerRequest: UpdatePasswordPlayerRequest): Player
 
 }
 
