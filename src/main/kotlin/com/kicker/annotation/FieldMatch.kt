@@ -2,6 +2,7 @@ package com.kicker.annotation
 
 import com.kicker.annotation.validator.FieldMatchValidator
 import javax.validation.Constraint
+import javax.validation.Payload
 import kotlin.reflect.KClass
 
 /**
@@ -16,7 +17,7 @@ annotation class FieldMatch(
         val match: Boolean = true,
         val message: String = "The fields must match",
         val groups: Array<KClass<out Any>> = [],
-        val payload: Array<KClass<out Any>> = []
+        val payload: Array<KClass<out Payload>> = []
 )
 
 @Target(AnnotationTarget.CLASS)

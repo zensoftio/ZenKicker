@@ -1,7 +1,7 @@
 package com.kicker.annotation.validator
 
 import com.kicker.annotation.FieldMatch
-import org.springframework.util.ReflectionUtils
+import com.kicker.utils.ProjectUtils
 import javax.validation.ConstraintValidator
 import javax.validation.ConstraintValidatorContext
 
@@ -24,31 +24,21 @@ class FieldMatchValidator : ConstraintValidator<FieldMatch, Any> {
     }
 
     override fun isValid(clazz: Any, context: ConstraintValidatorContext): Boolean {
-        val valueField1 = getValue(clazz, firstFieldName)
-        val valueField2 = getValue(clazz, secondFieldName)
+        val valueField1 = ProjectUtils.getValueFromField(clazz, firstFieldName)
+        val valueField2 = ProjectUtils.getValueFromField(clazz, secondFieldName)
 
         val condition = when (match) {
             true -> valueField1 == valueField2
             false -> valueField1 != valueField2
         }
 
-        if (condition) {
-            return true
+        return when (condition) {
+            true -> true
+            false -> {
+                ProjectUtils.buildConstraintViolation(context, message, firstFieldName)
+                false
+            }
         }
-
-        context.buildConstraintViolationWithTemplate(message)
-                .addPropertyNode(firstFieldName)
-                .addConstraintViolation()
-                .disableDefaultConstraintViolation()
-
-        return false
-    }
-
-    private fun getValue(clazz: Any, fieldName: String): Any? {
-        val field = ReflectionUtils.findField(clazz::class.java, fieldName)
-        field!!.isAccessible = true
-
-        return field.get(clazz)
     }
 
 }

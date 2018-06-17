@@ -1,8 +1,8 @@
 package com.kicker.controller.api
 
 import com.kicker.annotation.CurrentPlayer
-import com.kicker.domain.PageRequest
 import com.kicker.domain.model.game.GameDto
+import com.kicker.domain.model.game.GamePageRequest
 import com.kicker.domain.model.game.GamePageResponse
 import com.kicker.domain.model.game.GameRegistrationRequest
 import com.kicker.domain.model.player.PlayerDto
@@ -26,13 +26,13 @@ class GameController(
     fun get(@PathVariable gameId: Long): GameDto = GameDto(service.get(gameId))
 
     @GetMapping
-    fun getAll(@Valid pageRequest: PageRequest): GamePageResponse {
+    fun getAll(@Valid pageRequest: GamePageRequest): GamePageResponse {
         val games = service.getAll(pageRequest)
         return GamePageResponse(games.map { GameDto(it) }, getPlayers(games).map { PlayerDto(it) })
     }
 
     @GetMapping("/belong")
-    fun getAllBelongGames(@CurrentPlayer currentPlayer: Player, @Valid pageRequest: PageRequest): GamePageResponse {
+    fun getAllBelongGames(@CurrentPlayer currentPlayer: Player, @Valid pageRequest: GamePageRequest): GamePageResponse {
         val games = service.getAllBelongGames(currentPlayer, pageRequest)
         return GamePageResponse(games.map { GameDto(it) }, getPlayers(games).map { PlayerDto(it) })
     }
