@@ -41,6 +41,8 @@ interface PlayerService : BaseService<Player>, UserDetailsService {
 
 interface GameService : BaseService<Game> {
 
+    fun getAllBelongGames(currentPlayer: Player, pageable: Pageable): Page<Game>
+
     fun gameRegistration(currentPlayer: Player, request: GameRegistrationRequest): Game
 
 }
