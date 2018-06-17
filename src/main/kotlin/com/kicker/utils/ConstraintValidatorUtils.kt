@@ -6,7 +6,7 @@ import javax.validation.ConstraintValidatorContext
 /**
  * @author Yauheni Efimenko
  */
-object ProjectUtils {
+object ConstraintValidatorUtils {
 
     fun getValueFromField(clazz: Any, fieldName: String): Any? {
         val field = ReflectionUtils.findField(clazz::class.java, fieldName)

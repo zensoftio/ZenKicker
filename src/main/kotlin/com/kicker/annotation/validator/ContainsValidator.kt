@@ -1,7 +1,7 @@
 package com.kicker.annotation.validator
 
 import com.kicker.annotation.Contains
-import com.kicker.utils.ProjectUtils
+import com.kicker.utils.ConstraintValidatorUtils
 import javax.validation.ConstraintValidator
 import javax.validation.ConstraintValidatorContext
 
@@ -22,15 +22,15 @@ class ContainsValidator : ConstraintValidator<Contains, Any> {
     }
 
     override fun isValid(clazz: Any, context: ConstraintValidatorContext): Boolean {
-        val value = ProjectUtils.getValueFromField(clazz, valueFieldName)
-        val map = ProjectUtils.getValueFromField(clazz, mapFieldName) as Map<*, *>
+        val value = ConstraintValidatorUtils.getValueFromField(clazz, valueFieldName)
+        val map = ConstraintValidatorUtils.getValueFromField(clazz, mapFieldName) as Map<*, *>
 
         val condition = map.contains(value)
 
         return when (condition) {
             true -> true
             false -> {
-                ProjectUtils.buildConstraintViolation(context, message, mapFieldName)
+                ConstraintValidatorUtils.buildConstraintViolation(context, message, mapFieldName)
                 false
             }
         }

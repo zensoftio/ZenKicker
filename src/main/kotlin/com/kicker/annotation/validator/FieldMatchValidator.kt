@@ -1,7 +1,7 @@
 package com.kicker.annotation.validator
 
 import com.kicker.annotation.FieldMatch
-import com.kicker.utils.ProjectUtils
+import com.kicker.utils.ConstraintValidatorUtils
 import javax.validation.ConstraintValidator
 import javax.validation.ConstraintValidatorContext
 
@@ -24,8 +24,8 @@ class FieldMatchValidator : ConstraintValidator<FieldMatch, Any> {
     }
 
     override fun isValid(clazz: Any, context: ConstraintValidatorContext): Boolean {
-        val valueField1 = ProjectUtils.getValueFromField(clazz, firstFieldName)
-        val valueField2 = ProjectUtils.getValueFromField(clazz, secondFieldName)
+        val valueField1 = ConstraintValidatorUtils.getValueFromField(clazz, firstFieldName)
+        val valueField2 = ConstraintValidatorUtils.getValueFromField(clazz, secondFieldName)
 
         val condition = when (match) {
             true -> valueField1 == valueField2
@@ -35,7 +35,7 @@ class FieldMatchValidator : ConstraintValidator<FieldMatch, Any> {
         return when (condition) {
             true -> true
             false -> {
-                ProjectUtils.buildConstraintViolation(context, message, firstFieldName)
+                ConstraintValidatorUtils.buildConstraintViolation(context, message, firstFieldName)
                 false
             }
         }
