@@ -5,6 +5,6 @@ import org.springframework.data.domain.Page
 /**
  * @author Yauheni Efimenko
  */
-data class PageResponse<T>(var totalCount: Long, var list: List<T>) {
+open class PageResponse<T>(val totalCount: Long, val list: List<T>) {
     constructor(page: Page<T>) : this(page.totalElements, page.content)
 }

@@ -1,7 +1,6 @@
 package com.kicker.domain.model.game
 
 import com.fasterxml.jackson.annotation.JsonFormat
-import com.kicker.domain.model.player.PlayerDto
 import com.kicker.model.Game
 import java.time.LocalDateTime
 
@@ -10,25 +9,25 @@ import java.time.LocalDateTime
  */
 data class GameDto(
         val id: Long,
-        val redPlayer1: PlayerDto,
-        val redPlayer2: PlayerDto,
-        val yellowPlayer1: PlayerDto,
-        val yellowPlayer2: PlayerDto,
+        val redPlayer1Id: Long,
+        val redPlayer2Id: Long,
+        val yellowPlayer1Id: Long,
+        val yellowPlayer2Id: Long,
         val redGoals: Int,
         val yellowGoals: Int,
         @field:JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
         val date: LocalDateTime,
-        val reportedBy: PlayerDto
+        val reportedById: Long
 ) {
     constructor(game: Game) : this(
             game.id,
-            PlayerDto(game.redPlayer1),
-            PlayerDto(game.redPlayer2),
-            PlayerDto(game.yellowPlayer1),
-            PlayerDto(game.yellowPlayer2),
+            game.redPlayer1.id,
+            game.redPlayer2.id,
+            game.yellowPlayer1.id,
+            game.yellowPlayer2.id,
             game.redTeamGoals,
             game.yellowTeamGoals,
             game.date,
-            PlayerDto(game.reportedBy)
+            game.reportedBy.id
     )
 }

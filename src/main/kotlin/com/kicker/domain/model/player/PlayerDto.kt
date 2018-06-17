@@ -11,6 +11,7 @@ data class PlayerDto(
         val username: String,
         val firstName: String,
         val lastName: String,
+        val active: Boolean,
         val awards: List<AwardDto>
 ) {
     constructor(player: Player) : this(
@@ -18,6 +19,7 @@ data class PlayerDto(
             player.username,
             player.firstName,
             player.lastName,
+            player.active,
             player.awards.map { AwardDto(it) }
     )
 }
