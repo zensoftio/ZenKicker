@@ -27,10 +27,8 @@ interface PlayerRepository : BaseRepository<Player> {
 @Repository
 interface GameRepository : BaseRepository<Game> {
 
-    @Query(value = "SELECT * FROM games g WHERE g.red_player1_id = ?1 OR g.red_player2_id = ?1 " +
-            "OR g.yellow_player1_id = ?1 OR g.yellow_player2_id = ?1",
-            countQuery = "SELECT COUNT(*) FROM games",
-            nativeQuery = true)
+    @Query(value = "SELECT g FROM Game g WHERE g.redPlayer1 = ?1 OR g.redPlayer2 = ?1 OR g.yellowPlayer1 = ?1 " +
+            "OR g.yellowPlayer2 = ?1")
     fun findAllBelongGames(currentPlayer: Player, pageable: Pageable): Page<Game>
 
 }
