@@ -23,6 +23,6 @@ data class GameRegistrationRequest(
         @field:NotBlank var redPlayer2: String? = null,
         @field:NotBlank var yellowPlayer1: String? = null,
         @field:NotBlank var yellowPlayer2: String? = null,
-        @field:Min(value = 1) @field:Max(10) var redGoals: Int? = null,
-        @field:Min(value = 1) @field:Max(10) var yellowGoals: Int? = null
+        @field:Min(value = 0) @field:Max(10) var redGoals: Int? = null,
+        @field:Min(value = 0) @field:Max(10) var yellowGoals: Int? = null
 )
