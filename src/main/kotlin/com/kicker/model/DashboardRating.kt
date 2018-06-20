@@ -2,7 +2,6 @@ package com.kicker.model
 
 import com.kicker.model.base.BaseModel
 import javax.persistence.*
-import javax.validation.constraints.Max
 
 /**
  * @author Yauheni Efimenko
@@ -18,14 +17,13 @@ class DashboardRating(
         @Column(name = "delta", nullable = false)
         val delta: Double,
 
-        @field:Max(WEEKS_RATED.toLong(), message = "This column cannot be more $WEEKS_RATED")
         @Column(name = "weeks_ago", nullable = false)
         var weeksAgo: Int = 0
 
 ) : BaseModel() {
 
     companion object {
-        private const val WEEKS_RATED = 10
+        const val WEEKS_RATED = 10
         private const val OBSOLESCENCE_STEP = 0.1
     }
 

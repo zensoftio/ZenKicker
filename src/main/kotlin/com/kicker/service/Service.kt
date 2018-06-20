@@ -5,6 +5,7 @@ import com.kicker.domain.model.player.CreatePlayerRequest
 import com.kicker.domain.model.player.UpdateDataPlayerRequest
 import com.kicker.domain.model.player.UpdatePasswordPlayerRequest
 import com.kicker.model.Award
+import com.kicker.model.DashboardRating
 import com.kicker.model.Game
 import com.kicker.model.Player
 import com.kicker.model.base.BaseModel
@@ -19,11 +20,7 @@ interface BaseService<T : BaseModel> {
 
     fun get(id: Long): T
 
-    fun getAll(): List<T>
-
     fun getAll(pageable: Pageable): Page<T>
-
-    fun save(model: T): T
 
 }
 
@@ -50,5 +47,11 @@ interface GameService : BaseService<Game> {
 interface AwardService : BaseService<Award> {
 
     fun getAllByPlayer(playerId: Long): Page<Award>
+
+}
+
+interface DashboardRatingService : BaseService<DashboardRating> {
+
+    fun recalculate(player: Player)
 
 }

@@ -43,6 +43,7 @@ dependencies {
 
 //    Util
     compile('org.apache.commons:commons-lang3:3.7')
+    compile('org.apache.commons:commons-collections4:4.0')
 
 //    Database
     compile('org.flywaydb:flyway-core')

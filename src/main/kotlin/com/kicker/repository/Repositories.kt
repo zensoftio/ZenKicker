@@ -1,6 +1,7 @@
 package com.kicker.repository
 
 import com.kicker.model.Award
+import com.kicker.model.DashboardRating
 import com.kicker.model.Game
 import com.kicker.model.Player
 import com.kicker.model.base.BaseModel
@@ -37,5 +38,12 @@ interface GameRepository : BaseRepository<Game> {
 interface AwardRepository : BaseRepository<Award> {
 
     fun findByPlayer(player: Player): List<Award>
+
+}
+
+@Repository
+interface DashboardRatingRepository : BaseRepository<DashboardRating> {
+
+    fun findByPlayerOrderByWeeksAgoDesc(player: Player): MutableList<DashboardRating>
 
 }

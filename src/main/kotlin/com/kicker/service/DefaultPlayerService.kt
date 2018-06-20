@@ -36,7 +36,7 @@ class DefaultPlayerService(
 
         request.password = passwordEncoder.encode(request.password)
 
-        return super.save(Player.of(request))
+        return repository.save(Player.of(request))
     }
 
     @Transactional
