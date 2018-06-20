@@ -6,5 +6,5 @@ CREATE TABLE dashboard_rating (
   id        BIGSERIAL PRIMARY KEY,
   player_id BIGINT REFERENCES players    NOT NULL,
   delta     DOUBLE PRECISION             NOT NULL,
-  week_ago  INT                          NOT NULL DEFAULT 0
+  weeks_ago INT                          NOT NULL DEFAULT 0
 );

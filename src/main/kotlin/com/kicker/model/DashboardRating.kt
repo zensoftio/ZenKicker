@@ -16,11 +16,11 @@ class DashboardRating(
         val player: Player,
 
         @Column(name = "delta", nullable = false)
-        private val delta: Double,
+        val delta: Double,
 
         @Max(WEEKS_RATED.toLong(), message = "This column cannot be more $WEEKS_RATED")
-        @Column(name = "week_ago", nullable = false)
-        var weekAgo: Int = 0
+        @Column(name = "weeks_ago", nullable = false)
+        var weeksAgo: Int = 0
 
 ) : BaseModel() {
 
@@ -30,6 +30,6 @@ class DashboardRating(
     }
 
 
-    fun getDelta(): Double = delta * (WEEKS_RATED - weekAgo) * OBSOLESCENCE_STEP
+    fun getObsolescenceDelta(): Double = delta * (WEEKS_RATED - weeksAgo) * OBSOLESCENCE_STEP
 
 }
