@@ -34,4 +34,8 @@ interface GameRepository : BaseRepository<Game> {
 }
 
 @Repository
-interface AwardRepository : BaseRepository<Award>
+interface AwardRepository : BaseRepository<Award> {
+
+    fun findByPlayer(player: Player): List<Award>
+
+}

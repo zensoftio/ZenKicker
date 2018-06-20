@@ -1,6 +1,5 @@
 package com.kicker.domain.model.player
 
-import com.kicker.domain.model.award.AwardDto
 import com.kicker.model.Player
 
 /**
@@ -12,7 +11,7 @@ data class PlayerDto(
         val firstName: String,
         val lastName: String,
         val active: Boolean,
-        val awards: List<AwardDto>
+        val currentRating: Int
 ) {
     constructor(player: Player) : this(
             player.id,
@@ -20,6 +19,6 @@ data class PlayerDto(
             player.firstName,
             player.lastName,
             player.active,
-            player.awards.map { AwardDto(it) }
+            player.currentRating.toInt()
     )
 }

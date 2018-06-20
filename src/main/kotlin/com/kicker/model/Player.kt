@@ -28,10 +28,21 @@ class Player(
         @Column(name = "active", nullable = false)
         var active: Boolean = false,
 
-        @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
-        val awards: List<Award> = listOf()
+        @Column(name = "current_rating", nullable = false)
+        var currentRating: Double = INITIAL_RATING
 
 ) : BaseModel(), UserDetails {
+
+    companion object {
+        const val INITIAL_RATING: Double = 10000.0
+
+        fun of(createPlayerRequest: CreatePlayerRequest): Player = Player(
+                createPlayerRequest.username!!,
+                createPlayerRequest.password!!,
+                createPlayerRequest.firstName!!,
+                createPlayerRequest.lastName!!)
+    }
+
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> = mutableListOf()
 
@@ -53,14 +64,6 @@ class Player(
 
     fun setPassword(password: String) {
         this.password = password
-    }
-
-    companion object {
-        fun of(createPlayerRequest: CreatePlayerRequest): Player = Player(
-                createPlayerRequest.username!!,
-                createPlayerRequest.password!!,
-                createPlayerRequest.firstName!!,
-                createPlayerRequest.lastName!!)
     }
 
 }

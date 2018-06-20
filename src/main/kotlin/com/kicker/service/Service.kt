@@ -47,4 +47,8 @@ interface GameService : BaseService<Game> {
 
 }
 
-interface AwardService : BaseService<Award>
+interface AwardService : BaseService<Award> {
+
+    fun getAllByPlayer(playerId: Long): Page<Award>
+
+}
