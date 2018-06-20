@@ -18,7 +18,7 @@ class DashboardRating(
         @Column(name = "delta", nullable = false)
         val delta: Double,
 
-        @Max(WEEKS_RATED.toLong(), message = "This column cannot be more $WEEKS_RATED")
+        @field:Max(WEEKS_RATED.toLong(), message = "This column cannot be more $WEEKS_RATED")
         @Column(name = "weeks_ago", nullable = false)
         var weeksAgo: Int = 0
 
