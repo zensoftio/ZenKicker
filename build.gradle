@@ -1,8 +1,8 @@
 plugins {
     id 'idea'
-    id 'org.jetbrains.kotlin.jvm' version '1.2.41'
-    id 'org.jetbrains.kotlin.plugin.spring' version '1.2.41'
-    id 'org.jetbrains.kotlin.plugin.jpa' version '1.2.41'
+    id 'org.jetbrains.kotlin.jvm' version '1.2.50'
+    id 'org.jetbrains.kotlin.plugin.spring' version '1.2.50'
+    id 'org.jetbrains.kotlin.plugin.jpa' version '1.2.50'
     id 'org.springframework.boot' version '2.0.3.RELEASE'
 }
 
