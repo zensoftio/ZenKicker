@@ -52,6 +52,8 @@ interface AwardService : BaseService<Award> {
 
 interface DashboardRatingService : BaseService<DashboardRating> {
 
+    fun getAllByPlayer(player: Player): List<DashboardRating>
+
     fun recalculate(player: Player)
 
 }
