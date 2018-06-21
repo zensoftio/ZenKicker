@@ -1,6 +1,7 @@
 package com.kicker.service
 
 import com.kicker.model.Award
+import com.kicker.model.Player
 import com.kicker.repository.AwardRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
@@ -13,12 +14,10 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional(readOnly = true)
 class DefaultAwardService(
-        private val repository: AwardRepository,
-        private val playerService: PlayerService
+        private val repository: AwardRepository
 ) : DefaultBaseService<Award, AwardRepository>(repository), AwardService {
 
-    override fun getAllByPlayer(playerId: Long): Page<Award> {
-        val player = playerService.get(playerId)
+    override fun getAllByPlayer(player: Player): Page<Award> {
         return PageImpl(repository.findByPlayer(player))
     }
 

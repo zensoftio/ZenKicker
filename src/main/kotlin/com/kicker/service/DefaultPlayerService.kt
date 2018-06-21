@@ -40,28 +40,32 @@ class DefaultPlayerService(
     }
 
     @Transactional
-    override fun updateData(currentPlayer: Player, request: UpdateDataPlayerRequest): Player {
+    override fun updateData(player: Player, request: UpdateDataPlayerRequest): Player {
         if (isExist(request.username!!)) {
             throw DuplicateUsernameException("The player with such username already exist")
         }
 
-        currentPlayer.username = request.username!!
-        currentPlayer.firstName = request.firstName!!
-        currentPlayer.lastName = request.lastName!!
+        player.username = request.username!!
+        player.firstName = request.firstName!!
+        player.lastName = request.lastName!!
 
-        return repository.save(currentPlayer)
+        return repository.save(player)
     }
 
     @Transactional
-    override fun updatePassword(currentPlayer: Player, request: UpdatePasswordPlayerRequest): Player {
-        if (!passwordEncoder.matches(request.currentPassword, currentPlayer.password)) {
+    override fun updatePassword(player: Player, request: UpdatePasswordPlayerRequest): Player {
+        if (!passwordEncoder.matches(request.currentPassword, player.password)) {
             throw PasswordIncorrectException("Password is incorrect")
         }
 
-        currentPlayer.password = passwordEncoder.encode(request.newPassword)
+        player.password = passwordEncoder.encode(request.newPassword)
 
-        return repository.save(currentPlayer)
+        return repository.save(player)
     }
+
+    @Transactional
+    override fun updateRating(player: Player, delta: Double): Player =
+            repository.save(player.apply { currentRating += delta })
 
     private fun isExist(username: String): Boolean {
         return getByUsername(username)?.let { true } ?: false

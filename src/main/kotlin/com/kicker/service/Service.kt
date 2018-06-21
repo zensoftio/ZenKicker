@@ -30,23 +30,25 @@ interface PlayerService : BaseService<Player>, UserDetailsService {
 
     fun create(request: CreatePlayerRequest): Player
 
-    fun updateData(currentPlayer: Player, request: UpdateDataPlayerRequest): Player
+    fun updateData(player: Player, request: UpdateDataPlayerRequest): Player
 
-    fun updatePassword(currentPlayer: Player, request: UpdatePasswordPlayerRequest): Player
+    fun updatePassword(player: Player, request: UpdatePasswordPlayerRequest): Player
+
+    fun updateRating(player: Player, delta: Double): Player
 
 }
 
 interface GameService : BaseService<Game> {
 
-    fun getAllBelongGames(currentPlayer: Player, pageable: Pageable): Page<Game>
+    fun getAllBelongGames(player: Player, pageable: Pageable): Page<Game>
 
-    fun gameRegistration(currentPlayer: Player, request: GameRegistrationRequest): Game
+    fun gameRegistration(player: Player, request: GameRegistrationRequest): Game
 
 }
 
 interface AwardService : BaseService<Award> {
 
-    fun getAllByPlayer(playerId: Long): Page<Award>
+    fun getAllByPlayer(player: Player): Page<Award>
 
 }
 
