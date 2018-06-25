@@ -5,7 +5,7 @@ import com.kicker.model.Player
 /**
  * @author Yauheni Efimenko
  */
-data class DashboardResponce(
+data class DashboardResponse(
         val ratings: List<DashboardRatingDto>,
         val initialRating: Int
 ) {

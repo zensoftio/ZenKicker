@@ -1,7 +1,7 @@
 package com.kicker.controller.api
 
 import com.kicker.domain.model.dashboard.DashboardRatingDto
-import com.kicker.domain.model.dashboard.DashboardResponce
+import com.kicker.domain.model.dashboard.DashboardResponse
 import com.kicker.service.DashboardRatingService
 import com.kicker.service.PlayerService
 import org.springframework.web.bind.annotation.GetMapping
@@ -20,9 +20,9 @@ class DashboardRatingController(
 ) {
 
     @GetMapping("/{playerId}")
-    fun getAllByPlayer(@PathVariable playerId: Long): DashboardResponce {
+    fun getAllByPlayer(@PathVariable playerId: Long): DashboardResponse {
         val player = playerService.get(playerId)
-        return DashboardResponce(service.getAllByPlayer(player).map { DashboardRatingDto(it) })
+        return DashboardResponse(service.getAllByPlayer(player).map { DashboardRatingDto(it) })
     }
 
 }
