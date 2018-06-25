@@ -40,7 +40,9 @@ class DefaultPlayerService(
     }
 
     @Transactional
-    override fun updateData(player: Player, request: UpdateDataPlayerRequest): Player {
+    override fun updateData(playerId: Long, request: UpdateDataPlayerRequest): Player {
+        val player = get(playerId)
+
         if (isExist(request.username!!)) {
             throw DuplicateUsernameException("The player with such username already exist")
         }
@@ -53,7 +55,9 @@ class DefaultPlayerService(
     }
 
     @Transactional
-    override fun updatePassword(player: Player, request: UpdatePasswordPlayerRequest): Player {
+    override fun updatePassword(playerId: Long, request: UpdatePasswordPlayerRequest): Player {
+        val player = get(playerId)
+
         if (!passwordEncoder.matches(request.currentPassword, player.password)) {
             throw PasswordIncorrectException("Password is incorrect")
         }
@@ -64,8 +68,13 @@ class DefaultPlayerService(
     }
 
     @Transactional
-    override fun updateRating(player: Player, delta: Double): Player =
-            repository.save(player.apply { currentRating += delta })
+    override fun updateRating(playerId: Long, newRating: Double): Player {
+        val player = get(playerId)
+        player.currentRating = newRating
+
+        return repository.save(player)
+    }
+
 
     private fun isExist(username: String): Boolean {
         return getByUsername(username)?.let { true } ?: false

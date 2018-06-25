@@ -3,7 +3,6 @@ package com.kicker.service
 import com.kicker.model.DashboardRating
 import com.kicker.model.Player
 import com.kicker.repository.DashboardRatingRepository
-import com.kicker.repository.PlayerRepository
 import org.apache.commons.collections4.CollectionUtils
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -15,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true)
 class DefaultDashboardRatingService(
         private val repository: DashboardRatingRepository,
-        private val playerRepository: PlayerRepository
+        private val playerService: PlayerService
 ) : DefaultBaseService<DashboardRating, DashboardRatingRepository>(repository), DashboardRatingService {
 
     override fun getAllByPlayer(player: Player): List<DashboardRating> =
@@ -42,7 +41,9 @@ class DefaultDashboardRatingService(
         repository.save(newDashboardRating)
 
         dashboardRatings.add(newDashboardRating)
-        playerRepository.save(player.apply { currentRating = calculate(dashboardRatings) })
+        val newRating = calculate(dashboardRatings)
+
+        playerService.updateRating(player.id, newRating)
     }
 
     private fun calculate(dashboardRatings: List<DashboardRating>): Double =

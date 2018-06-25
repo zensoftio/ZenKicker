@@ -38,12 +38,12 @@ class PlayerController(
     @PutMapping
     fun updateDataPlayer(@CurrentPlayer currentPlayer: Player,
                          @Valid @RequestBody request: UpdateDataPlayerRequest): PlayerDto =
-            PlayerDto(service.updateData(currentPlayer, request))
+            PlayerDto(service.updateData(currentPlayer.id, request))
 
 
     @PutMapping("/password-reset")
     fun updatePasswordPlayer(@CurrentPlayer currentPlayer: Player,
                              @Valid @RequestBody request: UpdatePasswordPlayerRequest): PlayerDto =
-            PlayerDto(service.updatePassword(currentPlayer, request))
+            PlayerDto(service.updatePassword(currentPlayer.id, request))
 
 }

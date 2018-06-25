@@ -26,14 +26,14 @@ class DefaultGameService(
             repository.findAllBelongGames(player, pageable)
 
     @Transactional
-    override fun gameRegistration(player: Player, request: GameRegistrationRequest): Game {
+    override fun gameRegistration(reporter: Player, request: GameRegistrationRequest): Game {
         val redPlayer1 = getPlayerByUserName(request.redPlayer1!!)
         val redPlayer2 = getPlayerByUserName(request.redPlayer2!!)
         val yellowPlayer1 = getPlayerByUserName(request.yellowPlayer1!!)
         val yellowPlayer2 = getPlayerByUserName(request.yellowPlayer2!!)
 
         val game = Game(redPlayer1, redPlayer2, yellowPlayer1, yellowPlayer2, request.redGoals!!, request.yellowGoals!!,
-                LocalDateTime.now(), player)
+                LocalDateTime.now(), reporter)
 
         updatePlayersRating(game)
 
@@ -60,10 +60,10 @@ class DefaultGameService(
         val loser2Delta = loserPlayer2.currentRating * losingPercents / 100.0
         val winnerDelta = (loser1Delta + loser2Delta) / 2.0
 
-        playerService.updateRating(loserPlayer1, loser1Delta.unaryMinus())
-        playerService.updateRating(loserPlayer2, loser2Delta.unaryMinus())
-        playerService.updateRating(winnerPlayer1, winnerDelta)
-        playerService.updateRating(winnerPlayer2, winnerDelta)
+        playerService.updateRating(loserPlayer1.id, (loserPlayer1.currentRating - loser1Delta))
+        playerService.updateRating(loserPlayer2.id, (loserPlayer2.currentRating - loser2Delta))
+        playerService.updateRating(winnerPlayer1.id, (winnerPlayer1.currentRating + winnerDelta))
+        playerService.updateRating(winnerPlayer2.id, (winnerPlayer2.currentRating + winnerDelta))
     }
 
 }
