@@ -3,6 +3,7 @@ package com.kicker.config
 import com.kicker.service.PlayerService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration
@@ -39,14 +40,13 @@ class SecurityConfig : GlobalMethodSecurityConfiguration() {
                     .antMatchers("/js/**").permitAll()
                     .antMatchers("/styles/**").permitAll()
                     .antMatchers("/images/**").permitAll()
+                    .antMatchers(HttpMethod.POST, "/api/players").permitAll()
 
                     .antMatchers("/**").authenticated()
 
                     .and()
 
                     .formLogin()
-//                    .loginPage("/login")
-//                    .loginProcessingUrl("/login")
         }
 
     }
