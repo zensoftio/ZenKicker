@@ -20,6 +20,8 @@ interface BaseService<T : BaseModel> {
 
     fun get(id: Long): T
 
+    fun getAll(): List<T>
+
     fun getAll(pageable: Pageable): Page<T>
 
 }
