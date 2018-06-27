@@ -360,7 +360,7 @@ curl "/api/dashboard-rating/{playerId}"
 
 The Kicker API uses the following error format:
 
-#### `Exception response`:
+#### Exception response:
 
 The attributes:
 
@@ -370,7 +370,7 @@ status | Integer | Http code
 message | String | The description of exception
 errors | [ErrorDto](#error-dto)[] |  Array error objects
 
-#### `Error dto`:
+#### Error dto:
 
 The attributes:
 
@@ -380,7 +380,7 @@ code | String | Description error
 field | String | The name of field - *optional*
 message | String | The description of error - *optional*
 
-#### `Error Statuses`:
+#### Error Statuses:
 
 Error Status | Meaning
 ---------- | -------
