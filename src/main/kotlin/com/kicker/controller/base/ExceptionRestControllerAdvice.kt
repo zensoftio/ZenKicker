@@ -3,8 +3,7 @@ package com.kicker.controller.base
 import com.kicker.domain.exception.ErrorDto
 import com.kicker.domain.exception.ExceptionResponse
 import com.kicker.exception.service.ServiceException
-import org.springframework.http.HttpStatus.BAD_REQUEST
-import org.springframework.http.HttpStatus.NOT_FOUND
+import org.springframework.http.HttpStatus.*
 import org.springframework.validation.BindException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -39,9 +38,9 @@ class ExceptionRestControllerAdvice {
     fun noSuchElementExceptionHandler(exception: NoSuchElementException): ExceptionResponse =
             ExceptionResponse(NOT_FOUND.value(), exception.message!!)
 
-    @ResponseStatus(code = BAD_REQUEST)
+    @ResponseStatus(code = INTERNAL_SERVER_ERROR)
     @ExceptionHandler(IllegalStateException::class)
     fun illegalStateExceptionHandler(exception: IllegalStateException): ExceptionResponse =
-            ExceptionResponse(BAD_REQUEST.value(), exception.message ?: "Illegal State Exception")
+            ExceptionResponse(INTERNAL_SERVER_ERROR.value(), INTERNAL_SERVER_ERROR.reasonPhrase)
 
 }

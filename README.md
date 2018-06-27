@@ -336,3 +336,58 @@ curl "/api/dashboard-rating/{playerId}"
   "initialRating": 0
 }
 ```
+
+### Errors
+
+> Exception response:
+
+```json
+{
+    "status": 0,
+    "message": "string",
+    "errors": [
+        {
+            "code": "string"
+            "field": "string",
+            "message": "string",
+        },
+        {
+            "code": "string"
+        }
+    ]
+}
+```
+
+The Kicker API uses the following error format:
+
+#### `Exception response`:
+
+The attributes:
+
+Attribute | Type | Description
+--------- | ---- | -----------
+status | Integer | Http code
+message | String | The description of exception
+errors | [ErrorDto](#error-dto)[] |  Array error objects
+
+#### `Error dto`:
+
+The attributes:
+
+Attribute | Type | Description
+--------- | ---- | -----------
+code | String | Description error
+field | String | The name of field - *optional*
+message | String | The description of error - *optional*
+
+#### `Error Statuses`:
+
+Error Status | Meaning
+---------- | -------
+400 | Bad Request -- Your request is invalid.
+401 | Unauthorized -- Your API key is wrong.
+403 | Forbidden -- You don`t have an appropriate roles.
+404 | Not Found -- The specified OPEN Platform could not be found.
+405 | Method Not Allowed -- You tried to access a OPEN Platform with an invalid method.
+406 | Not Acceptable -- You requested a format that isn't json.
+500 | Internal Server Error -- We had a problem with our server. Try again later.
