@@ -39,7 +39,7 @@ class SecurityConfig : GlobalMethodSecurityConfiguration() {
 
         override fun configure(http: HttpSecurity) {
             http.csrf().disable()
-                    .cors().configurationSource(corsConfigurationSource())
+                .cors().configurationSource(corsConfigurationSource())
 
             http.authorizeRequests()
                     .antMatchers("/js/**").permitAll()
