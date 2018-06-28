@@ -1,14 +1,28 @@
 import React, {Component} from 'react';
-import {Switch, Route} from 'react-router-dom';
+import {Switch, Route, Redirect, withRouter} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import './App.css';
+import styled from 'styled-components';
 import {getCurrent} from "./actions";
-
-import LoginScene from './scenes/login';
+import LoginScene from './scenes/LoginScene';
 import {MainMenu} from "./components/main-menu";
+import RatingScene from "./scenes/RatingScene";
+import GroupStageScene from "./scenes/GroupStageScene";
+import PlayoffsScene from "./scenes/PlayoffsScene";
+import ProfileScene from "./scenes/ProfileScene";
 
-const AppTest = () => <div>hello</div>
+const NotFound = () => <div>not found</div>
+
+const Container = styled.div`
+	height: 100vh;
+  width: 100%;
+  display: flex;
+`;
+
+const Content = styled.div`
+	width: 100%;
+`;
+
 
 class App extends Component {
 
@@ -17,32 +31,21 @@ class App extends Component {
 
 	render() {
 		return (
-			<div className='container'>
-				<MainMenu logoUrl={'/logo/system.png'} isAdmin={isAdmin} actualLogo={actualLogo}/>
-				<div className='content'>
+			<Container>
+				<MainMenu />
+				<Content>
 					<Switch>
-						<Route exact path="/" component={AppTest}/>
+						<Route exact path="/rating" component={RatingScene}/>
+						<Route exact path="/group-stage" component={GroupStageScene}/>
+						<Route exact path="/playoffs" component={PlayoffsScene}/>
+						<Route exact path="/player/:id" component={ProfileScene}/>
 						<Route exact path="/login" component={LoginScene}/>
-						{/*<Redirect from="/" exact to="/statistics"/>*/}
-						{/*<Route path="/not-found" component={NotFoundScene}/>*/}
-						{/*<Redirect from="*" exact to="/not-found"/>*/}
-						{/*{*/}
-						{/*isAdmin ? (*/}
-						{/*<Switch>*/}
-						{/*<Route path="/campaigns" component={CampaignsScene}/>*/}
-						{/*<Route path="/backup-campaigns" component={BackupCampaignsScene}/>*/}
-						{/*<Route path="/media" component={MediaScene}/>*/}
-						{/*<Route path="/zones" component={ZonesScene}/>*/}
-						{/*<Route path="/clients" component={ClientsScene}/>*/}
-						{/*<Route path="/not-found" component={NotFoundScene}/>*/}
-						{/*<Redirect from="/" exact to="/statistics"/>*/}
-						{/*<Redirect from="*" exact to="/not-found"/>*/}
-						{/*</Switch>*/}
-						{/*) : <Redirect from="*" exact to="/statistics"/>*/}
-						{/*}*/}
+						<Route path="/not-found" component={NotFound}/>
+						<Redirect from="/" exact to="/rating"/>
+						<Redirect from="*" exact to="/not-found"/>
 					</Switch>
-				</div>
-			</div>
+				</Content>
+			</Container>
 
 		);
 	}
@@ -60,4 +63,4 @@ const mapDispatchToProps = (dispatch) => {
 	return actionMap;
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

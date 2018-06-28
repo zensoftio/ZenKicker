@@ -1,17 +1,36 @@
-import * as React from 'react'
-import {MainMenuLink} from '../../components/buttons/main_menu_link/index'
-import LogoMenu from "../../../components/logo_menu";
+import React from 'react';
+import styled from 'styled-components';
+import {Link} from 'react-router-dom';
+import {MainMenuLink} from "../../components-ui/buttons/main-menu-link";
+import {MenuGroup} from "../../components-ui/menu-group";
 
-const styles = require('./index.scss')
+const Content = styled.section`
+	width: 300px;
+	height: 100%;
+`;
 
-export const MainMenu = ({isAdmin, actualLogo, logoUrl}) => (
-	<section>
-		<LogoMenu logoUrl={logoUrl} actualLogo={actualLogo}/>
-		<MainMenuLink link="/statistics">statistics</MainMenuLink>
-		<MainMenuLink link="/campaigns">campaigns</MainMenuLink>
-		<MainMenuLink link="/backup-campaigns">backup_campaigns</MainMenuLink>
-		<MainMenuLink link="/media">media</MainMenuLink>
-		<MainMenuLink link="/zones">zones</MainMenuLink>
-		<MainMenuLink link="/clients">clients</MainMenuLink>
-	</section>
+const Title = styled(Link)`
+	with: 100%;
+	font-size: 22px;
+	padding: 20px;
+	margin-bottom: 20px;
+	display: block;
+	color: black;
+	text-decoration: none;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+	text-align: center;
+	&>span {
+		color: red;
+	}
+`;
+
+export const MainMenu = () => (
+	<Content>
+		<Title to="/">Zen<span>Kicker</span></Title>
+		<MainMenuLink link="/rating">Rating</MainMenuLink>
+		<MenuGroup title="Tournament">
+			<MainMenuLink link="/group-stage">Group stage</MainMenuLink>
+			<MainMenuLink link="/playoffs">Playoffs</MainMenuLink>
+		</MenuGroup>
+	</Content>
 )
