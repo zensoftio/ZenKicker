@@ -52,7 +52,7 @@ interface GameService : BaseService<Game> {
 
 interface AwardService : BaseService<Award> {
 
-    fun getAllByPlayer(player: Player): Page<Award>
+    fun getAllByPlayer(player: Player): List<Award>
 
 }
 

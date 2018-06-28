@@ -22,7 +22,8 @@ class AwardController(
     @GetMapping("/{playerId}")
     fun getAllByPlayer(@PathVariable playerId: Long): PageResponse<AwardDto> {
         val player = playerService.get(playerId)
-        return PageResponse(service.getAllByPlayer(player).map { AwardDto(it) })
+        val awards = service.getAllByPlayer(player)
+        return PageResponse(awards.size.toLong(), awards.map { AwardDto(it) })
     }
 
 }
