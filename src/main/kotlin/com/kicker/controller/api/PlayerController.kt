@@ -1,12 +1,8 @@
 package com.kicker.controller.api
 
 import com.kicker.annotation.CurrentPlayer
-import com.kicker.domain.PageRequest
 import com.kicker.domain.PageResponse
-import com.kicker.domain.model.player.CreatePlayerRequest
-import com.kicker.domain.model.player.PlayerDto
-import com.kicker.domain.model.player.UpdateDataPlayerRequest
-import com.kicker.domain.model.player.UpdatePasswordPlayerRequest
+import com.kicker.domain.model.player.*
 import com.kicker.model.Player
 import com.kicker.service.PlayerService
 import org.springframework.web.bind.annotation.*
@@ -28,7 +24,7 @@ class PlayerController(
     fun get(@PathVariable playerId: Long): PlayerDto = PlayerDto(service.get(playerId))
 
     @GetMapping
-    fun getAll(@Valid pageRequest: PageRequest): PageResponse<PlayerDto> =
+    fun getAll(@Valid pageRequest: PlayerPageRequest): PageResponse<PlayerDto> =
             PageResponse(service.getAll(pageRequest).map { PlayerDto(it) })
 
     @PostMapping
