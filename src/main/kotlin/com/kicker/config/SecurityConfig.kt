@@ -39,7 +39,7 @@ class SecurityConfig : GlobalMethodSecurityConfiguration() {
 
         override fun configure(http: HttpSecurity) {
             http.csrf().disable()
-                .cors().configurationSource(corsConfigurationSource())
+                .cors()
 
             http.authorizeRequests()
                     .antMatchers("/js/**").permitAll()
@@ -58,6 +58,7 @@ class SecurityConfig : GlobalMethodSecurityConfiguration() {
         fun corsConfigurationSource(): CorsConfigurationSource {
             val configuration = CorsConfiguration()
             configuration.allowedOrigins = listOf("*")
+            configuration.allowedHeaders = listOf("*")
             configuration.allowedMethods = listOf("*")
 
             val source = UrlBasedCorsConfigurationSource()
