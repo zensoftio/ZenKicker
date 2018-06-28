@@ -38,6 +38,8 @@ interface PlayerService : BaseService<Player>, UserDetailsService {
 
     fun updateRating(playerId: Long, newRating: Double): Player
 
+    fun updateActivation(playerId: Long, active: Boolean): Player
+
 }
 
 interface GameService : BaseService<Game> {

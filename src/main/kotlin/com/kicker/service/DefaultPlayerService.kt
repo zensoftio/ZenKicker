@@ -75,6 +75,13 @@ class DefaultPlayerService(
         return repository.save(player)
     }
 
+    @Transactional
+    override fun updateActivation(playerId: Long, active: Boolean): Player {
+        val player = get(playerId)
+        player.active = active
+
+        return repository.save(player)
+    }
 
     private fun isExist(username: String): Boolean {
         return getByUsername(username)?.let { true } ?: false
