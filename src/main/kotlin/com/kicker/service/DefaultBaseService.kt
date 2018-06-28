@@ -16,6 +16,8 @@ abstract class DefaultBaseService<T : BaseModel, R : BaseRepository<T>>(
 
     override fun get(id: Long): T = repository.findById(id).get()
 
+    override fun getAll(): List<T> = repository.findAll()
+
     override fun getAll(pageable: Pageable): Page<T> = repository.findAll(pageable)
 
 }
