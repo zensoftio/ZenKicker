@@ -11,6 +11,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.CorsConfigurationSource
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
+
 
 /**
  * @author Yauheni Efimenko
@@ -35,7 +39,7 @@ class SecurityConfig : GlobalMethodSecurityConfiguration() {
 
         override fun configure(http: HttpSecurity) {
             http.csrf().disable()
-                .cors().disable()
+                    .cors().configurationSource(corsConfigurationSource())
 
             http.authorizeRequests()
                     .antMatchers("/js/**").permitAll()
@@ -48,6 +52,18 @@ class SecurityConfig : GlobalMethodSecurityConfiguration() {
                     .and()
 
                     .formLogin()
+        }
+
+        @Bean
+        fun corsConfigurationSource(): CorsConfigurationSource {
+            val configuration = CorsConfiguration()
+            configuration.allowedOrigins = listOf("*")
+            configuration.allowedMethods = listOf("*")
+
+            val source = UrlBasedCorsConfigurationSource()
+            source.registerCorsConfiguration("/**", configuration)
+
+            return source
         }
 
     }
