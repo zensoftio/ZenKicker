@@ -28,6 +28,8 @@ class DefaultPlayerService(
     override fun loadUserByUsername(username: String): UserDetails = getByUsername(username)
             ?: throw UsernameNotFoundException("User with username $username not found")
 
+    override fun getAll(): List<Player> = repository.findOrderByCurrentRatingDesc()
+
     @Transactional
     override fun create(request: CreatePlayerRequest): Player {
         if (isExist(request.username!!)) {

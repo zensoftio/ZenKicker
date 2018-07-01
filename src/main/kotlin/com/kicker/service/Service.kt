@@ -54,11 +54,17 @@ interface AwardService : BaseService<Award> {
 
     fun getAllByPlayer(player: Player): List<Award>
 
+    fun doAwardMaxRatingForWeek()
+
+    fun doAwardMaxDeltaRatingForWeek()
+
 }
 
 interface DashboardRatingService : BaseService<DashboardRating> {
 
     fun getAllByPlayer(player: Player): List<DashboardRating>
+
+    fun getAllByLastWeek(): List<DashboardRating>
 
     fun recalculate(player: Player)
 

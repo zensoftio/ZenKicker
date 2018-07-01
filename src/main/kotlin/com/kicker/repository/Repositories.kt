@@ -23,6 +23,9 @@ interface PlayerRepository : BaseRepository<Player> {
 
     fun findByUsername(username: String): Player?
 
+    @Query(value = "SELECT p FROM Player p ORDER BY p.currentRating DESC")
+    fun findOrderByCurrentRatingDesc(): List<Player>
+
 }
 
 @Repository
@@ -44,6 +47,8 @@ interface AwardRepository : BaseRepository<Award> {
 @Repository
 interface DashboardRatingRepository : BaseRepository<DashboardRating> {
 
-    fun findByPlayerOrderByWeeksAgoDesc(player: Player): MutableList<DashboardRating>
+    fun findByPlayerOrderByWeeksAgoDesc(player: Player): List<DashboardRating>
+
+    fun findByWeeksAgoOrderByDeltaDesc(weeksAgo: Int): List<DashboardRating>
 
 }
