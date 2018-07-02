@@ -23,9 +23,6 @@ interface PlayerRepository : BaseRepository<Player> {
 
     fun findByUsername(username: String): Player?
 
-    @Query(value = "SELECT p FROM Player p ORDER BY p.currentRating DESC")
-    fun findOrderByCurrentRatingDesc(): List<Player>
-
 }
 
 @Repository
@@ -33,7 +30,7 @@ interface GameRepository : BaseRepository<Game> {
 
     @Query(value = "SELECT g FROM Game g WHERE g.redPlayer1 = ?1 OR g.redPlayer2 = ?1 OR g.yellowPlayer1 = ?1 " +
             "OR g.yellowPlayer2 = ?1")
-    fun findAllBelongGames(currentPlayer: Player, pageable: Pageable): Page<Game>
+    fun findAllBelongGames(player: Player, pageable: Pageable): Page<Game>
 
 }
 
@@ -49,6 +46,6 @@ interface DashboardRatingRepository : BaseRepository<DashboardRating> {
 
     fun findByPlayerOrderByWeeksAgoDesc(player: Player): List<DashboardRating>
 
-    fun findByWeeksAgoOrderByDeltaDesc(weeksAgo: Int): List<DashboardRating>
+    fun findByWeeksAgoAndDeltaNotOrderByDeltaDesc(weeksAgo: Int = 0, excludeDelta: Double = 0.0): List<DashboardRating>
 
 }

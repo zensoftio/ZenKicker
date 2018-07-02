@@ -38,21 +38,21 @@ interface PlayerService : BaseService<Player>, UserDetailsService {
 
     fun updateRating(playerId: Long, newRating: Double): Player
 
-    fun updateActivation(playerId: Long, active: Boolean): Player
+    fun updateActivity(playerId: Long, active: Boolean): Player
 
 }
 
 interface GameService : BaseService<Game> {
 
-    fun getAllBelongGames(player: Player, pageable: Pageable): Page<Game>
+    fun getAllBelongGames(playerId: Long, pageable: Pageable): Page<Game>
 
-    fun gameRegistration(reporter: Player, request: GameRegistrationRequest): Game
+    fun gameRegistration(playerId: Long, request: GameRegistrationRequest): Game
 
 }
 
 interface AwardService : BaseService<Award> {
 
-    fun getAllByPlayer(player: Player): List<Award>
+    fun getAllByPlayer(playerId: Long): List<Award>
 
     fun doAwardMaxRatingForWeek()
 
@@ -62,7 +62,7 @@ interface AwardService : BaseService<Award> {
 
 interface DashboardRatingService : BaseService<DashboardRating> {
 
-    fun getAllByPlayer(player: Player): List<DashboardRating>
+    fun getAllByPlayer(playerId: Long): List<DashboardRating>
 
     fun getAllByLastWeek(): List<DashboardRating>
 

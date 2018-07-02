@@ -22,11 +22,15 @@ class DefaultGameService(
         private val playerService: PlayerService
 ) : DefaultBaseService<Game, GameRepository>(repository), GameService {
 
-    override fun getAllBelongGames(player: Player, pageable: Pageable): Page<Game> =
-            repository.findAllBelongGames(player, pageable)
+    override fun getAllBelongGames(playerId: Long, pageable: Pageable): Page<Game> {
+        val player = playerService.get(playerId)
+        return repository.findAllBelongGames(player, pageable)
+    }
 
     @Transactional
-    override fun gameRegistration(reporter: Player, request: GameRegistrationRequest): Game {
+    override fun gameRegistration(playerId: Long, request: GameRegistrationRequest): Game {
+        val reporter = playerService.get(playerId)
+
         val redPlayer1 = getPlayerByUserName(request.redPlayer1!!)
         val redPlayer2 = getPlayerByUserName(request.redPlayer2!!)
         val yellowPlayer1 = getPlayerByUserName(request.yellowPlayer1!!)
@@ -44,10 +48,10 @@ class DefaultGameService(
             ?: throw NotFoundPlayerException("The player with username $username is not exist")
 
     private fun updatePlayersRating(game: Game) {
-        val loserPlayer1: Player = if (game.redTeamGoals > game.yellowTeamGoals) game.yellowPlayer1 else game.redPlayer1
-        val loserPlayer2: Player = if (loserPlayer1 == game.yellowPlayer1) game.yellowPlayer2 else game.redPlayer2
-        val winnerPlayer1: Player = if (loserPlayer1 == game.yellowPlayer1) game.redPlayer1 else game.yellowPlayer1
-        val winnerPlayer2: Player = if (loserPlayer1 == game.yellowPlayer1) game.redPlayer2 else game.yellowPlayer2
+        val loserPlayer1 = if (game.redTeamGoals > game.yellowTeamGoals) game.yellowPlayer1 else game.redPlayer1
+        val loserPlayer2 = if (loserPlayer1 == game.yellowPlayer1) game.yellowPlayer2 else game.redPlayer2
+        val winnerPlayer1 = if (loserPlayer1 == game.yellowPlayer1) game.redPlayer1 else game.yellowPlayer1
+        val winnerPlayer2 = if (loserPlayer1 == game.yellowPlayer1) game.redPlayer2 else game.yellowPlayer2
 
         val loserGoals: Int = if (loserPlayer1 == game.yellowPlayer1) game.yellowTeamGoals else game.redTeamGoals
         val losersTotalRating: Double = loserPlayer1.currentRating + loserPlayer2.currentRating

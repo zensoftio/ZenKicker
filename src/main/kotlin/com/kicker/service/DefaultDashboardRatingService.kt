@@ -17,14 +17,16 @@ class DefaultDashboardRatingService(
         private val playerService: PlayerService
 ) : DefaultBaseService<DashboardRating, DashboardRatingRepository>(repository), DashboardRatingService {
 
-    override fun getAllByPlayer(player: Player): List<DashboardRating> =
-            repository.findByPlayerOrderByWeeksAgoDesc(player)
+    override fun getAllByPlayer(playerId: Long): List<DashboardRating> {
+        val player = playerService.get(playerId)
+        return repository.findByPlayerOrderByWeeksAgoDesc(player)
+    }
 
-    override fun getAllByLastWeek(): List<DashboardRating> = repository.findByWeeksAgoOrderByDeltaDesc(0)
+    override fun getAllByLastWeek(): List<DashboardRating> = repository.findByWeeksAgoAndDeltaNotOrderByDeltaDesc()
 
     @Transactional
     override fun recalculate(player: Player) {
-        val dashboardRatings = getAllByPlayer(player) as MutableList<DashboardRating>
+        val dashboardRatings = repository.findByPlayerOrderByWeeksAgoDesc(player) as MutableList<DashboardRating>
 
         val rating = calculate(dashboardRatings)
         val delta = player.currentRating - rating

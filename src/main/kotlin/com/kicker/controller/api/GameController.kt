@@ -1,6 +1,5 @@
 package com.kicker.controller.api
 
-import com.kicker.annotation.CurrentPlayer
 import com.kicker.domain.model.game.GameDto
 import com.kicker.domain.model.game.GamePageRequest
 import com.kicker.domain.model.game.GamePageResponse
@@ -31,16 +30,16 @@ class GameController(
         return GamePageResponse(games.map { GameDto(it) }, getPlayers(games).map { PlayerDto(it) })
     }
 
-    @GetMapping("/belong")
-    fun getAllBelongGames(@CurrentPlayer currentPlayer: Player, @Valid pageRequest: GamePageRequest): GamePageResponse {
-        val games = service.getAllBelongGames(currentPlayer, pageRequest)
+    @GetMapping("/belong/{playerId}")
+    fun getAllBelongGames(@PathVariable playerId: Long, @Valid pageRequest: GamePageRequest): GamePageResponse {
+        val games = service.getAllBelongGames(playerId, pageRequest)
         return GamePageResponse(games.map { GameDto(it) }, getPlayers(games).map { PlayerDto(it) })
     }
 
-    @PostMapping
-    fun gameRegistration(@CurrentPlayer currentPlayer: Player,
-                         @Valid @RequestBody request: GameRegistrationRequest): GameDto =
-            GameDto(service.gameRegistration(currentPlayer, request))
+    @PostMapping("/{playerId}")
+    fun gameRegistration(@PathVariable playerId: Long, @Valid @RequestBody request: GameRegistrationRequest): GameDto {
+        return GameDto(service.gameRegistration(playerId, request))
+    }
 
     private fun getPlayers(games: Page<Game>): Set<Player> {
         val players = mutableSetOf<Player>()

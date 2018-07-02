@@ -1,11 +1,13 @@
 package com.kicker.service
 
+import com.kicker.domain.PageRequest
 import com.kicker.model.Award
 import com.kicker.model.DashboardRating
 import com.kicker.model.Player
 import com.kicker.model.dictionary.AwardDegree
 import com.kicker.model.dictionary.AwardType
 import com.kicker.repository.AwardRepository
+import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
@@ -26,15 +28,20 @@ class DefaultAwardService(
     }
 
 
-    override fun getAllByPlayer(player: Player): List<Award> {
+    override fun getAllByPlayer(playerId: Long): List<Award> {
+        val player = playerService.get(playerId)
+
         val awards = repository.findByPlayer(player)
         Collections.sort(awards, AwardsComparator())
+
         return awards
     }
 
     @Transactional
     override fun doAwardMaxRatingForWeek() {
-        val players = playerService.getAll()
+        val pageRequest = PageRequest(sortDirection = Sort.Direction.DESC, sortBy = "rating",
+                maySortBy = mapOf("rating" to "currentRating"))
+        val players = playerService.getAll(pageRequest).content
 
         if (players.size > TOP_PLACES) {
             saveAwardOverallRatingForWeek(players[0], AwardDegree.GOLD)

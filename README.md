@@ -2,14 +2,46 @@
 
 ## API
 
+### Marks
+
+* `pageable`
+
+> Target - URL
+> 
+> Indicate - URL marked by `pageble` supports request parameters described below
+> 
+> Request params:
+>   1. offset - describes the offset for the set of results (only positive integers, default value - `0`)
+>   2. limit - describes the limit of entities in the result set (only positive integers, default value - `10`)
+
+* `sorting`
+
+> Target - URL
+> 
+> Indicate - allow sorting by acceptable fields
+> 
+> Request params:
+>   1. sortBy - describes the sorting field of entity (default value - `id`)
+>   2. sortDirection - describes the sorting direction(`ASC` or `DESC`, default value - `ASC`) 
+
+* `optional`
+
+> Target - dto's fields
+> 
+> Indicate - nullable fields
+
 ### Game Controller
 
 #### Get All
 
 ```shell
-curl "/api/games"
+curl "/api/games" - `pageable` `sorting`
 ```
-
+           
+ sortBy:
+ * id
+ * date
+ 
 > Response:
 
 ```json
@@ -66,9 +98,13 @@ curl "/api/games/{gameId}"
 #### Get All Belong Games
 
 ```shell
-curl "/api/games/belong"
+curl "/api/games/belong/{playerId}" - `pageable` `sorting`
 ```
 
+ sortBy:
+ * id
+ * date
+ 
 > Response:
 
 ```json
@@ -103,7 +139,7 @@ curl "/api/games/belong"
 #### Game Registration
 
 ```shell
-curl "/api/games"
+curl "/api/games/{playerId}"
     -X POST
 ```
 
@@ -141,8 +177,12 @@ curl "/api/games"
 #### Get All
 
 ```shell
-curl "/api/players"
+curl "/api/players" - `pageable` `sorting`
 ```
+
+sortBy:
+* id
+* rating
 
 > Response:
 
@@ -197,7 +237,7 @@ curl "/api/players"
 #### Update Data Player
 
 ```shell
-curl "/api/players"
+curl "/api/players/{playerId}"
     -X PUT
 ```
 
@@ -227,7 +267,7 @@ curl "/api/players"
 #### Update Password Player
 
 ```shell
-curl "/api/players/password-reset"
+curl "/api/players/{playerId}/password-reset"
     -X PUT
 ```
 
@@ -303,16 +343,13 @@ curl "/api/awards/{playerId}"
 > Response:
 
 ```json
-{
-  "totalCount": 0,
-  "list": [
+[
     {
       "awardType": "string",
       "awardDegree": "string",
       "description": "string"
     }
-  ]
-}
+]
 ```
 
 ### Dashboard Rating Controller

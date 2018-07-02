@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional
  * @author Yauheni Efimenko
  */
 @Component
-class DashboardRatingSchedule(
+class SummingUpSchedule(
         private val playerService: PlayerService,
         private val dashboardRatingService: DashboardRatingService,
         private val awardService: AwardService
