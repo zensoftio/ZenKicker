@@ -1,12 +1,3 @@
--- Players
-CREATE TABLE players (
-  id         BIGSERIAL PRIMARY KEY,
-  username   VARCHAR NOT NULL UNIQUE,
-  first_name VARCHAR NOT NULL,
-  last_name  VARCHAR NOT NULL,
-  active     BOOLEAN NOT NULL
-);
-
 -- Award Degrees
 CREATE TABLE award_degrees (
   id  INT PRIMARY KEY,
@@ -34,17 +25,4 @@ CREATE TABLE awards (
   award_type_id   INT REFERENCES award_types   NOT NULL,
   award_degree_id INT REFERENCES award_degrees NOT NULL,
   description     VARCHAR                      NOT NULL
-);
-
--- Games
-CREATE TABLE games (
-  id                BIGSERIAL PRIMARY KEY,
-  red_player1_id    BIGINT REFERENCES players NOT NULL,
-  red_player2_id    BIGINT REFERENCES players NOT NULL,
-  yellow_player1_id BIGINT REFERENCES players NOT NULL,
-  yellow_player2_id BIGINT REFERENCES players NOT NULL,
-  red_team_goals    INT                       NOT NULL,
-  yellow_team_goals INT                       NOT NULL,
-  date              DATE                      NOT NULL,
-  reported_by       VARCHAR                   NOT NULL
 );
