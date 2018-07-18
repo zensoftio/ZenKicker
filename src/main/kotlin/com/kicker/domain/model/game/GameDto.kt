@@ -9,25 +9,15 @@ import java.time.LocalDateTime
  */
 data class GameDto(
         val id: Long,
-        val redPlayer1Id: Long,
-        val redPlayer2Id: Long,
-        val yellowPlayer1Id: Long,
-        val yellowPlayer2Id: Long,
-        val redGoals: Int,
-        val yellowGoals: Int,
         @field:JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
         val date: LocalDateTime,
-        val reportedById: Long
+        val reportedById: Long,
+        val score: String
 ) {
     constructor(game: Game) : this(
             game.id,
-            game.redPlayer1.id,
-            game.redPlayer2.id,
-            game.yellowPlayer1.id,
-            game.yellowPlayer2.id,
-            game.redTeamGoals,
-            game.yellowTeamGoals,
             game.date,
-            game.reportedBy.id
+            game.reportedBy.id,
+            game.score
     )
 }

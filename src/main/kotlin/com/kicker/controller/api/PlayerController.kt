@@ -1,6 +1,7 @@
 package com.kicker.controller.api
 
 import com.kicker.annotation.CurrentPlayer
+import com.kicker.domain.PageRequest
 import com.kicker.domain.PageResponse
 import com.kicker.domain.model.player.*
 import com.kicker.model.Player
@@ -24,19 +25,19 @@ class PlayerController(
     fun get(@PathVariable playerId: Long): PlayerDto = PlayerDto(service.get(playerId))
 
     @GetMapping
-    fun getAll(@Valid pageRequest: PlayerPageRequest): PageResponse<PlayerDto> =
+    fun getAll(@Valid pageRequest: PageRequest): PageResponse<PlayerDto> =
             PageResponse(service.getAll(pageRequest).map { PlayerDto(it) })
 
     @PostMapping
     fun create(@Valid @RequestBody request: CreatePlayerRequest): PlayerDto = PlayerDto(service.create(request))
 
-    @PutMapping("/{playerId}")
-    fun updateData(@PathVariable playerId: Long, @Valid @RequestBody request: UpdateDataPlayerRequest): PlayerDto {
+    @PutMapping("/{playerId}/username")
+    fun updateUsername(@PathVariable playerId: Long, @Valid @RequestBody request: UpdatePlayerUsernameRequest): PlayerDto {
         return PlayerDto(service.updateData(playerId, request))
     }
 
     @PutMapping("/{playerId}/password-reset")
-    fun updatePassword(@PathVariable playerId: Long, @Valid @RequestBody request: UpdatePasswordPlayerRequest): PlayerDto {
+    fun updatePassword(@PathVariable playerId: Long, @Valid @RequestBody request: UpdatePlayerPasswordRequest): PlayerDto {
         return PlayerDto(service.updatePassword(playerId, request))
     }
 

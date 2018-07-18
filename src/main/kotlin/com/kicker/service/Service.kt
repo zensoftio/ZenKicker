@@ -2,12 +2,13 @@ package com.kicker.service
 
 import com.kicker.domain.model.game.GameRegistrationRequest
 import com.kicker.domain.model.player.CreatePlayerRequest
-import com.kicker.domain.model.player.UpdateDataPlayerRequest
-import com.kicker.domain.model.player.UpdatePasswordPlayerRequest
+import com.kicker.domain.model.player.UpdatePlayerUsernameRequest
+import com.kicker.domain.model.player.UpdatePlayerPasswordRequest
 import com.kicker.model.Award
 import com.kicker.model.DashboardRating
 import com.kicker.model.Game
 import com.kicker.model.Player
+import com.kicker.model.PlayerStats
 import com.kicker.model.base.BaseModel
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -24,6 +25,8 @@ interface BaseService<T : BaseModel> {
 
     fun getAll(pageable: Pageable): Page<T>
 
+    fun save(entity: T): T
+
 }
 
 interface PlayerService : BaseService<Player>, UserDetailsService {
@@ -32,11 +35,9 @@ interface PlayerService : BaseService<Player>, UserDetailsService {
 
     fun create(request: CreatePlayerRequest): Player
 
-    fun updateData(playerId: Long, request: UpdateDataPlayerRequest): Player
+    fun updateData(playerId: Long, usernameRequest: UpdatePlayerUsernameRequest): Player
 
-    fun updatePassword(playerId: Long, request: UpdatePasswordPlayerRequest): Player
-
-    fun updateRating(playerId: Long, newRating: Double): Player
+    fun updatePassword(playerId: Long, passwordRequest: UpdatePlayerPasswordRequest): Player
 
     fun updateActivity(playerId: Long, active: Boolean): Player
 
@@ -44,9 +45,15 @@ interface PlayerService : BaseService<Player>, UserDetailsService {
 
 interface GameService : BaseService<Game> {
 
-    fun getAllBelongGames(playerId: Long, pageable: Pageable): Page<Game>
-
     fun gameRegistration(playerId: Long, request: GameRegistrationRequest): Game
+
+}
+
+interface PlayerStatsService : BaseService<PlayerStats> {
+
+    fun getByGame(gameId: Long): List<PlayerStats>
+
+    fun getByPlayer(playerId: Long): List<PlayerStats>
 
 }
 
@@ -57,15 +64,5 @@ interface AwardService : BaseService<Award> {
     fun doAwardMaxRatingForWeek()
 
     fun doAwardMaxDeltaRatingForWeek()
-
-}
-
-interface DashboardRatingService : BaseService<DashboardRating> {
-
-    fun getAllByPlayer(playerId: Long): List<DashboardRating>
-
-    fun getAllByLastWeek(): List<DashboardRating>
-
-    fun recalculate(player: Player)
 
 }

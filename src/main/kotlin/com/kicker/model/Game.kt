@@ -12,15 +12,15 @@ import javax.validation.constraints.Pattern
 @Table(name = "games")
 class Game(
 
-        @Column(name = "date", nullable = false, columnDefinition = "DATE")
-        val date: LocalDateTime,
-
         @Pattern(regexp = "\\d:\\d")
         @Column(name = "score", nullable = false)
         val score: String,
 
         @ManyToOne
         @JoinColumn(name = "reported_by", nullable = false)
-        val reportedBy: Player
+        val reportedBy: Player,
+
+        @Column(name = "date", nullable = false, columnDefinition = "DATE")
+        val date: LocalDateTime = LocalDateTime.now()
 
 ) : BaseModel()
