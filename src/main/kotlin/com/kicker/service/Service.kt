@@ -5,7 +5,6 @@ import com.kicker.domain.model.player.CreatePlayerRequest
 import com.kicker.domain.model.player.UpdatePlayerUsernameRequest
 import com.kicker.domain.model.player.UpdatePlayerPasswordRequest
 import com.kicker.model.Award
-import com.kicker.model.DashboardRating
 import com.kicker.model.Game
 import com.kicker.model.Player
 import com.kicker.model.PlayerStats

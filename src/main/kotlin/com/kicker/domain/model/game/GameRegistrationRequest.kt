@@ -10,7 +10,6 @@ import javax.validation.constraints.NotNull
  * @author Yauheni Efimenko
  */
 @FieldMatches(value = [
-    FieldMatch(first = "redGoals", second = "yellowGoals", match = false, message = "Game score cannot be equal"),
     FieldMatch(first = "loser1Id", second = "loser2Id", match = false, message = "The same player cannot play for the same team"),
     FieldMatch(first = "loser1Id", second = "winner1Id", match = false, message = "The same player can not play for different team"),
     FieldMatch(first = "loser1Id", second = "winner2Id", match = false, message = "The same player can not play for different team"),
@@ -23,6 +22,5 @@ data class GameRegistrationRequest(
         @field:NotNull var loser2Id: Long? = null,
         @field:NotNull var winner1Id: Long? = null,
         @field:NotNull var winner2Id: Long? = null,
-        @field:Min(value = 0) @field:Max(10) var losersGoals: Int? = null,
-        @field:Min(value = 0) @field:Max(10) var winnersGoals: Int? = null
+        @field:Min(value = 0) @field:Max(9) var losersGoals: Int? = null
 )
