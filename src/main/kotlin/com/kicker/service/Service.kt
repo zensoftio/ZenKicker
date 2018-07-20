@@ -50,8 +50,6 @@ interface GameService : BaseService<Game> {
 
 interface PlayerStatsService : BaseService<PlayerStats> {
 
-    fun getByGame(gameId: Long): List<PlayerStats>
-
     fun getByPlayer(playerId: Long): List<PlayerStats>
 
 }

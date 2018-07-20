@@ -12,14 +12,8 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true)
 class DefaultPlayerStatsService(
         private val repository: PlayerStatsRepository,
-        private val gameService: GameService,
         private val playerService: PlayerService
 ) : DefaultBaseService<PlayerStats, PlayerStatsRepository>(repository), PlayerStatsService {
-
-    override fun getByGame(gameId: Long): List<PlayerStats> {
-        val game = gameService.get(gameId)
-        return repository.findByGame(game)
-    }
 
     override fun getByPlayer(playerId: Long): List<PlayerStats> {
         val player = playerService.get(playerId)

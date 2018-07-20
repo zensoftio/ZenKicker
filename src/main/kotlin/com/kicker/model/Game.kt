@@ -21,6 +21,9 @@ class Game(
         val reportedBy: Player,
 
         @Column(name = "date", nullable = false, columnDefinition = "DATE")
-        val date: LocalDateTime = LocalDateTime.now()
+        val date: LocalDateTime = LocalDateTime.now(),
+
+        @OneToMany(mappedBy = "game")
+        val playerStatsList: List<PlayerStats> = listOf()
 
 ) : BaseModel()

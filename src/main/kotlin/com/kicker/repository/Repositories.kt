@@ -28,8 +28,6 @@ interface GameRepository : BaseRepository<Game>
 @Repository
 interface PlayerStatsRepository : BaseRepository<PlayerStats> {
 
-    fun findByGame(game: Game): List<PlayerStats>
-
     fun findByPlayer(player: Player): List<PlayerStats>
 
 }
