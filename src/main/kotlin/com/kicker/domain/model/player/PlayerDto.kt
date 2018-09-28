@@ -8,12 +8,14 @@ import com.kicker.model.Player
 data class PlayerDto(
         val id: Long,
         val username: String,
+        val rating: Int,
         val active: Boolean
 ) {
 
     constructor(player: Player) : this(
             player.id,
             player.username,
+            player.rating,
             player.active
     )
 

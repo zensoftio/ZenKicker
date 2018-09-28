@@ -1,6 +1,7 @@
 package com.kicker.controller.api
 
 import com.kicker.annotation.CurrentPlayer
+import com.kicker.domain.PageRequest
 import com.kicker.domain.PageResponse
 import com.kicker.domain.model.player.*
 import com.kicker.model.Player
@@ -25,7 +26,7 @@ class PlayerController(
     fun get(@PathVariable playerId: Long): PlayerDto = PlayerDto(service.get(playerId))
 
     @GetMapping
-    fun getAll(@Valid pageRequest: PlayerPageRequest): PageResponse<PlayerDto> =
+    fun getAll(@Valid pageRequest: PageRequest): PageResponse<PlayerDto> =
             PageResponse(service.getAll(pageRequest).map { PlayerDto(it) })
 
     @GetMapping("/active")
