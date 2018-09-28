@@ -1,52 +1,44 @@
-//package com.kicker.service
-//
-//import com.kicker.domain.model.game.GameRegistrationRequest
-//import com.kicker.exception.service.NotFoundPlayerException
-//import com.kicker.model.Game
-//import com.kicker.model.Player
-//import com.kicker.repository.GameRepository
-//import com.kicker.utils.RatingUtils
-//import org.springframework.data.domain.Page
-//import org.springframework.data.domain.Pageable
-//import org.springframework.stereotype.Service
-//import org.springframework.transaction.annotation.Transactional
-//import java.time.LocalDateTime
-//
-///**
-// * @author Yauheni Efimenko
-// */
-//@Service
-//@Transactional(readOnly = true)
-//class DefaultGameService(
-//        private val repository: GameRepository,
-//        private val playerService: PlayerService
-//) : DefaultBaseService<Game, GameRepository>(repository), GameService {
-//
-//    override fun getAllBelongGames(playerId: Long, pageable: Pageable): Page<Game> {
-//        val player = playerService.get(playerId)
-//        return repository.findAllBelongGames(player, pageable)
-//    }
-//
-//    @Transactional
-//    override fun gameRegistration(playerId: Long, request: GameRegistrationRequest): Game {
-//        val reporter = playerService.get(playerId)
-//
-//        val redPlayer1 = getPlayerByUserName(request.redPlayer1!!)
-//        val redPlayer2 = getPlayerByUserName(request.redPlayer2!!)
-//        val yellowPlayer1 = getPlayerByUserName(request.yellowPlayer1!!)
-//        val yellowPlayer2 = getPlayerByUserName(request.yellowPlayer2!!)
-//
-//        val game = Game(redPlayer1, redPlayer2, yellowPlayer1, yellowPlayer2, request.redGoals!!, request.yellowGoals!!,
-//                LocalDateTime.now(), reporter)
-//
+package com.kicker.service
+
+import com.kicker.domain.PageRequest
+import com.kicker.domain.model.game.GameRegistrationRequest
+import com.kicker.model.Game
+import com.kicker.repository.GameRepository
+import org.springframework.data.domain.Page
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
+
+/**
+ * @author Yauheni Efimenko
+ */
+@Service
+@Transactional(readOnly = true)
+class DefaultGameService(
+        private val repository: GameRepository,
+        private val playerService: PlayerService
+) : DefaultBaseService<Game, GameRepository>(repository), GameService {
+
+    override fun getAllBelongGames(playerId: Long, pageRequest: PageRequest): Page<Game> {
+        val player = playerService.get(playerId)
+        return repository.findAllBelongGames(player, pageRequest)
+    }
+
+    @Transactional
+    override fun gameRegistration(playerId: Long, request: GameRegistrationRequest): Game {
+        val reporter = playerService.get(playerId)
+
+        val winner1 = playerService.get(request.winner1Id!!)
+        val winner2 = playerService.get(request.winner2Id!!)
+        val loser1 = playerService.get(request.loser1Id!!)
+        val loser2 = playerService.get(request.loser2Id!!)
+
+        val game = Game(request.losersGoals!!, winner1, winner2, loser1, loser2, reporter)
+
 //        updatePlayersRating(game)
-//
-//        return repository.save(game)
-//    }
-//
-//    private fun getPlayerByUserName(username: String): Player = playerService.getByUsername(username)
-//            ?: throw NotFoundPlayerException("The player with username $username is not exist")
-//
+
+        return repository.save(game)
+    }
+
 //    private fun updatePlayersRating(game: Game) {
 //        val loserPlayer1 = if (game.redTeamGoals > game.yellowTeamGoals) game.yellowPlayer1 else game.redPlayer1
 //        val loserPlayer2 = if (loserPlayer1 == game.yellowPlayer1) game.yellowPlayer2 else game.redPlayer2
@@ -69,5 +61,5 @@
 //        playerService.updateRating(winnerPlayer1.id, (winnerPlayer1.currentRating + winnerDelta))
 //        playerService.updateRating(winnerPlayer2.id, (winnerPlayer2.currentRating + winnerDelta))
 //    }
-//
-//}
+
+}

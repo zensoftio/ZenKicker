@@ -1,12 +1,14 @@
 package com.kicker.service
 
+import com.kicker.domain.PageRequest
 import com.kicker.domain.model.player.CreatePlayerRequest
-import com.kicker.domain.model.player.UpdatePlayerUsernameRequest
 import com.kicker.domain.model.player.UpdatePlayerPasswordRequest
+import com.kicker.domain.model.player.UpdatePlayerUsernameRequest
 import com.kicker.exception.service.DuplicateUsernameException
 import com.kicker.exception.service.PasswordIncorrectException
 import com.kicker.model.Player
 import com.kicker.repository.PlayerRepository
+import org.springframework.data.domain.Page
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -25,7 +27,7 @@ class DefaultPlayerService(
 
     override fun getByUsername(username: String): Player? = repository.findByUsername(username)
 
-    override fun getAllActive(): List<Player> = repository.findAllByActiveTrueOrderByRatingDesc()
+    override fun getAllActive(pageRequest: PageRequest): Page<Player> = repository.findAllByActiveTrue(pageRequest)
 
     override fun loadUserByUsername(username: String): UserDetails = getByUsername(username)
             ?: throw UsernameNotFoundException("User with username $username not found")

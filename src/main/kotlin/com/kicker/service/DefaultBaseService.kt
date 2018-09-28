@@ -1,9 +1,9 @@
 package com.kicker.service
 
+import com.kicker.domain.PageRequest
 import com.kicker.model.base.BaseModel
 import com.kicker.repository.BaseRepository
 import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.transaction.annotation.Transactional
 
 /**
@@ -18,7 +18,7 @@ abstract class DefaultBaseService<T : BaseModel, R : BaseRepository<T>>(
 
     override fun getAll(): List<T> = repository.findAll()
 
-    override fun getAll(pageable: Pageable): Page<T> = repository.findAll(pageable)
+    override fun getAll(pageRequest: PageRequest): Page<T> = repository.findAll(pageRequest)
 
     @Transactional
     override fun save(entity: T): T = repository.save(entity)

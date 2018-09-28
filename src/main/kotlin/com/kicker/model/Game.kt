@@ -3,7 +3,6 @@ package com.kicker.model
 import com.kicker.model.base.BaseModel
 import java.time.LocalDateTime
 import javax.persistence.*
-import javax.validation.constraints.Pattern
 
 /**
  * @author Yauheni Efimenko
@@ -12,18 +11,36 @@ import javax.validation.constraints.Pattern
 @Table(name = "games")
 class Game(
 
-        @Pattern(regexp = "\\d:\\d")
-        @Column(name = "score", nullable = false)
-        val score: String,
+        @Column(name = "losers_goals", nullable = false)
+        val losersGoals: Int,
+
+        @ManyToOne
+        @JoinColumn(name = "winner1", nullable = false)
+        val winner1: Player,
+
+        @ManyToOne
+        @JoinColumn(name = "winner2", nullable = false)
+        val winner2: Player,
+
+        @ManyToOne
+        @JoinColumn(name = "loser1", nullable = false)
+        val loser1: Player,
+
+        @ManyToOne
+        @JoinColumn(name = "loser2", nullable = false)
+        val loser2: Player,
 
         @ManyToOne
         @JoinColumn(name = "reported_by", nullable = false)
         val reportedBy: Player,
 
         @Column(name = "date", nullable = false, columnDefinition = "DATE")
-        val date: LocalDateTime = LocalDateTime.now(),
+        val date: LocalDateTime = LocalDateTime.now()
 
-        @OneToMany(mappedBy = "game")
-        val playerStatsList: List<PlayerStats> = listOf()
+) : BaseModel() {
 
-) : BaseModel()
+    fun getWinners(): List<Player> = listOf(winner1, winner2)
+
+    fun getLosers(): List<Player> = listOf(loser1, loser2)
+
+}
