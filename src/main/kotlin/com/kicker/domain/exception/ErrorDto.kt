@@ -7,7 +7,6 @@ import org.springframework.validation.ObjectError
 /**
  * @author Yauheni Efimenko
  */
-//@Suppress("MemberVisibilityCanPrivate")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class ErrorDto(
         val code: String,

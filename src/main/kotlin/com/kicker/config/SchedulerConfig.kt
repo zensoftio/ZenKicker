@@ -6,7 +6,6 @@ import org.springframework.scheduling.annotation.SchedulingConfigurer
 import org.springframework.scheduling.config.ScheduledTaskRegistrar
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler
 
-
 /**
  * @author Yauheni Efimenko
  */

@@ -4,6 +4,7 @@ import com.kicker.service.PlayerService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
+import org.springframework.http.HttpMethod.*
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration
@@ -14,7 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
-
 
 /**
  * @author Yauheni Efimenko
@@ -45,7 +45,7 @@ class SecurityConfig : GlobalMethodSecurityConfiguration() {
                     .antMatchers("/js/**").permitAll()
                     .antMatchers("/styles/**").permitAll()
                     .antMatchers("/images/**").permitAll()
-                    .antMatchers(HttpMethod.POST, "/api/players").permitAll()
+                    .antMatchers(POST, "/api/players").permitAll()
 
                     .antMatchers("/**").authenticated()
 
@@ -54,18 +54,18 @@ class SecurityConfig : GlobalMethodSecurityConfiguration() {
                     .formLogin()
         }
 
-        @Bean
-        fun corsConfigurationSource(): CorsConfigurationSource {
-            val configuration = CorsConfiguration()
-            configuration.allowedOrigins = listOf("*")
-            configuration.allowedHeaders = listOf("*")
-            configuration.allowedMethods = listOf("*")
-
-            val source = UrlBasedCorsConfigurationSource()
-            source.registerCorsConfiguration("/**", configuration)
-
-            return source
-        }
+//        @Bean
+//        fun corsConfigurationSource(): CorsConfigurationSource {
+//            val configuration = CorsConfiguration()
+//            configuration.allowedOrigins = listOf("*")
+//            configuration.allowedHeaders = listOf("*")
+//            configuration.allowedMethods = listOf("*")
+//
+//            val source = UrlBasedCorsConfigurationSource()
+//            source.registerCorsConfiguration("/**", configuration)
+//
+//            return source
+//        }
 
     }
 

@@ -15,7 +15,7 @@ open class PageRequest(
         @field:Min(value = 1) @field:Max(100) private var limit: Int = 10,
         var sortDirection: Sort.Direction = Sort.Direction.ASC,
         var sortBy: String = "id",
-        val maySortBy: Map<String, String> = mapOf("id" to "id")
+        private val maySortBy: Map<String, String> = mapOf("id" to "id")
 ) : Pageable {
 
     override fun getPageNumber(): Int = (offset / limit + 1)
