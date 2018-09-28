@@ -4,25 +4,23 @@ import com.kicker.annotation.FieldMatch
 import com.kicker.annotation.FieldMatches
 import javax.validation.constraints.Max
 import javax.validation.constraints.Min
-import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
 
 /**
  * @author Yauheni Efimenko
  */
 @FieldMatches(value = [
-    FieldMatch(first = "redGoals", second = "yellowGoals", match = false, message = "Game score cannot be equal"),
-    FieldMatch(first = "redPlayer1", second = "redPlayer2", match = false, message = "The same player cannot play for the same team"),
-    FieldMatch(first = "redPlayer1", second = "yellowPlayer1", match = false, message = "The same player can not play for different team"),
-    FieldMatch(first = "redPlayer1", second = "yellowPlayer2", match = false, message = "The same player can not play for different team"),
-    FieldMatch(first = "redPlayer2", second = "yellowPlayer1", match = false, message = "The same player can not play for different team"),
-    FieldMatch(first = "redPlayer2", second = "yellowPlayer2", match = false, message = "The same player can not play for different team"),
-    FieldMatch(first = "yellowPlayer1", second = "yellowPlayer2", match = false, message = "The same player can not play for the same team")
+    FieldMatch(first = "loser1Id", second = "loser2Id", match = false, message = "The same player cannot play for the same team"),
+    FieldMatch(first = "loser1Id", second = "winner1Id", match = false, message = "The same player can not play for different team"),
+    FieldMatch(first = "loser1Id", second = "winner2Id", match = false, message = "The same player can not play for different team"),
+    FieldMatch(first = "loser2Id", second = "winner1Id", match = false, message = "The same player can not play for different team"),
+    FieldMatch(first = "loser2Id", second = "winner2Id", match = false, message = "The same player can not play for different team"),
+    FieldMatch(first = "winner1Id", second = "winner2Id", match = false, message = "The same player can not play for the same team")
 ])
 data class GameRegistrationRequest(
-        @field:NotBlank var redPlayer1: String? = null,
-        @field:NotBlank var redPlayer2: String? = null,
-        @field:NotBlank var yellowPlayer1: String? = null,
-        @field:NotBlank var yellowPlayer2: String? = null,
-        @field:Min(value = 0) @field:Max(10) var redGoals: Int? = null,
-        @field:Min(value = 0) @field:Max(10) var yellowGoals: Int? = null
+        @field:NotNull var loser1Id: Long? = null,
+        @field:NotNull var loser2Id: Long? = null,
+        @field:NotNull var winner1Id: Long? = null,
+        @field:NotNull var winner2Id: Long? = null,
+        @field:Min(value = 0) @field:Max(9) var losersGoals: Int? = null
 )

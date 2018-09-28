@@ -1,8 +1,8 @@
 package com.kicker.service
 
 import com.kicker.domain.model.player.CreatePlayerRequest
-import com.kicker.domain.model.player.UpdateDataPlayerRequest
-import com.kicker.domain.model.player.UpdatePasswordPlayerRequest
+import com.kicker.domain.model.player.UpdatePlayerUsernameRequest
+import com.kicker.domain.model.player.UpdatePlayerPasswordRequest
 import com.kicker.exception.service.DuplicateUsernameException
 import com.kicker.exception.service.PasswordIncorrectException
 import com.kicker.model.Player
@@ -25,6 +25,8 @@ class DefaultPlayerService(
 
     override fun getByUsername(username: String): Player? = repository.findByUsername(username)
 
+    override fun getAllActive(): List<Player> = repository.findAllByActiveTrueOrderByRatingDesc()
+
     override fun loadUserByUsername(username: String): UserDetails = getByUsername(username)
             ?: throw UsernameNotFoundException("User with username $username not found")
 
@@ -36,26 +38,23 @@ class DefaultPlayerService(
 
         request.password = passwordEncoder.encode(request.password)
 
-        return repository.save(Player.of(request))
+        return super.save(Player(request.username!!, request.password!!))
     }
 
     @Transactional
-    override fun updateData(playerId: Long, request: UpdateDataPlayerRequest): Player {
-        val player = get(playerId)
-
+    override fun updateUsername(playerId: Long, request: UpdatePlayerUsernameRequest): Player {
         if (isExist(request.username!!)) {
             throw DuplicateUsernameException("The player with such username already exist")
         }
 
+        val player = get(playerId)
         player.username = request.username!!
-        player.firstName = request.firstName!!
-        player.lastName = request.lastName!!
 
-        return repository.save(player)
+        return super.save(player)
     }
 
     @Transactional
-    override fun updatePassword(playerId: Long, request: UpdatePasswordPlayerRequest): Player {
+    override fun updatePassword(playerId: Long, request: UpdatePlayerPasswordRequest): Player {
         val player = get(playerId)
 
         if (!passwordEncoder.matches(request.currentPassword, player.password)) {
@@ -64,17 +63,24 @@ class DefaultPlayerService(
 
         player.password = passwordEncoder.encode(request.newPassword)
 
-        return repository.save(player)
+        return super.save(player)
     }
 
     @Transactional
-    override fun updateRating(playerId: Long, newRating: Double): Player {
+    override fun updateRating(playerId: Long, newRating: Int): Player {
         val player = get(playerId)
-        player.currentRating = newRating
+        player.rating = newRating
 
-        return repository.save(player)
+        return super.save(player)
     }
 
+    @Transactional
+    override fun updateActivity(playerId: Long, active: Boolean): Player {
+        val player = get(playerId)
+        player.active = active
+
+        return super.save(player)
+    }
 
     private fun isExist(username: String): Boolean {
         return getByUsername(username)?.let { true } ?: false

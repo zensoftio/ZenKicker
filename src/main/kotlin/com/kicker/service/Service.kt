@@ -2,12 +2,12 @@ package com.kicker.service
 
 import com.kicker.domain.model.game.GameRegistrationRequest
 import com.kicker.domain.model.player.CreatePlayerRequest
-import com.kicker.domain.model.player.UpdateDataPlayerRequest
-import com.kicker.domain.model.player.UpdatePasswordPlayerRequest
+import com.kicker.domain.model.player.UpdatePlayerUsernameRequest
+import com.kicker.domain.model.player.UpdatePlayerPasswordRequest
 import com.kicker.model.Award
-import com.kicker.model.DashboardRating
 import com.kicker.model.Game
 import com.kicker.model.Player
+import com.kicker.model.PlayerStats
 import com.kicker.model.base.BaseModel
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -24,40 +24,46 @@ interface BaseService<T : BaseModel> {
 
     fun getAll(pageable: Pageable): Page<T>
 
+    fun save(entity: T): T
+
 }
 
 interface PlayerService : BaseService<Player>, UserDetailsService {
 
     fun getByUsername(username: String): Player?
 
+    fun getAllActive(): List<Player>
+
     fun create(request: CreatePlayerRequest): Player
 
-    fun updateData(playerId: Long, request: UpdateDataPlayerRequest): Player
+    fun updateUsername(playerId: Long, request: UpdatePlayerUsernameRequest): Player
 
-    fun updatePassword(playerId: Long, request: UpdatePasswordPlayerRequest): Player
+    fun updatePassword(playerId: Long, request: UpdatePlayerPasswordRequest): Player
 
-    fun updateRating(playerId: Long, newRating: Double): Player
+    fun updateRating(playerId: Long, newRating: Int): Player
+
+    fun updateActivity(playerId: Long, active: Boolean): Player
 
 }
 
 interface GameService : BaseService<Game> {
 
-    fun getAllBelongGames(player: Player, pageable: Pageable): Page<Game>
+    fun gameRegistration(playerId: Long, request: GameRegistrationRequest): Game
 
-    fun gameRegistration(reporter: Player, request: GameRegistrationRequest): Game
+}
+
+interface PlayerStatsService : BaseService<PlayerStats> {
+
+    fun getByPlayer(playerId: Long): List<PlayerStats>
 
 }
 
 interface AwardService : BaseService<Award> {
 
-    fun getAllByPlayer(player: Player): Page<Award>
+    fun getAllByPlayer(playerId: Long): List<Award>
 
-}
+    fun doAwardMaxRatingForWeek()
 
-interface DashboardRatingService : BaseService<DashboardRating> {
-
-    fun getAllByPlayer(player: Player): List<DashboardRating>
-
-    fun recalculate(player: Player)
+    fun doAwardMaxDeltaRatingForWeek()
 
 }

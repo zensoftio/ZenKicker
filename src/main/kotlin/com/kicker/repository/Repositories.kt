@@ -1,14 +1,11 @@
 package com.kicker.repository
 
 import com.kicker.model.Award
-import com.kicker.model.DashboardRating
 import com.kicker.model.Game
 import com.kicker.model.Player
+import com.kicker.model.PlayerStats
 import com.kicker.model.base.BaseModel
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.NoRepositoryBean
 import org.springframework.stereotype.Repository
 
@@ -23,14 +20,17 @@ interface PlayerRepository : BaseRepository<Player> {
 
     fun findByUsername(username: String): Player?
 
+    fun findAllByActiveTrueOrderByRatingDesc(): List<Player>
+
 }
 
 @Repository
-interface GameRepository : BaseRepository<Game> {
+interface GameRepository : BaseRepository<Game>
 
-    @Query(value = "SELECT g FROM Game g WHERE g.redPlayer1 = ?1 OR g.redPlayer2 = ?1 OR g.yellowPlayer1 = ?1 " +
-            "OR g.yellowPlayer2 = ?1")
-    fun findAllBelongGames(currentPlayer: Player, pageable: Pageable): Page<Game>
+@Repository
+interface PlayerStatsRepository : BaseRepository<PlayerStats> {
+
+    fun findByPlayer(player: Player): List<PlayerStats>
 
 }
 
@@ -38,12 +38,5 @@ interface GameRepository : BaseRepository<Game> {
 interface AwardRepository : BaseRepository<Award> {
 
     fun findByPlayer(player: Player): List<Award>
-
-}
-
-@Repository
-interface DashboardRatingRepository : BaseRepository<DashboardRating> {
-
-    fun findByPlayerOrderByWeeksAgoDesc(player: Player): MutableList<DashboardRating>
 
 }

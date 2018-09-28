@@ -3,12 +3,10 @@ package com.kicker.controller.api
 import com.kicker.annotation.CurrentPlayer
 import com.kicker.domain.PageRequest
 import com.kicker.domain.PageResponse
-import com.kicker.domain.model.player.CreatePlayerRequest
-import com.kicker.domain.model.player.PlayerDto
-import com.kicker.domain.model.player.UpdateDataPlayerRequest
-import com.kicker.domain.model.player.UpdatePasswordPlayerRequest
+import com.kicker.domain.model.player.*
 import com.kicker.model.Player
 import com.kicker.service.PlayerService
+import org.springframework.data.domain.PageImpl
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
@@ -31,19 +29,21 @@ class PlayerController(
     fun getAll(@Valid pageRequest: PageRequest): PageResponse<PlayerDto> =
             PageResponse(service.getAll(pageRequest).map { PlayerDto(it) })
 
+    @GetMapping("/active")
+    fun getAllActive(): PageResponse<PlayerDto> =
+            PageResponse(PageImpl(service.getAllActive()).map { PlayerDto(it) })
+
     @PostMapping
-    fun createPlayer(@Valid @RequestBody request: CreatePlayerRequest): PlayerDto =
-            PlayerDto(service.create(request))
+    fun create(@Valid @RequestBody request: CreatePlayerRequest): PlayerDto = PlayerDto(service.create(request))
 
-    @PutMapping
-    fun updateDataPlayer(@CurrentPlayer currentPlayer: Player,
-                         @Valid @RequestBody request: UpdateDataPlayerRequest): PlayerDto =
-            PlayerDto(service.updateData(currentPlayer.id, request))
+    @PutMapping("/{playerId}/username")
+    fun updateUsername(@PathVariable playerId: Long, @Valid @RequestBody request: UpdatePlayerUsernameRequest): PlayerDto {
+        return PlayerDto(service.updateUsername(playerId, request))
+    }
 
-
-    @PutMapping("/password-reset")
-    fun updatePasswordPlayer(@CurrentPlayer currentPlayer: Player,
-                             @Valid @RequestBody request: UpdatePasswordPlayerRequest): PlayerDto =
-            PlayerDto(service.updatePassword(currentPlayer.id, request))
+    @PutMapping("/{playerId}/password-reset")
+    fun updatePassword(@PathVariable playerId: Long, @Valid @RequestBody request: UpdatePlayerPasswordRequest): PlayerDto {
+        return PlayerDto(service.updatePassword(playerId, request))
+    }
 
 }

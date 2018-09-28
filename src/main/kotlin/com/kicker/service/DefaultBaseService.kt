@@ -20,4 +20,7 @@ abstract class DefaultBaseService<T : BaseModel, R : BaseRepository<T>>(
 
     override fun getAll(pageable: Pageable): Page<T> = repository.findAll(pageable)
 
+    @Transactional
+    override fun save(entity: T): T = repository.save(entity)
+
 }

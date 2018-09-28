@@ -1,10 +1,11 @@
 package com.kicker.model
 
-import com.kicker.domain.model.player.CreatePlayerRequest
 import com.kicker.model.base.BaseModel
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
-import javax.persistence.*
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.Table
 
 /**
  * @author Yauheni Efimenko
@@ -19,28 +20,16 @@ class Player(
         @Column(name = "password", nullable = false)
         private var password: String,
 
-        @Column(name = "first_name", nullable = false)
-        var firstName: String,
-
-        @Column(name = "last_name", nullable = false)
-        var lastName: String,
+        @Column(name = "rating", nullable = false)
+        var rating: Int = PLAYER_RATING,
 
         @Column(name = "active", nullable = false)
-        var active: Boolean = false,
-
-        @Column(name = "current_rating", nullable = false)
-        var currentRating: Double = INITIAL_RATING
+        var active: Boolean = false
 
 ) : BaseModel(), UserDetails {
 
     companion object {
-        const val INITIAL_RATING: Double = 10000.0
-
-        fun of(createPlayerRequest: CreatePlayerRequest): Player = Player(
-                createPlayerRequest.username!!,
-                createPlayerRequest.password!!,
-                createPlayerRequest.firstName!!,
-                createPlayerRequest.lastName!!)
+        const val PLAYER_RATING: Int = 10000
     }
 
 
