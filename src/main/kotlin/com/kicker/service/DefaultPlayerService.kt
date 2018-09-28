@@ -25,6 +25,8 @@ class DefaultPlayerService(
 
     override fun getByUsername(username: String): Player? = repository.findByUsername(username)
 
+    override fun getAllActive(): List<Player> = repository.findAllByActiveTrueOrderByRatingDesc()
+
     override fun loadUserByUsername(username: String): UserDetails = getByUsername(username)
             ?: throw UsernameNotFoundException("User with username $username not found")
 
@@ -40,27 +42,34 @@ class DefaultPlayerService(
     }
 
     @Transactional
-    override fun updateData(playerId: Long, usernameRequest: UpdatePlayerUsernameRequest): Player {
-        val player = get(playerId)
-
-        if (isExist(usernameRequest.username!!)) {
+    override fun updateUsername(playerId: Long, request: UpdatePlayerUsernameRequest): Player {
+        if (isExist(request.username!!)) {
             throw DuplicateUsernameException("The player with such username already exist")
         }
 
-        player.username = usernameRequest.username!!
+        val player = get(playerId)
+        player.username = request.username!!
 
         return super.save(player)
     }
 
     @Transactional
-    override fun updatePassword(playerId: Long, passwordRequest: UpdatePlayerPasswordRequest): Player {
+    override fun updatePassword(playerId: Long, request: UpdatePlayerPasswordRequest): Player {
         val player = get(playerId)
 
-        if (!passwordEncoder.matches(passwordRequest.currentPassword, player.password)) {
+        if (!passwordEncoder.matches(request.currentPassword, player.password)) {
             throw PasswordIncorrectException("Password is incorrect")
         }
 
-        player.password = passwordEncoder.encode(passwordRequest.newPassword)
+        player.password = passwordEncoder.encode(request.newPassword)
+
+        return super.save(player)
+    }
+
+    @Transactional
+    override fun updateRating(playerId: Long, newRating: Int): Player {
+        val player = get(playerId)
+        player.rating = newRating
 
         return super.save(player)
     }

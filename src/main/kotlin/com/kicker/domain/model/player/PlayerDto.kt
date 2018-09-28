@@ -10,9 +10,11 @@ data class PlayerDto(
         val username: String,
         val active: Boolean
 ) {
+
     constructor(player: Player) : this(
             player.id,
             player.username,
             player.active
     )
+
 }

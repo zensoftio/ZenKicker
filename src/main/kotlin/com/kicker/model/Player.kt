@@ -20,10 +20,18 @@ class Player(
         @Column(name = "password", nullable = false)
         private var password: String,
 
+        @Column(name = "rating", nullable = false)
+        var rating: Int = PLAYER_RATING,
+
         @Column(name = "active", nullable = false)
         var active: Boolean = false
 
 ) : BaseModel(), UserDetails {
+
+    companion object {
+        const val PLAYER_RATING: Int = 10000
+    }
+
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> = mutableListOf()
 

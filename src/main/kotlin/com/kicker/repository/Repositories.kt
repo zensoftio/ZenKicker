@@ -20,6 +20,8 @@ interface PlayerRepository : BaseRepository<Player> {
 
     fun findByUsername(username: String): Player?
 
+    fun findAllByActiveTrueOrderByRatingDesc(): List<Player>
+
 }
 
 @Repository

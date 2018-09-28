@@ -32,11 +32,15 @@ interface PlayerService : BaseService<Player>, UserDetailsService {
 
     fun getByUsername(username: String): Player?
 
+    fun getAllActive(): List<Player>
+
     fun create(request: CreatePlayerRequest): Player
 
-    fun updateData(playerId: Long, usernameRequest: UpdatePlayerUsernameRequest): Player
+    fun updateUsername(playerId: Long, request: UpdatePlayerUsernameRequest): Player
 
-    fun updatePassword(playerId: Long, passwordRequest: UpdatePlayerPasswordRequest): Player
+    fun updatePassword(playerId: Long, request: UpdatePlayerPasswordRequest): Player
+
+    fun updateRating(playerId: Long, newRating: Int): Player
 
     fun updateActivity(playerId: Long, active: Boolean): Player
 
