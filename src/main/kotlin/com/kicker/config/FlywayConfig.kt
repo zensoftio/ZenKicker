@@ -11,8 +11,8 @@ import org.springframework.context.annotation.Profile
 @Configuration
 class FlywayConfig {
 
-    @Profile("local")
-    @Bean
+//    @Profile("local")
+//    @Bean
     fun flywayMigrationStrategy(): FlywayMigrationStrategy {
         return FlywayMigrationStrategy { flyway ->
             flyway.clean()

@@ -4,7 +4,6 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import styled from 'styled-components';
 import {getCurrent} from "./actions";
-import LoginScene from './scenes/LoginScene';
 import {MainMenu} from "./components/main-menu";
 import RatingScene from "./scenes/RatingScene";
 import GroupStageScene from "./scenes/GroupStageScene";
@@ -27,6 +26,7 @@ const Content = styled.div`
 class App extends Component {
 
 	componentDidMount() {
+	  this.props.actions.getCurrent();
 	}
 
 	render() {
@@ -39,7 +39,6 @@ class App extends Component {
 						<Route exact path="/group-stage" component={GroupStageScene}/>
 						<Route exact path="/playoffs" component={PlayoffsScene}/>
 						<Route exact path="/player/:id" component={ProfileScene}/>
-						<Route exact path="/login" component={LoginScene}/>
 						<Route path="/not-found" component={NotFound}/>
 						<Redirect from="/" exact to="/rating"/>
 						<Redirect from="*" exact to="/not-found"/>
