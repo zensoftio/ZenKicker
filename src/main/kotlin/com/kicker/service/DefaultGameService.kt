@@ -27,7 +27,11 @@ class DefaultGameService(
         return repository.findAllBelongGames(player, pageRequest)
     }
 
-    override fun countGamesLastWeekByPlayer(playerId: Long): Int = repository.countGamesLastWeekByPlayer(playerId)
+    override fun countGamesLastWeekByPlayer(playerId: Long): Int {
+        playerService.get(playerId) // validate to exist
+
+        return repository.countGamesLastWeekByPlayer(playerId)
+    }
 
     @Transactional
     override fun gameRegistration(playerId: Long, request: GameRegistrationRequest): Game {

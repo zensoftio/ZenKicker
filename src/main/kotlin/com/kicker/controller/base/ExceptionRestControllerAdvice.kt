@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
+import javax.validation.ConstraintViolationException
 
 /**
  * @author Yauheni Efimenko
@@ -27,6 +28,11 @@ class ExceptionRestControllerAdvice {
     fun bindExceptionHandler(exception: BindException): ExceptionResponse =
             ExceptionResponse(BAD_REQUEST.value(), BAD_REQUEST.reasonPhrase,
                     exception.bindingResult.allErrors.map { ErrorDto(it) })
+
+    @ResponseStatus(code = BAD_REQUEST)
+    @ExceptionHandler(ConstraintViolationException::class)
+    fun constraintViolationExceptionHandler(exception: ConstraintViolationException): ExceptionResponse =
+            ExceptionResponse(BAD_REQUEST.value(), exception.message!!)
 
     @ResponseStatus(code = BAD_REQUEST)
     @ExceptionHandler(ServiceException::class)

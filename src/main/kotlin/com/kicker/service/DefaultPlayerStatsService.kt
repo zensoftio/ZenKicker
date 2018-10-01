@@ -22,7 +22,10 @@ class DefaultPlayerStatsService(
         return repository.findByPlayer(player, pageRequest)
     }
 
-    override fun getDeltaByPlayerAndWeek(playerId: Long, week: Int): Double =
-            repository.calculateDeltaByPlayerAndWeek(playerId, week)
+    override fun getDeltaByPlayerAndWeek(playerId: Long, week: Int): Double {
+        playerService.get(playerId) // validate to exist
+
+        return repository.calculateDeltaByPlayerAndWeek(playerId, week)
+    }
 
 }
