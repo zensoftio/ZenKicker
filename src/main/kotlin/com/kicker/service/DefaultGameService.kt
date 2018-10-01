@@ -28,7 +28,7 @@ class DefaultGameService(
     }
 
     override fun countGamesLastWeekByPlayer(playerId: Long): Int {
-        playerService.get(playerId) // validate to exist
+        playerService.get(playerId) // validate to exist or exception
 
         return repository.countGamesLastWeekByPlayer(playerId)
     }
