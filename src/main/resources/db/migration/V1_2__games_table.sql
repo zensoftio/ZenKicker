@@ -7,5 +7,5 @@ CREATE TABLE games (
   loser1       BIGINT REFERENCES players NOT NULL,
   loser2       BIGINT REFERENCES players NOT NULL,
   reported_by  BIGINT REFERENCES players NOT NULL,
-  date         DATE                      NOT NULL
+  date         TIMESTAMP                 NOT NULL
 );

@@ -15,7 +15,7 @@ data class GameDto(
         val loser1Id: Long,
         val loser2Id: Long,
         val reportedById: Long,
-        @field:JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+        @field:JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
         val date: LocalDateTime
 ) {
 

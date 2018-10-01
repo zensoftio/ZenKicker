@@ -34,7 +34,7 @@ class Game(
         @JoinColumn(name = "reported_by", nullable = false)
         val reportedBy: Player,
 
-        @Column(name = "date", nullable = false, columnDefinition = "DATE")
+        @Column(name = "date", nullable = false, columnDefinition = "TIMESTAMP")
         val date: LocalDateTime = LocalDateTime.now()
 
 ) : BaseModel() {
