@@ -42,8 +42,8 @@ class DefaultGameService(
 
     private fun updatePlayersRating(game: Game) {
         with(game) {
-            val losersTotalRating: Double = loser1.rating + loser2.rating
-            val winnersTotalRating: Double = winner1.rating + winner2.rating
+            val losersTotalRating: Double = getLosers().sumByDouble { it.rating }
+            val winnersTotalRating: Double = getWinners().sumByDouble { it.rating }
 
             val skillCorrection: Double = RatingUtils.getSkillCorrection(losersTotalRating, winnersTotalRating)
             val losingPercents: Double = RatingUtils.getLosingPercents(losersGoals, skillCorrection)
