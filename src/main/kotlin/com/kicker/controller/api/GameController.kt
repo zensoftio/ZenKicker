@@ -25,9 +25,14 @@ class GameController(
         return PageResponse(service.getAll(pageRequest).map { GameDto(it) })
     }
 
-    @PostMapping("/{playerId}")
-    fun gameRegistration(@PathVariable playerId: Long, @Valid @RequestBody request: GameRegistrationRequest): GameDto {
-        return GameDto(service.gameRegistration(playerId, request))
+    @GetMapping("/player/{playerId}")
+    fun getAllBelongGames(@PathVariable playerId: Long, pageRequest: GamePageRequest): PageResponse<GameDto> {
+        return PageResponse(service.getAllBelongGames(playerId, pageRequest).map { GameDto(it) })
+    }
+
+    @PostMapping("/registration")
+    fun gameRegistration(@Valid @RequestBody request: GameRegistrationRequest): GameDto {
+        return GameDto(service.gameRegistration(request.reportedBy!!, request))
     }
 
 }

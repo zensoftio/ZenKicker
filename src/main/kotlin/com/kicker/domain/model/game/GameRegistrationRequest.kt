@@ -22,5 +22,6 @@ data class GameRegistrationRequest(
         @field:NotNull var winner2Id: Long? = null,
         @field:NotNull var loser1Id: Long? = null,
         @field:NotNull var loser2Id: Long? = null,
+        @field:NotNull var reportedBy: Long? = null,
         @field:Min(value = 0) @field:Max(9) var losersGoals: Int? = null
 )

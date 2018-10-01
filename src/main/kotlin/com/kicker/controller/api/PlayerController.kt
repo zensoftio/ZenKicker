@@ -25,7 +25,7 @@ class PlayerController(
     fun get(@PathVariable playerId: Long): PlayerDto = PlayerDto(service.get(playerId))
 
     @GetMapping
-    fun getAll(@Valid pageRequest: PageRequest): PageResponse<PlayerDto> =
+    fun getAll(pageRequest: PageRequest): PageResponse<PlayerDto> =
             PageResponse(service.getAll(pageRequest).map { PlayerDto(it) })
 
     @GetMapping("/active")
