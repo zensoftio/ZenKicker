@@ -1,19 +1,21 @@
 package com.kicker.domain.model.player_stats
 
-import com.kicker.domain.model.player.PlayerDto
+import com.kicker.domain.model.game.GameDto
 import com.kicker.model.PlayerStats
 
 /**
  * @author Yauheni Efimenko
  */
 data class PlayerStatsDto(
-        val playerDto: PlayerDto,
+        val gameDto: GameDto,
         val won: Boolean,
-        val delta: Double
+        val delta: Int
 ) {
+
     constructor(playerStats: PlayerStats) : this(
-            PlayerDto(playerStats.player),
+            GameDto(playerStats.game),
             playerStats.won,
-            playerStats.delta
+            playerStats.delta.toInt()
     )
+
 }

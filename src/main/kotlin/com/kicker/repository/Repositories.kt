@@ -38,7 +38,7 @@ interface GameRepository : BaseRepository<Game> {
 @Repository
 interface PlayerStatsRepository : BaseRepository<PlayerStats> {
 
-    fun findByPlayer(player: Player): List<PlayerStats>
+    fun findByPlayer(player: Player, pageable: Pageable): Page<PlayerStats>
 
 }
 
