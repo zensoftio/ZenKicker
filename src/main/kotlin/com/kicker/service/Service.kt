@@ -58,6 +58,8 @@ interface PlayerStatsService : BaseService<PlayerStats> {
 
     fun getByPlayer(playerId: Long, pageRequest: PageRequest): Page<PlayerStats>
 
+    fun getDeltaByPlayerAndWeek(playerId: Long, week: Int): Double
+
 }
 
 interface AwardService : BaseService<Award> {

@@ -24,4 +24,9 @@ class PlayerStatsController(
         return PageResponse(service.getByPlayer(playerId, pageRequest).map { PlayerStatsDto(it) })
     }
 
+    @GetMapping("/delta/player/{playerId}/week/{week}")
+    fun getDeltaByPlayerAndWeek(@PathVariable playerId: Long, @PathVariable week: Int): Int {
+        return service.getDeltaByPlayerAndWeek(playerId, week).toInt()
+    }
+
 }
