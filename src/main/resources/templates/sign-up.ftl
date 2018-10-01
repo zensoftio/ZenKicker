@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <link rel="shortcut icon" href="favicon.ico">
   <title>Login</title>
-  <link href="login.css" rel="stylesheet">
+  <link href="css/login.css" rel="stylesheet">
 </head>
 <body>
     <section class="wrapper">
@@ -33,7 +33,7 @@
     </section>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-<script src="/js/login.js"></script>
+<script src="js/login.js"></script>
 
 </body>
 </html>
