@@ -27,10 +27,10 @@ class DefaultGameService(
         return repository.findAllBelongGames(player, pageRequest)
     }
 
-    override fun countGamesLastWeekByPlayer(playerId: Long): Int {
+    override fun countGamesByPlayerAndWeek(playerId: Long, weekAgo: Int): Int {
         playerService.get(playerId) // validate to exist or exception
 
-        return repository.countGamesLastWeekByPlayer(playerId)
+        return repository.countGamesByPlayerAndWeek(playerId, weekAgo)
     }
 
     @Transactional

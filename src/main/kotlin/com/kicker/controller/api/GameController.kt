@@ -5,14 +5,17 @@ import com.kicker.domain.model.game.GameDto
 import com.kicker.domain.model.game.GamePageRequest
 import com.kicker.domain.model.game.GameRegistrationRequest
 import com.kicker.service.GameService
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
+import javax.validation.constraints.Min
 
 /**
  * @author Yauheni Efimenko
  */
 @RestController
 @RequestMapping("/api/games")
+@Validated
 class GameController(
         private val service: GameService
 ) {
@@ -30,8 +33,9 @@ class GameController(
         return PageResponse(service.getAllBelongGames(playerId, pageRequest).map { GameDto(it) })
     }
 
-    @GetMapping("/count/player/{playerId}")
-    fun getCountGamesLastWeekByPlayer(@PathVariable playerId: Long): Int = service.countGamesLastWeekByPlayer(playerId)
+    @GetMapping("/count/player/{playerId}/weekAgo/{weekAgo}")
+    fun getCountGamesLastWeekByPlayer(@PathVariable playerId: Long, @PathVariable @Min(0) weekAgo: Int): Int =
+            service.countGamesByPlayerAndWeek(playerId, weekAgo)
 
     @PostMapping("/registration")
     fun gameRegistration(@Valid @RequestBody request: GameRegistrationRequest): GameDto {

@@ -52,10 +52,11 @@ interface GameRepository : BaseRepository<Game> {
                 OR g.winner2 = :playerId
                 OR g.loser1 = :playerId
                 OR g.loser2 = :playerId)
-                AND (EXTRACT(WEEK FROM now()) - EXTRACT(WEEK FROM g.date)) = 1
+                AND (EXTRACT(WEEK FROM now()) - EXTRACT(WEEK FROM g.date)) = :weekAgo
             """)
-    fun countGamesLastWeekByPlayer(
-            @Param("playerId") playerId: Long
+    fun countGamesByPlayerAndWeek(
+            @Param("playerId") playerId: Long,
+            @Param("weekAgo") weekAgo: Int
     ): Int
 
 }
@@ -74,11 +75,11 @@ interface PlayerStatsRepository : BaseRepository<PlayerStats> {
                 FROM players_stats s INNER JOIN games g
                 ON s.game_id = g.id
                 AND s.player_id = :playerId
-                AND (EXTRACT(WEEK FROM now()) - EXTRACT(WEEK FROM g.date)) = :week
+                AND (EXTRACT(WEEK FROM now()) - EXTRACT(WEEK FROM g.date)) = :weekAgo
             """)
     fun calculateDeltaByPlayerAndWeek(
             @Param("playerId") playerId: Long,
-            @Param("week") week: Int
+            @Param("weekAgo") weekAgo: Int
     ): Double
 
 }
