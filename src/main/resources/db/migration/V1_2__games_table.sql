@@ -9,3 +9,8 @@ CREATE TABLE games (
   reported_by  BIGINT REFERENCES players NOT NULL,
   date         TIMESTAMP                 NOT NULL
 );
+
+CREATE INDEX index_winner1 ON games (winner1);
+CREATE INDEX index_winner2 ON games (winner2);
+CREATE INDEX index_loser1 ON games (loser1);
+CREATE INDEX index_loser2 ON games (loser2);
