@@ -52,6 +52,8 @@ interface GameService : BaseService<Game> {
 
     fun getAllBelongGames(playerId: Long, pageRequest: PageRequest): Page<Game>
 
+    fun countGamesLastWeekByPlayer(playerId: Long): Int
+
 }
 
 interface PlayerStatsService : BaseService<PlayerStats> {

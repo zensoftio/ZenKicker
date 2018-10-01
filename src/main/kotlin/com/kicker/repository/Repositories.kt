@@ -41,6 +41,23 @@ interface GameRepository : BaseRepository<Game> {
             """)
     fun findAllBelongGames(player: Player, pageable: Pageable): Page<Game>
 
+    /*
+    * Getting count of games for last week by player
+    * */
+    @Query(nativeQuery = true,
+            value = """
+                SELECT COUNT(g)
+                FROM games g
+                WHERE (g.winner1 = :playerId
+                OR g.winner2 = :playerId
+                OR g.loser1 = :playerId
+                OR g.loser2 = :playerId)
+                AND (EXTRACT(WEEK FROM now()) - EXTRACT(WEEK FROM g.date)) = 1
+            """)
+    fun countGamesLastWeekByPlayer(
+            @Param("playerId") playerId: Long
+    ): Int
+
 }
 
 @Repository
@@ -48,6 +65,9 @@ interface PlayerStatsRepository : BaseRepository<PlayerStats> {
 
     fun findByPlayer(player: Player, pageable: Pageable): Page<PlayerStats>
 
+    /*
+    * Getting delta of rating for a specific week by player
+    * */
     @Query(nativeQuery = true,
             value = """
                 SELECT COALESCE(SUM(s.delta), 0)

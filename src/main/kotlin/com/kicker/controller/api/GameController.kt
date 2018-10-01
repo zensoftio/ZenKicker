@@ -30,6 +30,9 @@ class GameController(
         return PageResponse(service.getAllBelongGames(playerId, pageRequest).map { GameDto(it) })
     }
 
+    @GetMapping("/count/player/{playerId}")
+    fun getCountGamesLastWeekByPlayer(@PathVariable playerId: Long): Int = service.countGamesLastWeekByPlayer(playerId)
+
     @PostMapping("/registration")
     fun gameRegistration(@Valid @RequestBody request: GameRegistrationRequest): GameDto {
         return GameDto(service.gameRegistration(request.reportedBy!!, request))

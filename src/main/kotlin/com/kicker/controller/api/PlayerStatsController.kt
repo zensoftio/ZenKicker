@@ -25,8 +25,7 @@ class PlayerStatsController(
     }
 
     @GetMapping("/delta/player/{playerId}/week/{week}")
-    fun getDeltaByPlayerAndWeek(@PathVariable playerId: Long, @PathVariable week: Int): Int {
-        return service.getDeltaByPlayerAndWeek(playerId, week).toInt()
-    }
+    fun getDeltaByPlayerAndWeek(@PathVariable playerId: Long, @PathVariable week: Int): Int =
+            service.getDeltaByPlayerAndWeek(playerId, week).toInt()
 
 }
