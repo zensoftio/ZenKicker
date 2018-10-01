@@ -52,11 +52,15 @@ interface GameService : BaseService<Game> {
 
     fun getAllBelongGames(playerId: Long, pageRequest: PageRequest): Page<Game>
 
+    fun countGamesByPlayerAndWeek(playerId: Long, weekAgo: Int): Int
+
 }
 
 interface PlayerStatsService : BaseService<PlayerStats> {
 
     fun getByPlayer(playerId: Long, pageRequest: PageRequest): Page<PlayerStats>
+
+    fun getDeltaByPlayerAndWeek(playerId: Long, weekAgo: Int): Double
 
 }
 

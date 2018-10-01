@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.NoRepositoryBean
+import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 
 /**
@@ -30,8 +31,33 @@ interface PlayerRepository : BaseRepository<Player> {
 @Repository
 interface GameRepository : BaseRepository<Game> {
 
-    @Query(value = "SELECT g FROM Game g WHERE g.winner1 = ?1 OR g.winner2 = ?1 OR g.loser1 = ?1 OR g.loser2 = ?1")
+    @Query(value = """
+                SELECT g
+                FROM Game g
+                WHERE g.winner1 = ?1
+                OR g.winner2 = ?1
+                OR g.loser1 = ?1
+                OR g.loser2 = ?1
+            """)
     fun findAllBelongGames(player: Player, pageable: Pageable): Page<Game>
+
+    /*
+    * Getting count of games for last week by player
+    * */
+    @Query(nativeQuery = true,
+            value = """
+                SELECT COUNT(g)
+                FROM games g
+                WHERE (g.winner1 = :playerId
+                OR g.winner2 = :playerId
+                OR g.loser1 = :playerId
+                OR g.loser2 = :playerId)
+                AND (EXTRACT(WEEK FROM now()) - EXTRACT(WEEK FROM g.date)) = :weekAgo
+            """)
+    fun countGamesByPlayerAndWeek(
+            @Param("playerId") playerId: Long,
+            @Param("weekAgo") weekAgo: Int
+    ): Int
 
 }
 
@@ -39,6 +65,22 @@ interface GameRepository : BaseRepository<Game> {
 interface PlayerStatsRepository : BaseRepository<PlayerStats> {
 
     fun findByPlayer(player: Player, pageable: Pageable): Page<PlayerStats>
+
+    /*
+    * Getting delta of rating for a specific week by player
+    * */
+    @Query(nativeQuery = true,
+            value = """
+                SELECT COALESCE(SUM(s.delta), 0)
+                FROM players_stats s INNER JOIN games g
+                ON s.game_id = g.id
+                AND s.player_id = :playerId
+                AND (EXTRACT(WEEK FROM now()) - EXTRACT(WEEK FROM g.date)) = :weekAgo
+            """)
+    fun calculateDeltaByPlayerAndWeek(
+            @Param("playerId") playerId: Long,
+            @Param("weekAgo") weekAgo: Int
+    ): Double
 
 }
 

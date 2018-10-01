@@ -5,6 +5,7 @@ import com.kicker.domain.model.player.CreatePlayerRequest
 import com.kicker.domain.model.player.UpdatePlayerPasswordRequest
 import com.kicker.domain.model.player.UpdatePlayerUsernameRequest
 import com.kicker.exception.service.DuplicateUsernameException
+import com.kicker.exception.service.NotFoundPlayerException
 import com.kicker.exception.service.PasswordIncorrectException
 import com.kicker.model.Player
 import com.kicker.repository.PlayerRepository
@@ -24,6 +25,14 @@ class DefaultPlayerService(
         private val repository: PlayerRepository,
         private val passwordEncoder: PasswordEncoder
 ) : DefaultBaseService<Player, PlayerRepository>(repository), PlayerService {
+
+    override fun get(id: Long): Player {
+        return try {
+            super.get(id)
+        } catch (e: NoSuchElementException) {
+            throw NotFoundPlayerException("Player with such id: $id not found")
+        }
+    }
 
     override fun getByUsername(username: String): Player? = repository.findByUsername(username)
 
