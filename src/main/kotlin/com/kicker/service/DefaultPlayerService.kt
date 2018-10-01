@@ -69,7 +69,7 @@ class DefaultPlayerService(
     }
 
     @Transactional
-    override fun updateRating(playerId: Long, newRating: Int): Player {
+    override fun updateRating(playerId: Long, newRating: Double): Player {
         val player = get(playerId)
         player.rating = newRating
 

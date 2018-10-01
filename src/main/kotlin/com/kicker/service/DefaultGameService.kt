@@ -4,6 +4,7 @@ import com.kicker.domain.PageRequest
 import com.kicker.domain.model.game.GameRegistrationRequest
 import com.kicker.model.Game
 import com.kicker.repository.GameRepository
+import com.kicker.utils.RatingUtils
 import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -34,32 +35,28 @@ class DefaultGameService(
 
         val game = Game(request.losersGoals!!, winner1, winner2, loser1, loser2, reporter)
 
-//        updatePlayersRating(game)
+        updatePlayersRating(game)
 
         return repository.save(game)
     }
 
-//    private fun updatePlayersRating(game: Game) {
-//        val loserPlayer1 = if (game.redTeamGoals > game.yellowTeamGoals) game.yellowPlayer1 else game.redPlayer1
-//        val loserPlayer2 = if (loserPlayer1 == game.yellowPlayer1) game.yellowPlayer2 else game.redPlayer2
-//        val winnerPlayer1 = if (loserPlayer1 == game.yellowPlayer1) game.redPlayer1 else game.yellowPlayer1
-//        val winnerPlayer2 = if (loserPlayer1 == game.yellowPlayer1) game.redPlayer2 else game.yellowPlayer2
-//
-//        val loserGoals: Int = if (loserPlayer1 == game.yellowPlayer1) game.yellowTeamGoals else game.redTeamGoals
-//        val losersTotalRating: Double = loserPlayer1.currentRating + loserPlayer2.currentRating
-//        val winnersTotalRating: Double = winnerPlayer1.currentRating + winnerPlayer2.currentRating
-//
-//        val skillCorrection: Double = RatingUtils.getSkillCorrection(losersTotalRating, winnersTotalRating)
-//        val losingPercents: Double = RatingUtils.getLosingPercents(loserGoals, skillCorrection)
-//
-//        val loser1Delta = loserPlayer1.currentRating * losingPercents / 100.0
-//        val loser2Delta = loserPlayer2.currentRating * losingPercents / 100.0
-//        val winnerDelta = (loser1Delta + loser2Delta) / 2.0
-//
-//        playerService.updateRating(loserPlayer1.id, (loserPlayer1.currentRating - loser1Delta))
-//        playerService.updateRating(loserPlayer2.id, (loserPlayer2.currentRating - loser2Delta))
-//        playerService.updateRating(winnerPlayer1.id, (winnerPlayer1.currentRating + winnerDelta))
-//        playerService.updateRating(winnerPlayer2.id, (winnerPlayer2.currentRating + winnerDelta))
-//    }
+    private fun updatePlayersRating(game: Game) {
+        with(game) {
+            val losersTotalRating: Double = loser1.rating + loser2.rating
+            val winnersTotalRating: Double = winner1.rating + winner2.rating
+
+            val skillCorrection: Double = RatingUtils.getSkillCorrection(losersTotalRating, winnersTotalRating)
+            val losingPercents: Double = RatingUtils.getLosingPercents(losersGoals, skillCorrection)
+
+            val loser1Delta = loser1.rating * losingPercents / 100.0
+            val loser2Delta = loser2.rating * losingPercents / 100.0
+            val winnerDelta = (loser1Delta + loser2Delta) / 2.0
+
+            playerService.updateRating(loser1.id, (loser1.rating - loser1Delta))
+            playerService.updateRating(loser2.id, (loser2.rating - loser2Delta))
+            playerService.updateRating(winner1.id, (winner1.rating + winnerDelta))
+            playerService.updateRating(winner2.id, (winner2.rating + winnerDelta))
+        }
+    }
 
 }

@@ -15,7 +15,7 @@ data class PlayerDto(
     constructor(player: Player) : this(
             player.id,
             player.username,
-            player.rating,
+            player.rating.toInt(),
             player.active
     )
 

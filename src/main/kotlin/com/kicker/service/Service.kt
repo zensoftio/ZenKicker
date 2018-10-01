@@ -40,7 +40,7 @@ interface PlayerService : BaseService<Player>, UserDetailsService {
 
     fun updatePassword(playerId: Long, request: UpdatePlayerPasswordRequest): Player
 
-    fun updateRating(playerId: Long, newRating: Int): Player
+    fun updateRating(playerId: Long, newRating: Double): Player
 
     fun updateActivity(playerId: Long, active: Boolean): Player
 
