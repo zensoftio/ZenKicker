@@ -18,9 +18,10 @@ import javax.validation.constraints.NotNull
     FieldMatch(first = "winner1Id", second = "winner2Id", match = false, message = "The same player can not play for the same team")
 ])
 data class GameRegistrationRequest(
-        @field:NotNull var loser1Id: Long? = null,
-        @field:NotNull var loser2Id: Long? = null,
         @field:NotNull var winner1Id: Long? = null,
         @field:NotNull var winner2Id: Long? = null,
+        @field:NotNull var loser1Id: Long? = null,
+        @field:NotNull var loser2Id: Long? = null,
+        @field:NotNull var reportedBy: Long? = null,
         @field:Min(value = 0) @field:Max(9) var losersGoals: Int? = null
 )

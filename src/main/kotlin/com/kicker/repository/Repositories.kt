@@ -5,7 +5,10 @@ import com.kicker.model.Game
 import com.kicker.model.Player
 import com.kicker.model.PlayerStats
 import com.kicker.model.base.BaseModel
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.NoRepositoryBean
 import org.springframework.stereotype.Repository
 
@@ -20,17 +23,22 @@ interface PlayerRepository : BaseRepository<Player> {
 
     fun findByUsername(username: String): Player?
 
-    fun findAllByActiveTrueOrderByRatingDesc(): List<Player>
+    fun findAllByActiveTrue(pageable: Pageable): Page<Player>
 
 }
 
 @Repository
-interface GameRepository : BaseRepository<Game>
+interface GameRepository : BaseRepository<Game> {
+
+    @Query(value = "SELECT g FROM Game g WHERE g.winner1 = ?1 OR g.winner2 = ?1 OR g.loser1 = ?1 OR g.loser2 = ?1")
+    fun findAllBelongGames(player: Player, pageable: Pageable): Page<Game>
+
+}
 
 @Repository
 interface PlayerStatsRepository : BaseRepository<PlayerStats> {
 
-    fun findByPlayer(player: Player): List<PlayerStats>
+    fun findByPlayer(player: Player, pageable: Pageable): Page<PlayerStats>
 
 }
 

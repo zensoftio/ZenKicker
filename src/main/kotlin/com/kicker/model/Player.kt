@@ -21,7 +21,7 @@ class Player(
         private var password: String,
 
         @Column(name = "rating", nullable = false)
-        var rating: Int = PLAYER_RATING,
+        var rating: Double = PLAYER_RATING,
 
         @Column(name = "active", nullable = false)
         var active: Boolean = false
@@ -29,7 +29,7 @@ class Player(
 ) : BaseModel(), UserDetails {
 
     companion object {
-        const val PLAYER_RATING: Int = 10000
+        const val PLAYER_RATING: Double = 10000.0
     }
 
 

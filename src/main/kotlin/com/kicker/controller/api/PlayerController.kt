@@ -6,7 +6,6 @@ import com.kicker.domain.PageResponse
 import com.kicker.domain.model.player.*
 import com.kicker.model.Player
 import com.kicker.service.PlayerService
-import org.springframework.data.domain.PageImpl
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
@@ -26,12 +25,12 @@ class PlayerController(
     fun get(@PathVariable playerId: Long): PlayerDto = PlayerDto(service.get(playerId))
 
     @GetMapping
-    fun getAll(@Valid pageRequest: PageRequest): PageResponse<PlayerDto> =
+    fun getAll(pageRequest: PageRequest): PageResponse<PlayerDto> =
             PageResponse(service.getAll(pageRequest).map { PlayerDto(it) })
 
     @GetMapping("/active")
-    fun getAllActive(): PageResponse<PlayerDto> =
-            PageResponse(PageImpl(service.getAllActive()).map { PlayerDto(it) })
+    fun getAllActive(pageRequest: PlayerPageRequest): PageResponse<PlayerDto> =
+            PageResponse(service.getAllActive(pageRequest).map { PlayerDto(it) })
 
     @PostMapping
     fun create(@Valid @RequestBody request: CreatePlayerRequest): PlayerDto = PlayerDto(service.create(request))
