@@ -69,6 +69,7 @@ class SecurityConfig : GlobalMethodSecurityConfiguration() {
                                              exception: AuthenticationException) {
             val exceptionResponse = ExceptionResponse(UNAUTHORIZED.value(), "Invalid username or password")
             response.status = exceptionResponse.status
+            response.addHeader("Content-Type", "application/json; charset=UTF-8")
             response.writer.write(jacksonObjectMapper().writeValueAsString(exceptionResponse))
         }
 
