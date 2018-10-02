@@ -5,10 +5,7 @@ import {connect} from 'react-redux';
 import styled from 'styled-components';
 import {getCurrent} from "./actions";
 import {MainMenu} from "./components/main-menu";
-import {TopBar} from "./components/top-bar";
 import RatingScene from "./scenes/RatingScene";
-import GroupStageScene from "./scenes/GroupStageScene";
-import PlayoffsScene from "./scenes/PlayoffsScene";
 import ProfileScene from "./scenes/ProfileScene";
 
 const NotFound = () => <div>not found</div>
@@ -21,6 +18,8 @@ const Container = styled.div`
 
 const Content = styled.div`
 	width: 100%;
+	padding: 20px;
+	padding-top: 0;
 `;
 
 
@@ -37,13 +36,10 @@ class App extends Component {
     }
 		return (
 			<Container>
-				<MainMenu />
+				<MainMenu currentUser={currentUser}/>
 				<Content>
-          <TopBar match={this.props.match} currentUser={currentUser}/>
 					<Switch>
 						<Route exact path="/rating" component={RatingScene}/>
-						<Route exact path="/group-stage" component={GroupStageScene}/>
-						<Route exact path="/playoffs" component={PlayoffsScene}/>
 						<Route exact path="/player/:id" component={ProfileScene}/>
 						<Route path="/not-found" component={NotFound}/>
 						<Redirect from="/" exact to="/rating"/>

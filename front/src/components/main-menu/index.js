@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 import {MainMenuLink} from "../../components-ui/buttons/main-menu-link";
-import {MenuGroup} from "../../components-ui/menu-group";
+
+import signOutIco from '../../shared/images/icons/sign-out.png';
 
 const Content = styled.section`
 	width: 300px;
@@ -24,14 +25,56 @@ const Title = styled(Link)`
 	}
 `;
 
+const AuthenticationContent = styled.div`
+  display: flex;
+  padding: 0 0 30px 10px;
+  justify-content: space-between;
+  align-items: center;
+  div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  img {
+    max-width: 30px;
+    min-width: 30px;
+    max-height: 30px;
+    min-height: 30px;
+  }
+`;
 
-export const MainMenu = () => (
+const Username = styled(Link)`
+  color: black;
+  text-decoration: none;
+  padding-left: 15px;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+	&:hover {
+		text-decoration: underline;
+	}
+	margin-right: 20px;
+`;
+
+const SignOut = styled.div`
+  width: 17px;
+  height: 17px;
+  background-image: url(${signOutIco});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+`;
+
+export const MainMenu = ({currentUser}) => (
 	<Content>
 		<Title to="/">Zen<span>Kicker</span></Title>
-		<MainMenuLink link="/rating">Rating</MainMenuLink>
-		<MenuGroup title="Tournament">
-			<MainMenuLink link="/group-stage">Group stage</MainMenuLink>
-			<MainMenuLink link="/playoffs">Playoffs</MainMenuLink>
-		</MenuGroup>
+    <AuthenticationContent>
+      <div>
+        <img alt="avatar" src={'https://www.shareicon.net/data/2016/08/05/806962_user_512x512.png'} />
+        <Username to={`/player/${currentUser.id}`}>{currentUser.username}</Username>
+      </div>
+      <a href="/logout"><SignOut/></a>
+    </AuthenticationContent>
+		<MainMenuLink link="/rating">Dashboard</MainMenuLink>
 	</Content>
 )

@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import {Table} from '../../components/table';
 import TabButton from '../../components-ui/buttons/tab-button';
+import {ProfileBlock} from '../ProfileBlock';
 
 const TabButtonContainer = styled.div`
   display: flex;
   margin-bottom: 20px;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+	width: max-content;
+	font-size: 1.2em;
 `;
 
 class Tabs extends Component {
@@ -17,8 +20,14 @@ class Tabs extends Component {
   }
 
   renderTab = () => {
-    if (this.state.isAllPlayersTab) return <Table columns={getColumns()} data={this.props.players.list}/>
-    return <Table columns={getColumns()} data={this.props.activePlayers.list}/>
+    if (this.state.isAllPlayersTab) {
+      return this.props.players && this.props.players.map((item, index) =>
+        <ProfileBlock key={item.id} id={item.id} index={index + 1} username={item.username} countGames={item.countGames}
+                      rated={item.rated} rating={item.rating}/>)
+    }
+    return this.props.activePlayers && this.props.activePlayers.map((item, index) =>
+      <ProfileBlock key={item.id} id={item.id} index={index + 1} username={item.username} countGames={item.countGames}
+                    rated={item.rated} rating={item.rating}/>)
   }
 
   setActivePlayersTab = () => this.setState({isAllPlayersTab: false})
@@ -38,48 +47,5 @@ class Tabs extends Component {
     );
   }
 }
-
-const getColumns = () => [
-  {
-    Header: '',
-    Cell: ({index}) => <span>{index + 1}</span>,
-    width: 50,
-    style: {
-      textAlign: 'center'
-    }
-  },
-  {
-    Header: "Player",
-    accessor: 'username',
-    width: 250,
-    style: {
-      textAlign: 'center'
-    }
-  },
-  {
-    Header: "Games",
-    accessor: 'games',
-    width: 100,
-    style: {
-      textAlign: 'center'
-    }
-  },
-  {
-    Header: "Rated",
-    accessor: 'rated',
-    width: 150,
-    style: {
-      textAlign: 'center'
-    }
-  },
-  {
-    Header: "Rating",
-    accessor: 'rating',
-    width: 150,
-    style: {
-      textAlign: 'center'
-    }
-  }
-];
 
 export default Tabs;

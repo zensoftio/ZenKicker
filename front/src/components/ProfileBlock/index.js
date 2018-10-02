@@ -1,28 +1,62 @@
 import React from 'react';
-import styled from 'styled-components/typings/styled-components';
+import styled from 'styled-components';
+import {Link} from 'react-router-dom';
 
-const Content = styled.div`
+const Content = styled(Link)`
   display: flex;
 	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+	color: black;
+	text-decoration: none;
 	align-items: center;
-	padding: 15px;
-	width: 50%;
+	padding: 15px 20px;
+	width: max-content;
+	transition: margin .3s ease-in-out;
 	span {
 	  margin-right: 30px;
 	}
   img {
-    width: 50px;
-    height: 50px;
+    max-width: 50px;
+    min-width: 50px;
+    max-height: 50px;
+    min-height: 50px;
+    padding-left: 20px;
+  }
+  &:hover {
+    margin: 5px 0;
+    box-shadow: 0 6px 10px rgba(0,0,0,0.1);
+    background-color: #fafafa
   }
 `;
+const Template = styled.div`
+  padding-left: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
 
-export const ProfileBlock = ({username, gamesCount, rated, rating}) => (
-  <Content>
-    <span>1</span>
-    <img src={'https://www.shareicon.net/data/2016/08/05/806962_user_512x512.png'} />
-    <span>{username}</span>
-    <span>{gamesCount}</span>
-    <span>{rated}</span>
-    <span>{rating}</span>
+const Index = styled.div`
+  max-width: 40px;
+  min-width: 40px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+const Username = styled(Template)`
+  max-width: 200px;
+  min-width: 200px;
+`;
+
+const Statistics = styled(Template)`
+  max-width: 100px;
+  min-width: 100px;
+`;
+
+export const ProfileBlock = ({index, id, username, countGames, rated, rating}) => (
+  <Content to={`/player/${id}`}>
+    <Index>{index}</Index>
+    <img alt="avatar" src={'https://www.shareicon.net/data/2016/08/05/806962_user_512x512.png'} />
+    <Username>{username}</Username>
+    <Statistics>{countGames}</Statistics>
+    <Statistics>{rated}</Statistics>
+    <Statistics>{rating}</Statistics>
   </Content>
 )

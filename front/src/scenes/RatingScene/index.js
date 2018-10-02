@@ -7,9 +7,9 @@ import {withRouter} from 'react-router-dom';
 import Tabs from '../../components/tabs';
 
 const Content = styled.div`
-	padding: 40px 20px 20px 20px;
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 `;
 
 class RatingScene extends Component {
@@ -24,7 +24,7 @@ class RatingScene extends Component {
     return (
       <div>
         <Content>
-          <Tabs players={players} activePlayers={activePlayers}/>
+          <Tabs players={players.list} activePlayers={activePlayers.list}/>
         </Content>
       </div>
 
