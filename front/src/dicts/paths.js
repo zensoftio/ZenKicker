@@ -4,7 +4,9 @@ const base = (rest) => `${configuration.apiPrefix}${rest}`;
 
 const Paths = {
 	User: {
-		GetCurrent: base('/players/current')
+		GetCurrent: base('/players/current'),
+		GetActive: base('/players/active'),
+		GetAll: base('/players')
 	}
 };
 

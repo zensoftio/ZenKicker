@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import styled from 'styled-components';
 import {getCurrent} from "./actions";
 import {MainMenu} from "./components/main-menu";
+import {TopBar} from "./components/top-bar";
 import RatingScene from "./scenes/RatingScene";
 import GroupStageScene from "./scenes/GroupStageScene";
 import PlayoffsScene from "./scenes/PlayoffsScene";
@@ -30,13 +31,15 @@ class App extends Component {
 	}
 
 	render() {
-	  if (!this.props.currentUser.username) {
+	  const {currentUser} = this.props;
+	  if (!currentUser.username) {
 	    return null
     }
 		return (
 			<Container>
 				<MainMenu />
 				<Content>
+          <TopBar match={this.props.match} currentUser={currentUser}/>
 					<Switch>
 						<Route exact path="/rating" component={RatingScene}/>
 						<Route exact path="/group-stage" component={GroupStageScene}/>
