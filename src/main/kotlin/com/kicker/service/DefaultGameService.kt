@@ -8,6 +8,7 @@ import com.kicker.model.PlayerStats
 import com.kicker.repository.GameRepository
 import com.kicker.utils.DateUtils
 import com.kicker.utils.RatingUtils
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -21,7 +22,8 @@ import java.time.LocalDate
 class DefaultGameService(
         private val repository: GameRepository,
         private val playerService: PlayerService,
-        private val playerStatsService: PlayerStatsService
+        private val playerStatsService: PlayerStatsService,
+        private val eventPublisher: ApplicationEventPublisher
 ) : DefaultBaseService<Game, GameRepository>(repository), GameService {
 
     override fun getAllByPlayer(playerId: Long, pageRequest: PageRequest): Page<Game> {
@@ -59,6 +61,7 @@ class DefaultGameService(
         val persistGame = repository.save(game)
 
         updatePlayersRating(persistGame)
+        eventPublisher.publishEvent(persistGame)
 
         return persistGame
     }
