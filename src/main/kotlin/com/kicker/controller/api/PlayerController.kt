@@ -33,7 +33,7 @@ class PlayerController(
     }
 
     @GetMapping
-    fun getAll(pageRequest: PageRequest): PageResponse<PlayerDto> {
+    fun getAll(pageRequest: PlayerPageRequest): PageResponse<PlayerDto> {
         return PageResponse(service.getAll(pageRequest).map {
             PlayerDto(it, gameService.countByPlayer(it.id), gameService.countFor10WeeksByPlayer(it.id))
         })
