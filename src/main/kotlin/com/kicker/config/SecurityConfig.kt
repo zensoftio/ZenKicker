@@ -5,8 +5,10 @@ import com.kicker.domain.exception.ExceptionResponse
 import com.kicker.service.PlayerService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpHeaders.CONTENT_TYPE
 import org.springframework.http.HttpMethod.POST
 import org.springframework.http.HttpStatus.UNAUTHORIZED
+import org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration
@@ -69,7 +71,7 @@ class SecurityConfig : GlobalMethodSecurityConfiguration() {
                                              exception: AuthenticationException) {
             val exceptionResponse = ExceptionResponse(UNAUTHORIZED.value(), "Invalid username or password")
             response.status = exceptionResponse.status
-            response.addHeader("Content-Type", "application/json; charset=UTF-8")
+            response.addHeader(CONTENT_TYPE, APPLICATION_JSON_UTF8_VALUE)
             response.writer.write(jacksonObjectMapper().writeValueAsString(exceptionResponse))
         }
 
