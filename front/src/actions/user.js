@@ -12,7 +12,7 @@ export const getCurrent = () => {
 
 		try {
 			const result = await api.get(Paths.User.GetCurrent);
-			dispatch({type: GET_CURRENT_USER_SUCCESS, payload: result});
+			dispatch({type: GET_CURRENT_USER_SUCCESS, payload: result.data});
 		} catch (err) {
 			console.warn(err);
 			dispatch({type: GET_CURRENT_USER_FAILURE});

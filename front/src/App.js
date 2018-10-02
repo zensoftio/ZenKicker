@@ -30,6 +30,9 @@ class App extends Component {
 	}
 
 	render() {
+	  if (!this.props.currentUser.username) {
+	    return null
+    }
 		return (
 			<Container>
 				<MainMenu />
@@ -51,7 +54,9 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
-	const props = {};
+	const props = {
+    currentUser: state.user.current
+  };
 	return props;
 }
 const mapDispatchToProps = (dispatch) => {
