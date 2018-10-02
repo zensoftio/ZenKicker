@@ -1,0 +1,22 @@
+<svg width="16" height="6" viewBox="0 0 16 6" version="1.1" xmlns="http://www.w3.org/2000/svg"
+>
+    <g id="Canvas" fill="none">
+        <g id="Group">
+            <g id="Ellipse">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M 0.500109 0.986749C 0.907629 1.26215 1.45517 1.60309 2.11315 1.94396C 3.60069 2.71459 5.68179 3.5 8 3.5C 10.3182 3.5 12.3993 2.71459 13.8869 1.94396C 14.5449 1.60306 15.0925 1.26209 15.5 0.986675L 15.5 1.777C 14.8017 2.37093 13.5837 3.02911 12.2106 3.55515C 10.7344 4.12069 9.1662 4.5 8 4.5C 6.57043 4.5 4.97388 4.13723 3.56363 3.5887C 2.24063 3.07411 1.13715 2.41781 0.500198 1.7969L 0.500109 0.986749Z"
+                      stroke-miterlimit="8" stroke="#5C6061"/>
+            </g>
+            <g id="Vector">
+                <path d="M 0 0L 1 2.5" transform="translate(3 5) scale(1 -1)" stroke="#5C6061"/>
+            </g>
+            <g id="Vector_2">
+                <path d="M 0 0L 0 2.5" transform="translate(8 6) scale(1 -1)" stroke="#5C6061"/>
+            </g>
+            <g id="Vector_3">
+                <path d="M 0 0L 1 2.5" transform="translate(13 5) scale(-1)" stroke="#5C6061"/>
+            </g>
+        </g>
+    </g>
+</svg>
+

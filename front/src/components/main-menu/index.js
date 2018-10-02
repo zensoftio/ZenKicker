@@ -24,6 +24,17 @@ const Title = styled(Link)`
 	}
 `;
 
+const SignOut = styled.a`
+	color: red;
+	position: absolute;
+	bottom: 20px;
+	left: 20px;
+		text-decoration: none;
+	&:hover {
+		text-decoration: underline;
+	}
+`;
+
 export const MainMenu = () => (
 	<Content>
 		<Title to="/">Zen<span>Kicker</span></Title>
@@ -32,5 +43,6 @@ export const MainMenu = () => (
 			<MainMenuLink link="/group-stage">Group stage</MainMenuLink>
 			<MainMenuLink link="/playoffs">Playoffs</MainMenuLink>
 		</MenuGroup>
+		<SignOut href="/logout">Sign out</SignOut>
 	</Content>
 )

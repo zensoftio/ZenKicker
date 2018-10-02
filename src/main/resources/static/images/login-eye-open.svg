@@ -1,0 +1,25 @@
+<svg width="16" height="12" viewBox="0 0 16 12" version="1.1" xmlns="http://www.w3.org/2000/svg"
+>
+    <g id="Canvas" fill="none">
+        <g id="Group">
+            <g id="Ellipse">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M 0.629774 5C 0.726456 5.12154 0.853093 5.27612 1.00709 5.45444C 1.40036 5.90982 1.96897 6.51633 2.66991 7.12155C 4.08732 8.34538 5.97193 9.5 8 9.5C 10.0281 9.5 11.9127 8.34538 13.3301 7.12155C 14.031 6.51633 14.5996 5.90982 14.9929 5.45444C 15.1469 5.27612 15.2735 5.12154 15.3702 5C 15.2735 4.87847 15.1469 4.72388 14.9929 4.54556C 14.5996 4.09018 14.031 3.48367 13.3301 2.87845C 11.9127 1.65462 10.0281 0.5 8 0.5C 5.97193 0.5 4.08732 1.65462 2.66991 2.87845C 1.96897 3.48367 1.40036 4.09018 1.00709 4.54556C 0.853093 4.72388 0.726456 4.87847 0.629774 5Z"
+                      stroke-miterlimit="8" transform="translate(0 1.5)" stroke="#5C6061"/>
+            </g>
+            <g id="Ellipse 2">
+                <circle cx="3" cy="3" r="3" transform="translate(5 3.5)" fill="#5C6061"/>
+            </g>
+            <g id="Vector">
+                <path d="M 0 0L 1 2" transform="translate(3 1.5)" stroke="#5C6061"/>
+            </g>
+            <g id="Vector_2">
+                <path d="M 0 0L 0 2.5" transform="translate(8 0)" stroke="#5C6061"/>
+            </g>
+            <g id="Vector_3">
+                <path d="M 0 0L 1 2" transform="translate(13 1.5) scale(-1 1)" stroke="#5C6061"/>
+            </g>
+        </g>
+    </g>
+</svg>
+

@@ -40,12 +40,10 @@ $(document).ready(function () {
     const $form = $('#login-form');
     const $userName = $form.find('input[name="username"]');
     const $password = $form.find('input[name="password"]');
-    const $rememberMe = $form.find('input[name="rememberMe"]');
     const $error = $form.find('.error');
 
     $form.submit(function (e) {
       e.preventDefault();
-
       $.ajax({
         url: '/login',
         type: 'POST',
@@ -53,19 +51,16 @@ $(document).ready(function () {
         data: {
           username: $userName.val(),
           password: $password.val(),
-          rememberMe: $rememberMe.prop('checked')
         },
         success: function (e) {
           document.location = '/';
         },
         error: function (e) {
           const error = e.responseJSON
-          $userName.addClass('input_error');
-          $password.addClass('input_error');
-          if (e.responseJSON.message) {
-            $error.text('Oops! ' + error.message);
-          } else {
-            $error.text('Oops! ' + error[0].fieldName.charAt(0).toUpperCase() + error[0].fieldName.slice(1).toLowerCase() + ' ' + error[0].errorMessage);
+          if (error.errors && error.errors.length) {
+            $error.text(error.errors[0].field.charAt(0).toUpperCase() + error.errors[0].field.slice(1).toLowerCase() + ' ' + error.errors[0].message);
+          } else if (error.message) {
+            $error.text(error.message);
           }
         }
       });

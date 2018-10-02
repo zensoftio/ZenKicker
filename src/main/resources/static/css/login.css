@@ -12,29 +12,61 @@ body {
     flex-direction: column;
     align-items: center;
 }
+.wrapper .error {
+    color: #C74242;
+    padding-bottom: 18px;
+}
+.eye_open {
+    width: 16px;
+    height: 12px;
+    position: absolute;
+    cursor: pointer;
+    right: 0;
+}
+
+.eye_close {
+    width: 16px;
+    height: 10px;
+    position: absolute;
+    cursor: pointer;
+    right: 0;
+}
+
+.input_error {
+    border: 1px solid #C74242 !important;
+}
 .wrapper form {
     width: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.title {
-    with: 100%;
+.logo {
     font-size: 60px;
     padding: 20px;
-    margin: 200px 0 100px 0;
+    margin: 100px 0 50px 0;
     display: block;
     color: black;
     text-decoration: none;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     text-align: center;
 }
-.title>span {
+.logo>span {
     color: red;
 }
+
+.title {
+    font-size: 2em;
+    margin-top: 50px;
+}
+
 .input_block {
     width: 300px;
     margin-bottom: 30px;
+    display: flex;
+    position: relative;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 .input_block input {
     width: 100%;
@@ -67,10 +99,10 @@ body {
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 .check_button_block button:active {
-    color: red;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 .sign-up-link {
-    margin-top: 20px;
+    margin-top: 40px;
     text-decoration: none;
     color: red
 }

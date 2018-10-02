@@ -9,8 +9,9 @@
 <body>
 
 <section class="wrapper">
-    <div class="title">Zen<span>Kicker</span></div>
-    <form id="login-form" method="POST" action="/login">
+    <div class="logo">Zen<span>Kicker</span></div>
+    <div class="title">Sign in</div>
+    <form id="login-form" method="POST">
     <#if override_referrer??>
         <input type="hidden" name="overrideReferrer" value="${override_referrer}">
     </#if>
@@ -23,10 +24,10 @@
             <div class="eye eye_close"></div>
         </div>
         <div class="check_button_block">
-          <button>Log in</button>
+          <button>Let's go!</button>
         </div>
     </form>
-  <a class="sign-up-link" href="#">Sign up</a>
+  <a class="sign-up-link" href="/sign-up">Sign up</a>
 </section>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
