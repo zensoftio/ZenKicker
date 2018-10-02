@@ -37,9 +37,9 @@ interface GameRepository : BaseRepository<Game> {
     @Query("SELECT COUNT(g) FROM Game g WHERE g.winner1 = ?1 OR g.winner2 = ?1 OR g.loser1 = ?1 OR g.loser2 = ?1")
     fun countByPlayer(player: Player): Long
 
-    /*
-    * Getting count of games for a specific interval of dates by player
-    * */
+    /**
+     * Getting count of games for a specific interval of dates by player
+     */
     @Query("""SELECT COUNT(g) FROM Game g WHERE (g.winner1 = ?1 OR g.winner2 = ?1 OR g.loser1 = ?1 OR g.loser2 = ?1)
                 AND (?2 <= DATE(g.date) AND ?3 >= DATE(g.date))""")
     fun countByPlayerAndIntervalDates(player: Player, startDate: LocalDate, endDate: LocalDate): Long
@@ -51,9 +51,9 @@ interface PlayerStatsRepository : BaseRepository<PlayerStats> {
 
     fun findByPlayer(player: Player, pageable: Pageable): Page<PlayerStats>
 
-    /*
-    * Getting delta of rating for a specific interval of dates by player
-    * */
+    /**
+     * Getting delta of rating for a specific interval of dates by player
+     */
     @Query("""SELECT SUM(s.delta) FROM PlayerStats s INNER JOIN Game g WHERE s.player = ?1
                 AND (?2 <= DATE(g.date) AND ?3 >= DATE(g.date))""")
     fun calculateDeltaByPlayerAndIntervalDates(player: Player, startDate: LocalDate, endDate: LocalDate): Double
