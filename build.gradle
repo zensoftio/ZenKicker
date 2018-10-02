@@ -57,3 +57,11 @@ dependencies {
 //    Test
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
+
+sourceSets {
+    main.kotlin.srcDirs += 'src/main/kotlin'
+    main.resources.srcDirs += 'front/build/resources'
+}
+
+// Front
+processResources.dependsOn(':front:assemble')
