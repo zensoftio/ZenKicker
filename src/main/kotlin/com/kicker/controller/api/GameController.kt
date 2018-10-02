@@ -29,13 +29,13 @@ class GameController(
     }
 
     @GetMapping("/player/{playerId}")
-    fun getAllBelongGames(@PathVariable playerId: Long, pageRequest: GamePageRequest): PageResponse<GameDto> {
-        return PageResponse(service.getAllBelongGames(playerId, pageRequest).map { GameDto(it) })
+    fun getAllByPlayer(@PathVariable playerId: Long, pageRequest: GamePageRequest): PageResponse<GameDto> {
+        return PageResponse(service.getAllByPlayer(playerId, pageRequest).map { GameDto(it) })
     }
 
-    @GetMapping("/count/player/{playerId}/weekAgo/{weekAgo}")
-    fun getCountGamesLastWeekByPlayer(@PathVariable playerId: Long, @PathVariable @Min(0) weekAgo: Int): Int =
-            service.countGamesByPlayerAndWeek(playerId, weekAgo)
+    @GetMapping("/count/player/{playerId}/weeksAgo/{weeksAgo}")
+    fun getCountByPlayerAndWeeksAgo(@PathVariable playerId: Long, @PathVariable @Min(0) weeksAgo: Long): Long =
+            service.countByPlayerAndWeeksAgo(playerId, weeksAgo)
 
     @PostMapping("/registration")
     fun gameRegistration(@Valid @RequestBody request: GameRegistrationRequest): GameDto {

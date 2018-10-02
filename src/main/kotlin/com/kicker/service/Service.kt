@@ -50,9 +50,13 @@ interface GameService : BaseService<Game> {
 
     fun gameRegistration(playerId: Long, request: GameRegistrationRequest): Game
 
-    fun getAllBelongGames(playerId: Long, pageRequest: PageRequest): Page<Game>
+    fun getAllByPlayer(playerId: Long, pageRequest: PageRequest): Page<Game>
 
-    fun countGamesByPlayerAndWeek(playerId: Long, weekAgo: Int): Int
+    fun countByPlayer(playerId: Long): Long
+
+    fun countByPlayerAndWeeksAgo(playerId: Long, weeksAgo: Long): Long
+
+    fun countFor10WeeksByPlayer(playerId: Long): Long
 
 }
 
@@ -60,7 +64,7 @@ interface PlayerStatsService : BaseService<PlayerStats> {
 
     fun getByPlayer(playerId: Long, pageRequest: PageRequest): Page<PlayerStats>
 
-    fun getDeltaByPlayerAndWeek(playerId: Long, weekAgo: Int): Double
+    fun getDeltaByPlayerAndWeeksAgo(playerId: Long, weeksAgo: Long): Double
 
 }
 

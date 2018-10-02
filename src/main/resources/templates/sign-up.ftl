@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <link rel="shortcut icon" href="favicon.ico">
-  <title>Login</title>
+  <title>Sign Up</title>
   <link href="css/login.css" rel="stylesheet">
 </head>
 <body>

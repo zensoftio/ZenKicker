@@ -6,10 +6,12 @@ import com.kicker.model.Game
 import com.kicker.model.Player
 import com.kicker.model.PlayerStats
 import com.kicker.repository.GameRepository
+import com.kicker.utils.DateUtils
 import com.kicker.utils.RatingUtils
 import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDate
 
 /**
  * @author Yauheni Efimenko
@@ -22,15 +24,26 @@ class DefaultGameService(
         private val playerStatsService: PlayerStatsService
 ) : DefaultBaseService<Game, GameRepository>(repository), GameService {
 
-    override fun getAllBelongGames(playerId: Long, pageRequest: PageRequest): Page<Game> {
+    override fun getAllByPlayer(playerId: Long, pageRequest: PageRequest): Page<Game> {
         val player = playerService.get(playerId)
-        return repository.findAllBelongGames(player, pageRequest)
+        return repository.findAllByPlayer(player, pageRequest)
     }
 
-    override fun countGamesByPlayerAndWeek(playerId: Long, weekAgo: Int): Int {
-        playerService.get(playerId) // validate to exist or exception
+    override fun countByPlayer(playerId: Long): Long {
+        val player = playerService.get(playerId)
+        return repository.countByPlayer(player)
+    }
 
-        return repository.countGamesByPlayerAndWeek(playerId, weekAgo)
+    override fun countByPlayerAndWeeksAgo(playerId: Long, weeksAgo: Long): Long {
+        val player = playerService.get(playerId)
+        val dates = DateUtils.getIntervalDatesOfWeek(weeksAgo)
+
+        return repository.countByPlayerAndIntervalDates(player, dates.first, dates.second)
+    }
+
+    override fun countFor10WeeksByPlayer(playerId: Long): Long {
+        val player = playerService.get(playerId)
+        return repository.countByPlayerAndIntervalDates(player, DateUtils.getStartDate10Weeks(), LocalDate.now())
     }
 
     @Transactional

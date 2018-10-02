@@ -10,8 +10,8 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.NoRepositoryBean
-import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
+import java.time.LocalDate
 
 /**
  * @author Yauheni Efimenko
@@ -31,33 +31,18 @@ interface PlayerRepository : BaseRepository<Player> {
 @Repository
 interface GameRepository : BaseRepository<Game> {
 
-    @Query(value = """
-                SELECT g
-                FROM Game g
-                WHERE g.winner1 = ?1
-                OR g.winner2 = ?1
-                OR g.loser1 = ?1
-                OR g.loser2 = ?1
-            """)
-    fun findAllBelongGames(player: Player, pageable: Pageable): Page<Game>
+    @Query("SELECT g FROM Game g WHERE g.winner1 = ?1 OR g.winner2 = ?1 OR g.loser1 = ?1 OR g.loser2 = ?1")
+    fun findAllByPlayer(player: Player, pageable: Pageable): Page<Game>
+
+    @Query("SELECT COUNT(g) FROM Game g WHERE g.winner1 = ?1 OR g.winner2 = ?1 OR g.loser1 = ?1 OR g.loser2 = ?1")
+    fun countByPlayer(player: Player): Long
 
     /*
-    * Getting count of games for last week by player
+    * Getting count of games for a specific interval of dates by player
     * */
-    @Query(nativeQuery = true,
-            value = """
-                SELECT COUNT(g)
-                FROM games g
-                WHERE (g.winner1 = :playerId
-                OR g.winner2 = :playerId
-                OR g.loser1 = :playerId
-                OR g.loser2 = :playerId)
-                AND (EXTRACT(WEEK FROM now()) - EXTRACT(WEEK FROM g.date)) = :weekAgo
-            """)
-    fun countGamesByPlayerAndWeek(
-            @Param("playerId") playerId: Long,
-            @Param("weekAgo") weekAgo: Int
-    ): Int
+    @Query("""SELECT COUNT(g) FROM Game g WHERE (g.winner1 = ?1 OR g.winner2 = ?1 OR g.loser1 = ?1 OR g.loser2 = ?1)
+                AND (?2 <= DATE(g.date) AND ?3 >= DATE(g.date))""")
+    fun countByPlayerAndIntervalDates(player: Player, startDate: LocalDate, endDate: LocalDate): Long
 
 }
 
@@ -67,20 +52,11 @@ interface PlayerStatsRepository : BaseRepository<PlayerStats> {
     fun findByPlayer(player: Player, pageable: Pageable): Page<PlayerStats>
 
     /*
-    * Getting delta of rating for a specific week by player
+    * Getting delta of rating for a specific interval of dates by player
     * */
-    @Query(nativeQuery = true,
-            value = """
-                SELECT COALESCE(SUM(s.delta), 0)
-                FROM players_stats s INNER JOIN games g
-                ON s.game_id = g.id
-                AND s.player_id = :playerId
-                AND (EXTRACT(WEEK FROM now()) - EXTRACT(WEEK FROM g.date)) = :weekAgo
-            """)
-    fun calculateDeltaByPlayerAndWeek(
-            @Param("playerId") playerId: Long,
-            @Param("weekAgo") weekAgo: Int
-    ): Double
+    @Query("""SELECT SUM(s.delta) FROM PlayerStats s INNER JOIN Game g WHERE s.player = ?1
+                AND (?2 <= DATE(g.date) AND ?3 >= DATE(g.date))""")
+    fun calculateDeltaByPlayerAndIntervalDates(player: Player, startDate: LocalDate, endDate: LocalDate): Double
 
 }
 

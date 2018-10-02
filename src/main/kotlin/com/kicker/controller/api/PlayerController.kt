@@ -5,6 +5,7 @@ import com.kicker.domain.PageRequest
 import com.kicker.domain.PageResponse
 import com.kicker.domain.model.player.*
 import com.kicker.model.Player
+import com.kicker.service.GameService
 import com.kicker.service.PlayerService
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
@@ -15,34 +16,55 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("/api/players")
 class PlayerController(
-        private val service: PlayerService
+        private val service: PlayerService,
+        private val gameService: GameService
 ) {
 
     @GetMapping("/current")
-    fun getCurrent(@CurrentPlayer currentPlayer: Player): PlayerDto = PlayerDto(currentPlayer)
+    fun getCurrent(@CurrentPlayer currentPlayer: Player): PlayerDto {
+        return PlayerDto(currentPlayer, gameService.countByPlayer(currentPlayer.id),
+                gameService.countFor10WeeksByPlayer(currentPlayer.id))
+    }
 
     @GetMapping("/{playerId}")
-    fun get(@PathVariable playerId: Long): PlayerDto = PlayerDto(service.get(playerId))
+    fun get(@PathVariable playerId: Long): PlayerDto {
+        return PlayerDto(service.get(playerId), gameService.countByPlayer(playerId),
+                gameService.countFor10WeeksByPlayer(playerId))
+    }
 
     @GetMapping
-    fun getAll(pageRequest: PageRequest): PageResponse<PlayerDto> =
-            PageResponse(service.getAll(pageRequest).map { PlayerDto(it) })
+    fun getAll(pageRequest: PageRequest): PageResponse<PlayerDto> {
+        return PageResponse(service.getAll(pageRequest).map {
+            PlayerDto(it, gameService.countByPlayer(it.id), gameService.countFor10WeeksByPlayer(it.id))
+        })
+    }
 
     @GetMapping("/active")
-    fun getAllActive(pageRequest: PlayerPageRequest): PageResponse<PlayerDto> =
-            PageResponse(service.getAllActive(pageRequest).map { PlayerDto(it) })
+    fun getAllActive(pageRequest: PlayerPageRequest): PageResponse<PlayerDto> {
+        return PageResponse(service.getAllActive(pageRequest).map {
+            PlayerDto(it, gameService.countByPlayer(it.id), gameService.countFor10WeeksByPlayer(it.id))
+        })
+    }
 
     @PostMapping
-    fun create(@Valid @RequestBody request: CreatePlayerRequest): PlayerDto = PlayerDto(service.create(request))
+    fun create(@Valid @RequestBody request: CreatePlayerRequest): PlayerDto {
+        val player = service.create(request)
+        return PlayerDto(player, gameService.countByPlayer(player.id),
+                gameService.countFor10WeeksByPlayer(player.id))
+    }
 
     @PutMapping("/{playerId}/username")
     fun updateUsername(@PathVariable playerId: Long, @Valid @RequestBody request: UpdatePlayerUsernameRequest): PlayerDto {
-        return PlayerDto(service.updateUsername(playerId, request))
+        val player = service.updateUsername(playerId, request)
+        return PlayerDto(player, gameService.countByPlayer(player.id),
+                gameService.countFor10WeeksByPlayer(player.id))
     }
 
     @PutMapping("/{playerId}/password-reset")
     fun updatePassword(@PathVariable playerId: Long, @Valid @RequestBody request: UpdatePlayerPasswordRequest): PlayerDto {
-        return PlayerDto(service.updatePassword(playerId, request))
+        val player = service.updatePassword(playerId, request)
+        return PlayerDto(player, gameService.countByPlayer(player.id),
+                gameService.countFor10WeeksByPlayer(player.id))
     }
 
 }
