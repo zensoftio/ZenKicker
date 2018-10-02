@@ -3,6 +3,7 @@ package com.kicker.service
 import com.kicker.domain.PageRequest
 import com.kicker.model.PlayerStats
 import com.kicker.repository.PlayerStatsRepository
+import com.kicker.utils.DateUtils
 import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -22,10 +23,11 @@ class DefaultPlayerStatsService(
         return repository.findByPlayer(player, pageRequest)
     }
 
-    override fun getDeltaByPlayerAndWeek(playerId: Long, weekAgo: Int): Double {
-        playerService.get(playerId) // validate to exist or exception
+    override fun getDeltaByPlayerAndWeeksAgo(playerId: Long, weeksAgo: Long): Double {
+        val player = playerService.get(playerId)
+        val dates = DateUtils.getIntervalDatesOfWeek(weeksAgo)
 
-        return repository.calculateDeltaByPlayerAndWeek(playerId, weekAgo)
+        return repository.calculateDeltaByPlayerAndIntervalDates(player, dates.first, dates.second)
     }
 
 }
