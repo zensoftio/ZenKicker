@@ -16,4 +16,9 @@ object RatingUtils {
     fun getSkillCorrection(losersTotalRating: Double, winnersTotalRating: Double): Double =
             Math.pow(losersTotalRating / winnersTotalRating, SKILL_CORRECTION_DEGREE)
 
+    fun getObsolescenceDelta(delta: Double, weeks: Long, weeksAgo: Long): Double {
+        val obsolescenceStep = 1.0 / weeks
+        return delta * (1.0 - weeksAgo * obsolescenceStep)
+    }
+
 }
