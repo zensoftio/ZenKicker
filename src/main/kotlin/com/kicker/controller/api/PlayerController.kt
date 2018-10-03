@@ -1,7 +1,6 @@
 package com.kicker.controller.api
 
 import com.kicker.annotation.CurrentPlayer
-import com.kicker.domain.PageRequest
 import com.kicker.domain.PageResponse
 import com.kicker.domain.model.player.*
 import com.kicker.model.Player
@@ -22,7 +21,7 @@ class PlayerController(
 
     @GetMapping("/current")
     fun getCurrent(@CurrentPlayer currentPlayer: Player): PlayerDto {
-        return PlayerDto(currentPlayer, gameService.countByPlayer(currentPlayer.id),
+        return PlayerDto(service.get(currentPlayer.id), gameService.countByPlayer(currentPlayer.id),
                 gameService.countFor10WeeksByPlayer(currentPlayer.id))
     }
 
@@ -60,7 +59,7 @@ class PlayerController(
                 gameService.countFor10WeeksByPlayer(player.id))
     }
 
-    @PutMapping("/{playerId}/password-reset")
+    @PutMapping("/{playerId}/password")
     fun updatePassword(@PathVariable playerId: Long, @Valid @RequestBody request: UpdatePlayerPasswordRequest): PlayerDto {
         val player = service.updatePassword(playerId, request)
         return PlayerDto(player, gameService.countByPlayer(player.id),

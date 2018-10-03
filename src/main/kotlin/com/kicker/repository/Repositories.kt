@@ -54,7 +54,7 @@ interface PlayerStatsRepository : BaseRepository<PlayerStats> {
     /**
      * Getting delta of rating for a specific interval of dates by player
      */
-    @Query("""SELECT SUM(s.delta) FROM PlayerStats s INNER JOIN Game g WHERE s.player = ?1
+    @Query("""SELECT COALESCE(SUM(s.delta), 0) FROM PlayerStats s JOIN Game g ON s.game = g AND s.player = ?1
                 AND (?2 <= DATE(g.date) AND ?3 >= DATE(g.date))""")
     fun calculateDeltaByPlayerAndIntervalDates(player: Player, startDate: LocalDate, endDate: LocalDate): Double
 

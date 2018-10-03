@@ -19,9 +19,6 @@ object DateUtils {
         return Pair(monday, sunday)
     }
 
-    /*
-    * Current week is number 0, so 10 week is number 9
-    * */
-    fun getStartDate10Weeks(): LocalDate = LocalDate.now().with(MONDAY).minusWeeks(9)
+    fun getStartDateOfWeek(weeksAgo: Long): LocalDate = LocalDate.now().with(MONDAY).minusWeeks(weeksAgo)
 
 }

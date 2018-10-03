@@ -66,6 +66,8 @@ interface PlayerStatsService : BaseService<PlayerStats> {
 
     fun getDeltaByPlayerAndWeeksAgo(playerId: Long, weeksAgo: Long): Double
 
+    fun getActualRatingByPlayer(playerId: Long): Double
+
 }
 
 interface AwardService : BaseService<Award> {
