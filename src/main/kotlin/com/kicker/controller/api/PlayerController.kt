@@ -51,7 +51,7 @@ class PlayerController(
                 gameService.countFor10WeeksByPlayer(player.id))
     }
 
-    @PutMapping("/{playerId}/password-reset")
+    @PutMapping("/{playerId}/password")
     fun updatePassword(@PathVariable playerId: Long, @Valid @RequestBody request: UpdatePlayerPasswordRequest): PlayerDto {
         val player = service.updatePassword(playerId, request)
         return PlayerDto(player, gameService.countByPlayer(player.id),
