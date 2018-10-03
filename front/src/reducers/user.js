@@ -1,13 +1,15 @@
 import {
   GET_ACTIVE_PLAYERS_SUCCESS,
   GET_ALL_PLAYERS_SUCCESS,
-  GET_CURRENT_USER_SUCCESS
+  GET_CURRENT_USER_SUCCESS,
+  GET_PLAYER_SUCCESS
 } from '../actions/const'
 
 const initState = {
-  current: {},
-  activePlayers: {},
-  players: {}
+  current: null,
+  activePlayers: null,
+  players: null,
+  player: null
 };
 
 export const user = (state = initState, action) => {
@@ -20,6 +22,9 @@ export const user = (state = initState, action) => {
 
     case GET_ALL_PLAYERS_SUCCESS:
       return {...state, players: action.payload};
+
+    case GET_PLAYER_SUCCESS:
+      return {...state, player: action.payload};
 
     default:
       return state;

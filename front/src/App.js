@@ -18,7 +18,7 @@ const Container = styled.div`
 
 const Content = styled.div`
 	width: 100%;
-	padding: 20px;
+	padding: 50px;
 	padding-top: 0;
 `;
 
@@ -31,7 +31,7 @@ class App extends Component {
 
 	render() {
 	  const {currentUser} = this.props;
-	  if (!currentUser.username) {
+	  if (!currentUser) {
 	    return null
     }
 		return (

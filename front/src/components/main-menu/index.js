@@ -6,13 +6,14 @@ import {MainMenuLink} from "../../components-ui/buttons/main-menu-link";
 import signOutIco from '../../shared/images/icons/sign-out.png';
 
 const Content = styled.section`
-	width: 300px;
+	min-width: 300px;
 	height: 100%;
 `;
 
 const Title = styled(Link)`
-	with: 100%;
+	width: 100%;
 	font-size: 22px;
+	box-sizing: border-box;
 	padding: 20px;
 	margin-bottom: 20px;
 	display: block;

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 import TabButton from '../../components-ui/buttons/tab-button';
-import {ProfileBlock} from '../ProfileBlock';
+import {ProfileBlock} from '../profile-block';
 
 const TabButtonContainer = styled.div`
   display: flex;

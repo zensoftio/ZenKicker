@@ -6,7 +6,10 @@ const Paths = {
 	User: {
 		GetCurrent: base('/players/current'),
 		GetActive: base('/players/active'),
-		GetAll: base('/players')
+		GetAll: base('/players'),
+		GetPlayer: (id) => base(`/players/${id}`),
+    UpdateUsername: (id) => base(`/players/${id}/username`),
+    UpdatePassword: (id) => base(`/players/${id}/password`),
 	}
 };
 

@@ -21,10 +21,11 @@ class RatingScene extends Component {
 
   render() {
     const {players, activePlayers} = this.props;
+
     return (
       <div>
         <Content>
-          <Tabs players={players.list} activePlayers={activePlayers.list}/>
+          <Tabs players={players ? players.list : []} activePlayers={activePlayers ? activePlayers.list : []}/>
         </Content>
       </div>
 

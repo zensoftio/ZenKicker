@@ -1,7 +1,9 @@
-import {getCurrent, getActivePlayers, getAllPlayers} from './user';
+import {getCurrent, getActivePlayers, getAllPlayers, getPlayer, updateUsername} from './user';
 
 export {
 	getCurrent,
   getActivePlayers,
-  getAllPlayers
+  getAllPlayers,
+  getPlayer,
+  updateUsername
 };
