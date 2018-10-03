@@ -1,5 +1,6 @@
 package com.kicker.service
 
+import com.kicker.config.property.AppSettingsProperties
 import com.kicker.domain.PageRequest
 import com.kicker.domain.model.game.GameRegistrationRequest
 import com.kicker.model.Game
@@ -19,7 +20,8 @@ import java.time.LocalDate
 class DefaultGameService(
         private val repository: GameRepository,
         private val playerService: PlayerService,
-        private val eventPublisher: ApplicationEventPublisher
+        private val eventPublisher: ApplicationEventPublisher,
+        private val appSettingsProperties: AppSettingsProperties
 ) : DefaultBaseService<Game, GameRepository>(repository), GameService {
 
     override fun getAllByPlayer(playerId: Long, pageRequest: PageRequest): Page<Game> {
@@ -39,9 +41,13 @@ class DefaultGameService(
         return repository.countByPlayerAndIntervalDates(player, dates.first, dates.second)
     }
 
+    /*
+    * Current week is number 0, so 10 week is number 9
+    * */
     override fun countFor10WeeksByPlayer(playerId: Long): Long {
         val player = playerService.get(playerId)
-        return repository.countByPlayerAndIntervalDates(player, DateUtils.getStartDate10Weeks(), LocalDate.now())
+        return repository.countByPlayerAndIntervalDates(player,
+                DateUtils.getStartDateOfWeek(appSettingsProperties.countWeeks!! - 1), LocalDate.now())
     }
 
     @Transactional
