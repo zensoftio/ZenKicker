@@ -1,7 +1,9 @@
 package com.kicker.controller.api
 
+import com.kicker.annotation.CurrentPlayer
 import com.kicker.domain.PageResponse
 import com.kicker.domain.model.player.*
+import com.kicker.model.Player
 import com.kicker.service.GameService
 import com.kicker.service.PlayerService
 import org.springframework.web.bind.annotation.*
@@ -16,6 +18,12 @@ class PlayerController(
         private val service: PlayerService,
         private val gameService: GameService
 ) {
+
+    @GetMapping("/current")
+    fun getCurrent(@CurrentPlayer currentPlayer: Player): PlayerDto {
+        return PlayerDto(service.get(currentPlayer.id), gameService.countByPlayer(currentPlayer.id),
+                gameService.countFor10WeeksByPlayer(currentPlayer.id))
+    }
 
     @GetMapping("/{playerId}")
     fun get(@PathVariable playerId: Long): PlayerDto {
