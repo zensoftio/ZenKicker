@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 import {updateUsername} from '../../actions';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {getCurrent} from "../../actions";
 
 const Content = styled.div`
   display: flex;
@@ -43,7 +46,7 @@ class UsernameBlock extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: this.props.username,
+      username: this.props.player.username,
       usernameError: null
     }
   }
@@ -51,12 +54,13 @@ class UsernameBlock extends Component {
   onUsernameChange = (value) => this.setState({username: value, usernameError: null})
 
   onUsernameBlur = async () => {
-    if (this.state.username === this.props.username) return;
+    if (this.state.username === this.props.player.username) return;
     try {
       const data = {
         username: this.state.username
       };
-      await updateUsername(this.props.id, data);
+      await updateUsername(this.props.player.id, data);
+      this.props.actions.getCurrent();
     } catch (err) {
       const error = err.response.data.message;
       this.setState({usernameError: error})
@@ -82,4 +86,19 @@ class UsernameBlock extends Component {
   }
 }
 
-export default UsernameBlock
+const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
+  const props = {
+    player: state.user.player,
+    currentUser: state.user.current
+  };
+  return props;
+}
+const mapDispatchToProps = (dispatch) => {
+  const actions = {
+    getCurrent
+  };
+  const actionMap = {actions: bindActionCreators(actions, dispatch)};
+  return actionMap;
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UsernameBlock);

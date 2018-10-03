@@ -51,7 +51,7 @@ class ProfileMainInfo extends Component {
           <img alt="avatar" src={'https://www.shareicon.net/data/2016/08/05/806962_user_512x512.png'} />
         </ProfilePhoto>
         <Info>
-          <UsernameBlock username={username} id={id} isCurrent={isCurrent}/>
+          <UsernameBlock isCurrent={isCurrent}/>
           <StatisticsContent>
             <Statistics>Rating: <span>{rating}</span></Statistics>
             <Statistics>Games played: <span>{countGames}</span></Statistics>
