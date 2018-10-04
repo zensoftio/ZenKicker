@@ -2,7 +2,7 @@ FROM openjdk:8-jre-alpine
 
 WORKDIR root/
 
-ADD build/libs/Kicker-*.jar ./application.jar
+ADD build/libs/kicker-*.jar ./application.jar
 
 EXPOSE 8080
 
