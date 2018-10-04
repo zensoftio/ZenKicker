@@ -16,6 +16,7 @@ const PopupContainer = styled.div`
   bottom: 0;
   right: 0;
   background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10;
 `;
 
 class Popup extends Component {
@@ -41,7 +42,7 @@ class Popup extends Component {
 
     return (
       <Content>
-        {!isPopupOpen && <Button onClick={this.onPopupOpen}>{buttonTitle}</Button>}
+        <Button onClick={this.onPopupOpen}>{buttonTitle}</Button>
         {
           isPopupOpen &&
           <PopupContainer onClick={this.handleOnBackgroundClick}>

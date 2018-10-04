@@ -22,8 +22,20 @@ const Content = styled.div`
 	width: 100%;
 	padding: 50px;
 	padding-top: 0;
+	box-sizing: border-box;
 `;
 
+const Test = styled.div`
+	width: 100%;
+`;
+
+const Test2 = styled.div`
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+	padding: 20px;
+	box-sizing: border-box;
+`;
 
 class App extends Component {
 
@@ -39,16 +51,21 @@ class App extends Component {
 		return (
 			<Container>
 				<MainMenu currentUser={currentUser}/>
-        <GameRegistration/>
-				<Content>
-					<Switch>
-						<Route exact path="/dashboard" component={DashboardScene}/>
-						<Route exact path="/player/:id" component={ProfileScene}/>
-						<Route path="/not-found" component={NotFound}/>
-						<Redirect from="/" exact to="/dashboard"/>
-						<Redirect from="*" exact to="/not-found"/>
-					</Switch>
-				</Content>
+        <Test>
+          <Test2>
+            <GameRegistration players={this.props.players ? this.props.players.list : []} registerGame={this.props.actions.registerGame}/>
+          </Test2>
+
+          <Content>
+            <Switch>
+              <Route exact path="/dashboard" component={DashboardScene}/>
+              <Route exact path="/player/:id" component={ProfileScene}/>
+              <Route path="/not-found" component={NotFound}/>
+              <Redirect from="/" exact to="/dashboard"/>
+              <Redirect from="*" exact to="/not-found"/>
+            </Switch>
+          </Content>
+        </Test>
 			</Container>
 
 		);
@@ -57,7 +74,8 @@ class App extends Component {
 
 const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
 	const props = {
-    currentUser: state.user.current
+    currentUser: state.user.current,
+    players: state.user.players
   };
 	return props;
 }
