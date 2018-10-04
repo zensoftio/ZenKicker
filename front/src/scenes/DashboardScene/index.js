@@ -4,9 +4,20 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {getActivePlayers, getAllPlayers} from '../../actions';
 import {withRouter} from 'react-router-dom';
-import Tabs from '../../components/tabs';
+import PlayersTabs from '../../components/players-tabs';
 
 const Content = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const PlayersContent = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+`;
+
+const GamesContent = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -23,11 +34,15 @@ class DashboardScene extends Component {
     const {players, activePlayers} = this.props;
 
     return (
-      <div>
-        <Content>
-          <Tabs players={players ? players.list : []} activePlayers={activePlayers ? activePlayers.list : []}/>
-        </Content>
-      </div>
+      <Content>
+        <PlayersContent>
+          <div>Players</div>
+          <PlayersTabs players={players ? players.list : []} activePlayers={activePlayers ? activePlayers.list : []}/>
+        </PlayersContent>
+        <GamesContent>
+          <div>Latest Games</div>
+        </GamesContent>
+      </Content>
 
     );
   }

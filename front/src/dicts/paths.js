@@ -12,7 +12,8 @@ const Paths = {
     UpdatePassword: base(`/players/password`)
 	},
 	Game: {
-		RegisterGame: base('/games/registration')
+		RegisterGame: base('/games/registration'),
+		GetAll: base('/games')
 	}
 };
 
