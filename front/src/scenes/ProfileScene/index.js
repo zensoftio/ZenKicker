@@ -42,7 +42,7 @@ class ProfileScene extends Component {
                            username={player.username} isCurrent={isCurrent}/>
         </Content>
         {
-          isCurrent && <PasswordBlock id={this.props.match.params.id} />
+          isCurrent && <PasswordBlock />
         }
       </div>
 

@@ -67,9 +67,9 @@ export const getPlayer = (id) => {
   }
 }
 
-export const updateUsername = async (id, data) => {
-  return await api.put(Paths.User.UpdateUsername(id), data);
+export const updateUsername = async (data) => {
+  return await api.put(Paths.User.UpdateUsername, data);
 }
-export const updatePassword = async (id, data) => {
-  return await api.put(Paths.User.UpdatePassword(id), data);
+export const updatePassword = async (data) => {
+  return await api.put(Paths.User.UpdatePassword, data);
 }

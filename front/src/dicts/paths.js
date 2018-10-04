@@ -8,8 +8,8 @@ const Paths = {
 		GetActive: base('/players/active'),
 		GetAll: base('/players'),
 		GetPlayer: (id) => base(`/players/${id}`),
-    UpdateUsername: (id) => base(`/players/${id}/username`),
-    UpdatePassword: (id) => base(`/players/${id}/password`),
+    UpdateUsername: base(`/players/username`),
+    UpdatePassword: base(`/players/password`)
 	}
 };
 

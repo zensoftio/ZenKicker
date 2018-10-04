@@ -59,7 +59,7 @@ class UsernameBlock extends Component {
       const data = {
         username: this.state.username
       };
-      await updateUsername(this.props.player.id, data);
+      await updateUsername(data);
       this.props.actions.getCurrent();
     } catch (err) {
       const error = err.response.data.message;

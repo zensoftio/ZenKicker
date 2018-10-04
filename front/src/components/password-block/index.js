@@ -75,7 +75,7 @@ class PasswordBlock extends Component {
         currentPassword: this.state.currentPassword,
         newPassword: this.state.newPassword
       };
-      await updatePassword(this.props.id, data);
+      await updatePassword(data);
       this.onPopupClose()
     } catch (err) {
       const error = err.response.data.message;
