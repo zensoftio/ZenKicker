@@ -10,6 +10,9 @@ const Paths = {
 		GetPlayer: (id) => base(`/players/${id}`),
     UpdateUsername: base(`/players/username`),
     UpdatePassword: base(`/players/password`)
+	},
+	Game: {
+		RegisterGame: base('/games/registration')
 	}
 };
 

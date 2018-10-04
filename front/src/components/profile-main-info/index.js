@@ -43,7 +43,7 @@ const Statistics = styled.div`
 class ProfileMainInfo extends Component {
 
   render() {
-    const {rating, countGames, rated, username, id, isCurrent} = this.props;
+    const {rating, countGames, rated, isCurrent} = this.props;
 
     return (
       <Content>
