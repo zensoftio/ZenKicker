@@ -52,16 +52,16 @@ class PlayerController(
                 gameService.countFor10WeeksByPlayer(player.id))
     }
 
-    @PutMapping("/{playerId}/username")
-    fun updateUsername(@PathVariable playerId: Long, @Valid @RequestBody request: UpdatePlayerUsernameRequest): PlayerDto {
-        val player = service.updateUsername(playerId, request)
+    @PutMapping("/username")
+    fun updateUsername(@CurrentPlayer currentPlayer: Player, @Valid @RequestBody request: UpdatePlayerUsernameRequest): PlayerDto {
+        val player = service.updateUsername(currentPlayer.id, request)
         return PlayerDto(player, gameService.countByPlayer(player.id),
                 gameService.countFor10WeeksByPlayer(player.id))
     }
 
-    @PutMapping("/{playerId}/password")
-    fun updatePassword(@PathVariable playerId: Long, @Valid @RequestBody request: UpdatePlayerPasswordRequest): PlayerDto {
-        val player = service.updatePassword(playerId, request)
+    @PutMapping("/password")
+    fun updatePassword(@CurrentPlayer currentPlayer: Player, @Valid @RequestBody request: UpdatePlayerPasswordRequest): PlayerDto {
+        val player = service.updatePassword(currentPlayer.id, request)
         return PlayerDto(player, gameService.countByPlayer(player.id),
                 gameService.countFor10WeeksByPlayer(player.id))
     }
