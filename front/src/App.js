@@ -7,6 +7,7 @@ import {getCurrent} from "./actions";
 import {MainMenu} from "./components/main-menu";
 import DashboardScene from "./scenes/DashboardScene";
 import ProfileScene from "./scenes/ProfileScene";
+import GameRegistration from './components/game-registration';
 
 const NotFound = () => <div>not found</div>
 
@@ -14,6 +15,7 @@ const Container = styled.div`
 	height: 100vh;
   width: 100%;
   display: flex;
+  position: relative;
 `;
 
 const Content = styled.div`
@@ -37,6 +39,7 @@ class App extends Component {
 		return (
 			<Container>
 				<MainMenu currentUser={currentUser}/>
+        <GameRegistration/>
 				<Content>
 					<Switch>
 						<Route exact path="/dashboard" component={DashboardScene}/>
