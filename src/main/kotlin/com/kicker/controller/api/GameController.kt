@@ -1,9 +1,11 @@
 package com.kicker.controller.api
 
+import com.kicker.annotation.CurrentPlayer
 import com.kicker.domain.PageResponse
 import com.kicker.domain.model.game.GameDto
 import com.kicker.domain.model.game.GamePageRequest
 import com.kicker.domain.model.game.GameRegistrationRequest
+import com.kicker.model.Player
 import com.kicker.service.GameService
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
@@ -38,8 +40,8 @@ class GameController(
             service.countByPlayerAndWeeksAgo(playerId, weeksAgo)
 
     @PostMapping("/registration")
-    fun gameRegistration(@Valid @RequestBody request: GameRegistrationRequest): GameDto {
-        return GameDto(service.gameRegistration(request.reportedBy!!, request))
+    fun gameRegistration(@CurrentPlayer currentPlayer: Player, @Valid @RequestBody request: GameRegistrationRequest): GameDto {
+        return GameDto(service.gameRegistration(currentPlayer.id, request))
     }
 
 }
