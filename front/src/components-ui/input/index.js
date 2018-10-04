@@ -41,10 +41,9 @@ const InputElement = styled.input`
   }
 `;
 
-export const Input = ({value, onChange, placeholder}) => (
+export const Input = ({value, onChange, placeholder, type = 'text'}) => (
   <Content>
-    <InputElement value={value} onChange={onChange}
-                   placeholder={placeholder}/>
+    <InputElement value={value} onChange={onChange} placeholder={placeholder} type={type}/>
     <span/>
   </Content>
 )

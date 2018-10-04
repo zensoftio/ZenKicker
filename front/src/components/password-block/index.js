@@ -95,9 +95,9 @@ class PasswordBlock extends Component {
               <InputsContainer>
                 <PopupTitle>Change password</PopupTitle>
                 <Input value={currentPassword} onChange={(e) => this.onCurrentPasswordChange(e.target.value)}
-                       placeholder='Enter old password'/>
+                       placeholder='Enter old password' type='password'/>
                 <Input value={newPassword} onChange={(e) => this.onNewPasswordChange(e.target.value)}
-                       placeholder='Enter new password'/>
+                       placeholder='Enter new password' type='password'/>
                 <PasswordError>{passwordError}</PasswordError>
                 <Button onClick={this.onChangePasswordClick}>Confirm</Button>
               </InputsContainer>
