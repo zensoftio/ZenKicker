@@ -76,6 +76,6 @@ export const MainMenu = ({currentUser}) => (
       </div>
       <a href="/logout"><SignOut/></a>
     </AuthenticationContent>
-		<MainMenuLink link="/rating">Dashboard</MainMenuLink>
+		<MainMenuLink link="/dashboard">Dashboard</MainMenuLink>
 	</Content>
 )

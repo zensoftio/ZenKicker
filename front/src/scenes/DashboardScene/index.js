@@ -12,7 +12,7 @@ const Content = styled.div`
 	align-items: center;
 `;
 
-class RatingScene extends Component {
+class DashboardScene extends Component {
 
   componentDidMount() {
     this.props.actions.getActivePlayers();
@@ -49,4 +49,4 @@ const mapDispatchToProps = (dispatch) => {
   return actionMap;
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RatingScene));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DashboardScene));

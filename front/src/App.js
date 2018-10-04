@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import styled from 'styled-components';
 import {getCurrent} from "./actions";
 import {MainMenu} from "./components/main-menu";
-import RatingScene from "./scenes/RatingScene";
+import DashboardScene from "./scenes/DashboardScene";
 import ProfileScene from "./scenes/ProfileScene";
 
 const NotFound = () => <div>not found</div>
@@ -39,10 +39,10 @@ class App extends Component {
 				<MainMenu currentUser={currentUser}/>
 				<Content>
 					<Switch>
-						<Route exact path="/rating" component={RatingScene}/>
+						<Route exact path="/dashboard" component={DashboardScene}/>
 						<Route exact path="/player/:id" component={ProfileScene}/>
 						<Route path="/not-found" component={NotFound}/>
-						<Redirect from="/" exact to="/rating"/>
+						<Redirect from="/" exact to="/dashboard"/>
 						<Redirect from="*" exact to="/not-found"/>
 					</Switch>
 				</Content>
