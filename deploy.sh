@@ -1,47 +1,44 @@
 #!/bin/bash
 
 # ENVIRONMENT VARIABLES
+APP_IMAGE_NAME=kicker
+APP_SERVICE_NAME=kicker
+NETWORK_SERVICES_NAME=kicker-net
+POSTGRES_SERVICE_NAME=postgres_kicker
 POSTGRES_HOST=postgres
 POSTGRES_DB=kicker
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=123
+OUTER_PORT=5440
 
 
 # CLEAN ENVIRONMENT
-sh docker/clean.sh
+sh docker/clean.sh ${APP_IMAGE_NAME} ${APP_SERVICE_NAME} ${POSTGRES_SERVICE_NAME} ${NETWORK_SERVICES_NAME}
 
 # BUILD APP
 ./gradlew clean assemble
 
 # CREATE IMAGE APP
-docker build -t kicker:latest -f docker/Dockerfile .
+docker build -t ${APP_IMAGE_NAME}:latest -f docker/Dockerfile .
 
 # CREATE NETWORK
-docker network create kicker-net
+docker network create ${NETWORK_SERVICES_NAME}
 
 # RUN POSTGRES
-docker run \
-    -d \
-    --name postgres \
-    --restart=always \
-    -e POSTGRES_DB=${POSTGRES_DB} \
-    -e POSTGRES_USER=${POSTGRES_USER} \
-    -e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} \
-    -p 5440:5432 \
-    postgres
+sh docker/postgres.sh ${POSTGRES_SERVICE_NAME} ${POSTGRES_DB} ${POSTGRES_USER} ${POSTGRES_PASSWORD} ${OUTER_PORT}
 
 # CREATE ALIAS FOR HOSTNAME
-docker network connect --alias ${POSTGRES_HOST} kicker-net postgres
+docker network connect --alias ${POSTGRES_HOST} ${NETWORK_SERVICES_NAME} ${POSTGRES_SERVICE_NAME}
 
 # RUN APP
 docker run \
     -i \
     --rm \
-    --name kicker \
-    --network kicker-net \
+    --name ${APP_SERVICE_NAME} \
+    --network ${NETWORK_SERVICES_NAME} \
     -e POSTGRES_HOST=${POSTGRES_HOST} \
     -e POSTGRES_DB=${POSTGRES_DB} \
     -e POSTGRES_USER=${POSTGRES_USER} \
     -e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} \
     -p 8080:8080 \
-    kicker:latest
+    ${APP_IMAGE_NAME}
