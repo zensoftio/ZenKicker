@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank
  * @author Yauheni Efimenko
  */
 
-@ConfigurationProperties(prefix = "static.path")
+@ConfigurationProperties(prefix = "static.folders")
 @Validated
 @Component
 class StaticFoldersProperties(

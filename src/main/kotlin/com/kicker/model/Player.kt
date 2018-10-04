@@ -24,7 +24,10 @@ class Player(
         var rating: Double = PLAYER_RATING,
 
         @Column(name = "active", nullable = false)
-        var active: Boolean = false
+        var active: Boolean = false,
+
+        @Column(name = "icon_name")
+        var iconName: String? = null
 
 ) : BaseModel(), UserDetails {
 
