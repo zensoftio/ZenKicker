@@ -1,6 +1,6 @@
 package com.kicker.component.listener
 
-import com.kicker.config.property.AppSettingsProperties
+import com.kicker.config.property.PlayerSettingsProperties
 import com.kicker.model.Game
 import com.kicker.model.Player
 import com.kicker.service.GameService
@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional
 class PlayerActivityListener(
         private val gameService: GameService,
         private val playerService: PlayerService,
-        private val appSettingsProperties: AppSettingsProperties
+        private val playerSettingsProperties: PlayerSettingsProperties
 ) {
 
     @EventListener
@@ -31,8 +31,8 @@ class PlayerActivityListener(
 
     private fun handlePlayerActivity(player: Player) {
         val currentCountGames = gameService.countFor10WeeksByPlayer(player.id)
-        if (!player.active && currentCountGames >= appSettingsProperties.countGames!!
-                || player.active && currentCountGames < appSettingsProperties.countGames!!) {
+        if (!player.active && currentCountGames >= playerSettingsProperties.countGames!!
+                || player.active && currentCountGames < playerSettingsProperties.countGames!!) {
             playerService.updateActivity(player.id, !player.active)
         }
     }

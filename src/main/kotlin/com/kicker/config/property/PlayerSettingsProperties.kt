@@ -9,10 +9,10 @@ import javax.validation.constraints.NotNull
  * @author Yauheni Efimenko
  */
 
-@ConfigurationProperties(prefix = "players.rating")
+@ConfigurationProperties(prefix = "player.rating")
 @Validated
 @Component
-class AppSettingsProperties(
+class PlayerSettingsProperties(
 
         @field:NotNull var countGames: Long? = null,
 
