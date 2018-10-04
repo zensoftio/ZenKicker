@@ -3,22 +3,7 @@ import styled from 'styled-components';
 import {Button} from '../../components-ui/buttons/button';
 import {Input} from '../../components-ui/input';
 import {updatePassword} from '../../actions/user';
-
-const Content = styled.div`
-  display: flex;
-`;
-
-const PopupContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-`;
+import Popup from '../popup';
 
 const PopupTitle = styled.div`
   font-size: 1.5em;
@@ -51,18 +36,10 @@ class PasswordBlock extends Component {
       newPassword: '',
       currentPassword: '',
       passwordError: null,
-      isPopupOpen: false
     }
   }
 
-  onPopupOpen = () => this.setState({isPopupOpen: true})
-  onPopupClose = () => this.setState({isPopupOpen: false, newPassword: '', currentPassword: '', passwordError: null,})
-
-  handleOnBackgroundClick = (e) => {
-    if (e.target.classList.contains(PopupContainer.styledComponentId)) {
-      this.onPopupClose()
-    }
-  }
+  clearValues = () => this.setState({newPassword: '', currentPassword: '', passwordError: null})
 
   onNewPasswordChange = (value) => this.setState({newPassword: value, passwordError: null})
   onCurrentPasswordChange = (value) => this.setState({currentPassword: value, passwordError: null})
@@ -76,34 +53,29 @@ class PasswordBlock extends Component {
         newPassword: this.state.newPassword
       };
       await updatePassword(data);
-      this.onPopupClose()
+      this.clearValues();
+      this.child.onPopupClose()
     } catch (err) {
       const error = err.response.data.message;
-      this.setState({passwordError: error})
+      this.setState({passwordError: error});
     }
   }
 
   render() {
-    const {newPassword, currentPassword, passwordError, isPopupOpen} = this.state;
+    const {newPassword, currentPassword, passwordError} = this.state;
 
     return (
-      <Content>
-        {!isPopupOpen && <Button onClick={this.onPopupOpen}>Change password</Button>}
-        {
-          isPopupOpen &&
-            <PopupContainer onClick={this.handleOnBackgroundClick}>
-              <InputsContainer>
-                <PopupTitle>Change password</PopupTitle>
-                <Input value={currentPassword} onChange={(e) => this.onCurrentPasswordChange(e.target.value)}
-                       placeholder='Enter old password' type='password'/>
-                <Input value={newPassword} onChange={(e) => this.onNewPasswordChange(e.target.value)}
-                       placeholder='Enter new password' type='password'/>
-                <PasswordError>{passwordError}</PasswordError>
-                <Button onClick={this.onChangePasswordClick}>Confirm</Button>
-              </InputsContainer>
-            </PopupContainer>
-        }
-      </Content>
+      <Popup buttonTitle='Change password' ref={instance => {this.child = instance}}>
+        <InputsContainer>
+          <PopupTitle>Change password</PopupTitle>
+          <Input value={currentPassword} onChange={(e) => this.onCurrentPasswordChange(e.target.value)}
+                 placeholder='Enter old password' type='password'/>
+          <Input value={newPassword} onChange={(e) => this.onNewPasswordChange(e.target.value)}
+                 placeholder='Enter new password' type='password'/>
+          <PasswordError>{passwordError}</PasswordError>
+          <Button onClick={this.onChangePasswordClick}>Confirm</Button>
+        </InputsContainer>
+      </Popup>
     )
   }
 }
