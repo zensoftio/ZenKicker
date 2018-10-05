@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
+import org.springframework.web.multipart.MultipartException
 import javax.validation.ConstraintViolationException
 
 /**
@@ -42,6 +43,11 @@ class ExceptionRestControllerAdvice {
     @ResponseStatus(code = NOT_FOUND)
     @ExceptionHandler(NoSuchElementException::class)
     fun noSuchElementExceptionHandler(exception: NoSuchElementException): ExceptionResponse =
+            ExceptionResponse(NOT_FOUND.value(), exception.message!!)
+
+    @ResponseStatus(code = NOT_FOUND)
+    @ExceptionHandler(MultipartException::class)
+    fun multipartExceptionHandler(exception: MultipartException): ExceptionResponse =
             ExceptionResponse(NOT_FOUND.value(), exception.message!!)
 
     @ResponseStatus(code = INTERNAL_SERVER_ERROR)

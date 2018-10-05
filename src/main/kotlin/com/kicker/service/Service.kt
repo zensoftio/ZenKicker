@@ -12,6 +12,7 @@ import com.kicker.model.PlayerStats
 import com.kicker.model.base.BaseModel
 import org.springframework.data.domain.Page
 import org.springframework.security.core.userdetails.UserDetailsService
+import org.springframework.web.multipart.MultipartFile
 
 /**
  * @author Yauheni Efimenko
@@ -43,6 +44,8 @@ interface PlayerService : BaseService<Player>, UserDetailsService {
     fun updateRating(playerId: Long, newRating: Double): Player
 
     fun updateActivity(playerId: Long, active: Boolean): Player
+
+    fun updateIcon(playerId: Long, icon: MultipartFile): Player
 
 }
 

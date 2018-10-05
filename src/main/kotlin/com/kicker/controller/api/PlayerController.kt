@@ -7,6 +7,7 @@ import com.kicker.model.Player
 import com.kicker.service.GameService
 import com.kicker.service.PlayerService
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
 import javax.validation.Valid
 
 /**
@@ -55,6 +56,17 @@ class PlayerController(
     @PutMapping("/username")
     fun updateUsername(@CurrentPlayer currentPlayer: Player, @Valid @RequestBody request: UpdatePlayerUsernameRequest): PlayerDto {
         val player = service.updateUsername(currentPlayer.id, request)
+        return PlayerDto(player, gameService.countByPlayer(player.id),
+                gameService.countFor10WeeksByPlayer(player.id))
+    }
+
+    @PutMapping("/icon")
+    fun updateUsername(@CurrentPlayer currentPlayer: Player, @RequestPart file: MultipartFile): PlayerDto {
+        if (file.isEmpty) {
+            throw Exception()
+        }
+
+        val player = service.updateIcon(currentPlayer.id, file)
         return PlayerDto(player, gameService.countByPlayer(player.id),
                 gameService.countFor10WeeksByPlayer(player.id))
     }

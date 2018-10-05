@@ -1,6 +1,6 @@
 package com.kicker.service
 
-import com.kicker.config.property.AppSettingsProperties
+import com.kicker.config.property.PlayerSettingsProperties
 import com.kicker.domain.PageRequest
 import com.kicker.model.Player
 import com.kicker.model.PlayerStats
@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional
 class DefaultPlayerStatsService(
         private val repository: PlayerStatsRepository,
         private val playerService: PlayerService,
-        private val appSettingsProperties: AppSettingsProperties
+        private val playerSettingsProperties: PlayerSettingsProperties
 ) : DefaultBaseService<PlayerStats, PlayerStatsRepository>(repository), PlayerStatsService {
 
     override fun getByPlayer(playerId: Long, pageRequest: PageRequest): Page<PlayerStats> {
@@ -37,10 +37,10 @@ class DefaultPlayerStatsService(
     override fun getActualRatingByPlayer(playerId: Long): Double {
         var rating = Player.PLAYER_RATING
 
-        for (i in 0..appSettingsProperties.countWeeks!!) {
+        for (i in 0..playerSettingsProperties.countWeeks!!) {
             val deltaForWeek = getDeltaByPlayerAndWeeksAgo(playerId, i)
             val obsolescenceDeltaForWeek = RatingUtils.getObsolescenceDelta(deltaForWeek,
-                    appSettingsProperties.countWeeks!!, i)
+                    playerSettingsProperties.countWeeks!!, i)
 
             rating += obsolescenceDeltaForWeek
         }
