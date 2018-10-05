@@ -12,6 +12,10 @@ const Content = styled.div`
 	padding: 100px 0 20px 0;
 `;
 
+const ChangePasswordContainer = styled.div`
+	margin-top: 80px;
+`;
+
 class ProfileScene extends Component {
 
   componentDidMount() {
@@ -41,9 +45,11 @@ class ProfileScene extends Component {
           <ProfileMainInfo countGames={player.countGames} rated={player.rated} rating={player.rating} id={this.props.match.params.id}
                            username={player.username} isCurrent={isCurrent}/>
         </Content>
-        {
-          isCurrent && <PasswordBlock />
-        }
+        <ChangePasswordContainer>
+          {
+            isCurrent && <PasswordBlock />
+          }
+        </ChangePasswordContainer>
       </div>
 
     );

@@ -51,8 +51,9 @@ class ProfilePhotoBlock extends Component {
     try {
       await updatePhoto(data);
       this.props.actions.getCurrent();
+      this.props.setPhotoError(null)
     } catch (err) {
-      console.log(err.response.data)
+      this.props.setPhotoError(err.response.data.message);
     }
   }
 

@@ -23,7 +23,7 @@ const InputsContainer = styled.div`
 `;
 
 const PasswordError = styled.span`
-  color: red;
+  color: #C74242;
   display: flex;
   align-items: center;
   margin: 20px 0;

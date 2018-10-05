@@ -6,6 +6,7 @@ import ProfilePhotoBlock from '../profile-photo-block';
 const Content = styled.div`
   display: flex;
   width: 100%;
+  position: relative;
 `;
 
 const Info = styled.div`
@@ -29,14 +30,34 @@ const Statistics = styled.div`
   }
 `;
 
+const ErrorPhotoUpload = styled.div`
+  position: absolute;
+  width: 300px;
+  color: #C74242;
+  bottom: -40px;
+`;
+
 class ProfileMainInfo extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      uploadPhotoError: null
+    }
+  }
+
+  setPhotoError = (message) => {
+    this.setState({uploadPhotoError: message})
+  }
 
   render() {
     const {rating, countGames, rated, isCurrent} = this.props;
+    const {uploadPhotoError} = this.state;
 
     return (
       <Content>
-        <ProfilePhotoBlock isCurrent={isCurrent}/>
+        <ProfilePhotoBlock isCurrent={isCurrent} setPhotoError={this.setPhotoError}/>
+        <ErrorPhotoUpload>{uploadPhotoError}</ErrorPhotoUpload>
         <Info>
           <UsernameBlock isCurrent={isCurrent}/>
           <StatisticsContent>

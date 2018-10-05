@@ -34,7 +34,7 @@ const UsernameInput = styled.input`
 `;
 
 const UsernameError = styled.span`
-  color: red;
+  color: #C74242;
   display: flex;
   align-items: center;
   position: absolute;
