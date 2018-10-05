@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {updatePhoto} from '../../actions/user';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {getCurrent} from '../../actions';
+import {getCurrent, getPlayer} from '../../actions';
 
 const ProfilePhoto = styled.div`
   width: 150px;
@@ -51,6 +51,7 @@ class ProfilePhotoBlock extends Component {
     try {
       await updatePhoto(data);
       this.props.actions.getCurrent();
+      this.props.actions.getPlayer(this.props.player.id);
       this.props.setPhotoError(null)
     } catch (err) {
       this.props.setPhotoError(err.response.data.message);
@@ -58,14 +59,14 @@ class ProfilePhotoBlock extends Component {
   }
 
   render() {
-    const {currentUser, isCurrent} = this.props;
-    const id = currentUser.iconName + Math.random();
+    const {player, isCurrent} = this.props;
+    const id = player.iconName + Math.random();
 
     return (
       <ProfilePhoto>
         {
-          currentUser.iconName ?
-            <img alt="avatar" src={`http://localhost/images/icons/${currentUser.iconName}`}/> :
+          player.iconName ?
+            <img alt="avatar" src={`http://localhost/images/icons/${player.iconName}`}/> :
             <img alt="avatar" src={'https://www.shareicon.net/data/2016/08/05/806962_user_512x512.png'} />
         }
         {
@@ -82,13 +83,15 @@ class ProfilePhotoBlock extends Component {
 
 const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
   const props = {
-    currentUser: state.user.current
+    currentUser: state.user.current,
+    player: state.user.player
   };
   return props;
 }
 const mapDispatchToProps = (dispatch) => {
   const actions = {
-    getCurrent
+    getCurrent,
+    getPlayer,
   };
   const actionMap = {actions: bindActionCreators(actions, dispatch)};
   return actionMap;
