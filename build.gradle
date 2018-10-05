@@ -45,6 +45,7 @@ dependencies {
 //    Util
     compile('org.apache.commons:commons-lang3:3.7')
     compile('org.apache.commons:commons-collections4:4.0')
+    compile('net.coobird:thumbnailator:0.4.8')
 
     // DevTools
     runtime('org.springframework.boot:spring-boot-devtools')

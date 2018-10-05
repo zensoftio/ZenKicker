@@ -102,6 +102,7 @@ class DefaultPlayerService(
         val player = get(playerId)
         val iconName = UUID.randomUUID().toString() + icon.originalFilename!!
 
+        player.iconName?.let { iconManager.remove(it) }
         iconManager.save(iconName, icon.bytes)
 
         player.iconName = iconName

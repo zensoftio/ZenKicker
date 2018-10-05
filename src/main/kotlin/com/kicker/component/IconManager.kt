@@ -1,12 +1,16 @@
 package com.kicker.component
 
+import com.kicker.config.property.IconsSizeProperties
 import com.kicker.config.property.StaticFoldersProperties
-import org.slf4j.LoggerFactory
+import net.coobird.thumbnailator.Thumbnails
 import org.springframework.stereotype.Component
+import java.io.ByteArrayInputStream
 import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Paths
 import javax.annotation.PostConstruct
+import javax.imageio.ImageIO
+
 
 /**
  * @author Yauheni Efimenko
@@ -14,12 +18,9 @@ import javax.annotation.PostConstruct
 
 @Component
 class IconManager(
+        private val iconsSizeProperties: IconsSizeProperties,
         foldersProperties: StaticFoldersProperties
 ) {
-
-    companion object {
-        private val log = LoggerFactory.getLogger(IconManager::class.java)
-    }
 
     private val iconsDirectory = Paths.get("${foldersProperties.images!!}/icons")
 
@@ -34,9 +35,27 @@ class IconManager(
     fun save(iconName: String, bytes: ByteArray) {
         try {
             val iconPath = Paths.get("$iconsDirectory/$iconName")
-            Files.write(iconPath, bytes)
+
+            val bis = ByteArrayInputStream(bytes)
+            val bufferedImage = ImageIO.read(bis)
+
+            // Squeeze
+            Thumbnails.of(bufferedImage)
+                    .size(iconsSizeProperties.width!!, iconsSizeProperties.height!!)
+                    .toFile("$iconPath")
         } catch (e: IOException) {
-            log.error(e.message, e)
+            throw IllegalStateException(e.message, e)
+        }
+    }
+
+    fun remove(iconName: String) {
+        try {
+            val iconPath = Paths.get("$iconsDirectory/$iconName")
+            if (Files.exists(iconPath)) {
+                Files.delete(iconPath)
+            }
+        } catch (e: IOException) {
+            throw IllegalStateException(e.message, e)
         }
     }
 

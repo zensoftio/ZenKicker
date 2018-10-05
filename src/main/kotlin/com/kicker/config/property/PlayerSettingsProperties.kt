@@ -12,10 +12,16 @@ import javax.validation.constraints.NotNull
 @ConfigurationProperties(prefix = "player.rating")
 @Validated
 @Component
-class PlayerSettingsProperties(
+data class PlayerSettingsProperties(
 
+        /**
+         * Count of games in order to became an active player
+         */
         @field:NotNull var countGames: Long? = null,
 
+        /**
+         * Count of weeks for which the rating is taken
+         */
         @field:NotNull var countWeeks: Long? = null
 
 )

@@ -20,4 +20,5 @@ docker rm -vf ${POSTGRES_SERVICE_NAME}
 docker rmi -f ${APP_IMAGE_NAME}
 docker network rm ${NETWORK_SERVICES_NAME}
 docker rm -vf ${NGINX_SERVICES_NAME}
-docker volume rm -f ${VOLUME_IMAGES_NAME}
+# Uncomment when need to delete icons
+#docker volume rm -f ${VOLUME_IMAGES_NAME}

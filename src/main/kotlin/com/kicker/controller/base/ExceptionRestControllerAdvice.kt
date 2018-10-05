@@ -2,6 +2,7 @@ package com.kicker.controller.base
 
 import com.kicker.domain.exception.ErrorDto
 import com.kicker.domain.exception.ExceptionResponse
+import com.kicker.exception.controller.ControllerException
 import com.kicker.exception.service.ServiceException
 import org.springframework.http.HttpStatus.*
 import org.springframework.validation.BindException
@@ -31,24 +32,29 @@ class ExceptionRestControllerAdvice {
                     exception.bindingResult.allErrors.map { ErrorDto(it) })
 
     @ResponseStatus(code = BAD_REQUEST)
-    @ExceptionHandler(ConstraintViolationException::class)
-    fun constraintViolationExceptionHandler(exception: ConstraintViolationException): ExceptionResponse =
-            ExceptionResponse(BAD_REQUEST.value(), exception.message!!)
-
-    @ResponseStatus(code = BAD_REQUEST)
     @ExceptionHandler(ServiceException::class)
     fun serviceExceptionHandler(exception: ServiceException): ExceptionResponse =
             ExceptionResponse(BAD_REQUEST.value(), exception.message!!)
 
-    @ResponseStatus(code = NOT_FOUND)
+    @ResponseStatus(code = BAD_REQUEST)
+    @ExceptionHandler(ControllerException::class)
+    fun controllerExceptionHandler(exception: ControllerException): ExceptionResponse =
+            ExceptionResponse(BAD_REQUEST.value(), exception.message!!)
+
+    @ResponseStatus(code = BAD_REQUEST)
     @ExceptionHandler(NoSuchElementException::class)
     fun noSuchElementExceptionHandler(exception: NoSuchElementException): ExceptionResponse =
-            ExceptionResponse(NOT_FOUND.value(), exception.message!!)
+            ExceptionResponse(BAD_REQUEST.value(), exception.message!!)
 
-    @ResponseStatus(code = NOT_FOUND)
+    @ResponseStatus(code = BAD_REQUEST)
     @ExceptionHandler(MultipartException::class)
     fun multipartExceptionHandler(exception: MultipartException): ExceptionResponse =
-            ExceptionResponse(NOT_FOUND.value(), exception.message!!)
+            ExceptionResponse(BAD_REQUEST.value(), exception.message!!)
+
+    @ResponseStatus(code = BAD_REQUEST)
+    @ExceptionHandler(ConstraintViolationException::class)
+    fun constraintViolationExceptionHandler(exception: ConstraintViolationException): ExceptionResponse =
+            ExceptionResponse(BAD_REQUEST.value(), exception.message!!)
 
     @ResponseStatus(code = INTERNAL_SERVER_ERROR)
     @ExceptionHandler(IllegalStateException::class)
