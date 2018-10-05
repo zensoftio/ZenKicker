@@ -1,10 +1,16 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 import {Button} from '../../components-ui/buttons/button';
-import {Input} from '../../components-ui/input';
 import Popup from '../popup';
 import DropdownInput from '../../components-ui/dropdown-input';
-import {registerGame} from '../../actions';
+import {
+  getActivePlayers,
+  getAllPlayers,
+  registerGame
+} from '../../actions';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
 
 const Content = styled.div``;
 
@@ -58,6 +64,11 @@ class GameRegistration extends Component {
       losersGoals: null,
       registrationError: null,
     }
+  }
+
+  componentDidMount() {
+    this.props.actions.getActivePlayers();
+    this.props.actions.getAllPlayers();
   }
 
   clearValues = () => this.setState({
@@ -141,4 +152,18 @@ class GameRegistration extends Component {
   }
 }
 
-export default GameRegistration
+
+const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
+  const props = {};
+  return props;
+}
+const mapDispatchToProps = (dispatch) => {
+  const actions = {
+    getActivePlayers,
+    getAllPlayers
+  };
+  const actionMap = {actions: bindActionCreators(actions, dispatch)};
+  return actionMap;
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(GameRegistration));

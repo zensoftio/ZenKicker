@@ -22,7 +22,7 @@ class ProfileScene extends Component {
   componentDidUpdate() {
     const {player} = this.props;
     const playerId = this.props.match.params.id;
-    if (player.id !== +playerId) {
+    if (player && player.id !== +playerId) {
       this.props.actions.getPlayer(playerId);
     }
   }

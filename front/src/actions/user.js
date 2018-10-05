@@ -73,3 +73,6 @@ export const updateUsername = async (data) => {
 export const updatePassword = async (data) => {
   return await api.put(Paths.User.UpdatePassword, data);
 }
+export const updatePhoto = async (data) => {
+  return await api.put(Paths.User.UpdatePhoto, data);
+}

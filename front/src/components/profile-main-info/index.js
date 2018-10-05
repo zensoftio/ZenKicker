@@ -1,22 +1,11 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 import UsernameBlock from '../username-block';
+import ProfilePhotoBlock from '../profile-photo-block';
 
 const Content = styled.div`
   display: flex;
   width: 100%;
-`;
-
-const ProfilePhoto = styled.div`
-  width: 150px;
-  min-width: 150px;
-  height: 150px;
-  padding: 0 20px;
-  
-  img {
-    width: 100%;
-    height: 100%;
-  }
 `;
 
 const Info = styled.div`
@@ -47,9 +36,7 @@ class ProfileMainInfo extends Component {
 
     return (
       <Content>
-        <ProfilePhoto>
-          <img alt="avatar" src={'https://www.shareicon.net/data/2016/08/05/806962_user_512x512.png'} />
-        </ProfilePhoto>
+        <ProfilePhotoBlock isCurrent={isCurrent}/>
         <Info>
           <UsernameBlock isCurrent={isCurrent}/>
           <StatisticsContent>

@@ -46,11 +46,11 @@ class PlayersTabs extends Component {
     if (this.state.isAllPlayersTab) {
       return this.props.players && this.props.players.map((item, index) =>
         <ProfileBlock key={item.id} id={item.id} index={index + 1} username={item.username} countGames={item.countGames}
-                      rated={item.rated} rating={item.rating}/>)
+                      rated={item.rated} rating={item.rating} iconName={item.iconName}/>)
     }
     return this.props.activePlayers && this.props.activePlayers.map((item, index) =>
       <ProfileBlock key={item.id} id={item.id} index={index + 1} username={item.username} countGames={item.countGames}
-                    rated={item.rated} rating={item.rating}/>)
+                    rated={item.rated} rating={item.rating} iconName={item.iconName}/>)
   }
 
   setActivePlayersTab = () => this.setState({isAllPlayersTab: false})

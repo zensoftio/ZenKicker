@@ -9,7 +9,8 @@ const Paths = {
 		GetAll: base('/players'),
 		GetPlayer: (id) => base(`/players/${id}`),
     UpdateUsername: base(`/players/username`),
-    UpdatePassword: base(`/players/password`)
+    UpdatePassword: base(`/players/password`),
+    UpdatePhoto: base(`/players/icon`)
 	},
 	Game: {
 		RegisterGame: base('/games/registration'),

@@ -19,7 +19,8 @@ const Content = styled(Link)`
     min-width: 50px;
     max-height: 50px;
     min-height: 50px;
-    padding-left: 20px;
+    margin-left: 20px;
+    border-radius: 100%;
   }
   &:hover {
     margin: 5px 0;
@@ -50,10 +51,14 @@ const Statistics = styled(Template)`
   min-width: 100px;
 `;
 
-export const ProfileBlock = ({index, id, username, countGames, rated, rating}) => (
+export const ProfileBlock = ({index, id, username, countGames, rated, rating, iconName}) => (
   <Content to={`/player/${id}`}>
     <Index>{index}</Index>
-    <img alt="avatar" src={'https://www.shareicon.net/data/2016/08/05/806962_user_512x512.png'} />
+    {
+      iconName ?
+        <img alt="avatar" src={`http://localhost/images/icons/${iconName}`}/> :
+        <img alt="avatar" src={'https://www.shareicon.net/data/2016/08/05/806962_user_512x512.png'} />
+    }
     <Username>{username}</Username>
     <Statistics>{countGames}</Statistics>
     <Statistics>{rated}</Statistics>

@@ -41,6 +41,7 @@ const AuthenticationContent = styled.div`
     min-width: 30px;
     max-height: 30px;
     min-height: 30px;
+    border-radius: 100%;
   }
 `;
 
@@ -71,7 +72,11 @@ export const MainMenu = ({currentUser}) => (
 		<Title to="/">Zen<span>Kicker</span></Title>
     <AuthenticationContent>
       <div>
-        <img alt="avatar" src={'https://www.shareicon.net/data/2016/08/05/806962_user_512x512.png'} />
+        {
+          currentUser.iconName ?
+            <img alt="avatar" src={`http://localhost/images/icons/${currentUser.iconName}`}/> :
+            <img alt="avatar" src={'https://www.shareicon.net/data/2016/08/05/806962_user_512x512.png'} />
+        }
         <Username to={`/player/${currentUser.id}`}>{currentUser.username}</Username>
       </div>
       <a href="/logout"><SignOut/></a>
