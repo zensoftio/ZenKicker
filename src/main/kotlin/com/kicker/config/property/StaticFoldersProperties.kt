@@ -14,6 +14,9 @@ import javax.validation.constraints.NotBlank
 @Component
 data class StaticFoldersProperties(
 
+        /**
+         * Folder for static content (images)
+         */
         @field:NotBlank var images: String? = null
 
 )
