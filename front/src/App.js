@@ -25,11 +25,11 @@ const Content = styled.div`
 	box-sizing: border-box;
 `;
 
-const Test = styled.div`
+const MainContentContainer = styled.div`
 	width: 100%;
 `;
 
-const Test2 = styled.div`
+const GameRegistrationContainer = styled.div`
 	width: 100%;
 	display: flex;
 	justify-content: flex-end;
@@ -51,10 +51,10 @@ class App extends Component {
 		return (
 			<Container>
 				<MainMenu currentUser={currentUser}/>
-        <Test>
-          <Test2>
+        <MainContentContainer>
+          <GameRegistrationContainer>
             <GameRegistration players={this.props.players ? this.props.players.list : []} registerGame={this.props.actions.registerGame}/>
-          </Test2>
+          </GameRegistrationContainer>
 
           <Content>
             <Switch>
@@ -65,7 +65,7 @@ class App extends Component {
               <Redirect from="*" exact to="/not-found"/>
             </Switch>
           </Content>
-        </Test>
+        </MainContentContainer>
 			</Container>
 
 		);
