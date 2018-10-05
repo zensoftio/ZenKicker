@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull
 @ConfigurationProperties(prefix = "player.rating")
 @Validated
 @Component
-class PlayerSettingsProperties(
+data class PlayerSettingsProperties(
 
         @field:NotNull var countGames: Long? = null,
 
