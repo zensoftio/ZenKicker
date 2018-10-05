@@ -32,7 +32,8 @@ class Popup extends Component {
 
   handleOnBackgroundClick = (e) => {
     if (e.target.classList.contains(PopupContainer.styledComponentId)) {
-      this.onPopupClose()
+      this.onPopupClose();
+      this.props.clearValues();
     }
   }
 

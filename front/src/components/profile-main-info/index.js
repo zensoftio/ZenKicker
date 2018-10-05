@@ -32,7 +32,6 @@ const Statistics = styled.div`
 
 const ErrorPhotoUpload = styled.div`
   position: absolute;
-  width: 300px;
   color: #C74242;
   bottom: -40px;
 `;

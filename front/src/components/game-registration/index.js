@@ -105,11 +105,17 @@ class GameRegistration extends Component {
     }
   }
 
+  getFilteredPlayerList = () => {
+    const {players} = this.props;
+    const {winner1Id, winner2Id, loser1Id, loser2Id} = this.state;
+    const chosenPlayers = [winner1Id, winner2Id, loser1Id, loser2Id];
+    const mapPlayers = players && players.map(i => ({value: i.id, label: i.username}));
+    return mapPlayers.filter(i => !chosenPlayers.includes(i.value))
+  }
+
   render() {
     const {registrationError} = this.state;
-    const {players} = this.props;
 
-    const playersList = players && players.map(i => ({value: i.id, label: i.username}));
     const goals = [
       {value: 0, label: 0},
       {value: 1, label: 1},
@@ -125,21 +131,21 @@ class GameRegistration extends Component {
 
     return (
       <Content>
-        <Popup buttonTitle='Register Game' ref={instance => {this.child = instance}}>
+        <Popup buttonTitle='Register Game' ref={instance => {this.child = instance}} clearValues={this.clearValues}>
           <InputsContainer>
             <PopupTitle>Register game</PopupTitle>
             <Container>
               <Block>
-                <DropdownInput data={playersList} onChange={this.onWinner1Change} placeholder='Winner 1'/>
-                <DropdownInput data={playersList} onChange={this.onWinner2Change} placeholder='Winner 2'/>
+                <DropdownInput data={this.getFilteredPlayerList()} onChange={this.onWinner1Change} placeholder='Winner 1'/>
+                <DropdownInput data={this.getFilteredPlayerList()} onChange={this.onWinner2Change} placeholder='Winner 2'/>
               </Block>
               <ScoreBlock>
                 <div>10 :</div>
                 <DropdownInput data={goals} onChange={this.onLosersGoalsChange} placeholder=''/>
               </ScoreBlock>
               <Block>
-                <DropdownInput data={playersList} onChange={this.onLoser1Change} placeholder='Loser 1'/>
-                <DropdownInput data={playersList} onChange={this.onLoser2Change} placeholder='Loser 2'/>
+                <DropdownInput data={this.getFilteredPlayerList()} onChange={this.onLoser1Change} placeholder='Loser 1'/>
+                <DropdownInput data={this.getFilteredPlayerList()} onChange={this.onLoser2Change} placeholder='Loser 2'/>
               </Block>
             </Container>
 
