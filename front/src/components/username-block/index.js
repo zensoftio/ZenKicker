@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {updateUsername} from '../../actions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {getCurrent} from "../../actions";
+import {getPlayer, getCurrent} from "../../actions";
 
 const Content = styled.div`
   display: flex;
@@ -19,6 +19,7 @@ const Username = styled.div`
 
 const UsernameInput = styled.input`
   font-size: 1.7em;
+  background-color: #fbfbfb;
   padding: 5px 10px;
   width: 400px;
   box-sizing: border-box;
@@ -26,7 +27,7 @@ const UsernameInput = styled.input`
   border-radius: 5px;
   outline: none;
   &:hover {
-    background-color: #fbfbfb
+    background-color: #f9f9f9
   }
   &:focus {
 		background-color: #f7f7f7
@@ -60,6 +61,7 @@ class UsernameBlock extends Component {
         username: this.state.username
       };
       await updateUsername(data);
+      this.props.actions.getPlayer(this.props.player.id);
       this.props.actions.getCurrent();
     } catch (err) {
       const error = err.response.data.message;
@@ -95,7 +97,8 @@ const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
 }
 const mapDispatchToProps = (dispatch) => {
   const actions = {
-    getCurrent
+    getPlayer,
+    getCurrent,
   };
   const actionMap = {actions: bindActionCreators(actions, dispatch)};
   return actionMap;
