@@ -3,9 +3,11 @@ package com.kicker.controller.api
 import com.kicker.annotation.CurrentPlayer
 import com.kicker.domain.PageResponse
 import com.kicker.domain.model.player.*
+import com.kicker.exception.controller.MultipartFileException
 import com.kicker.model.Player
 import com.kicker.service.GameService
 import com.kicker.service.PlayerService
+import org.springframework.http.MediaType.*
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import javax.validation.Valid
@@ -61,12 +63,10 @@ class PlayerController(
     }
 
     @PutMapping("/icon")
-    fun updateUsername(@CurrentPlayer currentPlayer: Player, @RequestPart file: MultipartFile): PlayerDto {
-        if (file.isEmpty) {
-            throw Exception()
-        }
+    fun updateUsername(@CurrentPlayer currentPlayer: Player, @RequestPart("file") icon: MultipartFile): PlayerDto {
+        validateIcon(icon)
 
-        val player = service.updateIcon(currentPlayer.id, file)
+        val player = service.updateIcon(currentPlayer.id, icon)
         return PlayerDto(player, gameService.countByPlayer(player.id),
                 gameService.countFor10WeeksByPlayer(player.id))
     }
@@ -76,6 +76,17 @@ class PlayerController(
         val player = service.updatePassword(currentPlayer.id, request)
         return PlayerDto(player, gameService.countByPlayer(player.id),
                 gameService.countFor10WeeksByPlayer(player.id))
+    }
+
+    private fun validateIcon(icon: MultipartFile) {
+        if (icon.isEmpty) {
+            throw MultipartFileException("The uploaded file is empty")
+        }
+
+        if (icon.contentType != IMAGE_JPEG_VALUE && icon.contentType != IMAGE_PNG_VALUE
+                && icon.contentType != IMAGE_GIF_VALUE) {
+            throw MultipartFileException("Incorrect file type, ${icon.contentType}")
+        }
     }
 
 }
