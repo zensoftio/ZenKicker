@@ -45,7 +45,10 @@ class PasswordBlock extends Component {
   onCurrentPasswordChange = (value) => this.setState({currentPassword: value, passwordError: null})
 
   onChangePasswordClick = async () => {
-    if (this.state.newPassword === this.state.currentPassword) return;
+    if (this.state.newPassword === this.state.currentPassword) {
+      this.child.onPopupClose();
+      return;
+    };
     if (this.state.newPassword === '' || this.state.currentPassword === '') return this.setState({passwordError: 'All fields are required'});
     try {
       const data = {
