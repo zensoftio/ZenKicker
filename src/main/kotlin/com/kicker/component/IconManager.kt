@@ -36,7 +36,16 @@ class IconManager(
             val iconPath = Paths.get("$iconsDirectory/$iconName")
             Files.write(iconPath, bytes)
         } catch (e: IOException) {
-            log.error(e.message, e)
+            throw IllegalStateException(e.message, e)
+        }
+    }
+
+    fun remove(iconName: String) {
+        try {
+            val iconPath = Paths.get("$iconsDirectory/$iconName")
+            Files.delete(iconPath)
+        } catch (e: IOException) {
+            throw IllegalStateException(e.message, e)
         }
     }
 
