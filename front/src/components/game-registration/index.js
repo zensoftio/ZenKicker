@@ -4,13 +4,8 @@ import {Button} from '../../components-ui/buttons/button';
 import Popup from '../popup';
 import DropdownInput from '../../components-ui/dropdown-input';
 import {
-  getActivePlayers,
-  getAllPlayers,
-  registerGame
+  registerGame,
 } from '../../actions';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
 
 const Content = styled.div``;
 
@@ -66,11 +61,6 @@ class GameRegistration extends Component {
     }
   }
 
-  componentDidMount() {
-    this.props.actions.getActivePlayers();
-    this.props.actions.getAllPlayers();
-  }
-
   clearValues = () => this.setState({
     winner1Id: null,
     winner2Id: null,
@@ -86,8 +76,12 @@ class GameRegistration extends Component {
   onLoser2Change = ({value}) => this.setState({loser2Id: value, registrationError: null})
   onLosersGoalsChange = ({value}) => this.setState({losersGoals: value, registrationError: null})
 
-  onChangePasswordClick = async () => {
+  onRegisterGame = async () => {
     const {winner1Id, winner2Id, loser1Id, loser2Id, losersGoals} = this.state;
+    if (winner1Id === null || winner2Id === null || loser1Id === null || loser2Id === null || losersGoals === null) {
+      return this.setState({registrationError: 'All fields should be filled'});
+    }
+    const {getActivePlayers, getAllPlayers, getLatestGames, getAllGames} = this.props;
     const data = {
       winner1Id,
       winner2Id,
@@ -98,8 +92,13 @@ class GameRegistration extends Component {
     try {
       await registerGame(data);
       this.clearValues();
-      this.child.onPopupClose()
+      this.child.onPopupClose();
+      getActivePlayers();
+      getAllPlayers();
+      getLatestGames();
+      getAllGames();
     } catch (err) {
+      console.log({err})
       const error = err.response.data.errors[0].message;
       this.setState({registrationError: error});
     }
@@ -150,7 +149,7 @@ class GameRegistration extends Component {
             </Container>
 
             <RegistrationError>{registrationError}</RegistrationError>
-            <Button onClick={this.onChangePasswordClick}>Confirm</Button>
+            <Button onClick={this.onRegisterGame}>Confirm</Button>
           </InputsContainer>
         </Popup>
       </Content>
@@ -158,18 +157,4 @@ class GameRegistration extends Component {
   }
 }
 
-
-const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
-  const props = {};
-  return props;
-}
-const mapDispatchToProps = (dispatch) => {
-  const actions = {
-    getActivePlayers,
-    getAllPlayers
-  };
-  const actionMap = {actions: bindActionCreators(actions, dispatch)};
-  return actionMap;
-}
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(GameRegistration));
+export default GameRegistration;

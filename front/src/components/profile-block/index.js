@@ -9,6 +9,8 @@ const Content = styled(Link)`
 	text-decoration: none;
 	align-items: center;
 	padding: 15px 20px;
+	min-height: 80px;
+	box-sizing: border-box;
 	width: max-content;
 	transition: margin .3s ease-in-out;
 	span {

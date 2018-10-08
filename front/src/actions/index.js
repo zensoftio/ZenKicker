@@ -1,5 +1,5 @@
 import {getCurrent, getActivePlayers, getAllPlayers, getPlayer, updateUsername} from './user';
-import {registerGame, getAllGames} from './game';
+import {registerGame, getAllGames, getLatestGames, appendToGames} from './game';
 
 export {
 	getCurrent,
@@ -8,5 +8,7 @@ export {
   getPlayer,
   updateUsername,
   registerGame,
-  getAllGames
+  getAllGames,
+  getLatestGames,
+  appendToGames,
 };

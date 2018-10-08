@@ -10,6 +10,8 @@ const Content = styled(Link)`
 	align-items: center;
 	padding: 15px 20px;
 	width: max-content;
+	min-height: 80px;
+	box-sizing: border-box;
 	transition: margin .3s ease-in-out;
 	span {
 	  margin-right: 30px;
@@ -19,7 +21,11 @@ const Content = styled(Link)`
     min-width: 50px;
     max-height: 50px;
     min-height: 50px;
-    padding-left: 20px;
+    margin-left: 10px;
+    border-radius: 100%;
+    &:first-child {
+      padding-left: 0;
+    }
   }
   &:hover {
     margin: 5px 0;
@@ -27,36 +33,45 @@ const Content = styled(Link)`
     background-color: #fafafa
   }
 `;
-const Template = styled.div`
-  padding-left: 20px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+
+const Team = styled.div`
+  display: flex;
 `;
 
-const Index = styled.div`
-  max-width: 40px;
-  min-width: 40px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+const Score = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 40px;
+  font-size: 1.3em;
 `;
 
-const Username = styled(Template)`
-  max-width: 200px;
-  min-width: 200px;
-`;
-
-const Statistics = styled(Template)`
-  max-width: 100px;
-  min-width: 100px;
-`;
-
-export const GameBlock = ({index, id, username, countGames, rated, rating}) => (
-  <Content to={`/player/${id}`}>
-    <Index>{index}</Index>
-    <img alt="avatar" src={'https://www.shareicon.net/data/2016/08/05/806962_user_512x512.png'} />
-    <Username>{username}</Username>
-    <Statistics>{countGames}</Statistics>
-    <Statistics>{rated}</Statistics>
-    <Statistics>{rating}</Statistics>
+export const GameBlock = ({winner1Icon, winner2Icon, loser1Icon, loser2Icon, losersGoals}) => (
+  <Content to={'/'}>
+    <Team>
+      {
+        winner1Icon ?
+          <img alt="avatar" src={`http://localhost/images/icons/${winner1Icon}`}/> :
+          <img alt="avatar" src={'https://www.shareicon.net/data/2016/08/05/806962_user_512x512.png'} />
+      }
+      {
+        winner2Icon ?
+          <img alt="avatar" src={`http://localhost/images/icons/${winner2Icon}`}/> :
+          <img alt="avatar" src={'https://www.shareicon.net/data/2016/08/05/806962_user_512x512.png'} />
+      }
+    </Team>
+    <Score>10 : {losersGoals}</Score>
+    <Team>
+      {
+        loser1Icon ?
+          <img alt="avatar" src={`http://localhost/images/icons/${loser1Icon}`}/> :
+          <img alt="avatar" src={'https://www.shareicon.net/data/2016/08/05/806962_user_512x512.png'} />
+      }
+      {
+        loser2Icon ?
+          <img alt="avatar" src={`http://localhost/images/icons/${loser2Icon}`}/> :
+          <img alt="avatar" src={'https://www.shareicon.net/data/2016/08/05/806962_user_512x512.png'} />
+      }
+    </Team>
   </Content>
 )

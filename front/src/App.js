@@ -3,7 +3,13 @@ import {Switch, Route, Redirect, withRouter} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import styled from 'styled-components';
-import {getCurrent} from "./actions";
+import {
+	getCurrent,
+  getAllPlayers,
+  getActivePlayers,
+  getLatestGames,
+  getAllGames
+} from "./actions";
 import {MainMenu} from "./components/main-menu";
 import DashboardScene from "./scenes/DashboardScene";
 import ProfileScene from "./scenes/ProfileScene";
@@ -44,8 +50,9 @@ class App extends Component {
 	}
 
 	render() {
-	  const {currentUser} = this.props;
-	  if (!currentUser) {
+	  const {currentUser, actions, players} = this.props;
+
+	  if (!currentUser || !currentUser.username) {
 	    return null
     }
 		return (
@@ -53,7 +60,8 @@ class App extends Component {
 				<MainMenu currentUser={currentUser}/>
         <MainContentContainer>
           <GameRegistrationContainer>
-            <GameRegistration players={this.props.players ? this.props.players.list : []} registerGame={this.props.actions.registerGame}/>
+            <GameRegistration players={players ? players.list : []} getAllPlayers={actions.getAllPlayers} getAllGames={actions.getAllGames}
+                              getActivePlayers={actions.getActivePlayers} getLatestGames={actions.getLatestGames}/>
           </GameRegistrationContainer>
 
           <Content>
@@ -81,7 +89,11 @@ const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
 }
 const mapDispatchToProps = (dispatch) => {
 	const actions = {
-		getCurrent
+		getCurrent,
+    getAllPlayers,
+    getActivePlayers,
+    getLatestGames,
+    getAllGames
 	};
 	const actionMap = {actions: bindActionCreators(actions, dispatch)};
 	return actionMap;

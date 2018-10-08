@@ -57,11 +57,12 @@ class PlayersTabs extends Component {
   setAllPlayersTab = () => this.setState({isAllPlayersTab: true})
 
   render() {
+    const {isAllPlayersTab} = this.state;
     return (
       <div>
         <TabButtonContainer>
-          <TabButton name='active' onButtonClick={this.setActivePlayersTab} isActive={!this.state.isAllPlayersTab}/>
-          <TabButton name='all' onButtonClick={this.setAllPlayersTab} isActive={this.state.isAllPlayersTab}/>
+          <TabButton name='active' onButtonClick={this.setActivePlayersTab} isActive={!isAllPlayersTab}/>
+          <TabButton name='all' onButtonClick={this.setAllPlayersTab} isActive={isAllPlayersTab}/>
         </TabButtonContainer>
         <Head>
           <IndexColumn>#</IndexColumn>

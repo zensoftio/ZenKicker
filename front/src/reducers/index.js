@@ -1,7 +1,9 @@
 import {user} from './user';
+import {game} from './game';
 
 const reducers = {
-  user
+  user,
+  game
 };
 
 export default reducers;

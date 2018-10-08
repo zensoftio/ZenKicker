@@ -7,8 +7,14 @@ import {
 
 const initState = {
   current: null,
-  activePlayers: null,
-  players: null,
+  activePlayers: {
+    list: [],
+    totalCount: 0
+  },
+  players: {
+    list: [],
+    totalCount: 0
+  },
   player: null
 };
 
