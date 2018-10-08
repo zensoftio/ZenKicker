@@ -109,7 +109,7 @@ class GameRegistration extends Component {
     const {players} = this.props;
     const {winner1Id, winner2Id, loser1Id, loser2Id} = this.state;
     const chosenPlayers = [winner1Id, winner2Id, loser1Id, loser2Id];
-    const mapPlayers = players && players.map(i => ({value: i.id, label: i.username}));
+    const mapPlayers = players ? players.map(i => ({value: i.id, label: i.username})) : [];
     return mapPlayers.filter(i => !chosenPlayers.includes(i.value))
   }
 
