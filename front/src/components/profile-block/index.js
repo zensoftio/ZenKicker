@@ -12,7 +12,6 @@ const Content = styled(Link)`
 	min-height: 80px;
 	box-sizing: border-box;
 	width: max-content;
-	transition: margin .3s ease-in-out;
 	span {
 	  margin-right: 30px;
 	}
@@ -25,8 +24,6 @@ const Content = styled(Link)`
     border-radius: 100%;
   }
   &:hover {
-    margin: 5px 0;
-    box-shadow: 0 6px 10px rgba(0,0,0,0.1);
     background-color: #fafafa
   }
 `;
