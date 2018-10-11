@@ -2,19 +2,24 @@ import React from 'react';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 
-const Content = styled(Link)`
+const defaultPhoto = 'https://www.hgvrecruitmentcentre.co.uk/wp-content/uploads/2018/04/1_MccriYX-ciBniUzRKAUsAw.png';
+
+const Content = styled.div`
   display: flex;
 	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-	color: black;
-	text-decoration: none;
 	align-items: center;
 	padding: 15px 20px;
 	width: max-content;
 	min-height: 80px;
 	box-sizing: border-box;
-	span {
-	  margin-right: 30px;
-	}
+`;
+
+const Team = styled.div`
+  display: flex;
+`;
+
+const User = styled(Link)`
+  display: flex;
   img {
     max-width: 50px;
     min-width: 50px;
@@ -26,13 +31,6 @@ const Content = styled(Link)`
       padding-left: 0;
     }
   }
-  &:hover {
-    background-color: #fafafa
-  }
-`;
-
-const Team = styled.div`
-  display: flex;
 `;
 
 const Score = styled.div`
@@ -43,32 +41,40 @@ const Score = styled.div`
   font-size: 1.3em;
 `;
 
-export const GameBlock = ({winner1Icon, winner2Icon, loser1Icon, loser2Icon, losersGoals}) => (
-  <Content to={'/'}>
+export const GameBlock = ({winner1Icon, winner1Id, winner2Icon, winner2Id, loser1Icon, loser1Id, loser2Icon, loser2Id, losersGoals}) => (
+  <Content>
     <Team>
-      {
-        winner1Icon ?
-          <img alt="avatar" src={`http://localhost/images/icons/${winner1Icon}`}/> :
-          <img alt="avatar" src={'https://www.shareicon.net/data/2016/08/05/806962_user_512x512.png'} />
-      }
-      {
-        winner2Icon ?
-          <img alt="avatar" src={`http://localhost/images/icons/${winner2Icon}`}/> :
-          <img alt="avatar" src={'https://www.shareicon.net/data/2016/08/05/806962_user_512x512.png'} />
-      }
+      <User to={`/player/${winner1Id}`}>
+        {
+          winner1Icon ?
+            <img alt="avatar" src={`http://localhost/images/icons/${winner1Icon}`}/> :
+            <img alt="avatar" src={defaultPhoto} />
+        }
+      </User>
+      <User to={`/player/${winner2Id}`}>
+        {
+          winner2Icon ?
+            <img alt="avatar" src={`http://localhost/images/icons/${winner2Icon}`}/> :
+            <img alt="avatar" src={defaultPhoto} />
+        }
+      </User>
     </Team>
     <Score>10 : {losersGoals}</Score>
     <Team>
-      {
-        loser1Icon ?
-          <img alt="avatar" src={`http://localhost/images/icons/${loser1Icon}`}/> :
-          <img alt="avatar" src={'https://www.shareicon.net/data/2016/08/05/806962_user_512x512.png'} />
-      }
-      {
-        loser2Icon ?
-          <img alt="avatar" src={`http://localhost/images/icons/${loser2Icon}`}/> :
-          <img alt="avatar" src={'https://www.shareicon.net/data/2016/08/05/806962_user_512x512.png'} />
-      }
+      <User to={`/player/${loser1Id}`}>
+        {
+          loser1Icon ?
+            <img alt="avatar" src={`http://localhost/images/icons/${loser1Icon}`}/> :
+            <img alt="avatar" src={defaultPhoto} />
+        }
+      </User>
+      <User to={`/player/${loser2Id}`}>
+        {
+          loser2Icon ?
+            <img alt="avatar" src={`http://localhost/images/icons/${loser2Icon}`}/> :
+            <img alt="avatar" src={defaultPhoto} />
+        }
+      </User>
     </Team>
   </Content>
 )

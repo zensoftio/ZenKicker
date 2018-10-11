@@ -4,8 +4,14 @@ import {Button} from '../../components-ui/buttons/button';
 import Popup from '../popup';
 import DropdownInput from '../../components-ui/dropdown-input';
 import {
+  getActivePlayers,
+  getAllGames,
+  getAllPlayers,
+  getLatestGames,
   registerGame,
 } from '../../actions';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
 const Content = styled.div``;
 
@@ -81,7 +87,7 @@ class GameRegistration extends Component {
     if (winner1Id === null || winner2Id === null || loser1Id === null || loser2Id === null || losersGoals === null) {
       return this.setState({registrationError: 'All fields should be filled'});
     }
-    const {getActivePlayers, getAllPlayers, getLatestGames, getAllGames} = this.props;
+    const {getActivePlayers, getAllPlayers, getLatestGames, getAllGames} = this.props.actions;
     const data = {
       winner1Id,
       winner2Id,
@@ -108,7 +114,7 @@ class GameRegistration extends Component {
     const {players} = this.props;
     const {winner1Id, winner2Id, loser1Id, loser2Id} = this.state;
     const chosenPlayers = [winner1Id, winner2Id, loser1Id, loser2Id];
-    const mapPlayers = players ? players.map(i => ({value: i.id, label: i.username})) : [];
+    const mapPlayers = players.list.map(i => ({value: i.id, label: i.username}));
     return mapPlayers.filter(i => !chosenPlayers.includes(i.value))
   }
 
@@ -157,4 +163,21 @@ class GameRegistration extends Component {
   }
 }
 
-export default GameRegistration;
+const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
+  const props = {
+    players: state.player.players
+  };
+  return props;
+}
+const mapDispatchToProps = (dispatch) => {
+  const actions = {
+    getAllPlayers,
+    getActivePlayers,
+    getLatestGames,
+    getAllGames
+  };
+  const actionMap = {actions: bindActionCreators(actions, dispatch)};
+  return actionMap;
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(GameRegistration);

@@ -5,11 +5,14 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {getCurrent, getPlayer} from '../../actions';
 
+import uploadIco from '../../shared/images/icons/upload.png';
+const defaultPhoto = 'https://www.hgvrecruitmentcentre.co.uk/wp-content/uploads/2018/04/1_MccriYX-ciBniUzRKAUsAw.png';
+
 const ProfilePhoto = styled.div`
   width: 150px;
   min-width: 150px;
   height: 150px;
-  padding: 0 20px;
+  margin: 0 20px;
   position: relative;
   img {
     border-radius: 100%;
@@ -20,7 +23,7 @@ const ProfilePhoto = styled.div`
 
 const Button = styled.label`
   cursor: pointer;
-  
+  border-radius: 100%;
   position: absolute;
   left: 0;
   top:0;
@@ -29,6 +32,13 @@ const Button = styled.label`
   
   input{
     display: none;
+  }
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    background-image: url(${uploadIco});
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 40px 40px;
   }
 `;
 
@@ -67,7 +77,7 @@ class ProfilePhotoBlock extends Component {
         {
           player.iconName ?
             <img alt="avatar" src={`http://localhost/images/icons/${player.iconName}`}/> :
-            <img alt="avatar" src={'https://www.shareicon.net/data/2016/08/05/806962_user_512x512.png'} />
+            <img alt="avatar" src={defaultPhoto} />
         }
         {
           isCurrent &&
@@ -84,7 +94,7 @@ class ProfilePhotoBlock extends Component {
 const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
   const props = {
     currentUser: state.user.current,
-    player: state.user.player
+    player: state.player.player
   };
   return props;
 }

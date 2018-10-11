@@ -90,7 +90,7 @@ class UsernameBlock extends Component {
 
 const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
   const props = {
-    player: state.user.player,
+    player: state.player.player,
     currentUser: state.user.current
   };
   return props;

@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 
+const defaultPhoto = 'https://www.hgvrecruitmentcentre.co.uk/wp-content/uploads/2018/04/1_MccriYX-ciBniUzRKAUsAw.png';
+
 const Content = styled(Link)`
   display: flex;
 	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -56,7 +58,7 @@ export const ProfileBlock = ({index, id, username, countGames, rated, rating, ic
     {
       iconName ?
         <img alt="avatar" src={`http://localhost/images/icons/${iconName}`}/> :
-        <img alt="avatar" src={'https://www.shareicon.net/data/2016/08/05/806962_user_512x512.png'} />
+        <img alt="avatar" src={defaultPhoto} />
     }
     <Username>{username}</Username>
     <Statistics>{countGames}</Statistics>
