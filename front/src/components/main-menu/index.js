@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import {MainMenuLink} from "../../components-ui/buttons/main-menu-link";
 
 import signOutIco from '../../shared/images/icons/sign-out.png';
-const defaultPhoto = 'https://www.hgvrecruitmentcentre.co.uk/wp-content/uploads/2018/04/1_MccriYX-ciBniUzRKAUsAw.png';
+import UserPhoto from '../../components-ui/user-photo';
 
 const Content = styled.section`
 	min-width: 300px;
@@ -73,11 +73,7 @@ export const MainMenu = ({currentUser}) => (
 		<Title to="/">Zen<span>Kicker</span></Title>
     <AuthenticationContent>
       <div>
-        {
-          currentUser.iconName ?
-            <img alt="avatar" src={`http://localhost/images/icons/${currentUser.iconName}`}/> :
-            <img alt="avatar" src={defaultPhoto} />
-        }
+        <UserPhoto photo={currentUser.iconName}/>
         <Username to={`/player/${currentUser.id}`}>{currentUser.username}</Username>
       </div>
       <a href="/logout"><SignOut/></a>

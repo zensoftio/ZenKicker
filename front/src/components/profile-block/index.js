@@ -1,8 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
+import UserPhoto from '../../components-ui/user-photo';
 
-const defaultPhoto = 'https://www.hgvrecruitmentcentre.co.uk/wp-content/uploads/2018/04/1_MccriYX-ciBniUzRKAUsAw.png';
+export const ProfileBlock = ({index, id, username, countGames, rated, rating, iconName}) => (
+  <Content to={`/player/${id}`}>
+    <Index>{index}</Index>
+      <UserPhoto photo={iconName}/>
+    <Username>{username}</Username>
+    <Statistics>{countGames}</Statistics>
+    <Statistics>{rated}</Statistics>
+    <Statistics>{rating}</Statistics>
+  </Content>
+)
 
 const Content = styled(Link)`
   display: flex;
@@ -52,17 +62,3 @@ const Statistics = styled(Template)`
   min-width: 100px;
 `;
 
-export const ProfileBlock = ({index, id, username, countGames, rated, rating, iconName}) => (
-  <Content to={`/player/${id}`}>
-    <Index>{index}</Index>
-    {
-      iconName ?
-        <img alt="avatar" src={`http://localhost/images/icons/${iconName}`}/> :
-        <img alt="avatar" src={defaultPhoto} />
-    }
-    <Username>{username}</Username>
-    <Statistics>{countGames}</Statistics>
-    <Statistics>{rated}</Statistics>
-    <Statistics>{rating}</Statistics>
-  </Content>
-)

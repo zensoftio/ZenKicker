@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
-
-const defaultPhoto = 'https://www.hgvrecruitmentcentre.co.uk/wp-content/uploads/2018/04/1_MccriYX-ciBniUzRKAUsAw.png';
+import UserPhoto from '../../components-ui/user-photo';
 
 const Content = styled.div`
   display: flex;
@@ -45,35 +44,19 @@ export const GameBlock = ({winner1Icon, winner1Id, winner2Icon, winner2Id, loser
   <Content>
     <Team>
       <User to={`/player/${winner1Id}`}>
-        {
-          winner1Icon ?
-            <img alt="avatar" src={`http://localhost/images/icons/${winner1Icon}`}/> :
-            <img alt="avatar" src={defaultPhoto} />
-        }
+        <UserPhoto photo={winner1Icon}/>
       </User>
       <User to={`/player/${winner2Id}`}>
-        {
-          winner2Icon ?
-            <img alt="avatar" src={`http://localhost/images/icons/${winner2Icon}`}/> :
-            <img alt="avatar" src={defaultPhoto} />
-        }
+        <UserPhoto photo={winner2Icon}/>
       </User>
     </Team>
     <Score>10 : {losersGoals}</Score>
     <Team>
       <User to={`/player/${loser1Id}`}>
-        {
-          loser1Icon ?
-            <img alt="avatar" src={`http://localhost/images/icons/${loser1Icon}`}/> :
-            <img alt="avatar" src={defaultPhoto} />
-        }
+        <UserPhoto photo={loser1Icon}/>
       </User>
       <User to={`/player/${loser2Id}`}>
-        {
-          loser2Icon ?
-            <img alt="avatar" src={`http://localhost/images/icons/${loser2Icon}`}/> :
-            <img alt="avatar" src={defaultPhoto} />
-        }
+        <UserPhoto photo={loser2Icon}/>
       </User>
     </Team>
   </Content>

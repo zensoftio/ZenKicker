@@ -5,7 +5,27 @@ import {MainMenuLink} from "../../components-ui/buttons/main-menu-link";
 import GameRegistration from '../game-registration';
 
 import signOutIco from '../../shared/images/icons/sign-out.png';
-const defaultPhoto = 'https://www.hgvrecruitmentcentre.co.uk/wp-content/uploads/2018/04/1_MccriYX-ciBniUzRKAUsAw.png';
+import UserPhoto from '../../components-ui/user-photo';
+
+export const HorizontalMenu = ({currentUser}) => (
+  <Content>
+    <Title to="/">Zen<span>Kicker</span></Title>
+    <TopBar>
+      <Navigation>
+        <MainMenuLink link="/players">Players</MainMenuLink>
+        <MainMenuLink link="/games">Games</MainMenuLink>
+      </Navigation>
+      <RightSection>
+        <GameRegistration />
+        <User to={`/player/${currentUser.id}`}>
+          <UserPhoto photo={currentUser.iconName}/>
+          <Username>{currentUser.username}</Username>
+        </User>
+        <a href="/logout"><SignOut/></a>
+      </RightSection>
+    </TopBar>
+  </Content>
+)
 
 const Content = styled.section`
 	width: 100%;
@@ -82,27 +102,3 @@ const SignOut = styled.div`
   background-position: center;
   background-size: contain;
 `;
-
-export const HorizontalMenu = ({currentUser}) => (
-  <Content>
-    <Title to="/">Zen<span>Kicker</span></Title>
-    <TopBar>
-      <Navigation>
-        <MainMenuLink link="/players">Players</MainMenuLink>
-        <MainMenuLink link="/games">Games</MainMenuLink>
-      </Navigation>
-      <RightSection>
-        <GameRegistration />
-        <User to={`/player/${currentUser.id}`}>
-          {
-            currentUser.iconName ?
-              <img alt="avatar" src={`http://localhost/images/icons/${currentUser.iconName}`}/> :
-              <img alt="avatar" src={defaultPhoto} />
-          }
-          <Username>{currentUser.username}</Username>
-        </User>
-        <a href="/logout"><SignOut/></a>
-      </RightSection>
-    </TopBar>
-  </Content>
-)
