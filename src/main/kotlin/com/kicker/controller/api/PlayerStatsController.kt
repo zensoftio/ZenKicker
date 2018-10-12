@@ -36,9 +36,9 @@ class PlayerStatsController(
         return service.countLossesByPlayer(playerId)
     }
 
-    @GetMapping("/player/{playerId}/victories")
-    fun getVictoriesByPlayer(@PathVariable playerId: Long): Long {
-        return service.countVictoriesByPlayer(playerId)
+    @GetMapping("/player/{playerId}/wins")
+    fun getWinsByPlayer(@PathVariable playerId: Long): Long {
+        return service.countWinsByPlayer(playerId)
     }
 
 }

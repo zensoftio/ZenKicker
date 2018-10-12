@@ -73,7 +73,7 @@ interface PlayerStatsService : BaseService<PlayerStats> {
 
     fun countLossesByPlayer(playerId: Long): Long
 
-    fun countVictoriesByPlayer(playerId: Long): Long
+    fun countWinsByPlayer(playerId: Long): Long
 
 }
 

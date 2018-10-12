@@ -53,7 +53,7 @@ class DefaultPlayerStatsService(
         return repository.countByPlayerAndWon(player, false)
     }
 
-    override fun countVictoriesByPlayer(playerId: Long): Long {
+    override fun countWinsByPlayer(playerId: Long): Long {
         val player = playerService.get(playerId)
         return repository.countByPlayerAndWon(player, true)
     }
