@@ -31,4 +31,14 @@ class PlayerStatsController(
     fun getDeltaByPlayerAndWeeksAgo(@PathVariable playerId: Long, @PathVariable @Min(0) weeksAgo: Long): Int =
             service.getDeltaByPlayerAndWeeksAgo(playerId, weeksAgo).toInt()
 
+    @GetMapping("/player/{playerId}/losses")
+    fun countLossesByPlayer(@PathVariable playerId: Long): Long {
+        return service.countLossesByPlayer(playerId)
+    }
+
+    @GetMapping("/player/{playerId}/victories")
+    fun getVictoriesByPlayer(@PathVariable playerId: Long): Long {
+        return service.countVictoriesByPlayer(playerId)
+    }
+
 }

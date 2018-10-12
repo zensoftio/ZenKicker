@@ -58,6 +58,8 @@ interface PlayerStatsRepository : BaseRepository<PlayerStats> {
                 AND (?2 <= DATE(g.date) AND ?3 >= DATE(g.date))""")
     fun calculateDeltaByPlayerAndIntervalDates(player: Player, startDate: LocalDate, endDate: LocalDate): Double
 
+    fun countByPlayerAndWon(player: Player, won: Boolean): Long
+
 }
 
 @Repository

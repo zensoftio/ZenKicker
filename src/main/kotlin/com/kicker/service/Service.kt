@@ -71,6 +71,10 @@ interface PlayerStatsService : BaseService<PlayerStats> {
 
     fun getActualRatingByPlayer(playerId: Long): Double
 
+    fun countLossesByPlayer(playerId: Long): Long
+
+    fun countVictoriesByPlayer(playerId: Long): Long
+
 }
 
 interface AwardService : BaseService<Award> {

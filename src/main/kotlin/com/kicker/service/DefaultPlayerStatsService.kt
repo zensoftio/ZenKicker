@@ -48,4 +48,14 @@ class DefaultPlayerStatsService(
         return rating
     }
 
+    override fun countLossesByPlayer(playerId: Long): Long {
+        val player = playerService.get(playerId)
+        return repository.countByPlayerAndWon(player, false)
+    }
+
+    override fun countVictoriesByPlayer(playerId: Long): Long {
+        val player = playerService.get(playerId)
+        return repository.countByPlayerAndWon(player, true)
+    }
+
 }
