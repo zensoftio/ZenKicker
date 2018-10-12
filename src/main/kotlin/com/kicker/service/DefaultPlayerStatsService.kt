@@ -1,5 +1,6 @@
 package com.kicker.service
 
+import com.kicker.config.property.GamesSettingsProperties
 import com.kicker.config.property.PlayerSettingsProperties
 import com.kicker.domain.PageRequest
 import com.kicker.model.Player
@@ -19,7 +20,8 @@ import org.springframework.transaction.annotation.Transactional
 class DefaultPlayerStatsService(
         private val repository: PlayerStatsRepository,
         private val playerService: PlayerService,
-        private val playerSettingsProperties: PlayerSettingsProperties
+        private val playerSettingsProperties: PlayerSettingsProperties,
+        private val gamesSettingsProperties: GamesSettingsProperties
 ) : DefaultBaseService<PlayerStats, PlayerStatsRepository>(repository), PlayerStatsService {
 
     override fun getByPlayer(playerId: Long, pageRequest: PageRequest): Page<PlayerStats> {
@@ -56,6 +58,20 @@ class DefaultPlayerStatsService(
     override fun countWinsByPlayer(playerId: Long): Long {
         val player = playerService.get(playerId)
         return repository.countByPlayerAndWon(player, true)
+    }
+
+    override fun countGoalsAgainstByPlayer(playerId: Long): Long {
+        val player = playerService.get(playerId)
+
+        val countLosses = repository.countByPlayerAndWon(player, false)
+        return repository.countGoalsByPlayerAndWon(player, true) + countLosses * gamesSettingsProperties.defaultMaxScore!!
+    }
+
+    override fun countGoalsForByPlayer(playerId: Long): Long {
+        val player = playerService.get(playerId)
+
+        val countWins = repository.countByPlayerAndWon(player, true)
+        return repository.countGoalsByPlayerAndWon(player, false) + countWins * gamesSettingsProperties.defaultMaxScore!!
     }
 
 }

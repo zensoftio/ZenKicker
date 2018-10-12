@@ -41,4 +41,14 @@ class PlayerStatsController(
         return service.countWinsByPlayer(playerId)
     }
 
+    @GetMapping("/player/{playerId}/goalsAgainst")
+    fun countGoalsAgainstByPlayer(@PathVariable playerId: Long): Long {
+        return service.countGoalsAgainstByPlayer(playerId)
+    }
+
+    @GetMapping("/player/{playerId}/goalsFor")
+    fun countGoalsForByPlayer(@PathVariable playerId: Long): Long {
+        return service.countGoalsForByPlayer(playerId)
+    }
+
 }

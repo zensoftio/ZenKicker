@@ -60,6 +60,10 @@ interface PlayerStatsRepository : BaseRepository<PlayerStats> {
 
     fun countByPlayerAndWon(player: Player, won: Boolean): Long
 
+    @Query("""SELECT COALESCE(SUM(g.losersGoals), 0) FROM PlayerStats s JOIN Game g ON s.game = g AND s.player = ?1
+                AND s.won = ?2""")
+    fun countGoalsByPlayerAndWon(player: Player, won: Boolean): Long
+
 }
 
 @Repository
