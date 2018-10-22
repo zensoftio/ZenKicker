@@ -13,6 +13,8 @@ import {
 } from '../../actions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import {Colors} from '../../helpers/style-variables';
+import {getGoalValues} from '../../helpers/goal-values';
 
 class GameRegistration extends Component {
   constructor(props) {
@@ -82,19 +84,6 @@ class GameRegistration extends Component {
   render() {
     const {registrationError} = this.state;
 
-    const goals = [
-      {value: 0, label: 0},
-      {value: 1, label: 1},
-      {value: 2, label: 2},
-      {value: 3, label: 3},
-      {value: 4, label: 4},
-      {value: 5, label: 5},
-      {value: 6, label: 6},
-      {value: 7, label: 7},
-      {value: 8, label: 8},
-      {value: 9, label: 9},
-    ]
-
     return (
       <Content>
         <Popup buttonTitle='Register Game' ref={instance => {this.child = instance}} clearValues={this.clearValues}>
@@ -107,14 +96,13 @@ class GameRegistration extends Component {
               </Block>
               <ScoreBlock>
                 <div>10 :</div>
-                <DropdownInput data={goals} onChange={this.onLosersGoalsChange} placeholder=''/>
+                <DropdownInput data={getGoalValues()} onChange={this.onLosersGoalsChange} placeholder=''/>
               </ScoreBlock>
               <Block>
                 <DropdownInput data={this.getFilteredPlayerList()} onChange={this.onLoser1Change} placeholder='Loser 1'/>
                 <DropdownInput data={this.getFilteredPlayerList()} onChange={this.onLoser2Change} placeholder='Loser 2'/>
               </Block>
             </Container>
-
             <RegistrationError>{registrationError}</RegistrationError>
             <Button onClick={this.onRegisterGame}>Confirm</Button>
           </InputsContainer>
@@ -180,7 +168,7 @@ const InputsContainer = styled.div`
 `;
 
 const RegistrationError = styled.span`
-  color: red;
+  color: ${Colors.ERROR_COLOR};
   display: flex;
   align-items: center;
   margin: 20px 0;

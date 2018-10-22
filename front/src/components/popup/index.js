@@ -2,23 +2,6 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 import {Button} from '../../components-ui/buttons/button';
 
-const Content = styled.div`
-  display: flex;
-`;
-
-const PopupContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 10;
-`;
-
 class Popup extends Component {
   constructor(props) {
     super(props);
@@ -27,8 +10,15 @@ class Popup extends Component {
     }
   }
 
-  onPopupOpen = () => this.setState({isPopupOpen: true})
-  onPopupClose = () => this.setState({isPopupOpen: false})
+  onPopupOpen = () => {
+    this.setState({isPopupOpen: true});
+    document.getElementsByTagName('BODY')[0].style.overflow = 'hidden';
+
+  }
+  onPopupClose = () => {
+    this.setState({isPopupOpen: false});
+    document.getElementsByTagName('BODY')[0].style.overflow = 'auto';
+  }
 
   handleOnBackgroundClick = (e) => {
     if (e.target.classList.contains(PopupContainer.styledComponentId)) {
@@ -55,4 +45,21 @@ class Popup extends Component {
   }
 }
 
-export default Popup
+export default Popup;
+
+const Content = styled.div`
+  display: flex;
+`;
+
+const PopupContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+`;

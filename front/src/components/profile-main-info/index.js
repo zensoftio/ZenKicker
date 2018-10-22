@@ -3,43 +3,7 @@ import styled from 'styled-components';
 import UsernameBlock from '../username-block';
 import ProfilePhotoBlock from '../profile-photo-block';
 import PasswordBlock from '../password-block';
-
-const Content = styled.div`
-  display: flex;
-  width: 100%;
-  position: relative;
-`;
-
-const Info = styled.div`
-  width: 100%;
-`;
-
-const StatisticsContent = styled.div`
-  padding: 20px 0 0 20px;
-`;
-
-const Statistics = styled.div`
-  font-size: 1.3em;
-  padding-bottom: 10px;
-  
-  &:last-child {
-    padding-bottom: 0;
-  }
-
-  span {
-    font-weight: 100;
-  }
-`;
-
-const ErrorPhotoUpload = styled.div`
-  position: absolute;
-  color: #C74242;
-  bottom: 60px;
-`;
-
-const ChangePasswordContainer = styled.div`
-  margin-top: 70px;
-`;
+import {Colors} from '../../helpers/style-variables';
 
 class ProfileMainInfo extends Component {
 
@@ -62,16 +26,16 @@ class ProfileMainInfo extends Component {
       <Content>
         <div>
           <ProfilePhotoBlock isCurrent={isCurrent} setPhotoError={this.setPhotoError}/>
-          <ChangePasswordContainer>
-            {
-              isCurrent && <PasswordBlock />
-            }
-          </ChangePasswordContainer>
           <ErrorPhotoUpload>{uploadPhotoError}</ErrorPhotoUpload>
         </div>
 
         <Info>
-          <UsernameBlock isCurrent={isCurrent}/>
+          <EditingBlock>
+            <UsernameBlock isCurrent={isCurrent}/>
+            {
+              isCurrent && <PasswordBlock />
+            }
+          </EditingBlock>
           <StatisticsContent>
             <Statistics>Rating: <span>{rating}</span></Statistics>
             <Statistics>Games played: <span>{countGames}</span></Statistics>
@@ -84,3 +48,39 @@ class ProfileMainInfo extends Component {
 }
 
 export default ProfileMainInfo
+
+const Content = styled.div`
+  display: flex;
+  width: 900px;
+`;
+
+const Info = styled.div`
+  width: 100%;
+`;
+
+const StatisticsContent = styled.div`
+  padding: 40px 20px 0 20px;
+`;
+
+const Statistics = styled.div`
+  font-size: 1.3em;
+  padding-bottom: 10px;
+  &:last-child {
+    padding-bottom: 0;
+  }
+  span {
+    padding-left: 10px;
+    color: ${Colors.MAIN_COLOR}
+  }
+`;
+
+const ErrorPhotoUpload = styled.div`
+  color: ${Colors.ERROR_COLOR};
+  max-width: 200px;
+  margin-top: 10px;
+`;
+
+const EditingBlock = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;

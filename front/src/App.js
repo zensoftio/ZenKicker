@@ -74,6 +74,7 @@ export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
 
 const Container = styled.div`
   width: 100%;
+  min-height: 100vh;
   display: flex;
   position: relative;
   flex-direction: column;
@@ -85,7 +86,7 @@ const Content = styled.div`
 	padding: 0 50px 20px 50px;
 	padding-top: 0;
 	box-sizing: border-box;
-	margin-top: 40px;
+	margin-top: 120px;
 	display: flex;
 	justify-content: center;
 `;

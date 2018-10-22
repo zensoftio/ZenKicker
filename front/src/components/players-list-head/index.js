@@ -1,6 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 
+const PlayersListHead = () => (
+  <Content>
+    <IndexColumn>#</IndexColumn>
+    <PlayerColumn>Player</PlayerColumn>
+    <StatisticColumn>Games</StatisticColumn>
+    <StatisticColumn>Rated</StatisticColumn>
+    <StatisticColumn>Rating</StatisticColumn>
+  </Content>
+)
+
+export default PlayersListHead;
+
 const Content = styled.div`
   display: flex;
 	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -30,14 +42,3 @@ const StatisticColumn = styled.div`
   text-align: right;
 `;
 
-const PlayersListHead = () => (
-  <Content>
-    <IndexColumn>#</IndexColumn>
-    <PlayerColumn>Player</PlayerColumn>
-    <StatisticColumn>Games</StatisticColumn>
-    <StatisticColumn>Rated</StatisticColumn>
-    <StatisticColumn>Rating</StatisticColumn>
-  </Content>
-)
-
-export default PlayersListHead;

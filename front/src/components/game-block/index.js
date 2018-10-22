@@ -20,7 +20,7 @@ export const GameBlock = ({winner1Icon, winner1Id, winner2Icon, winner2Id, loser
         <UsernameLeft>{winner2Name}</UsernameLeft>
       </User>
     </Team>
-    <Score>10 : {losersGoals}</Score>
+    <Score><span>10</span> : <span>{losersGoals}</span></Score>
     <Team>
       <User to={`/player/${loser1Id}`}>
         <UsernameRight>{loser1Name}</UsernameRight>
@@ -61,6 +61,9 @@ const User = styled(Link)`
   &:last-child {
     margin-bottom: 0;
   }
+  &:hover {
+    background-color: #fafafa
+  }
 `;
 
 const UsernameLeft = styled.div`
@@ -87,9 +90,14 @@ const Photo = styled.div`
 `;
 
 const Score = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   padding: 0 40px;
   font-size: 1.3em;
+  span {
+    &:first-child {
+      color: green;
+    }
+    &:last-child {
+      color: red;
+    }
+  }
 `;

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import {Colors} from '../../helpers/style-variables';
 
 const Content = styled.div`
   position: relative;
@@ -13,7 +14,7 @@ const Content = styled.div`
     left: 0;
     height: 2px;
     width: 100%;
-    background red;
+    background: ${Colors.MAIN_COLOR};
     transform: scaleX(0);
     transform-origin: 0 0;
     transition: all .15s ease;
@@ -34,7 +35,7 @@ const InputElement = styled.input`
     background: none;
     outline: none;
     + span {
-      color red;
+      color: ${Colors.MAIN_COLOR};
       transform: translateY(-26px) scale(.75);
       transform: scaleX(1);
     }

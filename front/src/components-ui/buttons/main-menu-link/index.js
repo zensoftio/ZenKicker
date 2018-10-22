@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {NavLink} from 'react-router-dom';
+import {Colors} from '../../../helpers/style-variables';
 
 const LinkButton = styled(NavLink)`
   padding: 22px 25px 10px 25px;
@@ -14,7 +15,7 @@ const LinkButton = styled(NavLink)`
   text-decoration: none;
 
   &:hover, &.active{
-		border-bottom: solid 3px red;
+		border-bottom: solid 3px ${Colors.MAIN_COLOR};
     span{
       opacity: 1;
     }

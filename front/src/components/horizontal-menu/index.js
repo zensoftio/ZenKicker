@@ -6,6 +6,7 @@ import GameRegistration from '../game-registration';
 
 import signOutIco from '../../shared/images/icons/sign-out.png';
 import UserPhoto from '../../components-ui/user-photo';
+import {Colors} from '../../helpers/style-variables';
 
 export const HorizontalMenu = ({currentUser}) => (
   <Content>
@@ -31,10 +32,13 @@ export const HorizontalMenu = ({currentUser}) => (
 
 const Content = styled.section`
 	width: 100%;
-	height: 60px;
-	min-height: 60px;
+	height: 70px;
+	min-height: 70px;
 	display: flex;
 	align-items: center;
+	position: fixed;
+	background-color: #fff;
+	z-index: 10;
 `;
 
 const Title = styled(Link)`
@@ -47,7 +51,7 @@ const Title = styled(Link)`
 	text-decoration: none;
 	text-align: center;
 	&>span {
-		color: red;
+		color: ${Colors.MAIN_COLOR};
 	}
 `;
 

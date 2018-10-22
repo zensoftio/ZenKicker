@@ -5,6 +5,7 @@ import {MainMenuLink} from "../../components-ui/buttons/main-menu-link";
 
 import signOutIco from '../../shared/images/icons/sign-out.png';
 import UserPhoto from '../../components-ui/user-photo';
+import {Colors} from '../../helpers/style-variables';
 
 const Content = styled.section`
 	min-width: 300px;
@@ -23,7 +24,7 @@ const Title = styled(Link)`
 	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 	text-align: center;
 	&>span {
-		color: red;
+		color: ${Colors.MAIN_COLOR};
 	}
 `;
 
