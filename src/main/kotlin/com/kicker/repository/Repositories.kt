@@ -58,6 +58,12 @@ interface PlayerStatsRepository : BaseRepository<PlayerStats> {
                 AND (?2 <= DATE(g.date) AND ?3 >= DATE(g.date))""")
     fun calculateDeltaByPlayerAndIntervalDates(player: Player, startDate: LocalDate, endDate: LocalDate): Double
 
+    fun countByPlayerAndWon(player: Player, won: Boolean): Long
+
+    @Query("""SELECT COALESCE(SUM(g.losersGoals), 0) FROM PlayerStats s JOIN Game g ON s.game = g AND s.player = ?1
+                AND s.won = ?2""")
+    fun countGoalsByPlayerAndWon(player: Player, won: Boolean): Long
+
 }
 
 @Repository
