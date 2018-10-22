@@ -15,8 +15,7 @@ import PlayersScene from "./scenes/PlayersScene";
 import GamesScene from "./scenes/GamesScene";
 import ProfileScene from "./scenes/ProfileScene";
 import {HorizontalMenu} from './components/horizontal-menu';
-
-const NotFound = () => <div>not found</div>
+import {NotFoundScene} from './scenes/NotFoundScene';
 
 class App extends Component {
 
@@ -40,7 +39,7 @@ class App extends Component {
             <Route exact path="/players" component={PlayersScene}/>
             <Route exact path="/games" component={GamesScene}/>
             <Route exact path="/player/:id" component={ProfileScene}/>
-            <Route path="/not-found" component={NotFound}/>
+            <Route path="/not-found" component={NotFoundScene}/>
             <Redirect from="/" exact to="/dashboard"/>
             <Redirect from="*" exact to="/not-found"/>
           </Switch>

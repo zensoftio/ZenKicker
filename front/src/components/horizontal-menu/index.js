@@ -47,11 +47,11 @@ const Title = styled(Link)`
 	box-sizing: border-box;
 	padding: 20px;
 	display: block;
-	color: black;
+	color: ${Colors.MAIN_COLOR};
 	text-decoration: none;
 	text-align: center;
 	&>span {
-		color: ${Colors.MAIN_COLOR};
+		color: black;
 	}
 `;
 
