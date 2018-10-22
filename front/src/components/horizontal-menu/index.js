@@ -18,7 +18,9 @@ export const HorizontalMenu = ({currentUser}) => (
       <RightSection>
         <GameRegistration />
         <User to={`/player/${currentUser.id}`}>
-          <UserPhoto photo={currentUser.iconName}/>
+          <Photo>
+            <UserPhoto photo={currentUser.iconName}/>
+          </Photo>
           <Username>{currentUser.username}</Username>
         </User>
         <a href="/logout"><SignOut/></a>
@@ -59,6 +61,7 @@ const TopBar = styled.div`
 const Navigation = styled.div`
   display: flex;
   padding: 0 40px;
+  margin-left: 200px;
 `;
 
 const RightSection = styled.div`
@@ -77,13 +80,18 @@ const User = styled(Link)`
 	&:hover {
 		text-decoration: underline;
 	}
-  img {
-    max-width: 40px;
-    min-width: 40px;
-    max-height: 40px;
-    min-height: 40px;
-    border-radius: 100%;
-  }
+`;
+
+const Photo = styled.div`
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  max-width: 40px;
+  min-width: 40px;
+  max-height: 40px;
+  min-height: 40px;
+  border-radius: 100%;
+  justify-content: center;
 `;
 
 const Username = styled.div`

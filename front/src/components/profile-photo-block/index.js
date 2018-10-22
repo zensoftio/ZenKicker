@@ -71,16 +71,17 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(mapStateToProps, mapDispatchToProps)(ProfilePhotoBlock);
 
 const ProfilePhoto = styled.div`
-  width: 150px;
   min-width: 150px;
-  height: 150px;
+  max-width: 150px;
+  min-height: 150px;
+  max-height: 150px;
   margin: 0 20px;
   position: relative;
-  img {
-    border-radius: 100%;
-    width: 100%;
-    height: 100%;
-  }
+  overflow: hidden;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Button = styled.label`

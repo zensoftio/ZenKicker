@@ -11,7 +11,9 @@ const Paths = {
 	},
 	Game: {
 		RegisterGame: base('/games/registration'),
-		GetAll: base('/games')
+		GetAll: base('/games'),
+    PlayerGames: (id) => base(`/games/player/${id}`),
+    GetGamesCount: (id, count) => base(`/games/count/player/${id}/weeksAgo/${count}`)
 	},
   Player: {
     GetActive: base('/players/active'),

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 import UsernameBlock from '../username-block';
 import ProfilePhotoBlock from '../profile-photo-block';
+import PasswordBlock from '../password-block';
 
 const Content = styled.div`
   display: flex;
@@ -33,7 +34,11 @@ const Statistics = styled.div`
 const ErrorPhotoUpload = styled.div`
   position: absolute;
   color: #C74242;
-  bottom: -40px;
+  bottom: 60px;
+`;
+
+const ChangePasswordContainer = styled.div`
+  margin-top: 70px;
 `;
 
 class ProfileMainInfo extends Component {
@@ -55,8 +60,16 @@ class ProfileMainInfo extends Component {
 
     return (
       <Content>
-        <ProfilePhotoBlock isCurrent={isCurrent} setPhotoError={this.setPhotoError}/>
-        <ErrorPhotoUpload>{uploadPhotoError}</ErrorPhotoUpload>
+        <div>
+          <ProfilePhotoBlock isCurrent={isCurrent} setPhotoError={this.setPhotoError}/>
+          <ChangePasswordContainer>
+            {
+              isCurrent && <PasswordBlock />
+            }
+          </ChangePasswordContainer>
+          <ErrorPhotoUpload>{uploadPhotoError}</ErrorPhotoUpload>
+        </div>
+
         <Info>
           <UsernameBlock isCurrent={isCurrent}/>
           <StatisticsContent>

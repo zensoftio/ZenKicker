@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 import TabButton from '../../components-ui/buttons/tab-button';
 import {ProfileBlock} from '../profile-block';
+import PlayersListHead from '../players-list-head';
 import InfiniteScroll from '../infinite-scroll';
 
 class PlayersTabs extends Component {
@@ -42,22 +43,16 @@ class PlayersTabs extends Component {
   render() {
     const {isAllPlayersTab} = this.state;
     return (
-      <div>
+      <Content>
         <TabButtonContainer>
           <TabButton name='active' onButtonClick={this.setActivePlayersTab} isActive={!isAllPlayersTab}/>
           <TabButton name='all' onButtonClick={this.setAllPlayersTab} isActive={isAllPlayersTab}/>
         </TabButtonContainer>
-        <Head>
-          <IndexColumn>#</IndexColumn>
-          <PlayerColumn>Player</PlayerColumn>
-          <StatisticColumn>Games</StatisticColumn>
-          <StatisticColumn>Rated</StatisticColumn>
-          <StatisticColumn>Rating</StatisticColumn>
-        </Head>
+        <PlayersListHead />
         <Players>
           {this.renderTab()}
         </Players>
-      </div>
+      </Content>
 
     );
   }
@@ -65,6 +60,9 @@ class PlayersTabs extends Component {
 
 export default PlayersTabs;
 
+const Content = styled.div`
+  width: 900px;
+`;
 const TabButtonContainer = styled.div`
   display: flex;
   margin-bottom: 20px;
@@ -73,33 +71,11 @@ const TabButtonContainer = styled.div`
 	font-size: 1.2em;
 `;
 
-const Head = styled.div`
-  display: flex;
-	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-	align-items: center;
-	padding: 15px 0 15px 20px;
-	width: max-content;
-`;
-
-const IndexColumn = styled.div`
-  max-width: 60px;
-  min-width: 60px;
-`;
-
-const PlayerColumn = styled.div`
-  max-width: 290px;
-  min-width: 290px;
-`;
-
-const StatisticColumn = styled.div`
-  max-width: 120px;
-  min-width: 120px;
-`;
-
 const Players = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	max-height: 650px;
+	width: 100%;
 	overflow: auto;
 `;

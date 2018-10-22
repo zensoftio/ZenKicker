@@ -9,50 +9,10 @@ import {
   getAllPlayers,
   getLatestGames,
   registerGame,
+  getTopPlayers
 } from '../../actions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-
-const Content = styled.div``;
-
-const PopupTitle = styled.div`
-  font-size: 1.5em;
-  margin-bottom: 40px;
-`;
-
-const Container = styled.div`
-  display: flex;
-  width: 600px;
-  align-items: center;
-`;
-
-const Block = styled.div`
-  width: 40%;
-`;
-
-const ScoreBlock = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const InputsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: max-content;
-  height: max-content;
-  background-color: #fff;
-  padding: 40px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  border-radius: 2px;
-`;
-
-const RegistrationError = styled.span`
-  color: red;
-  display: flex;
-  align-items: center;
-  margin: 20px 0;
-`;
 
 class GameRegistration extends Component {
   constructor(props) {
@@ -87,7 +47,7 @@ class GameRegistration extends Component {
     if (winner1Id === null || winner2Id === null || loser1Id === null || loser2Id === null || losersGoals === null) {
       return this.setState({registrationError: 'All fields should be filled'});
     }
-    const {getActivePlayers, getAllPlayers, getLatestGames, getAllGames} = this.props.actions;
+    const {getActivePlayers, getAllPlayers, getLatestGames, getAllGames, getTopPlayers} = this.props.actions;
     const data = {
       winner1Id,
       winner2Id,
@@ -103,6 +63,7 @@ class GameRegistration extends Component {
       getAllPlayers();
       getLatestGames();
       getAllGames();
+      getTopPlayers();
     } catch (err) {
       console.log({err})
       const error = err.response.data.errors[0].message;
@@ -174,10 +135,53 @@ const mapDispatchToProps = (dispatch) => {
     getAllPlayers,
     getActivePlayers,
     getLatestGames,
-    getAllGames
+    getAllGames,
+    getTopPlayers
   };
   const actionMap = {actions: bindActionCreators(actions, dispatch)};
   return actionMap;
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameRegistration);
+
+
+const Content = styled.div``;
+
+const PopupTitle = styled.div`
+  font-size: 1.5em;
+  margin-bottom: 40px;
+`;
+
+const Container = styled.div`
+  display: flex;
+  width: 600px;
+  align-items: center;
+`;
+
+const Block = styled.div`
+  width: 40%;
+`;
+
+const ScoreBlock = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const InputsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: max-content;
+  height: max-content;
+  background-color: #fff;
+  padding: 40px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-radius: 2px;
+`;
+
+const RegistrationError = styled.span`
+  color: red;
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+`;

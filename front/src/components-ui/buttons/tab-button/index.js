@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {capitalizeString} from '../../../helpers/string-helpers';
 
 const Content = styled.div`
-  padding: 20px;
+  padding: 10px 20px;
   cursor: pointer;
   color: ${props => props.active ? 'red' : 'black'};
   background-color: ${props => props.active ? '#fafafa' : '#fff'};

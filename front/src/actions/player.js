@@ -8,7 +8,7 @@ export const getActivePlayers = () => {
     dispatch({type: ActionType.Player.GET_ACTIVE_PLAYERS_REQUEST});
 
     try {
-      const result = await api.get(Paths.Player.GetActive);
+      const result = await api.get(Paths.Player.GetActive, {params: {limit: 15}});
       dispatch({type: ActionType.Player.GET_ACTIVE_PLAYERS_SUCCESS, payload: result.data});
     } catch (err) {
       console.warn(err);
@@ -23,7 +23,7 @@ export const getAllPlayers = () => {
     dispatch({type: ActionType.Player.GET_ALL_PLAYERS_REQUEST});
 
     try {
-      const result = await api.get(Paths.Player.GetAll);
+      const result = await api.get(Paths.Player.GetAll, {params: {limit: 15}});
       dispatch({type: ActionType.Player.GET_ALL_PLAYERS_SUCCESS, payload: result.data});
     } catch (err) {
       console.warn(err);
@@ -66,7 +66,7 @@ export const appendToPlayers = (playersLength) => async (dispatch) => {
   dispatch({type: ActionType.Player.APPEND_TO_PLAYERS_REQUEST});
 
   try {
-    const page = {offset: playersLength, limit: 7};
+    const page = {offset: playersLength, limit: 5};
     const result = await api.get(Paths.Player.GetAll, {params: page});
     dispatch({type: ActionType.Player.APPEND_TO_PLAYERS_SUCCESS, payload: result.data});
   } catch (err) {
@@ -79,7 +79,7 @@ export const appendToActivePlayers = (playersLength) => async (dispatch) => {
   dispatch({type: ActionType.Player.APPEND_TO_ACTIVE_PLAYERS_REQUEST});
 
   try {
-    const page = {offset: playersLength, limit: 7};
+    const page = {offset: playersLength, limit: 5};
     const result = await api.get(Paths.Player.GetAll, {params: page});
     dispatch({type: ActionType.Player.APPEND_TO_ACTIVE_PLAYERS_SUCCESS, payload: result.data});
   } catch (err) {

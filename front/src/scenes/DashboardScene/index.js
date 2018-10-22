@@ -25,7 +25,11 @@ class DashboardScene extends Component {
         winner1Icon: players.list.length ? players.list.find(player => player.id === game.winner1Id).iconName : null,
         winner2Icon: players.list.length ? players.list.find(player => player.id === game.winner2Id).iconName : null,
         loser1Icon: players.list.length ? players.list.find(player => player.id === game.loser1Id).iconName : null,
-        loser2Icon: players.list.length ? players.list.find(player => player.id === game.loser2Id).iconName : null
+        loser2Icon: players.list.length ? players.list.find(player => player.id === game.loser2Id).iconName : null,
+        winner1Name: players.list.length ? players.list.find(player => player.id === game.winner1Id).username : null,
+        winner2Name: players.list.length ? players.list.find(player => player.id === game.winner2Id).username : null,
+        loser1Name: players.list.length ? players.list.find(player => player.id === game.loser1Id).username : null,
+        loser2Name: players.list.length ? players.list.find(player => player.id === game.loser2Id).username : null
       }
     ))
 
@@ -67,13 +71,16 @@ export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Dashboard
 
 const Content = styled.div`
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  justify-content: center;
+  width: 900px;
 `;
 
 const Title = styled.div`
   font-size: 1.5em;
   margin: 20px 0;
   width: 100%;
+  text-align: center;
 `;
 
 const PlayersContent = styled.div`
@@ -83,6 +90,7 @@ const PlayersContent = styled.div`
 `;
 
 const LatestGamesContent = styled.div`
+  margin-top: 50px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;

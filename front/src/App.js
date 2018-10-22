@@ -34,19 +34,17 @@ class App extends Component {
 		return (
 			<Container>
 				<HorizontalMenu currentUser={currentUser}/>
-        <MainContentContainer>
-          <Content>
-            <Switch>
-              <Route exact path="/dashboard" component={DashboardScene}/>
-              <Route exact path="/players" component={PlayersScene}/>
-              <Route exact path="/games" component={GamesScene}/>
-              <Route exact path="/player/:id" component={ProfileScene}/>
-              <Route path="/not-found" component={NotFound}/>
-              <Redirect from="/" exact to="/dashboard"/>
-              <Redirect from="*" exact to="/not-found"/>
-            </Switch>
-          </Content>
-        </MainContentContainer>
+        <Content>
+          <Switch>
+            <Route exact path="/dashboard" component={DashboardScene}/>
+            <Route exact path="/players" component={PlayersScene}/>
+            <Route exact path="/games" component={GamesScene}/>
+            <Route exact path="/player/:id" component={ProfileScene}/>
+            <Route path="/not-found" component={NotFound}/>
+            <Redirect from="/" exact to="/dashboard"/>
+            <Redirect from="*" exact to="/not-found"/>
+          </Switch>
+        </Content>
 			</Container>
 
 		);
@@ -75,21 +73,19 @@ const mapDispatchToProps = (dispatch) => {
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
 
 const Container = styled.div`
-	height: 100vh;
   width: 100%;
   display: flex;
   position: relative;
   flex-direction: column;
+  align-items: center;
 `;
 
 const Content = styled.div`
 	width: 100%;
-	padding: 50px;
+	padding: 0 50px 20px 50px;
 	padding-top: 0;
 	box-sizing: border-box;
-`;
-
-const MainContentContainer = styled.div`
-	width: 100%;
 	margin-top: 40px;
+	display: flex;
+	justify-content: center;
 `;
