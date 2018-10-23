@@ -32,7 +32,7 @@ class App extends Component {
     }
 		return (
 			<Container>
-				<HorizontalMenu currentUser={currentUser}/>
+				<HorizontalMenu id={currentUser.id} iconName={currentUser.iconName} username={currentUser.username}/>
         <Content>
           <Switch>
             <Route exact path="/dashboard" component={DashboardScene}/>

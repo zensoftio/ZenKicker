@@ -8,7 +8,7 @@ import signOutIco from '../../shared/images/icons/sign-out.png';
 import UserPhoto from '../../components-ui/user-photo';
 import {Colors} from '../../helpers/style-variables';
 
-export const HorizontalMenu = ({currentUser}) => (
+export const HorizontalMenu = ({id, iconName, username}) => (
   <Content>
     <Title to="/">Zen<span>Kicker</span></Title>
     <TopBar>
@@ -18,11 +18,11 @@ export const HorizontalMenu = ({currentUser}) => (
       </Navigation>
       <RightSection>
         <GameRegistration />
-        <User to={`/player/${currentUser.id}`}>
+        <User to={`/player/${id}`}>
           <Photo>
-            <UserPhoto photo={currentUser.iconName}/>
+            <UserPhoto photo={iconName}/>
           </Photo>
-          <Username>{currentUser.username}</Username>
+          <Username>{username}</Username>
         </User>
         <a href="/logout"><SignOut/></a>
       </RightSection>

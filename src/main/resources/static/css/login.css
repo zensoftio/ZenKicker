@@ -46,13 +46,12 @@ body {
     padding: 20px;
     margin: 100px 0 50px 0;
     display: block;
-    color: black;
+    color: #008CE4;
     text-decoration: none;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     text-align: center;
 }
 .logo>span {
-    color: red;
+    color: black;
 }
 
 .title {
@@ -62,24 +61,40 @@ body {
 
 .input_block {
     width: 300px;
-    margin-bottom: 30px;
+    margin: auto auto 30px auto;
     display: flex;
     position: relative;
     align-items: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.input_block span{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background: #008CE4;
+    transform: scaleX(0);
+    transform-origin: 0 0;
+    transition: all .15s ease;
 }
 .input_block input {
+    font-size: 1em;
+    padding: 10px 0;
     width: 100%;
-    height: 40px;
-    text-align: center;
     box-sizing: border-box;
     border: none;
     border-left: solid 3px transparent;
     outline: none;
-    font-size: 1em;
+    text-align: center;
 }
 .input_block input:focus {
-    border-left: solid 3px red;
+    background: none;
+    outline: none;
+}
+.input_block input:focus + span {
+    color: #008CE4;
+    transform: translateY(-26px) scale(.75);
+    transform: scaleX(1);
 }
 .check_button_block {
     width: 120px;
@@ -88,6 +103,7 @@ body {
 .check_button_block button {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     border: none;
+    border-left: solid 3px transparent;
     width: 100%;
     height: 40px;
     font-size: 1.2em;
@@ -96,15 +112,13 @@ body {
     outline: none;
 }
 .check_button_block button:hover {
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-.check_button_block button:active {
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-left: solid 3px #008CE4;
 }
 .sign-up-link {
     margin-top: 40px;
     text-decoration: none;
-    color: red
+    color: #008CE4
 }
 .sign-up-link:hover {
     text-decoration: underline;
