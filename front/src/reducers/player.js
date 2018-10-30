@@ -13,7 +13,9 @@ const initState = {
     list: [],
     totalCount: 0
   },
-  player: null
+  player: null,
+  deltaStatistic: null,
+  gamesCountStatistic: null
 };
 
 export const player = (state = initState, action) => {
@@ -28,7 +30,15 @@ export const player = (state = initState, action) => {
       return {...state, topPlayers: action.payload};
 
     case ActionType.Player.GET_PLAYER_SUCCESS:
-      return {...state, player: action.payload};
+      const player = { ...action.payload.player, ...action.payload};
+      delete player['player'];
+      return {...state, player: player};
+
+    case ActionType.Player.GET_PLAYER_DELTA_STATISTIC_SUCCESS:
+      return {...state, deltaStatistic: action.payload};
+
+    case ActionType.Player.GET_PLAYER_GAMES_COUNT_STATISTIC_SUCCESS:
+      return {...state, gamesCountStatistic: action.payload};
 
     case ActionType.Player.APPEND_TO_PLAYERS_SUCCESS:
       return {...state, players: {totalCount: action.payload.totalCount, list: [...state.players.list, ...action.payload.list]}};

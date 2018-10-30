@@ -19,7 +19,7 @@ class ProfileMainInfo extends Component {
   }
 
   render() {
-    const {rating, countGames, rated, isCurrent} = this.props;
+    const {rating, countGames, rated, isCurrent, countLosses, countWins, goalsAgainst, goalsFor} = this.props;
     const {uploadPhotoError} = this.state;
 
     return (
@@ -40,6 +40,10 @@ class ProfileMainInfo extends Component {
             <Statistics>Rating: <span>{rating}</span></Statistics>
             <Statistics>Games played: <span>{countGames}</span></Statistics>
             <Statistics>Games rated: <span>{rated}</span></Statistics>
+            <Statistics>Games won: <span>{countWins}</span></Statistics>
+            <Statistics>Games lost: <span>{countLosses}</span></Statistics>
+            <Statistics>Goals for: <span>{goalsFor}</span></Statistics>
+            <Statistics>Goals against: <span>{goalsAgainst}</span></Statistics>
           </StatisticsContent>
         </Info>
       </Content>

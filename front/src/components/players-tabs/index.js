@@ -4,6 +4,7 @@ import TabButton from '../../components-ui/buttons/tab-button';
 import {ProfileBlock} from '../profile-block';
 import PlayersListHead from '../players-list-head';
 import InfiniteScroll from '../infinite-scroll';
+import {NoContent} from '../no-content';
 
 class PlayersTabs extends Component {
   constructor(props) {
@@ -22,17 +23,21 @@ class PlayersTabs extends Component {
     if (isAllPlayersTab) {
       return (
         <InfiniteScroll data={players.list} onLoadMore={this.onLoadMorePlayers} totalCount={players.totalCount}>
-          {players.list.map((item, index) =>
+          {players.list.length ? players.list.map((item, index) =>
             <ProfileBlock key={item.id} id={item.id} index={index + 1} username={item.username} countGames={item.countGames}
-                          rated={item.rated} rating={item.rating} iconName={item.iconName}/>)}
+                          rated={item.rated} rating={item.rating} iconName={item.iconName}/>) :
+            <NoContent/>
+          }
         </InfiniteScroll>
       )
     }
     return (
       <InfiniteScroll data={activePlayers.list} onLoadMore={this.onLoadMoreActivePlayers} totalCount={activePlayers.totalCount}>
-        {activePlayers.list.map((item, index) =>
+        {activePlayers.list.length ? activePlayers.list.map((item, index) =>
           <ProfileBlock key={item.id} id={item.id} index={index + 1} username={item.username} countGames={item.countGames}
-                        rated={item.rated} rating={item.rating} iconName={item.iconName}/>)}
+                        rated={item.rated} rating={item.rating} iconName={item.iconName}/>) :
+          <NoContent/>
+        }
       </InfiniteScroll>
     )
   }
@@ -77,5 +82,6 @@ const Players = styled.div`
 	align-items: center;
 	max-height: 650px;
 	width: 100%;
-	overflow: auto;
+	overflow-y: auto;
+	overflow-x: hidden;
 `;

@@ -38,7 +38,7 @@ export const getTopPlayers = () => {
     dispatch({type: ActionType.Player.GET_TOP_PLAYERS_REQUEST});
 
     try {
-      const result = await api.get(Paths.Player.GetActive, {params: {limit: 7}});
+      const result = await api.get(Paths.Player.GetActive, {params: {limit: 5}});
       dispatch({type: ActionType.Player.GET_TOP_PLAYERS_SUCCESS, payload: result.data});
     } catch (err) {
       console.warn(err);
@@ -85,5 +85,37 @@ export const appendToActivePlayers = (playersLength) => async (dispatch) => {
   } catch (err) {
     console.warn(err);
     dispatch({type: ActionType.Player.APPEND_TO_ACTIVE_PLAYERS_FAILURE});
+  }
+}
+
+export const getPlayerDeltaStatistic = (id) => {
+  return async (dispatch) => {
+
+    dispatch({type: ActionType.Player.GET_PLAYER_DELTA_STATISTIC_REQUEST});
+
+    try {
+      const countOfWeeks = 9;
+      const result = await api.get(Paths.Player.GetDeltaStatistic(id, countOfWeeks));
+      dispatch({type: ActionType.Player.GET_PLAYER_DELTA_STATISTIC_SUCCESS, payload: result.data});
+    } catch (err) {
+      console.warn(err);
+      dispatch({type: ActionType.Player.GET_PLAYER_DELTA_STATISTIC_FAILURE});
+    }
+  }
+}
+
+export const getPlayerGamesCountStatistic = (id) => {
+  return async (dispatch) => {
+
+    dispatch({type: ActionType.Player.GET_PLAYER_GAMES_COUNT_STATISTIC_REQUEST});
+
+    try {
+      const countOfWeeks = 9;
+      const result = await api.get(Paths.Player.GetGamesCountStatistic(id, countOfWeeks));
+      dispatch({type: ActionType.Player.GET_PLAYER_GAMES_COUNT_STATISTIC_SUCCESS, payload: result.data});
+    } catch (err) {
+      console.warn(err);
+      dispatch({type: ActionType.Player.GET_PLAYER_GAMES_COUNT_STATISTIC_FAILURE});
+    }
   }
 }

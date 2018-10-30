@@ -10,7 +10,7 @@ export const getLatestGames = () => async (dispatch) => {
   dispatch({type: ActionType.Game.GET_LATEST_GAMES_REQUEST});
 
   try {
-    const result = await api.get(Paths.Game.GetAll, {params: {limit: 7}});
+    const result = await api.get(Paths.Game.GetAll, {params: {limit: 5}});
     dispatch({type: ActionType.Game.GET_LATEST_GAMES_SUCCESS, payload: result.data});
   } catch (err) {
     console.warn(err);

@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import UserPhoto from '../../components-ui/user-photo';
 
 export const GameBlock = ({winner1Icon, winner1Id, winner2Icon, winner2Id, loser1Icon, loser1Id, loser2Icon, loser2Id, losersGoals,
-                            winner1Name, winner2Name, loser1Name, loser2Name}) => (
+                            winner1Name, winner2Name, loser1Name, loser2Name, won, delta}) => (
   <Content>
     <Team>
       <User to={`/player/${winner1Id}`}>
@@ -20,7 +20,12 @@ export const GameBlock = ({winner1Icon, winner1Id, winner2Icon, winner2Id, loser
         <UsernameLeft>{winner2Name}</UsernameLeft>
       </User>
     </Team>
-    <Score><span>10</span> : <span>{losersGoals}</span></Score>
+    <Score>
+      <span>10</span> : <span>{losersGoals}</span>
+      {
+        delta && <Delta won={won}>{won && '+'}{delta}</Delta>
+      }
+    </Score>
     <Team>
       <User to={`/player/${loser1Id}`}>
         <UsernameRight>{loser1Name}</UsernameRight>
@@ -92,12 +97,17 @@ const Photo = styled.div`
 const Score = styled.div`
   padding: 0 40px;
   font-size: 1.3em;
+  color: red;
   span {
     &:first-child {
       color: green;
     }
-    &:last-child {
-      color: red;
-    }
   }
+`;
+
+const Delta = styled.div`
+  font-size: 0.8em;
+  text-align: center;
+  padding-top: 10px;
+  color: ${({won}) => won ? 'green' : 'red'};
 `;

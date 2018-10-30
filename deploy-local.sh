@@ -23,6 +23,9 @@ then
     exit 1
 fi
 
+# BUILD APP
+./gradlew clean assemble
+
 # RUN POSTGRES
 sh docker/postgres.sh ${POSTGRES_SERVICE_NAME} \
                         ${POSTGRES_DB} \

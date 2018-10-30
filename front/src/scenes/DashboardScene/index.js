@@ -36,11 +36,11 @@ class DashboardScene extends Component {
     return (
       <Content>
         <PlayersContent>
-          <Title>Top Players</Title>
+          <Title>Top 5 players</Title>
           <TopPlayers topPlayers={topPlayers.list}/>
         </PlayersContent>
         <LatestGamesContent>
-          <Title>Latest Games</Title>
+          <Title>Latest games</Title>
           <LatestGames latestGames={mappedLatestGames}/>
         </LatestGamesContent>
       </Content>
