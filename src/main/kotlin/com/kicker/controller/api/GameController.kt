@@ -10,6 +10,7 @@ import com.kicker.service.GameService
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
+import javax.validation.constraints.Max
 import javax.validation.constraints.Min
 
 /**
@@ -35,10 +36,14 @@ class GameController(
         return PageResponse(service.getAllByPlayer(playerId, pageRequest).map { GameDto(it) })
     }
 
-    @Deprecated("Return count of games for 10 weeks")
-    @GetMapping("/count/player/{playerId}/weeksAgo/{weeksAgo}")
-    fun getCountByPlayerAndWeeksAgo(@PathVariable playerId: Long, @PathVariable @Min(0) weeksAgo: Long): Long =
-            service.countByPlayerAndWeeksAgo(playerId, weeksAgo)
+    /**
+     * 0 is the current week
+     * 9 is the tenth week
+     */
+    @GetMapping("/count/player/{playerId}/dashboard/countWeeks/{countWeeks}")
+    fun getCountByPlayerAndWeeksAgo(@PathVariable playerId: Long,
+                                    @PathVariable @Min(0) @Max(9) countWeeks: Long): Map<Long, Long> =
+            service.countByPlayerForWeeksAgo(playerId, countWeeks)
 
     @PostMapping("/registration")
     fun gameRegistration(@CurrentPlayer currentPlayer: Player, @Valid @RequestBody request: GameRegistrationRequest): GameDto {

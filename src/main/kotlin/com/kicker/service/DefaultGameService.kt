@@ -34,6 +34,14 @@ class DefaultGameService(
         return repository.countByPlayer(player)
     }
 
+    override fun countByPlayerForWeeksAgo(playerId: Long, countWeeks: Long): Map<Long, Long> {
+        val dashboard = mutableMapOf<Long, Long>()
+        for (weeksAgo in 0..countWeeks) {
+            dashboard[weeksAgo] = countByPlayerAndWeeksAgo(playerId, weeksAgo)
+        }
+        return dashboard
+    }
+
     override fun countByPlayerAndWeeksAgo(playerId: Long, weeksAgo: Long): Long {
         val player = playerService.get(playerId)
         val dates = DateUtils.getIntervalDatesOfWeek(weeksAgo)
