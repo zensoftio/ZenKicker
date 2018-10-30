@@ -35,6 +35,7 @@ class GameController(
         return PageResponse(service.getAllByPlayer(playerId, pageRequest).map { GameDto(it) })
     }
 
+    @Deprecated("Return count of games for 10 weeks")
     @GetMapping("/count/player/{playerId}/weeksAgo/{weeksAgo}")
     fun getCountByPlayerAndWeeksAgo(@PathVariable playerId: Long, @PathVariable @Min(0) weeksAgo: Long): Long =
             service.countByPlayerAndWeeksAgo(playerId, weeksAgo)

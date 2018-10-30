@@ -22,11 +22,12 @@ class PlayerStatsController(
         private val service: PlayerStatsService
 ) {
 
-    @GetMapping("/player/{playerId}")
+    @GetMapping("/games/player/{playerId}")
     fun getPlayerStats(@PathVariable playerId: Long, pageRequest: PlayerStatsPageRequest): PageResponse<PlayerStatsDto> {
         return PageResponse(service.getByPlayer(playerId, pageRequest).map { PlayerStatsDto(it) })
     }
 
+    @Deprecated("Return delta for 10 weeks")
     @GetMapping("/delta/player/{playerId}/weeksAgo/{weeksAgo}")
     fun getDeltaByPlayerAndWeeksAgo(@PathVariable playerId: Long, @PathVariable @Min(0) weeksAgo: Long): Int =
             service.getDeltaByPlayerAndWeeksAgo(playerId, weeksAgo).toInt()
