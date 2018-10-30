@@ -5,6 +5,7 @@ import com.kicker.domain.model.game.GameRegistrationRequest
 import com.kicker.domain.model.player.CreatePlayerRequest
 import com.kicker.domain.model.player.UpdatePlayerPasswordRequest
 import com.kicker.domain.model.player.UpdatePlayerUsernameRequest
+import com.kicker.domain.model.player_stats.PlayerStatsDto
 import com.kicker.model.Award
 import com.kicker.model.Game
 import com.kicker.model.Player
@@ -65,7 +66,9 @@ interface GameService : BaseService<Game> {
 
 interface PlayerStatsService : BaseService<PlayerStats> {
 
-    fun getByPlayer(playerId: Long, pageRequest: PageRequest): Page<PlayerStats>
+    fun getStatsByPlayer(playerId: Long): PlayerStatsDto
+
+    fun getGamesStatsByPlayer(playerId: Long, pageRequest: PageRequest): Page<PlayerStats>
 
     fun getDeltaByPlayerAndWeeksAgo(playerId: Long, weeksAgo: Long): Double
 
