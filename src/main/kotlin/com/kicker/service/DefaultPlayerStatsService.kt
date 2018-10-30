@@ -3,6 +3,8 @@ package com.kicker.service
 import com.kicker.config.property.GamesSettingsProperties
 import com.kicker.config.property.PlayerSettingsProperties
 import com.kicker.domain.PageRequest
+import com.kicker.domain.model.player.PlayerDto
+import com.kicker.domain.model.player_stats.PlayerStatsDto
 import com.kicker.model.Player
 import com.kicker.model.PlayerStats
 import com.kicker.repository.PlayerStatsRepository
@@ -20,11 +22,24 @@ import org.springframework.transaction.annotation.Transactional
 class DefaultPlayerStatsService(
         private val repository: PlayerStatsRepository,
         private val playerService: PlayerService,
+        private val gameService: GameService,
         private val playerSettingsProperties: PlayerSettingsProperties,
         private val gamesSettingsProperties: GamesSettingsProperties
 ) : DefaultBaseService<PlayerStats, PlayerStatsRepository>(repository), PlayerStatsService {
 
-    override fun getByPlayer(playerId: Long, pageRequest: PageRequest): Page<PlayerStats> {
+    override fun getStatsByPlayer(playerId: Long): PlayerStatsDto = PlayerStatsDto(
+            PlayerDto(
+                    playerService.get(playerId),
+                    gameService.countByPlayer(playerId),
+                    gameService.countFor10WeeksByPlayer(playerId)
+            ),
+            countLossesByPlayer(playerId),
+            countWinsByPlayer(playerId),
+            countGoalsAgainstByPlayer(playerId),
+            countGoalsForByPlayer(playerId)
+    )
+
+    override fun getGamesStatsByPlayer(playerId: Long, pageRequest: PageRequest): Page<PlayerStats> {
         val player = playerService.get(playerId)
         return repository.findByPlayer(player, pageRequest)
     }

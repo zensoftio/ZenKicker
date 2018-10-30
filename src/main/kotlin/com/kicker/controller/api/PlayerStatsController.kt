@@ -1,6 +1,7 @@
 package com.kicker.controller.api
 
 import com.kicker.domain.PageResponse
+import com.kicker.domain.model.player_stats.PlayerGamesStatsDto
 import com.kicker.domain.model.player_stats.PlayerStatsDto
 import com.kicker.domain.model.player_stats.PlayerStatsPageRequest
 import com.kicker.service.PlayerStatsService
@@ -22,34 +23,19 @@ class PlayerStatsController(
         private val service: PlayerStatsService
 ) {
 
+    @GetMapping("/player/{playerId}")
+    fun getPlayerStats(@PathVariable playerId: Long, pageRequest: PlayerStatsPageRequest): PlayerStatsDto {
+        return service.getStatsByPlayer(playerId)
+    }
+
     @GetMapping("/games/player/{playerId}")
-    fun getPlayerStats(@PathVariable playerId: Long, pageRequest: PlayerStatsPageRequest): PageResponse<PlayerStatsDto> {
-        return PageResponse(service.getByPlayer(playerId, pageRequest).map { PlayerStatsDto(it) })
+    fun getPlayerGamesStats(@PathVariable playerId: Long, pageRequest: PlayerStatsPageRequest): PageResponse<PlayerGamesStatsDto> {
+        return PageResponse(service.getGamesStatsByPlayer(playerId, pageRequest).map { PlayerGamesStatsDto(it) })
     }
 
     @Deprecated("Return delta for 10 weeks")
     @GetMapping("/delta/player/{playerId}/weeksAgo/{weeksAgo}")
     fun getDeltaByPlayerAndWeeksAgo(@PathVariable playerId: Long, @PathVariable @Min(0) weeksAgo: Long): Int =
             service.getDeltaByPlayerAndWeeksAgo(playerId, weeksAgo).toInt()
-
-    @GetMapping("/player/{playerId}/losses")
-    fun countLossesByPlayer(@PathVariable playerId: Long): Long {
-        return service.countLossesByPlayer(playerId)
-    }
-
-    @GetMapping("/player/{playerId}/wins")
-    fun getWinsByPlayer(@PathVariable playerId: Long): Long {
-        return service.countWinsByPlayer(playerId)
-    }
-
-    @GetMapping("/player/{playerId}/goalsAgainst")
-    fun countGoalsAgainstByPlayer(@PathVariable playerId: Long): Long {
-        return service.countGoalsAgainstByPlayer(playerId)
-    }
-
-    @GetMapping("/player/{playerId}/goalsFor")
-    fun countGoalsForByPlayer(@PathVariable playerId: Long): Long {
-        return service.countGoalsForByPlayer(playerId)
-    }
 
 }
