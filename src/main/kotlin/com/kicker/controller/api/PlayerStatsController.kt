@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import javax.validation.constraints.Max
 import javax.validation.constraints.Min
 
 /**
@@ -33,9 +34,13 @@ class PlayerStatsController(
         return PageResponse(service.getGamesStatsByPlayer(playerId, pageRequest).map { PlayerGamesStatsDto(it) })
     }
 
-    @Deprecated("Return delta for 10 weeks")
-    @GetMapping("/delta/player/{playerId}/weeksAgo/{weeksAgo}")
-    fun getDeltaByPlayerAndWeeksAgo(@PathVariable playerId: Long, @PathVariable @Min(0) weeksAgo: Long): Int =
-            service.getDeltaByPlayerAndWeeksAgo(playerId, weeksAgo).toInt()
+    /**
+     * 0 is the current week
+     * 9 is the tenth week
+     */
+    @GetMapping("/delta/player/{playerId}/dashboard/countWeeks/{countWeeks}")
+    fun getDeltaByPlayerAndWeeksAgo(@PathVariable playerId: Long,
+                                    @PathVariable @Min(0) @Max(9) countWeeks: Long): Map<Long, Int> =
+            service.getDeltaByPlayerForWeeksAgo(playerId, countWeeks).mapValues { it.value.toInt() }
 
 }
