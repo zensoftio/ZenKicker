@@ -1,5 +1,6 @@
 package com.kicker.repository
 
+import com.kicker.domain.repository.CountGamesPerDayDto
 import com.kicker.model.Award
 import com.kicker.model.Game
 import com.kicker.model.Player
@@ -33,6 +34,10 @@ interface GameRepository : BaseRepository<Game> {
 
     @Query("SELECT g FROM Game g WHERE g.winner1 = ?1 OR g.winner2 = ?1 OR g.loser1 = ?1 OR g.loser2 = ?1")
     fun findAllByPlayer(player: Player, pageable: Pageable): Page<Game>
+
+    @Query("""SELECT new com.kicker.domain.repository.CountGamesPerDayDto(MIN(g.date), COUNT(g))
+        FROM Game g WHERE ?1 <= DATE(g.date) AND ?2 >= DATE(g.date) GROUP BY DATE(g.date)""")
+    fun findByIntervalDates(startDate: LocalDate, endDate: LocalDate): List<CountGamesPerDayDto>
 
     @Query("SELECT COUNT(g) FROM Game g WHERE g.winner1 = ?1 OR g.winner2 = ?1 OR g.loser1 = ?1 OR g.loser2 = ?1")
     fun countByPlayer(player: Player): Long
