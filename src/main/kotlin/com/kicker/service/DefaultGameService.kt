@@ -35,10 +35,10 @@ class DefaultGameService(
         return repository.countByPlayer(player)
     }
 
-    override fun countByPlayerForWeeksAgo(playerId: Long, countWeeks: Long): Map<Long, Long> {
-        val dashboard = mutableMapOf<Long, Long>()
+    override fun countByPlayerForWeeksAgo(playerId: Long, countWeeks: Long): List<Long> {
+        val dashboard = mutableListOf<Long>()
         for (weeksAgo in 0..countWeeks) {
-            dashboard[weeksAgo] = countByPlayerAndWeeksAgo(playerId, weeksAgo)
+            dashboard.add(countByPlayerAndWeeksAgo(playerId, weeksAgo))
         }
         return dashboard
     }

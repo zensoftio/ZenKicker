@@ -44,10 +44,10 @@ class DefaultPlayerStatsService(
         return repository.findByPlayer(player, pageRequest)
     }
 
-    override fun getDeltaByPlayerForWeeksAgo(playerId: Long, countWeeks: Long): Map<Long, Double> {
-        val dashboard = mutableMapOf<Long, Double>()
+    override fun getDeltaByPlayerForWeeksAgo(playerId: Long, countWeeks: Long): List<Double> {
+        val dashboard = mutableListOf<Double>()
         for (weeksAgo in 0..countWeeks) {
-            dashboard[weeksAgo] = getDeltaByPlayerAndWeeksAgo(playerId, weeksAgo)
+            dashboard.add(getDeltaByPlayerAndWeeksAgo(playerId, weeksAgo))
         }
         return dashboard
     }

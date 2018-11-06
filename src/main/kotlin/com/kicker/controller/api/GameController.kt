@@ -43,7 +43,7 @@ class GameController(
      */
     @GetMapping("/count/player/{playerId}/dashboard/countWeeks/{countWeeks}")
     fun getCountByPlayerAndWeeksAgo(@PathVariable playerId: Long,
-                                    @PathVariable @Min(0) @Max(9) countWeeks: Long): Map<Long, Long> =
+                                    @PathVariable @Min(0) @Max(9) countWeeks: Long): List<Long> =
             service.countByPlayerForWeeksAgo(playerId, countWeeks)
 
     @PostMapping("/registration")
