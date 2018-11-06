@@ -6,7 +6,7 @@ import javax.validation.ConstraintValidator
 import javax.validation.ConstraintValidatorContext
 
 /**
- * @author Ruslan Molchanov
+ * @author Yauheni Efimenko
  */
 class ContainsValidator : ConstraintValidator<Contains, Any> {
 
