@@ -59,13 +59,13 @@ interface GameService : BaseService<Game> {
 
     fun countByPlayer(playerId: Long): Long
 
-    fun countByPlayerForWeeksAgo(playerId: Long, countWeeks: Long): List<Long>
+    fun countPerWeekDuring10WeeksByPlayer(playerId: Long): List<Long>
 
     fun countByPlayerAndWeeksAgo(playerId: Long, weeksAgo: Long): Long
 
-    fun countFor10WeeksByPlayer(playerId: Long): Long
+    fun countDuring10WeeksByPlayer(playerId: Long): Long
 
-    fun countByLastWeek(): List<CountGamesPerDayDto>
+    fun countPerDayDuringLast7Days(): List<CountGamesPerDayDto>
 
 }
 
@@ -75,7 +75,7 @@ interface PlayerStatsService : BaseService<PlayerStats> {
 
     fun getGamesStatsByPlayer(playerId: Long, pageRequest: PageRequest): Page<PlayerStats>
 
-    fun getDeltaByPlayerForWeeksAgo(playerId: Long, countWeeks: Long): List<Double>
+    fun getDeltaPerWeekDuring10WeeksByPlayer(playerId: Long): List<Double>
 
     fun getDeltaByPlayerAndWeeksAgo(playerId: Long, weeksAgo: Long): Double
 

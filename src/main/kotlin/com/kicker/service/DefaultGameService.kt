@@ -35,10 +35,13 @@ class DefaultGameService(
         return repository.countByPlayer(player)
     }
 
-    override fun countByPlayerForWeeksAgo(playerId: Long, countWeeks: Long): List<Long> {
+    /*
+    * Current week is number 0, so 10 week is number 9
+    * */
+    override fun countPerWeekDuring10WeeksByPlayer(playerId: Long): List<Long> {
         val dashboard = mutableListOf<Long>()
-        for (weeksAgo in 0..countWeeks) {
-            dashboard.add(countByPlayerAndWeeksAgo(playerId, weeksAgo))
+        for (weeksAgo in 0..9) {
+            dashboard.add(countByPlayerAndWeeksAgo(playerId, weeksAgo.toLong()))
         }
         return dashboard
     }
@@ -53,18 +56,14 @@ class DefaultGameService(
     /*
     * Current week is number 0, so 10 week is number 9
     * */
-    override fun countFor10WeeksByPlayer(playerId: Long): Long {
+    override fun countDuring10WeeksByPlayer(playerId: Long): Long {
         val player = playerService.get(playerId)
         return repository.countByPlayerAndIntervalDates(player,
                 DateUtils.getStartDateOfWeek(playerSettingsProperties.countWeeks!! - 1), LocalDate.now())
     }
 
-    /*
-    * Current week is number 0, so the last week is 1
-    * */
-    override fun countByLastWeek(): List<CountGamesPerDayDto> {
-        val dates = DateUtils.getIntervalDatesOfWeek(1)
-        return repository.findByIntervalDates(dates.first, dates.second)
+    override fun countPerDayDuringLast7Days(): List<CountGamesPerDayDto> {
+        return repository.countPerDayByIntervalDates(LocalDate.now().minusWeeks(1), LocalDate.now())
     }
 
     @Transactional
