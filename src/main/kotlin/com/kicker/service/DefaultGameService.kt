@@ -3,6 +3,7 @@ package com.kicker.service
 import com.kicker.config.property.PlayerSettingsProperties
 import com.kicker.domain.PageRequest
 import com.kicker.domain.model.game.GameRegistrationRequest
+import com.kicker.domain.repository.CountGamesPerDayDto
 import com.kicker.model.Game
 import com.kicker.repository.GameRepository
 import com.kicker.utils.DateUtils
@@ -34,10 +35,10 @@ class DefaultGameService(
         return repository.countByPlayer(player)
     }
 
-    override fun countByPlayerForWeeksAgo(playerId: Long, countWeeks: Long): Map<Long, Long> {
-        val dashboard = mutableMapOf<Long, Long>()
+    override fun countByPlayerForWeeksAgo(playerId: Long, countWeeks: Long): List<Long> {
+        val dashboard = mutableListOf<Long>()
         for (weeksAgo in 0..countWeeks) {
-            dashboard[weeksAgo] = countByPlayerAndWeeksAgo(playerId, weeksAgo)
+            dashboard.add(countByPlayerAndWeeksAgo(playerId, weeksAgo))
         }
         return dashboard
     }
@@ -56,6 +57,14 @@ class DefaultGameService(
         val player = playerService.get(playerId)
         return repository.countByPlayerAndIntervalDates(player,
                 DateUtils.getStartDateOfWeek(playerSettingsProperties.countWeeks!! - 1), LocalDate.now())
+    }
+
+    /*
+    * Current week is number 0, so the last week is 1
+    * */
+    override fun countByLastWeek(): List<CountGamesPerDayDto> {
+        val dates = DateUtils.getIntervalDatesOfWeek(1)
+        return repository.findByIntervalDates(dates.first, dates.second)
     }
 
     @Transactional

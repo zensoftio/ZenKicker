@@ -5,6 +5,7 @@ import com.kicker.domain.PageResponse
 import com.kicker.domain.model.game.GameDto
 import com.kicker.domain.model.game.GamePageRequest
 import com.kicker.domain.model.game.GameRegistrationRequest
+import com.kicker.domain.repository.CountGamesPerDayDto
 import com.kicker.model.Player
 import com.kicker.service.GameService
 import org.springframework.validation.annotation.Validated
@@ -42,12 +43,15 @@ class GameController(
      */
     @GetMapping("/count/player/{playerId}/dashboard/countWeeks/{countWeeks}")
     fun getCountByPlayerAndWeeksAgo(@PathVariable playerId: Long,
-                                    @PathVariable @Min(0) @Max(9) countWeeks: Long): Map<Long, Long> =
+                                    @PathVariable @Min(0) @Max(9) countWeeks: Long): List<Long> =
             service.countByPlayerForWeeksAgo(playerId, countWeeks)
 
     @PostMapping("/registration")
     fun gameRegistration(@CurrentPlayer currentPlayer: Player, @Valid @RequestBody request: GameRegistrationRequest): GameDto {
         return GameDto(service.gameRegistration(currentPlayer.id, request))
     }
+
+    @GetMapping("/count/lastWeek")
+    fun getCountByLastWeek(): List<CountGamesPerDayDto> = service.countByLastWeek()
 
 }
