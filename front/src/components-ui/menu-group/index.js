@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import {Colors} from '../../helpers/style-variables';
 
 const Content = styled.section`
 	width: 100%;
@@ -23,7 +24,7 @@ const List = styled.div`
 
 const Title = styled.div`
   padding: 12px 25px;
-  color: red;
+  color: ${Colors.MAIN_COLOR};
 `;
 
 export class MenuGroup extends React.Component {

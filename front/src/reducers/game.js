@@ -1,8 +1,4 @@
-import {
-  APPEND_TO_GAMES_SUCCESS,
-  GET_ALL_GAMES_SUCCESS,
-  GET_LATEST_GAMES_SUCCESS,
-} from '../actions/const'
+import {ActionType} from '../actions/const';
 
 const initState = {
   games: {
@@ -13,18 +9,32 @@ const initState = {
     list: [],
     totalCount: 0
   },
+  playerGames: {
+    list: [],
+    totalCount: 0
+  },
+  gamesPerLastWeek: []
 };
 
 export const game = (state = initState, action) => {
   switch (action.type) {
-    case GET_ALL_GAMES_SUCCESS:
+    case ActionType.Game.GET_ALL_GAMES_SUCCESS:
       return {...state, games: action.payload};
 
-    case APPEND_TO_GAMES_SUCCESS:
+    case ActionType.Game.APPEND_TO_GAMES_SUCCESS:
       return {...state, games: {totalCount: action.payload.totalCount, list: [...state.games.list, ...action.payload.list]}};
 
-    case GET_LATEST_GAMES_SUCCESS:
+    case ActionType.Game.GET_LATEST_GAMES_SUCCESS:
       return {...state, latestGames: action.payload};
+
+    case ActionType.Game.GET_PLAYER_GAMES_SUCCESS:
+      return {...state, playerGames: action.payload};
+
+    case ActionType.Game.APPEND_TO_PLAYER_GAMES_SUCCESS:
+      return {...state, playerGames: {totalCount: action.payload.totalCount, list: [...state.playerGames.list, ...action.payload.list]}};
+
+    case ActionType.Game.GET_GAMES_COUNT_PER_WEEK_SUCCESS:
+      return {...state, gamesPerLastWeek: action.payload};
 
     default:
       return state;

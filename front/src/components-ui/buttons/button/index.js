@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import {Colors} from '../../../helpers/style-variables';
 
 const Content = styled.div`
 	width: max-content;
@@ -9,14 +10,12 @@ const Content = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
-  border-left: solid 3px red;
+  border-left: solid 3px transparent;
 
   &:hover {
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-left: solid 3px ${Colors.MAIN_COLOR};
   }
-  &:active {
-    border-left: solid 3px green;
-  }  
 `;
 
 export const Button = ({children, onClick}) => (

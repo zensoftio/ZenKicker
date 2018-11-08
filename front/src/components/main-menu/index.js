@@ -4,6 +4,8 @@ import {Link} from 'react-router-dom';
 import {MainMenuLink} from "../../components-ui/buttons/main-menu-link";
 
 import signOutIco from '../../shared/images/icons/sign-out.png';
+import UserPhoto from '../../components-ui/user-photo';
+import {Colors} from '../../helpers/style-variables';
 
 const Content = styled.section`
 	min-width: 300px;
@@ -22,7 +24,7 @@ const Title = styled(Link)`
 	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 	text-align: center;
 	&>span {
-		color: red;
+		color: ${Colors.MAIN_COLOR};
 	}
 `;
 
@@ -72,11 +74,7 @@ export const MainMenu = ({currentUser}) => (
 		<Title to="/">Zen<span>Kicker</span></Title>
     <AuthenticationContent>
       <div>
-        {
-          currentUser.iconName ?
-            <img alt="avatar" src={`http://localhost/images/icons/${currentUser.iconName}`}/> :
-            <img alt="avatar" src={'https://www.shareicon.net/data/2016/08/05/806962_user_512x512.png'} />
-        }
+        <UserPhoto photo={currentUser.iconName}/>
         <Username to={`/player/${currentUser.id}`}>{currentUser.username}</Username>
       </div>
       <a href="/logout"><SignOut/></a>

@@ -4,8 +4,138 @@ import {Button} from '../../components-ui/buttons/button';
 import Popup from '../popup';
 import DropdownInput from '../../components-ui/dropdown-input';
 import {
+  getActivePlayers,
+  getAllGames,
+  getAllPlayers,
+  getLatestGames,
   registerGame,
+  getTopPlayers,
+  getGamesCountPerWeek
 } from '../../actions';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {Colors} from '../../helpers/style-variables';
+import {getGoalValues} from '../../helpers/goal-values';
+
+class GameRegistration extends Component {
+  constructor(props) {
+    super(props);
+    this.popupChild = React.createRef();
+    this.state = {
+      winner1Id: null,
+      winner2Id: null,
+      loser1Id: null,
+      loser2Id: null,
+      losersGoals: null,
+      registrationError: null,
+    }
+  }
+
+  clearValues = () => this.setState({
+    winner1Id: null,
+    winner2Id: null,
+    loser1Id: null,
+    loser2Id: null,
+    losersGoals: null,
+    registrationError: null,
+  })
+
+  onWinner1Change = ({value}) => this.setState({winner1Id: value, registrationError: null})
+  onWinner2Change = ({value}) => this.setState({winner2Id: value, registrationError: null})
+  onLoser1Change = ({value}) => this.setState({loser1Id: value, registrationError: null})
+  onLoser2Change = ({value}) => this.setState({loser2Id: value, registrationError: null})
+  onLosersGoalsChange = ({value}) => this.setState({losersGoals: value, registrationError: null})
+
+  onRegisterGame = async () => {
+    const {winner1Id, winner2Id, loser1Id, loser2Id, losersGoals} = this.state;
+    if (winner1Id === null || winner2Id === null || loser1Id === null || loser2Id === null || losersGoals === null) {
+      return this.setState({registrationError: 'All fields should be filled'});
+    }
+    const {getActivePlayers, getAllPlayers, getLatestGames, getAllGames, getTopPlayers, getGamesCountPerWeek} = this.props.actions;
+    const data = {
+      winner1Id,
+      winner2Id,
+      loser1Id,
+      loser2Id,
+      losersGoals
+    };
+    try {
+      await registerGame(data);
+      this.clearValues();
+      this.popupChild.current.onPopupClose();
+      getActivePlayers();
+      getAllPlayers();
+      getLatestGames();
+      getAllGames();
+      getTopPlayers();
+      getGamesCountPerWeek();
+    } catch (err) {
+      console.log({err})
+      const error = err.response.data.errors[0].message;
+      this.setState({registrationError: error});
+    }
+  }
+
+  getFilteredPlayerList = () => {
+    const {players} = this.props;
+    const {winner1Id, winner2Id, loser1Id, loser2Id} = this.state;
+    const chosenPlayers = [winner1Id, winner2Id, loser1Id, loser2Id];
+    const mapPlayers = players.list.map(i => ({value: i.id, label: i.username}));
+    return mapPlayers.filter(i => !chosenPlayers.includes(i.value))
+  }
+
+  render() {
+    const {registrationError} = this.state;
+
+    return (
+      <Content>
+        <Popup buttonTitle='Register Game' ref={this.popupChild} clearValues={this.clearValues}>
+          <InputsContainer>
+            <PopupTitle>Register game</PopupTitle>
+            <Container>
+              <Block>
+                <DropdownInput data={this.getFilteredPlayerList()} onChange={this.onWinner1Change} placeholder='Winner 1'/>
+                <DropdownInput data={this.getFilteredPlayerList()} onChange={this.onWinner2Change} placeholder='Winner 2'/>
+              </Block>
+              <ScoreBlock>
+                <div>10 :</div>
+                <DropdownInput data={getGoalValues()} onChange={this.onLosersGoalsChange} placeholder=''/>
+              </ScoreBlock>
+              <Block>
+                <DropdownInput data={this.getFilteredPlayerList()} onChange={this.onLoser1Change} placeholder='Loser 1'/>
+                <DropdownInput data={this.getFilteredPlayerList()} onChange={this.onLoser2Change} placeholder='Loser 2'/>
+              </Block>
+            </Container>
+            <RegistrationError>{registrationError}</RegistrationError>
+            <Button onClick={this.onRegisterGame}>Confirm</Button>
+          </InputsContainer>
+        </Popup>
+      </Content>
+    )
+  }
+}
+
+const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
+  const props = {
+    players: state.player.players
+  };
+  return props;
+}
+const mapDispatchToProps = (dispatch) => {
+  const actions = {
+    getAllPlayers,
+    getActivePlayers,
+    getLatestGames,
+    getAllGames,
+    getTopPlayers,
+    getGamesCountPerWeek
+  };
+  const actionMap = {actions: bindActionCreators(actions, dispatch)};
+  return actionMap;
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(GameRegistration);
+
 
 const Content = styled.div``;
 
@@ -42,119 +172,8 @@ const InputsContainer = styled.div`
 `;
 
 const RegistrationError = styled.span`
-  color: red;
+  color: ${Colors.ERROR_COLOR};
   display: flex;
   align-items: center;
   margin: 20px 0;
 `;
-
-class GameRegistration extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      winner1Id: null,
-      winner2Id: null,
-      loser1Id: null,
-      loser2Id: null,
-      losersGoals: null,
-      registrationError: null,
-    }
-  }
-
-  clearValues = () => this.setState({
-    winner1Id: null,
-    winner2Id: null,
-    loser1Id: null,
-    loser2Id: null,
-    losersGoals: null,
-    registrationError: null,
-  })
-
-  onWinner1Change = ({value}) => this.setState({winner1Id: value, registrationError: null})
-  onWinner2Change = ({value}) => this.setState({winner2Id: value, registrationError: null})
-  onLoser1Change = ({value}) => this.setState({loser1Id: value, registrationError: null})
-  onLoser2Change = ({value}) => this.setState({loser2Id: value, registrationError: null})
-  onLosersGoalsChange = ({value}) => this.setState({losersGoals: value, registrationError: null})
-
-  onRegisterGame = async () => {
-    const {winner1Id, winner2Id, loser1Id, loser2Id, losersGoals} = this.state;
-    if (winner1Id === null || winner2Id === null || loser1Id === null || loser2Id === null || losersGoals === null) {
-      return this.setState({registrationError: 'All fields should be filled'});
-    }
-    const {getActivePlayers, getAllPlayers, getLatestGames, getAllGames} = this.props;
-    const data = {
-      winner1Id,
-      winner2Id,
-      loser1Id,
-      loser2Id,
-      losersGoals
-    };
-    try {
-      await registerGame(data);
-      this.clearValues();
-      this.child.onPopupClose();
-      getActivePlayers();
-      getAllPlayers();
-      getLatestGames();
-      getAllGames();
-    } catch (err) {
-      console.log({err})
-      const error = err.response.data.errors[0].message;
-      this.setState({registrationError: error});
-    }
-  }
-
-  getFilteredPlayerList = () => {
-    const {players} = this.props;
-    const {winner1Id, winner2Id, loser1Id, loser2Id} = this.state;
-    const chosenPlayers = [winner1Id, winner2Id, loser1Id, loser2Id];
-    const mapPlayers = players ? players.map(i => ({value: i.id, label: i.username})) : [];
-    return mapPlayers.filter(i => !chosenPlayers.includes(i.value))
-  }
-
-  render() {
-    const {registrationError} = this.state;
-
-    const goals = [
-      {value: 0, label: 0},
-      {value: 1, label: 1},
-      {value: 2, label: 2},
-      {value: 3, label: 3},
-      {value: 4, label: 4},
-      {value: 5, label: 5},
-      {value: 6, label: 6},
-      {value: 7, label: 7},
-      {value: 8, label: 8},
-      {value: 9, label: 9},
-    ]
-
-    return (
-      <Content>
-        <Popup buttonTitle='Register Game' ref={instance => {this.child = instance}} clearValues={this.clearValues}>
-          <InputsContainer>
-            <PopupTitle>Register game</PopupTitle>
-            <Container>
-              <Block>
-                <DropdownInput data={this.getFilteredPlayerList()} onChange={this.onWinner1Change} placeholder='Winner 1'/>
-                <DropdownInput data={this.getFilteredPlayerList()} onChange={this.onWinner2Change} placeholder='Winner 2'/>
-              </Block>
-              <ScoreBlock>
-                <div>10 :</div>
-                <DropdownInput data={goals} onChange={this.onLosersGoalsChange} placeholder=''/>
-              </ScoreBlock>
-              <Block>
-                <DropdownInput data={this.getFilteredPlayerList()} onChange={this.onLoser1Change} placeholder='Loser 1'/>
-                <DropdownInput data={this.getFilteredPlayerList()} onChange={this.onLoser2Change} placeholder='Loser 2'/>
-              </Block>
-            </Container>
-
-            <RegistrationError>{registrationError}</RegistrationError>
-            <Button onClick={this.onRegisterGame}>Confirm</Button>
-          </InputsContainer>
-        </Popup>
-      </Content>
-    )
-  }
-}
-
-export default GameRegistration;

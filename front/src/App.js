@@ -10,70 +10,41 @@ import {
   getLatestGames,
   getAllGames
 } from "./actions";
-import {MainMenu} from "./components/main-menu";
 import DashboardScene from "./scenes/DashboardScene";
+import PlayersScene from "./scenes/PlayersScene";
+import GamesScene from "./scenes/GamesScene";
 import ProfileScene from "./scenes/ProfileScene";
-import GameRegistration from './components/game-registration';
-
-const NotFound = () => <div>not found</div>
-
-const Container = styled.div`
-	height: 100vh;
-  width: 100%;
-  display: flex;
-  position: relative;
-`;
-
-const Content = styled.div`
-	width: 100%;
-	padding: 50px;
-	padding-top: 0;
-	box-sizing: border-box;
-`;
-
-const MainContentContainer = styled.div`
-	width: 100%;
-`;
-
-const GameRegistrationContainer = styled.div`
-	width: 100%;
-	display: flex;
-	justify-content: flex-end;
-	padding: 20px;
-	box-sizing: border-box;
-`;
+import {HorizontalMenu} from './components/horizontal-menu';
+import NotFoundScene from './scenes/NotFoundScene';
 
 class App extends Component {
 
 	componentDidMount() {
 	  this.props.actions.getCurrent();
+	  this.props.actions.getAllPlayers();
 	}
 
 	render() {
-	  const {currentUser, actions, players} = this.props;
+	  const {currentUser} = this.props;
 
 	  if (!currentUser || !currentUser.username) {
-	    return null
+	    return null;
     }
+
 		return (
 			<Container>
-				<MainMenu currentUser={currentUser}/>
-        <MainContentContainer>
-          <GameRegistrationContainer>
-            <GameRegistration players={players ? players.list : []} getAllPlayers={actions.getAllPlayers} getAllGames={actions.getAllGames}
-                              getActivePlayers={actions.getActivePlayers} getLatestGames={actions.getLatestGames}/>
-          </GameRegistrationContainer>
-
-          <Content>
-            <Switch>
-              <Route exact path="/dashboard" component={DashboardScene}/>
-              <Route exact path="/player/:id" component={ProfileScene}/>
-              <Route path="/not-found" component={NotFound}/>
-              <Redirect from="/" exact to="/dashboard"/>
-              <Redirect from="*" exact to="/not-found"/>
-            </Switch>
-          </Content>
-        </MainContentContainer>
+				<HorizontalMenu id={currentUser.id} iconName={currentUser.iconName} username={currentUser.username}/>
+        <Content>
+          <Switch>
+            <Route exact path="/dashboard" component={DashboardScene}/>
+            <Route exact path="/players" component={PlayersScene}/>
+            <Route exact path="/games" component={GamesScene}/>
+            <Route exact path="/player/:id" component={ProfileScene}/>
+            <Route path="/not-found" component={NotFoundScene}/>
+            <Redirect from="/" exact to="/dashboard"/>
+            <Redirect from="*" exact to="/not-found"/>
+          </Switch>
+        </Content>
 			</Container>
 
 		);
@@ -83,7 +54,7 @@ class App extends Component {
 const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
 	const props = {
     currentUser: state.user.current,
-    players: state.user.players
+    players: state.player.players
   };
 	return props;
 }
@@ -100,3 +71,22 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+
+const Container = styled.div`
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Content = styled.div`
+	width: 100%;
+	padding: 0 50px 20px 50px;
+	padding-top: 0;
+	box-sizing: border-box;
+	margin-top: 120px;
+	display: flex;
+	justify-content: center;
+`;

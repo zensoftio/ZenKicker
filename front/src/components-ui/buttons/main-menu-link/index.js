@@ -1,21 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
 import {NavLink} from 'react-router-dom';
+import {Colors} from '../../../helpers/style-variables';
 
 const LinkButton = styled(NavLink)`
-	width: 100%;
-  padding: 12px 25px;
+  padding: 22px 25px 10px 25px;
+  margin: 0 10px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
   cursor: pointer;
   background: fade_out(black, 0.5);
-  border-left: 3px solid transparent;
+  border-bottom: 3px solid #efefef;
   text-decoration: none;
 
   &:hover, &.active{
-		border-left: solid 3px red;
-		
+		border-bottom: solid 3px ${Colors.MAIN_COLOR};
     span{
       opacity: 1;
     }
@@ -23,12 +23,10 @@ const LinkButton = styled(NavLink)`
 `;
 
 const MenuItem = styled.span`
-  line-height: 20px;
   font-weight: 400;
   color: black;
   opacity: 0.5;
   text-transform: capitalize;
-  left: 8px;
 `;
 
 export const MainMenuLink = ({children, link}) => (

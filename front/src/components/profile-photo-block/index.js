@@ -5,32 +5,8 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {getCurrent, getPlayer} from '../../actions';
 
-const ProfilePhoto = styled.div`
-  width: 150px;
-  min-width: 150px;
-  height: 150px;
-  padding: 0 20px;
-  position: relative;
-  img {
-    border-radius: 100%;
-    width: 100%;
-    height: 100%;
-  }
-`;
-
-const Button = styled.label`
-  cursor: pointer;
-  
-  position: absolute;
-  left: 0;
-  top:0;
-  bottom: 0;
-  right: 0;
-  
-  input{
-    display: none;
-  }
-`;
+import uploadIco from '../../shared/images/icons/upload.png';
+import UserPhoto from '../../components-ui/user-photo';
 
 class ProfilePhotoBlock extends Component {
   constructor(props) {
@@ -64,11 +40,7 @@ class ProfilePhotoBlock extends Component {
 
     return (
       <ProfilePhoto>
-        {
-          player.iconName ?
-            <img alt="avatar" src={`http://localhost/images/icons/${player.iconName}`}/> :
-            <img alt="avatar" src={'https://www.shareicon.net/data/2016/08/05/806962_user_512x512.png'} />
-        }
+        <UserPhoto photo={player.iconName}/>
         {
           isCurrent &&
           <Button htmlFor={id} >
@@ -80,11 +52,10 @@ class ProfilePhotoBlock extends Component {
   }
 }
 
-
 const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
   const props = {
     currentUser: state.user.current,
-    player: state.user.player
+    player: state.player.player
   };
   return props;
 }
@@ -98,3 +69,38 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfilePhotoBlock);
+
+const ProfilePhoto = styled.div`
+  min-width: 150px;
+  max-width: 150px;
+  min-height: 150px;
+  max-height: 150px;
+  margin: 0 20px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Button = styled.label`
+  cursor: pointer;
+  border-radius: 100%;
+  position: absolute;
+  left: 0;
+  top:0;
+  bottom: 0;
+  right: 0;
+  
+  input{
+    display: none;
+  }
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    background-image: url(${uploadIco});
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 40px 40px;
+  }
+`;
