@@ -31,7 +31,7 @@ class DefaultPlayerStatsService(
             PlayerDto(
                     playerService.get(playerId),
                     gameService.countByPlayer(playerId),
-                    gameService.countFor10WeeksByPlayer(playerId)
+                    gameService.countDuring10WeeksByPlayer(playerId)
             ),
             countLossesByPlayer(playerId),
             countWinsByPlayer(playerId),
@@ -44,10 +44,13 @@ class DefaultPlayerStatsService(
         return repository.findByPlayer(player, pageRequest)
     }
 
-    override fun getDeltaByPlayerForWeeksAgo(playerId: Long, countWeeks: Long): List<Double> {
+    /*
+    * Current week is number 0, so 10 week is number 9
+    * */
+    override fun getDeltaPerWeekDuring10WeeksByPlayer(playerId: Long): List<Double> {
         val dashboard = mutableListOf<Double>()
-        for (weeksAgo in 0..countWeeks) {
-            dashboard.add(getDeltaByPlayerAndWeeksAgo(playerId, weeksAgo))
+        for (weeksAgo in 0..9) {
+            dashboard.add(getDeltaByPlayerAndWeeksAgo(playerId, weeksAgo.toLong()))
         }
         return dashboard
     }
@@ -75,25 +78,25 @@ class DefaultPlayerStatsService(
 
     override fun countLossesByPlayer(playerId: Long): Long {
         val player = playerService.get(playerId)
-        return repository.countByPlayerAndWon(player, false)
+        return repository.countGamesByPlayerAndWon(player, false)
     }
 
     override fun countWinsByPlayer(playerId: Long): Long {
         val player = playerService.get(playerId)
-        return repository.countByPlayerAndWon(player, true)
+        return repository.countGamesByPlayerAndWon(player, true)
     }
 
     override fun countGoalsAgainstByPlayer(playerId: Long): Long {
         val player = playerService.get(playerId)
 
-        val countLosses = repository.countByPlayerAndWon(player, false)
+        val countLosses = repository.countGamesByPlayerAndWon(player, false)
         return repository.countGoalsByPlayerAndWon(player, true) + countLosses * gamesSettingsProperties.defaultMaxScore!!
     }
 
     override fun countGoalsForByPlayer(playerId: Long): Long {
         val player = playerService.get(playerId)
 
-        val countWins = repository.countByPlayerAndWon(player, true)
+        val countWins = repository.countGamesByPlayerAndWon(player, true)
         return repository.countGoalsByPlayerAndWon(player, false) + countWins * gamesSettingsProperties.defaultMaxScore!!
     }
 
