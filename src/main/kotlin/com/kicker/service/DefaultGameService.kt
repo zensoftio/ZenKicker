@@ -3,7 +3,6 @@ package com.kicker.service
 import com.kicker.config.property.PlayerSettingsProperties
 import com.kicker.domain.PageRequest
 import com.kicker.domain.model.game.GameRegistrationRequest
-import com.kicker.domain.repository.CountGamesPerDayDto
 import com.kicker.model.Game
 import com.kicker.repository.GameRepository
 import com.kicker.utils.DateUtils
@@ -11,7 +10,7 @@ import org.springframework.context.ApplicationEventPublisher
 import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.time.LocalDate
+import java.time.LocalDate.now
 
 /**
  * @author Yauheni Efimenko
@@ -59,11 +58,31 @@ class DefaultGameService(
     override fun countDuring10WeeksByPlayer(playerId: Long): Long {
         val player = playerService.get(playerId)
         return repository.countByPlayerAndIntervalDates(player,
-                DateUtils.getStartDateOfWeek(playerSettingsProperties.countWeeks!! - 1), LocalDate.now())
+                DateUtils.getStartDateOfWeek(playerSettingsProperties.countWeeks!! - 1), now())
     }
 
-    override fun countPerDayDuringLast7Days(): List<CountGamesPerDayDto> {
-        return repository.countPerDayByIntervalDates(LocalDate.now().minusWeeks(1), LocalDate.now())
+    override fun countPerDayDuringLast7Days(): List<Long> {
+        val countGamesPerDay = repository.countPerDayByIntervalDates(now().minusWeeks(1), now())
+        val countGamesPerDayDuringLast7Days = mutableListOf<Long>()
+
+        /**
+         * plusDays(1) is needed because current day also is needed be in last week
+         */
+        var startDate = now().minusWeeks(1).plusDays(1)
+        val endDate = now()
+        while (!startDate.isAfter(endDate)) {
+            val dto = countGamesPerDay.firstOrNull { it.date == startDate }
+
+            if (null != dto) {
+                countGamesPerDayDuringLast7Days.add(dto.count)
+            } else {
+                countGamesPerDayDuringLast7Days.add(0)
+            }
+
+            startDate = startDate.plusDays(1)
+        }
+
+        return countGamesPerDayDuringLast7Days
     }
 
     @Transactional

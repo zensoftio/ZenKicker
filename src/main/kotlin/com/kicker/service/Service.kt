@@ -6,7 +6,6 @@ import com.kicker.domain.model.player.CreatePlayerRequest
 import com.kicker.domain.model.player.UpdatePlayerPasswordRequest
 import com.kicker.domain.model.player.UpdatePlayerUsernameRequest
 import com.kicker.domain.model.player_stats.PlayerStatsDto
-import com.kicker.domain.repository.CountGamesPerDayDto
 import com.kicker.model.Award
 import com.kicker.model.Game
 import com.kicker.model.Player
@@ -65,7 +64,7 @@ interface GameService : BaseService<Game> {
 
     fun countDuring10WeeksByPlayer(playerId: Long): Long
 
-    fun countPerDayDuringLast7Days(): List<CountGamesPerDayDto>
+    fun countPerDayDuringLast7Days(): List<Long>
 
 }
 
