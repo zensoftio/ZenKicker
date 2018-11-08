@@ -1,8 +1,7 @@
 package com.kicker.domain.model.game
 
-import com.fasterxml.jackson.annotation.JsonFormat
 import com.kicker.model.Game
-import java.time.LocalDateTime
+import java.sql.Timestamp
 
 /**
  * @author Yauheni Efimenko
@@ -15,8 +14,7 @@ data class GameDto(
         val loser1Id: Long,
         val loser2Id: Long,
         val reportedById: Long,
-        @field:JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-        val date: LocalDateTime
+        val date: Long
 ) {
 
     constructor(game: Game) : this(
@@ -27,7 +25,7 @@ data class GameDto(
             game.loser1.id,
             game.loser2.id,
             game.reportedBy.id,
-            game.date
+            Timestamp.valueOf(game.date).time
     )
 
 }
