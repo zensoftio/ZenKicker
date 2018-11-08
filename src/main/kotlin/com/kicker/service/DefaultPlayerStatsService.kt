@@ -49,7 +49,7 @@ class DefaultPlayerStatsService(
     * */
     override fun getDeltaPerWeekDuring10WeeksByPlayer(playerId: Long): List<Double> {
         val dashboard = mutableListOf<Double>()
-        for (weeksAgo in 0..9) {
+        for (weeksAgo in 9 downTo 0) {
             dashboard.add(getDeltaByPlayerAndWeeksAgo(playerId, weeksAgo.toLong()))
         }
         return dashboard

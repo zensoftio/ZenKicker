@@ -22,7 +22,7 @@ class PlayerActivitySchedule(
     @Transactional
     fun schedulePlayerActivity() {
         playerService.getAll().forEach {
-            if (it.active && gameService.countFor10WeeksByPlayer(it.id) < playerSettingsProperties.countGames!!) {
+            if (it.active && gameService.countDuring10WeeksByPlayer(it.id) < playerSettingsProperties.countGames!!) {
                 playerService.updateActivity(it.id, !it.active)
             }
         }
