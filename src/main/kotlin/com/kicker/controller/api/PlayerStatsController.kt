@@ -1,6 +1,7 @@
 package com.kicker.controller.api
 
 import com.kicker.domain.PageResponse
+import com.kicker.domain.model.player_stats.PlayerGamesStatsDto
 import com.kicker.domain.model.player_stats.PlayerStatsDto
 import com.kicker.domain.model.player_stats.PlayerStatsPageRequest
 import com.kicker.service.PlayerStatsService
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import javax.validation.constraints.Min
 
 /**
  * @author Yauheni Efimenko
@@ -23,12 +23,17 @@ class PlayerStatsController(
 ) {
 
     @GetMapping("/player/{playerId}")
-    fun getPlayerStats(@PathVariable playerId: Long, pageRequest: PlayerStatsPageRequest): PageResponse<PlayerStatsDto> {
-        return PageResponse(service.getByPlayer(playerId, pageRequest).map { PlayerStatsDto(it) })
+    fun getPlayerStats(@PathVariable playerId: Long, pageRequest: PlayerStatsPageRequest): PlayerStatsDto {
+        return service.getStatsByPlayer(playerId)
     }
 
-    @GetMapping("/delta/player/{playerId}/weeksAgo/{weeksAgo}")
-    fun getDeltaByPlayerAndWeeksAgo(@PathVariable playerId: Long, @PathVariable @Min(0) weeksAgo: Long): Int =
-            service.getDeltaByPlayerAndWeeksAgo(playerId, weeksAgo).toInt()
+    @GetMapping("/games/player/{playerId}")
+    fun getPlayerGamesStats(@PathVariable playerId: Long, pageRequest: PlayerStatsPageRequest): PageResponse<PlayerGamesStatsDto> {
+        return PageResponse(service.getGamesStatsByPlayer(playerId, pageRequest).map { PlayerGamesStatsDto(it) })
+    }
+
+    @GetMapping("/delta/player/{playerId}/dashboard")
+    fun getDeltaPerWeekDuring10WeeksByPlayer(@PathVariable playerId: Long): List<Int> =
+            service.getDeltaPerWeekDuring10WeeksByPlayer(playerId).map { it.toInt() }
 
 }

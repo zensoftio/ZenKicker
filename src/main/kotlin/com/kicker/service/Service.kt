@@ -5,6 +5,7 @@ import com.kicker.domain.model.game.GameRegistrationRequest
 import com.kicker.domain.model.player.CreatePlayerRequest
 import com.kicker.domain.model.player.UpdatePlayerPasswordRequest
 import com.kicker.domain.model.player.UpdatePlayerUsernameRequest
+import com.kicker.domain.model.player_stats.PlayerStatsDto
 import com.kicker.model.Award
 import com.kicker.model.Game
 import com.kicker.model.Player
@@ -57,19 +58,35 @@ interface GameService : BaseService<Game> {
 
     fun countByPlayer(playerId: Long): Long
 
+    fun countPerWeekDuring10WeeksByPlayer(playerId: Long): List<Long>
+
     fun countByPlayerAndWeeksAgo(playerId: Long, weeksAgo: Long): Long
 
-    fun countFor10WeeksByPlayer(playerId: Long): Long
+    fun countDuring10WeeksByPlayer(playerId: Long): Long
+
+    fun countPerDayDuringLast7Days(): List<Long>
 
 }
 
 interface PlayerStatsService : BaseService<PlayerStats> {
 
-    fun getByPlayer(playerId: Long, pageRequest: PageRequest): Page<PlayerStats>
+    fun getStatsByPlayer(playerId: Long): PlayerStatsDto
+
+    fun getGamesStatsByPlayer(playerId: Long, pageRequest: PageRequest): Page<PlayerStats>
+
+    fun getDeltaPerWeekDuring10WeeksByPlayer(playerId: Long): List<Double>
 
     fun getDeltaByPlayerAndWeeksAgo(playerId: Long, weeksAgo: Long): Double
 
     fun getActualRatingByPlayer(playerId: Long): Double
+
+    fun countLossesByPlayer(playerId: Long): Long
+
+    fun countWinsByPlayer(playerId: Long): Long
+
+    fun countGoalsAgainstByPlayer(playerId: Long): Long
+
+    fun countGoalsForByPlayer(playerId: Long): Long
 
 }
 

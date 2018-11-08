@@ -30,7 +30,7 @@ class PlayerActivityListener(
     }
 
     private fun handlePlayerActivity(player: Player) {
-        val currentCountGames = gameService.countFor10WeeksByPlayer(player.id)
+        val currentCountGames = gameService.countDuring10WeeksByPlayer(player.id)
         if (!player.active && currentCountGames >= playerSettingsProperties.countGames!!
                 || player.active && currentCountGames < playerSettingsProperties.countGames!!) {
             playerService.updateActivity(player.id, !player.active)
