@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import PlayerStatistic from '../player-statistic';
+import Chart from '../chart';
 
 const setWeekValue = (week) => {
   if (week === 0) return 'Current week';
@@ -10,15 +10,15 @@ const setWeekValue = (week) => {
 
 const ChartStatistics = ({deltaStatistic, gamesCountStatistic}) => {
 
-  const mappedDeltaStatistic = deltaStatistic ? Object.values(deltaStatistic).map((item, index) =>
-    ({delta: item, week: setWeekValue(index)})) : []
-  const mappedGamesCountStatistic = gamesCountStatistic ? Object.values(gamesCountStatistic).map((item, index) =>
-    ({games: item, week: setWeekValue(index)})) : []
+  const mappedDeltaStatistic = deltaStatistic.map((item, index) =>
+    ({delta: item, week: setWeekValue(index)}));
+  const mappedGamesCountStatistic = gamesCountStatistic.map((item, index) =>
+    ({games: item, week: setWeekValue(index)}));
 
   return (
     <Content>
-      <PlayerStatistic data={mappedDeltaStatistic} lineDataKey='delta' title='Delta per week'/>
-      <PlayerStatistic data={mappedGamesCountStatistic} lineDataKey='games' title='Count of games per week'/>
+      <Chart data={mappedDeltaStatistic} lineDataKey='delta' xDataKey='week' title='Delta per week'/>
+      <Chart data={mappedGamesCountStatistic} lineDataKey='games' xDataKey='week' title='Count of games per week'/>
     </Content>
   )
 }

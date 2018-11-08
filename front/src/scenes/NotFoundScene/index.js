@@ -22,10 +22,11 @@ const ErrorText = styled.div`
   }
 `;
 
-export const NotFoundScene = () => (
+const NotFoundScene = () => (
   <Content>
     <ErrorCode>404</ErrorCode>
     <ErrorText>WHAT ARE YOU DOING, <span>SICK BASTARD</span>?</ErrorText>
     <ErrorText>GET AWAY FROM HERE!</ErrorText>
   </Content>
 )
+export default NotFoundScene;

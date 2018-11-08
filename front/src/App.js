@@ -15,7 +15,7 @@ import PlayersScene from "./scenes/PlayersScene";
 import GamesScene from "./scenes/GamesScene";
 import ProfileScene from "./scenes/ProfileScene";
 import {HorizontalMenu} from './components/horizontal-menu';
-import {NotFoundScene} from './scenes/NotFoundScene';
+import NotFoundScene from './scenes/NotFoundScene';
 
 class App extends Component {
 
@@ -28,8 +28,9 @@ class App extends Component {
 	  const {currentUser} = this.props;
 
 	  if (!currentUser || !currentUser.username) {
-	    return null
+	    return null;
     }
+
 		return (
 			<Container>
 				<HorizontalMenu id={currentUser.id} iconName={currentUser.iconName} username={currentUser.username}/>

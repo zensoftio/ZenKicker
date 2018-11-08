@@ -14,8 +14,8 @@ const initState = {
     totalCount: 0
   },
   player: null,
-  deltaStatistic: null,
-  gamesCountStatistic: null
+  deltaStatistic: [],
+  gamesCountStatistic: []
 };
 
 export const player = (state = initState, action) => {

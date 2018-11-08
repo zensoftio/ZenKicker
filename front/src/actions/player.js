@@ -94,8 +94,7 @@ export const getPlayerDeltaStatistic = (id) => {
     dispatch({type: ActionType.Player.GET_PLAYER_DELTA_STATISTIC_REQUEST});
 
     try {
-      const countOfWeeks = 9;
-      const result = await api.get(Paths.Player.GetDeltaStatistic(id, countOfWeeks));
+      const result = await api.get(Paths.Player.GetDeltaStatistic(id));
       dispatch({type: ActionType.Player.GET_PLAYER_DELTA_STATISTIC_SUCCESS, payload: result.data});
     } catch (err) {
       console.warn(err);
@@ -110,8 +109,7 @@ export const getPlayerGamesCountStatistic = (id) => {
     dispatch({type: ActionType.Player.GET_PLAYER_GAMES_COUNT_STATISTIC_REQUEST});
 
     try {
-      const countOfWeeks = 9;
-      const result = await api.get(Paths.Player.GetGamesCountStatistic(id, countOfWeeks));
+      const result = await api.get(Paths.Player.GetGamesCountStatistic(id));
       dispatch({type: ActionType.Player.GET_PLAYER_GAMES_COUNT_STATISTIC_SUCCESS, payload: result.data});
     } catch (err) {
       console.warn(err);

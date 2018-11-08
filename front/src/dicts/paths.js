@@ -12,14 +12,15 @@ const Paths = {
 	Game: {
 		RegisterGame: base('/games/registration'),
 		GetAll: base('/games'),
-    PlayerGames: (id) => base(`/stats/games/player/${id}`)
+    PlayerGames: (id) => base(`/stats/games/player/${id}`),
+    GetGamesCount: base('/games/count/lastWeek')
 	},
   Player: {
     GetActive: base('/players/active'),
     GetAll: base('/players'),
     GetPlayer: (id) => base(`/stats/player/${id}`),
-    GetDeltaStatistic: (id, countOfWeeks) => base(`/stats/delta/player/${id}/dashboard/countWeeks/${countOfWeeks}`),
-    GetGamesCountStatistic: (id, count) => base(`/games/count/player/${id}/dashboard/countWeeks/${count}`)
+    GetDeltaStatistic: (id) => base(`/stats/delta/player/${id}/dashboard`),
+    GetGamesCountStatistic: (id) => base(`/games/count/player/${id}/dashboard`)
   }
 };
 

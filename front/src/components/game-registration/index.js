@@ -9,7 +9,8 @@ import {
   getAllPlayers,
   getLatestGames,
   registerGame,
-  getTopPlayers
+  getTopPlayers,
+  getGamesCountPerWeek
 } from '../../actions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -19,6 +20,7 @@ import {getGoalValues} from '../../helpers/goal-values';
 class GameRegistration extends Component {
   constructor(props) {
     super(props);
+    this.popupChild = React.createRef();
     this.state = {
       winner1Id: null,
       winner2Id: null,
@@ -49,7 +51,7 @@ class GameRegistration extends Component {
     if (winner1Id === null || winner2Id === null || loser1Id === null || loser2Id === null || losersGoals === null) {
       return this.setState({registrationError: 'All fields should be filled'});
     }
-    const {getActivePlayers, getAllPlayers, getLatestGames, getAllGames, getTopPlayers} = this.props.actions;
+    const {getActivePlayers, getAllPlayers, getLatestGames, getAllGames, getTopPlayers, getGamesCountPerWeek} = this.props.actions;
     const data = {
       winner1Id,
       winner2Id,
@@ -60,12 +62,13 @@ class GameRegistration extends Component {
     try {
       await registerGame(data);
       this.clearValues();
-      this.child.onPopupClose();
+      this.popupChild.current.onPopupClose();
       getActivePlayers();
       getAllPlayers();
       getLatestGames();
       getAllGames();
       getTopPlayers();
+      getGamesCountPerWeek();
     } catch (err) {
       console.log({err})
       const error = err.response.data.errors[0].message;
@@ -86,7 +89,7 @@ class GameRegistration extends Component {
 
     return (
       <Content>
-        <Popup buttonTitle='Register Game' ref={instance => {this.child = instance}} clearValues={this.clearValues}>
+        <Popup buttonTitle='Register Game' ref={this.popupChild} clearValues={this.clearValues}>
           <InputsContainer>
             <PopupTitle>Register game</PopupTitle>
             <Container>
@@ -124,7 +127,8 @@ const mapDispatchToProps = (dispatch) => {
     getActivePlayers,
     getLatestGames,
     getAllGames,
-    getTopPlayers
+    getTopPlayers,
+    getGamesCountPerWeek
   };
   const actionMap = {actions: bindActionCreators(actions, dispatch)};
   return actionMap;

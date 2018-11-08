@@ -13,7 +13,7 @@ const initState = {
     list: [],
     totalCount: 0
   },
-  gamesCount: null
+  gamesPerLastWeek: []
 };
 
 export const game = (state = initState, action) => {
@@ -33,8 +33,8 @@ export const game = (state = initState, action) => {
     case ActionType.Game.APPEND_TO_PLAYER_GAMES_SUCCESS:
       return {...state, playerGames: {totalCount: action.payload.totalCount, list: [...state.playerGames.list, ...action.payload.list]}};
 
-    case ActionType.Game.GET_GAMES_COUNT_PER_WEEKS_SUCCESS:
-      return {...state, gamesCount: action.payload};
+    case ActionType.Game.GET_GAMES_COUNT_PER_WEEK_SUCCESS:
+      return {...state, gamesPerLastWeek: action.payload};
 
     default:
       return state;

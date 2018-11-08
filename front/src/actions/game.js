@@ -69,14 +69,14 @@ export const appendToGames = (gamesLength) => async (dispatch) => {
   }
 }
 
-export const getGamesCountPerWeeks = (id) => async (dispatch) => {
-  dispatch({type: ActionType.Game.GET_GAMES_COUNT_PER_WEEKS_REQUEST});
+export const getGamesCountPerWeek = () => async (dispatch) => {
+  dispatch({type: ActionType.Game.GET_GAMES_COUNT_PER_WEEK_REQUEST});
 
   try {
-    const result = await api.get(Paths.Game.GetGamesCount(id, 10));
-    dispatch({type: ActionType.Game.GET_GAMES_COUNT_PER_WEEKS_SUCCESS, payload: result.data});
+    const result = await api.get(Paths.Game.GetGamesCount);
+    dispatch({type: ActionType.Game.GET_GAMES_COUNT_PER_WEEK_SUCCESS, payload: result.data});
   } catch (err) {
     console.warn(err);
-    dispatch({type: ActionType.Game.GET_GAMES_COUNT_PER_WEEKS_FAILURE});
+    dispatch({type: ActionType.Game.GET_GAMES_COUNT_PER_WEEK_FAILURE});
   }
 }

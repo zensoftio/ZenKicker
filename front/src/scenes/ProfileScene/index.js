@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {getPlayer, getPlayerGames, appendToPlayerGames, getGamesCountPerWeeks, getPlayerDeltaStatistic, getPlayerGamesCountStatistic} from '../../actions';
+import {getPlayer, getPlayerGames, appendToPlayerGames, getPlayerDeltaStatistic, getPlayerGamesCountStatistic} from '../../actions';
 import {withRouter} from 'react-router-dom';
 import ProfileMainInfo from '../../components/profile-main-info';
 import PlayerGames from '../../components/player-games';
@@ -75,7 +75,6 @@ const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
     players: state.player.players,
     playerGames: state.game.playerGames,
     currentUser: state.user.current,
-    gamesCount: state.game.gamesCount,
     deltaStatistic: state.player.deltaStatistic,
     gamesCountStatistic: state.player.gamesCountStatistic,
   };
@@ -86,7 +85,6 @@ const mapDispatchToProps = (dispatch) => {
     getPlayer,
     getPlayerGames,
     appendToPlayerGames,
-    getGamesCountPerWeeks,
     getPlayerGamesCountStatistic,
     getPlayerDeltaStatistic
   };

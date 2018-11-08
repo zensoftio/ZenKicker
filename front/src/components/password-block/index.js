@@ -9,6 +9,7 @@ import {Colors} from '../../helpers/style-variables';
 class PasswordBlock extends Component {
   constructor(props) {
     super(props);
+    this.popupChild = React.createRef();
     this.state = {
       newPassword: '',
       currentPassword: '',
@@ -38,7 +39,7 @@ class PasswordBlock extends Component {
       };
       await updatePassword(data);
       this.clearValues();
-      this.child.onPopupClose()
+      this.popupChild.current.onPopupClose()
     } catch (err) {
       const error = err.response.data.message;
       this.setState({passwordError: error});
@@ -49,7 +50,7 @@ class PasswordBlock extends Component {
     const {newPassword, currentPassword, passwordError, newPasswordConfirm} = this.state;
 
     return (
-      <Popup buttonTitle='Change password' ref={instance => {this.child = instance}} clearValues={this.clearValues}>
+      <Popup buttonTitle='Change password' ref={this.popupChild} clearValues={this.clearValues}>
         <InputsContainer>
           <PopupTitle>Change password</PopupTitle>
           <Input value={currentPassword} onChange={(e) => this.onCurrentPasswordChange(e.target.value)}

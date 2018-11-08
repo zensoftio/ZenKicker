@@ -97,11 +97,6 @@ const Photo = styled.div`
 const Score = styled.div`
   padding: 0 40px;
   font-size: 1.3em;
-  color: red;
-  span {
-    &:first-child {
-      color: green;
-    }
   }
 `;
 

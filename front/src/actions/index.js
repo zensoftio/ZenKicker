@@ -2,7 +2,7 @@ import {getCurrent, updateUsername} from './user';
 import {getActivePlayers, getAllPlayers, getPlayer, getTopPlayers, appendToPlayers, appendToActivePlayers,
   getPlayerDeltaStatistic, getPlayerGamesCountStatistic} from './player';
 import {
-  registerGame, getAllGames, getLatestGames, appendToGames, getPlayerGames, appendToPlayerGames, getGamesCountPerWeeks
+  registerGame, getAllGames, getLatestGames, appendToGames, getPlayerGames, appendToPlayerGames, getGamesCountPerWeek
 } from './game';
 
 export {
@@ -20,7 +20,7 @@ export {
   appendToActivePlayers,
   getPlayerGames,
   appendToPlayerGames,
-  getGamesCountPerWeeks,
+  getGamesCountPerWeek,
   getPlayerDeltaStatistic,
   getPlayerGamesCountStatistic
 };
