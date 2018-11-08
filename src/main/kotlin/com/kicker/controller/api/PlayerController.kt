@@ -25,26 +25,26 @@ class PlayerController(
     @GetMapping("/current")
     fun getCurrent(@CurrentPlayer currentPlayer: Player): PlayerDto {
         return PlayerDto(service.get(currentPlayer.id), gameService.countByPlayer(currentPlayer.id),
-                gameService.countFor10WeeksByPlayer(currentPlayer.id))
+                gameService.countDuring10WeeksByPlayer(currentPlayer.id))
     }
 
     @GetMapping("/{playerId}")
     fun get(@PathVariable playerId: Long): PlayerDto {
         return PlayerDto(service.get(playerId), gameService.countByPlayer(playerId),
-                gameService.countFor10WeeksByPlayer(playerId))
+                gameService.countDuring10WeeksByPlayer(playerId))
     }
 
     @GetMapping
     fun getAll(pageRequest: PlayerPageRequest): PageResponse<PlayerDto> {
         return PageResponse(service.getAll(pageRequest).map {
-            PlayerDto(it, gameService.countByPlayer(it.id), gameService.countFor10WeeksByPlayer(it.id))
+            PlayerDto(it, gameService.countByPlayer(it.id), gameService.countDuring10WeeksByPlayer(it.id))
         })
     }
 
     @GetMapping("/active")
     fun getAllActive(pageRequest: PlayerPageRequest): PageResponse<PlayerDto> {
         return PageResponse(service.getAllActive(pageRequest).map {
-            PlayerDto(it, gameService.countByPlayer(it.id), gameService.countFor10WeeksByPlayer(it.id))
+            PlayerDto(it, gameService.countByPlayer(it.id), gameService.countDuring10WeeksByPlayer(it.id))
         })
     }
 
@@ -52,14 +52,14 @@ class PlayerController(
     fun create(@Valid @RequestBody request: CreatePlayerRequest): PlayerDto {
         val player = service.create(request)
         return PlayerDto(player, gameService.countByPlayer(player.id),
-                gameService.countFor10WeeksByPlayer(player.id))
+                gameService.countDuring10WeeksByPlayer(player.id))
     }
 
     @PutMapping("/username")
     fun updateUsername(@CurrentPlayer currentPlayer: Player, @Valid @RequestBody request: UpdatePlayerUsernameRequest): PlayerDto {
         val player = service.updateUsername(currentPlayer.id, request)
         return PlayerDto(player, gameService.countByPlayer(player.id),
-                gameService.countFor10WeeksByPlayer(player.id))
+                gameService.countDuring10WeeksByPlayer(player.id))
     }
 
     @PutMapping("/icon")
@@ -68,14 +68,14 @@ class PlayerController(
 
         val player = service.updateIcon(currentPlayer.id, icon)
         return PlayerDto(player, gameService.countByPlayer(player.id),
-                gameService.countFor10WeeksByPlayer(player.id))
+                gameService.countDuring10WeeksByPlayer(player.id))
     }
 
     @PutMapping("/password")
     fun updatePassword(@CurrentPlayer currentPlayer: Player, @Valid @RequestBody request: UpdatePlayerPasswordRequest): PlayerDto {
         val player = service.updatePassword(currentPlayer.id, request)
         return PlayerDto(player, gameService.countByPlayer(player.id),
-                gameService.countFor10WeeksByPlayer(player.id))
+                gameService.countDuring10WeeksByPlayer(player.id))
     }
 
     private fun validateIcon(icon: MultipartFile) {

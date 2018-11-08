@@ -40,7 +40,7 @@ class DefaultGameService(
     * */
     override fun countPerWeekDuring10WeeksByPlayer(playerId: Long): List<Long> {
         val dashboard = mutableListOf<Long>()
-        for (weeksAgo in 0..9) {
+        for (weeksAgo in 9 downTo 0) {
             dashboard.add(countByPlayerAndWeeksAgo(playerId, weeksAgo.toLong()))
         }
         return dashboard
