@@ -24,25 +24,20 @@ class PlayerRatingListener(
     @Transactional
     fun handleRegistrationGame(game: Game) {
         with(game) {
-            val loser1Rating = playerStatsService.getActualRatingByPlayer(loser1.id)
-            val loser2Rating = playerStatsService.getActualRatingByPlayer(loser2.id)
-            val winner1Rating = playerStatsService.getActualRatingByPlayer(winner1.id)
-            val winner2Rating = playerStatsService.getActualRatingByPlayer(winner2.id)
-
-            val losersTotalRating: Double = loser1Rating.plus(loser2Rating)
-            val winnersTotalRating: Double = winner1Rating.plus(winner2Rating)
+            val losersTotalRating: Double = loser1.rating.plus(loser2.rating)
+            val winnersTotalRating: Double = winner1.rating.plus(winner2.rating)
 
             val skillCorrection: Double = RatingUtils.getSkillCorrection(losersTotalRating, winnersTotalRating)
             val losingPercents: Double = RatingUtils.getLosingPercents(losersGoals, skillCorrection)
 
-            val loser1Delta = loser1Rating * losingPercents / 100.0
-            val loser2Delta = loser2Rating * losingPercents / 100.0
+            val loser1Delta = loser1.rating * losingPercents / 100.0
+            val loser2Delta = loser2.rating * losingPercents / 100.0
             val winnerDelta = (loser1Delta + loser2Delta) / 2.0
 
-            updatePlayerRating(loser1, game, false, loser1Rating, loser1Delta.unaryMinus())
-            updatePlayerRating(loser2, game, false, loser2Rating, loser2Delta.unaryMinus())
-            updatePlayerRating(winner1, game, true, winner1Rating, winnerDelta)
-            updatePlayerRating(winner2, game, true, winner2Rating, winnerDelta)
+            updatePlayerRating(loser1, game, false, loser1.rating, loser1Delta.unaryMinus())
+            updatePlayerRating(loser2, game, false, loser2.rating, loser2Delta.unaryMinus())
+            updatePlayerRating(winner1, game, true, winner1.rating, winnerDelta)
+            updatePlayerRating(winner2, game, true, winner2.rating, winnerDelta)
         }
     }
 
