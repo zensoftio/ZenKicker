@@ -35,6 +35,6 @@ class PlayerStatsController(
 
     @GetMapping("/delta/player/{playerId}/dashboard")
     fun getDeltaPerWeekDuring10WeeksByPlayer(@PathVariable playerId: Long): List<Int> =
-            service.getDeltaPerWeekDuring10WeeksByPlayer(playerId).map { Player.PLAYER_RATING.toInt() + it.toInt() }
+            service.getDeltaPerWeekDuring10WeeksByPlayer(playerId).map { (Player.PLAYER_RATING + it).toInt() }
 
 }
