@@ -32,7 +32,7 @@ class ProfileScene extends Component {
   }
 
   render() {
-    const {player, match, currentUser, players, playerGames, actions, deltaStatistic, gamesCountStatistic} = this.props;
+    const {player, match, currentUser, players, playerGames, actions, ratingStatistic, gamesCountStatistic} = this.props;
     const playerId = match.params.id;
 
     if (!player) return null;
@@ -63,7 +63,7 @@ class ProfileScene extends Component {
                          goalsAgainst={player.goalsAgainst} goalsFor={player.goalsFor}/>
         <PlayerGames games={mappedGames ? mappedGames : []} appendToGames={actions.appendToPlayerGames} totalCount={playerGames.totalCount}
                      playerId={playerId}/>
-        <ChartStatistics deltaStatistic={deltaStatistic} gamesCountStatistic={gamesCountStatistic}/>
+        <ChartStatistics ratingStatistic={ratingStatistic} gamesCountStatistic={gamesCountStatistic}/>
       </Content>
     );
   }
@@ -75,7 +75,7 @@ const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
     players: state.player.players,
     playerGames: state.game.playerGames,
     currentUser: state.user.current,
-    deltaStatistic: state.player.deltaStatistic,
+    ratingStatistic: state.player.deltaStatistic,
     gamesCountStatistic: state.player.gamesCountStatistic,
   };
   return props;

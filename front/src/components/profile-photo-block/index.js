@@ -36,7 +36,7 @@ class ProfilePhotoBlock extends Component {
 
   render() {
     const {player, isCurrent} = this.props;
-    const id = player.iconName + Math.random();
+    const id = player.iconName ? player.iconName + Math.random() : Math.random();
 
     return (
       <ProfilePhoto>
