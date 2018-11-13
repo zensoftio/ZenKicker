@@ -4,6 +4,7 @@ import com.kicker.domain.PageResponse
 import com.kicker.domain.model.player_stats.PlayerGamesStatsDto
 import com.kicker.domain.model.player_stats.PlayerStatsDto
 import com.kicker.domain.model.player_stats.PlayerStatsPageRequest
+import com.kicker.model.Player
 import com.kicker.service.PlayerStatsService
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
@@ -34,6 +35,6 @@ class PlayerStatsController(
 
     @GetMapping("/delta/player/{playerId}/dashboard")
     fun getDeltaPerWeekDuring10WeeksByPlayer(@PathVariable playerId: Long): List<Int> =
-            service.getDeltaPerWeekDuring10WeeksByPlayer(playerId).map { it.toInt() }
+            service.getDeltaPerWeekDuring10WeeksByPlayer(playerId).map { Player.PLAYER_RATING.toInt() + it.toInt() }
 
 }
