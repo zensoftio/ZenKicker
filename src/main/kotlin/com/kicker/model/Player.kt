@@ -27,21 +27,25 @@ class Player(
         var active: Boolean = false,
 
         @Column(name = "icon_name")
-        var iconName: String? = null,
-
-        @Column(name = "current_win_streak", nullable = false)
-        private var currentWinStreak: Int = 0,
-
-        @Column(name = "current_loss_streak", nullable = false)
-        private var currentLossStreak: Int = 0,
-
-        @Column(name = "longest_win_streak", nullable = false)
-        private var longestWinStreak: Int = 0,
-
-        @Column(name = "longest_loss_streak", nullable = false)
-        private var longestLossStreak: Int = 0
+        var iconName: String? = null
 
 ) : BaseModel(), UserDetails {
+
+    @Column(name = "current_winning_streak", nullable = false)
+    var currentWinningStreak: Int = 0
+        private set
+
+    @Column(name = "current_losses_streak", nullable = false)
+    var currentLossesStreak: Int = 0
+        private set
+
+    @Column(name = "longest_winning_streak", nullable = false)
+    var longestWinningStreak: Int = 0
+        private set
+
+    @Column(name = "longest_losses_streak", nullable = false)
+    var longestLossesStreak: Int = 0
+        private set
 
     companion object {
         const val PLAYER_RATING: Double = 10000.0
@@ -70,26 +74,18 @@ class Player(
         this.password = password
     }
 
-    fun getCurrentWinStreak(): Int = currentWinStreak
-
-    fun getCurrentLossStreak(): Int = currentLossStreak
-
-    fun getLongestWinStreak(): Int = longestWinStreak
-
-    fun getLongestLossStreak(): Int = longestLossStreak
-
     fun changeWinAndLossStreak(won: Boolean) {
         if (won) {
-            currentWinStreak++
-            currentLossStreak = 0
-            if (longestWinStreak < currentWinStreak) {
-                longestWinStreak = currentWinStreak
+            currentWinningStreak++
+            currentLossesStreak = 0
+            if (longestWinningStreak < currentWinningStreak) {
+                longestWinningStreak = currentWinningStreak
             }
         } else {
-            currentLossStreak++
-            currentWinStreak = 0
-            if (longestLossStreak < currentLossStreak) {
-                longestLossStreak = currentLossStreak
+            currentLossesStreak++
+            currentWinningStreak = 0
+            if (longestLossesStreak < currentLossesStreak) {
+                longestLossesStreak = currentLossesStreak
             }
         }
     }

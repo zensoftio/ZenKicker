@@ -6,10 +6,7 @@ import com.kicker.domain.model.player.CreatePlayerRequest
 import com.kicker.domain.model.player.UpdatePlayerPasswordRequest
 import com.kicker.domain.model.player.UpdatePlayerUsernameRequest
 import com.kicker.domain.model.playerStats.PlayerStatsDto
-import com.kicker.model.Award
-import com.kicker.model.Game
-import com.kicker.model.Player
-import com.kicker.model.PlayerStats
+import com.kicker.model.*
 import com.kicker.model.base.BaseModel
 import org.springframework.data.domain.Page
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -92,12 +89,22 @@ interface PlayerStatsService : BaseService<PlayerStats> {
 
 }
 
-interface AwardService : BaseService<Award> {
+interface PlayerRelationsService {
 
-    fun getAllByPlayer(playerId: Long): List<Award>
+    fun getAllByPlayer(playerId: Long, pageRequest: PageRequest): Page<PlayerRelations>
 
-    fun doAwardMaxRatingForWeek()
+    fun getByPlayerAndPartner(playerId: Long, partnerId: Long): PlayerRelations
 
-    fun doAwardMaxDeltaRatingForWeek()
+    fun create(playerRelations: PlayerRelations): PlayerRelations
 
 }
+
+//interface AwardService : BaseService<Award> {
+//
+//    fun getAllByPlayer(playerId: Long): List<Award>
+//
+//    fun doAwardMaxRatingForWeek()
+//
+//    fun doAwardMaxDeltaRatingForWeek()
+//
+//}

@@ -15,10 +15,10 @@ data class PlayerDto(
         val rated: Long,
         val active: Boolean,
         val iconName: String?,
-        val currentWinStreak: Int,
-        val currentLossStreak: Int,
-        val longestWinStreak: Int,
-        val longestLossStreak: Int
+        val currentWinningStreak: Int,
+        val currentLossesStreak: Int,
+        val longestWinningStreak: Int,
+        val longestLossesStreak: Int
 ) {
 
     constructor(player: Player, countGames: Long, rated: Long) : this(
@@ -29,10 +29,10 @@ data class PlayerDto(
             rated,
             player.active,
             player.iconName,
-            player.getCurrentWinStreak(),
-            player.getCurrentLossStreak(),
-            player.getLongestWinStreak(),
-            player.getLongestLossStreak()
+            player.currentWinningStreak,
+            player.currentLossesStreak,
+            player.longestWinningStreak,
+            player.longestLossesStreak
     )
 
 }

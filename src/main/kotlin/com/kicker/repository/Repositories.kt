@@ -1,10 +1,7 @@
 package com.kicker.repository
 
 import com.kicker.domain.repository.CountGamesPerDayDto
-import com.kicker.model.Award
-import com.kicker.model.Game
-import com.kicker.model.Player
-import com.kicker.model.PlayerStats
+import com.kicker.model.*
 import com.kicker.model.base.BaseModel
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -72,8 +69,17 @@ interface PlayerStatsRepository : BaseRepository<PlayerStats> {
 }
 
 @Repository
-interface AwardRepository : BaseRepository<Award> {
+interface PlayerRelationsRepository : BaseRepository<PlayerRelations> {
 
-    fun findByPlayer(player: Player): List<Award>
+    fun findByPlayer(player: Player, pageable: Pageable): Page<PlayerRelations>
+
+    fun findByPlayerAndPartner(player: Player, partner: Player): PlayerRelations?
 
 }
+
+//@Repository
+//interface AwardRepository : BaseRepository<Award> {
+//
+//    fun findByPlayer(player: Player): List<Award>
+//
+//}
