@@ -46,7 +46,8 @@ class DashboardScene extends Component {
     return (
       <Content>
         <div>
-          <Chart data={mappedGamesCountStatistic} lineDataKey='count' title='Games per week' xDataKey='day'/>
+          <Chart data={mappedGamesCountStatistic} lineDataKey='count' xDataKey='day'
+                 title='Games per day'/>
         </div>
         <div>
           <Title>Top 5 players</Title>

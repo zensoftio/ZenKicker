@@ -8,16 +8,16 @@ const setWeekValue = (week) => {
   return `${week} weeks ago`;
 }
 
-const ChartStatistics = ({deltaStatistic, gamesCountStatistic}) => {
+const ChartStatistics = ({ratingStatistic, gamesCountStatistic}) => {
 
-  const mappedDeltaStatistic = deltaStatistic.map((item, index) =>
-    ({delta: item, week: setWeekValue(index)}));
+  const mappedRatingStatistic = ratingStatistic.map((item, index) =>
+    ({rating: item, week: setWeekValue(index)}));
   const mappedGamesCountStatistic = gamesCountStatistic.map((item, index) =>
     ({games: item, week: setWeekValue(index)}));
 
   return (
     <Content>
-      <Chart data={mappedDeltaStatistic} lineDataKey='delta' xDataKey='week' title='Delta per week'/>
+      <Chart data={mappedRatingStatistic} lineDataKey='rating' xDataKey='week' title='Rating per week'/>
       <Chart data={mappedGamesCountStatistic} lineDataKey='games' xDataKey='week' title='Count of games per week'/>
     </Content>
   )

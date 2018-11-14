@@ -23,6 +23,9 @@ class ProfileMainInfo extends Component {
     const {rating, countGames, rated, isCurrent, countLosses, countWins, goalsAgainst, goalsFor} = this.props;
     const {uploadPhotoError} = this.state;
 
+    const countWinsPercents = countGames ? Math.round(parseFloat(countWins * 100 / countGames) * 100) / 100 : 0;
+    const countLossesPercents = countGames ? Math.round(parseFloat(countLosses * 100 / countGames) * 100) / 100 : 0;
+
     return (
       <Content>
         <Status>{getPlayerStatus(rating)}</Status>
@@ -43,8 +46,8 @@ class ProfileMainInfo extends Component {
               <Field>Rating: <span>{rating}</span></Field>
               <Field>Games played: <span>{countGames}</span></Field>
               <Field>Games rated: <span>{rated}</span></Field>
-              <Field>Games won: <span>{countWins}</span></Field>
-              <Field>Games lost: <span>{countLosses}</span></Field>
+              <Field>Games won: <span>({countWinsPercents}%) {countWins}</span></Field>
+              <Field>Games lost: <span>({countLossesPercents}%) {countLosses}</span></Field>
               <Field>Goals for: <span>{goalsFor}</span></Field>
               <Field>Goals against: <span>{goalsAgainst}</span></Field>
             </Statistics>
