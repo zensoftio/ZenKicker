@@ -109,6 +109,15 @@ class DefaultPlayerService(
         return super.save(player)
     }
 
+    @Transactional
+    override fun updateWinAndLossStreak(playerId: Long, won: Boolean): Player {
+        val player = get(playerId)
+
+        player.changeWinAndLossStreak(won)
+
+        return super.save(player)
+    }
+
     private fun isExist(username: String): Boolean {
         return getByUsername(username)?.let { true } ?: false
     }

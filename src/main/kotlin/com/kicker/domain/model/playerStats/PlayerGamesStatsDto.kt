@@ -1,4 +1,4 @@
-package com.kicker.domain.model.player_stats
+package com.kicker.domain.model.playerStats
 
 import com.kicker.domain.model.game.GameDto
 import com.kicker.model.PlayerStats

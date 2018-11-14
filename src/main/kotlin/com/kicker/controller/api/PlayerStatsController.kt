@@ -1,9 +1,9 @@
 package com.kicker.controller.api
 
 import com.kicker.domain.PageResponse
-import com.kicker.domain.model.player_stats.PlayerGamesStatsDto
-import com.kicker.domain.model.player_stats.PlayerStatsDto
-import com.kicker.domain.model.player_stats.PlayerStatsPageRequest
+import com.kicker.domain.model.playerStats.PlayerGamesStatsDto
+import com.kicker.domain.model.playerStats.PlayerStatsDto
+import com.kicker.domain.model.playerStats.PlayerStatsPageRequest
 import com.kicker.model.Player
 import com.kicker.service.PlayerStatsService
 import org.springframework.validation.annotation.Validated

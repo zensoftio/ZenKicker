@@ -1,4 +1,4 @@
-package com.kicker.domain.model.player_stats
+package com.kicker.domain.model.playerStats
 
 import com.kicker.domain.PageRequest
 import org.springframework.data.domain.Sort.Direction.DESC

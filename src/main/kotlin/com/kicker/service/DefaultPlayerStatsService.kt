@@ -4,7 +4,7 @@ import com.kicker.config.property.GamesSettingsProperties
 import com.kicker.config.property.PlayerSettingsProperties
 import com.kicker.domain.PageRequest
 import com.kicker.domain.model.player.PlayerDto
-import com.kicker.domain.model.player_stats.PlayerStatsDto
+import com.kicker.domain.model.playerStats.PlayerStatsDto
 import com.kicker.model.Player
 import com.kicker.model.PlayerStats
 import com.kicker.repository.PlayerStatsRepository
