@@ -13,7 +13,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -43,15 +42,12 @@ class SecurityConfig : GlobalMethodSecurityConfiguration() {
             auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder)
         }
 
-        override fun configure(web: WebSecurity) {
-            web.ignoring().antMatchers("/css/**", "/js/**", "/images/**")
-        }
-
         override fun configure(http: HttpSecurity) {
             http.csrf().disable()
             http.cors()
 
             http.authorizeRequests()
+                    .antMatchers(*Companion.AUTH_WHITELIST).permitAll()
                     .antMatchers("/sign-up").permitAll()
                     .antMatchers(POST, "/api/players").permitAll()
                     .antMatchers("/**").authenticated()
@@ -61,6 +57,22 @@ class SecurityConfig : GlobalMethodSecurityConfiguration() {
                     .formLogin()
                     .loginPage("/login").permitAll()
                     .failureHandler(AuthenticationFailureHandler())
+        }
+
+        companion object {
+            private val AUTH_WHITELIST = arrayOf(
+                    "/css/**",
+                    "/js/**",
+                    "/images/**",
+
+                    "/v2/api-docs",
+                    "/swagger-resources",
+                    "/swagger-resources/**",
+                    "/configuration/ui",
+                    "/configuration/security",
+                    "/swagger-ui.html",
+                    "/webjars/**"
+            )
         }
 
     }

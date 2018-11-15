@@ -7,8 +7,10 @@ import com.kicker.domain.model.game.GamePageRequest
 import com.kicker.domain.model.game.GameRegistrationRequest
 import com.kicker.model.Player
 import com.kicker.service.GameService
+import io.swagger.annotations.ApiOperation
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
+import springfox.documentation.annotations.ApiIgnore
 import javax.validation.Valid
 
 /**
@@ -24,13 +26,15 @@ class GameController(
     @GetMapping("/{gameId}")
     fun get(@PathVariable gameId: Long): GameDto = GameDto(service.get(gameId))
 
+    @ApiOperation(value = "getAll - Remember! You can use game page request")
     @GetMapping
-    fun getAll(pageRequest: GamePageRequest): PageResponse<GameDto> {
+    fun getAll(@ApiIgnore pageRequest: GamePageRequest): PageResponse<GameDto> {
         return PageResponse(service.getAll(pageRequest).map { GameDto(it) })
     }
 
+    @ApiOperation(value = "getAllByPlayer - Remember! You can use game page request")
     @GetMapping("/player/{playerId}")
-    fun getAllByPlayer(@PathVariable playerId: Long, pageRequest: GamePageRequest): PageResponse<GameDto> {
+    fun getAllByPlayer(@PathVariable playerId: Long, @ApiIgnore pageRequest: GamePageRequest): PageResponse<GameDto> {
         return PageResponse(service.getAllByPlayer(playerId, pageRequest).map { GameDto(it) })
     }
 

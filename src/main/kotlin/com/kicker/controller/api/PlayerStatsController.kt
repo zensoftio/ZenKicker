@@ -7,11 +7,13 @@ import com.kicker.domain.model.playerStats.PlayerStatsPageRequest
 import com.kicker.domain.repository.PlayerDeltaDto
 import com.kicker.model.Player
 import com.kicker.service.PlayerStatsService
+import io.swagger.annotations.ApiOperation
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import springfox.documentation.annotations.ApiIgnore
 import kotlin.math.roundToInt
 
 /**
@@ -26,12 +28,13 @@ class PlayerStatsController(
 ) {
 
     @GetMapping("/player/{playerId}")
-    fun getPlayerStats(@PathVariable playerId: Long, pageRequest: PlayerStatsPageRequest): PlayerStatsDto {
+    fun getPlayerStats(@PathVariable playerId: Long): PlayerStatsDto {
         return service.getStatsByPlayer(playerId)
     }
 
+    @ApiOperation(value = "getPlayerGamesStats - Remember! You can use player stats page request")
     @GetMapping("/games/player/{playerId}")
-    fun getPlayerGamesStats(@PathVariable playerId: Long, pageRequest: PlayerStatsPageRequest): PageResponse<PlayerGamesStatsDto> {
+    fun getPlayerGamesStats(@PathVariable playerId: Long, @ApiIgnore pageRequest: PlayerStatsPageRequest): PageResponse<PlayerGamesStatsDto> {
         return PageResponse(service.getGamesStatsByPlayer(playerId, pageRequest).map { PlayerGamesStatsDto(it) })
     }
 

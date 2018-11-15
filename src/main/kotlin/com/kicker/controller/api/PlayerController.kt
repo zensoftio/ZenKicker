@@ -7,9 +7,11 @@ import com.kicker.exception.controller.MultipartFileException
 import com.kicker.model.Player
 import com.kicker.service.GameService
 import com.kicker.service.PlayerService
+import io.swagger.annotations.ApiOperation
 import org.springframework.http.MediaType.*
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
+import springfox.documentation.annotations.ApiIgnore
 import javax.validation.Valid
 
 /**
@@ -34,15 +36,17 @@ class PlayerController(
                 gameService.countDuring10WeeksByPlayer(playerId))
     }
 
+    @ApiOperation(value = "getAll - Remember! You can use player page request")
     @GetMapping
-    fun getAll(pageRequest: PlayerPageRequest): PageResponse<PlayerDto> {
+    fun getAll(@ApiIgnore pageRequest: PlayerPageRequest): PageResponse<PlayerDto> {
         return PageResponse(service.getAll(pageRequest).map {
             PlayerDto(it, gameService.countByPlayer(it.id), gameService.countDuring10WeeksByPlayer(it.id))
         })
     }
 
+    @ApiOperation(value = "getAllActive - Remember! You can use player page request")
     @GetMapping("/active")
-    fun getAllActive(pageRequest: PlayerPageRequest): PageResponse<PlayerDto> {
+    fun getAllActive(@ApiIgnore pageRequest: PlayerPageRequest): PageResponse<PlayerDto> {
         return PageResponse(service.getAllActive(pageRequest).map {
             PlayerDto(it, gameService.countByPlayer(it.id), gameService.countDuring10WeeksByPlayer(it.id))
         })
