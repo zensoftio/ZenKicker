@@ -12,11 +12,11 @@ import javax.persistence.*
 class PlayerRelations(
 
         @ManyToOne
-        @JoinColumn(name = "player", nullable = false)
+        @JoinColumn(name = "player_id", nullable = false)
         val player: Player,
 
         @ManyToOne
-        @JoinColumn(name = "partner", nullable = false)
+        @JoinColumn(name = "partner_id", nullable = false)
         val partner: Player
 
 ) : BaseModel() {

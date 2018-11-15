@@ -15,19 +15,19 @@ class Game(
         val losersGoals: Int,
 
         @ManyToOne
-        @JoinColumn(name = "winner1", nullable = false)
+        @JoinColumn(name = "winner1_id", nullable = false)
         val winner1: Player,
 
         @ManyToOne
-        @JoinColumn(name = "winner2", nullable = false)
+        @JoinColumn(name = "winner2_id", nullable = false)
         val winner2: Player,
 
         @ManyToOne
-        @JoinColumn(name = "loser1", nullable = false)
+        @JoinColumn(name = "loser1_id", nullable = false)
         val loser1: Player,
 
         @ManyToOne
-        @JoinColumn(name = "loser2", nullable = false)
+        @JoinColumn(name = "loser2_id", nullable = false)
         val loser2: Player,
 
         @ManyToOne
