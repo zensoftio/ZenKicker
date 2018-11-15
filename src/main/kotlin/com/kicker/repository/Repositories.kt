@@ -71,7 +71,7 @@ interface PlayerStatsRepository : BaseRepository<PlayerStats> {
 @Repository
 interface PlayerRelationsRepository : BaseRepository<PlayerRelations> {
 
-    fun findByPlayer(player: Player, pageable: Pageable): Page<PlayerRelations>
+    fun findByPlayerAndPartnerActiveTrue(player: Player, pageable: Pageable): Page<PlayerRelations>
 
     fun findByPlayerAndPartner(player: Player, partner: Player): PlayerRelations?
 

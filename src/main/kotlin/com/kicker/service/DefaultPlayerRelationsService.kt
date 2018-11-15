@@ -19,7 +19,7 @@ class DefaultPlayerRelationsService(
 
     override fun getAllByPlayer(playerId: Long, pageRequest: PageRequest): Page<PlayerRelations> {
         val player = playerService.get(playerId)
-        return repository.findByPlayer(player, pageRequest)
+        return repository.findByPlayerAndPartnerActiveTrue(player, pageRequest)
     }
 
     override fun getByPlayerAndPartner(playerId: Long, partnerId: Long): PlayerRelations {
