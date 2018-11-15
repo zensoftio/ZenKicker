@@ -48,4 +48,28 @@ open class PageRequest(
 
     override fun previousOrFirst(): Pageable = previous()
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as PageRequest
+
+        if (offset != other.offset) return false
+        if (limit != other.limit) return false
+        if (sortDirection != other.sortDirection) return false
+        if (sortBy != other.sortBy) return false
+        if (maySortBy != other.maySortBy) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = offset
+        result = 31 * result + limit
+        result = 31 * result + sortDirection.hashCode()
+        result = 31 * result + sortBy.hashCode()
+        result = 31 * result + maySortBy.hashCode()
+        return result
+    }
+
 }

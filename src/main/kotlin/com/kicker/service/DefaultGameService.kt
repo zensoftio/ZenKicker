@@ -6,6 +6,8 @@ import com.kicker.domain.model.game.GameRegistrationRequest
 import com.kicker.model.Game
 import com.kicker.repository.GameRepository
 import com.kicker.utils.DateUtils
+import org.springframework.cache.annotation.CacheEvict
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
@@ -24,6 +26,7 @@ class DefaultGameService(
         private val playerSettingsProperties: PlayerSettingsProperties
 ) : DefaultBaseService<Game, GameRepository>(repository), GameService {
 
+    @Cacheable("games")
     override fun getAllByPlayer(playerId: Long, pageRequest: PageRequest): Page<Game> {
         val player = playerService.get(playerId)
         return repository.findAllByPlayer(player, pageRequest)
@@ -85,6 +88,7 @@ class DefaultGameService(
         return countGamesPerDayDuringLast7Days
     }
 
+    @CacheEvict(value = ["games", "relations", "playerStats", "gameStats", "deltaPerWeekDuring10Weeks"], allEntries = true)
     @Transactional
     override fun gameRegistration(playerId: Long, request: GameRegistrationRequest): Game {
         val reporter = playerService.get(playerId)

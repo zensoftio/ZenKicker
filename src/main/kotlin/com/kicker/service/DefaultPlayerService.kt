@@ -10,6 +10,8 @@ import com.kicker.exception.service.NotFoundPlayerException
 import com.kicker.exception.service.PasswordIncorrectException
 import com.kicker.model.Player
 import com.kicker.repository.PlayerRepository
+import org.springframework.cache.annotation.CacheEvict
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.domain.Page
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UsernameNotFoundException
@@ -40,11 +42,19 @@ class DefaultPlayerService(
 
     override fun getByUsername(username: String): Player? = repository.findByUsername(username)
 
+    @Cacheable("players")
+    override fun getAll(): List<Player> = super.getAll()
+
+    @Cacheable("players")
+    override fun getAll(pageRequest: PageRequest): Page<Player> = super.getAll(pageRequest)
+
+    @Cacheable("activePlayers")
     override fun getAllActive(pageRequest: PageRequest): Page<Player> = repository.findAllByActiveTrue(pageRequest)
 
     override fun loadUserByUsername(username: String): UserDetails = getByUsername(username)
             ?: throw UsernameNotFoundException("User with username $username not found")
 
+    @CacheEvict("players", allEntries = true)
     @Transactional
     override fun create(request: CreatePlayerRequest): Player {
         if (isExist(request.username!!)) {
@@ -89,6 +99,7 @@ class DefaultPlayerService(
         return super.save(player)
     }
 
+    @CacheEvict("activePlayers", allEntries = true)
     @Transactional
     override fun updateActivity(playerId: Long, active: Boolean): Player {
         val player = get(playerId)
