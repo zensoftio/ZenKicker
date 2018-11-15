@@ -1,7 +1,11 @@
 package com.kicker.repository
 
 import com.kicker.domain.repository.CountGamesPerDayDto
-import com.kicker.model.*
+import com.kicker.domain.repository.PlayerDeltaDto
+import com.kicker.model.Game
+import com.kicker.model.Player
+import com.kicker.model.PlayerRelations
+import com.kicker.model.PlayerStats
 import com.kicker.model.base.BaseModel
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -60,6 +64,15 @@ interface PlayerStatsRepository : BaseRepository<PlayerStats> {
                 AND (?2 <= DATE(g.date) AND ?3 >= DATE(g.date))""")
     fun calculateDeltaByPlayerAndIntervalDates(player: Player, startDate: LocalDate, endDate: LocalDate): Double
 
+    /**
+     * Getting delta of rating of players for a specific interval of dates
+     */
+    @Query("""SELECT new com.kicker.domain.repository.PlayerDeltaDto(s.player, SUM(s.delta) AS deltaSum)
+        FROM PlayerStats s JOIN Game g ON s.game = g
+        AND (?1 <= DATE(g.date) AND ?2 >= DATE(g.date)) AND (s.player.active = true)
+        GROUP BY s.player ORDER BY deltaSum DESC""")
+    fun calculateDeltaPlayersForIntervalDates(startDate: LocalDate, endDate: LocalDate): List<PlayerDeltaDto>
+
     fun countGamesByPlayerAndWon(player: Player, won: Boolean): Long
 
     @Query("""SELECT COALESCE(SUM(g.losersGoals), 0) FROM PlayerStats s JOIN Game g ON s.game = g AND s.player = ?1
@@ -76,10 +89,3 @@ interface PlayerRelationsRepository : BaseRepository<PlayerRelations> {
     fun findByPlayerAndPartner(player: Player, partner: Player): PlayerRelations?
 
 }
-
-//@Repository
-//interface AwardRepository : BaseRepository<Award> {
-//
-//    fun findByPlayer(player: Player): List<Award>
-//
-//}

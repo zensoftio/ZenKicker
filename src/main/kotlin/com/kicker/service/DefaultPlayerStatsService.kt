@@ -5,6 +5,7 @@ import com.kicker.config.property.PlayerSettingsProperties
 import com.kicker.domain.PageRequest
 import com.kicker.domain.model.player.PlayerDto
 import com.kicker.domain.model.playerStats.PlayerStatsDto
+import com.kicker.domain.repository.PlayerDeltaDto
 import com.kicker.model.Player
 import com.kicker.model.PlayerStats
 import com.kicker.repository.PlayerStatsRepository
@@ -60,6 +61,14 @@ class DefaultPlayerStatsService(
         val dates = DateUtils.getIntervalDatesOfWeek(weeksAgo)
 
         return repository.calculateDeltaByPlayerAndIntervalDates(player, dates.first, dates.second)
+    }
+
+    /*
+    * Current week is number 0, so 1 is last week
+    * */
+    override fun getDeltaPlayersForLastWeek(): List<PlayerDeltaDto> {
+        val dates = DateUtils.getIntervalDatesOfWeek(1)
+        return repository.calculateDeltaPlayersForIntervalDates(dates.first, dates.second)
     }
 
     override fun getActualRatingByPlayer(playerId: Long): Double {

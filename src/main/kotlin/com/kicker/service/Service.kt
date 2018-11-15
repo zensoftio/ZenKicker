@@ -6,7 +6,11 @@ import com.kicker.domain.model.player.CreatePlayerRequest
 import com.kicker.domain.model.player.UpdatePlayerPasswordRequest
 import com.kicker.domain.model.player.UpdatePlayerUsernameRequest
 import com.kicker.domain.model.playerStats.PlayerStatsDto
-import com.kicker.model.*
+import com.kicker.domain.repository.PlayerDeltaDto
+import com.kicker.model.Game
+import com.kicker.model.Player
+import com.kicker.model.PlayerRelations
+import com.kicker.model.PlayerStats
 import com.kicker.model.base.BaseModel
 import org.springframework.data.domain.Page
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -77,6 +81,8 @@ interface PlayerStatsService : BaseService<PlayerStats> {
 
     fun getDeltaByPlayerAndWeeksAgo(playerId: Long, weeksAgo: Long): Double
 
+    fun getDeltaPlayersForLastWeek(): List<PlayerDeltaDto>
+
     fun getActualRatingByPlayer(playerId: Long): Double
 
     fun countLossesByPlayer(playerId: Long): Long
@@ -98,13 +104,3 @@ interface PlayerRelationsService {
     fun create(playerRelations: PlayerRelations): PlayerRelations
 
 }
-
-//interface AwardService : BaseService<Award> {
-//
-//    fun getAllByPlayer(playerId: Long): List<Award>
-//
-//    fun doAwardMaxRatingForWeek()
-//
-//    fun doAwardMaxDeltaRatingForWeek()
-//
-//}
