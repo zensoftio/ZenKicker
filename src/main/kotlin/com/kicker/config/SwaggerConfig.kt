@@ -40,8 +40,65 @@ class SwaggerConfig : WebMvcConfigurationSupport() {
 
     private fun apiInfo(): ApiInfo = ApiInfoBuilder()
             .title("Kicker API")
-            .description("The app for corporate recreation. The saving of matches, maintaining the " +
-                    "rating of players.")
+            .description("""
+                ## Marks
+
+                * `pageable`
+
+                Target - URL
+
+                Indicate - URL marked by `pageble` supports request parameters described below
+
+                Request params:
+                    1. offset - describes the offset for the set of results (only positive integers, default value - `0`)
+                    2. limit - describes the limit of entities in the result set (only positive integers, default value - `10`)
+
+                * `sorting`
+
+                Target - URL
+
+                Indicate - allow sorting by acceptable fields
+
+                Request params:
+                    1. sortBy - describes the sorting field of entity (default value - `id`)
+                    2. sortDirection - describes the sorting direction(`ASC` or `DESC`, default value - `ASC`)
+
+                * `optional`
+
+                Target - dto's fields
+
+                Indicate - nullable fields
+
+                ## Errors
+
+                ```json
+                {
+                  "status": 400,
+                  "message": "Method Argument Not Valid",
+                  "errors": [
+                    {
+                      "message": "size must be between 5 and 50",
+                      "field": "password",
+                      "code": "Size"
+                    },
+                    {
+                      "message": "size must be between 5 and 50",
+                      "field": "confirmPassword",
+                      "code": "Size"
+                    },
+                    {
+                      "message": "Passwords must be equal",
+                      "code": "PasswordsEqualsConstraint"
+                    }
+                  ]
+                }
+                ```
+
+                Fields:
+                * status - HTTP status
+                * message - error's message
+                * errors - `optional`
+            """.trimIndent())
             .version("1.0.0")
             .build()
 

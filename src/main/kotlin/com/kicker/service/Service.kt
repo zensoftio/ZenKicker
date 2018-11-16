@@ -81,7 +81,7 @@ interface PlayerStatsService : BaseService<PlayerStats> {
 
     fun getDeltaByPlayerAndWeeksAgo(playerId: Long, weeksAgo: Long): Double
 
-    fun getDeltaPlayersForLastWeek(): List<PlayerDeltaDto>
+    fun getDeltaPlayersDuringLastWeek(): List<PlayerDeltaDto>
 
     fun getActualRatingByPlayer(playerId: Long): Double
 

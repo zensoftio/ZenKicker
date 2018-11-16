@@ -20,7 +20,10 @@ class PlayerRelationsController(
         private val service: PlayerRelationsService
 ) {
 
-    @ApiOperation(value = "getAllByPlayer - Remember! You can use player relations page request")
+    @ApiOperation(value = "Get all relations by player`s id", notes = """Pageable.
+        * sortBy - [id,winningPercentage], default:winningPercentage
+        * sortDirection - [ASC,DESC], default:DESC
+    """)
     @GetMapping("/{playerId}/relations")
     fun getAllByPlayer(@PathVariable playerId: Long, @ApiIgnore pageRequest: PlayerRelationsPageRequest): PageResponse<PlayerRelationsDto> {
         return PageResponse(service.getAllByPlayer(playerId, pageRequest).map { PlayerRelationsDto(it) })
