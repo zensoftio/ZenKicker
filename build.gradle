@@ -29,6 +29,7 @@ compileTestKotlin {
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
@@ -49,7 +50,12 @@ dependencies {
     compile('net.coobird:thumbnailator:0.4.8')
     compile('com.github.ben-manes.caffeine:caffeine:2.6.2')
 
-    // DevTools
+//    Swagger
+    compile('io.springfox:springfox-swagger2:2.9.0')
+    compile('io.springfox:springfox-swagger-ui:2.9.0')
+    compile('org.webjars:swagger-ui:3.17.0')
+
+//    DevTools
     runtime('org.springframework.boot:spring-boot-devtools')
     kapt('org.springframework.boot:spring-boot-configuration-processor')
 
