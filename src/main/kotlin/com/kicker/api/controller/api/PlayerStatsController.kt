@@ -1,12 +1,12 @@
 package com.kicker.api.controller.api
 
-import com.kicker.domain.PageResponse
-import com.kicker.domain.model.playerStats.PlayerGamesStatsDto
-import com.kicker.domain.model.playerStats.PlayerStatsDto
-import com.kicker.domain.model.playerStats.PlayerStatsPageRequest
-import com.kicker.domain.repository.PlayerDeltaDto
-import com.kicker.model.Player
-import com.kicker.service.PlayerStatsService
+import com.kicker.api.domain.PageResponse
+import com.kicker.api.domain.model.playerStats.PlayerGamesStatsDto
+import com.kicker.api.domain.model.playerStats.PlayerStatsDto
+import com.kicker.api.domain.model.playerStats.PlayerStatsPageRequest
+import com.kicker.api.domain.repository.PlayerDeltaDto
+import com.kicker.api.model.Player
+import com.kicker.api.service.PlayerStatsService
 import io.swagger.annotations.ApiOperation
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping

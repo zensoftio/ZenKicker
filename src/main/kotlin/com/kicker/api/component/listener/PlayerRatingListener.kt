@@ -1,11 +1,11 @@
 package com.kicker.api.component.listener
 
-import com.kicker.model.Game
-import com.kicker.model.Player
-import com.kicker.model.PlayerStats
-import com.kicker.service.PlayerService
-import com.kicker.service.PlayerStatsService
-import com.kicker.utils.RatingUtils
+import com.kicker.api.model.Game
+import com.kicker.api.model.Player
+import com.kicker.api.model.PlayerStats
+import com.kicker.api.service.PlayerService
+import com.kicker.api.service.PlayerStatsService
+import com.kicker.api.utils.RatingUtils
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional

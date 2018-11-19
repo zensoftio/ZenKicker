@@ -1,12 +1,12 @@
 package com.kicker.api.controller.api
 
-import com.kicker.annotation.CurrentPlayer
-import com.kicker.domain.PageResponse
-import com.kicker.domain.model.game.GameDto
-import com.kicker.domain.model.game.GamePageRequest
-import com.kicker.domain.model.game.GameRegistrationRequest
-import com.kicker.model.Player
-import com.kicker.service.GameService
+import com.kicker.api.annotation.CurrentPlayer
+import com.kicker.api.domain.PageResponse
+import com.kicker.api.domain.model.game.GameDto
+import com.kicker.api.domain.model.game.GamePageRequest
+import com.kicker.api.domain.model.game.GameRegistrationRequest
+import com.kicker.api.model.Player
+import com.kicker.api.service.GameService
 import io.swagger.annotations.ApiOperation
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*

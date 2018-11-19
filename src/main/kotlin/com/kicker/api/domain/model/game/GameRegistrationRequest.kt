@@ -1,7 +1,7 @@
 package com.kicker.api.domain.model.game
 
-import com.kicker.annotation.FieldMatch
-import com.kicker.annotation.FieldMatches
+import com.kicker.api.annotation.FieldMatch
+import com.kicker.api.annotation.FieldMatches
 import javax.validation.constraints.Max
 import javax.validation.constraints.Min
 import javax.validation.constraints.NotNull

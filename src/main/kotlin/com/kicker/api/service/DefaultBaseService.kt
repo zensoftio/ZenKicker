@@ -1,8 +1,8 @@
 package com.kicker.api.service
 
-import com.kicker.domain.PageRequest
-import com.kicker.model.base.BaseModel
-import com.kicker.repository.BaseRepository
+import com.kicker.api.domain.PageRequest
+import com.kicker.api.model.base.BaseModel
+import com.kicker.api.repository.BaseRepository
 import org.springframework.data.domain.Page
 import org.springframework.transaction.annotation.Transactional
 

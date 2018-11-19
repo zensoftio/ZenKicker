@@ -1,6 +1,6 @@
 package com.kicker.api.domain.model.playerRelations
 
-import com.kicker.model.PlayerRelations
+import com.kicker.api.model.PlayerRelations
 import java.math.BigDecimal
 import java.math.RoundingMode
 

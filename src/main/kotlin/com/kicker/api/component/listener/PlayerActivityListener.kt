@@ -1,10 +1,10 @@
 package com.kicker.api.component.listener
 
-import com.kicker.config.property.PlayerSettingsProperties
-import com.kicker.model.Game
-import com.kicker.model.Player
-import com.kicker.service.GameService
-import com.kicker.service.PlayerService
+import com.kicker.api.config.property.PlayerSettingsProperties
+import com.kicker.api.model.Game
+import com.kicker.api.model.Player
+import com.kicker.api.service.GameService
+import com.kicker.api.service.PlayerService
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional

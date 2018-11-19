@@ -1,16 +1,16 @@
 package com.kicker.api.service
 
-import com.kicker.config.property.GamesSettingsProperties
-import com.kicker.config.property.PlayerSettingsProperties
-import com.kicker.domain.PageRequest
-import com.kicker.domain.model.player.PlayerDto
-import com.kicker.domain.model.playerStats.PlayerStatsDto
-import com.kicker.domain.repository.PlayerDeltaDto
-import com.kicker.model.Player
-import com.kicker.model.PlayerStats
-import com.kicker.repository.PlayerStatsRepository
-import com.kicker.utils.DateUtils
-import com.kicker.utils.RatingUtils
+import com.kicker.api.config.property.GamesSettingsProperties
+import com.kicker.api.config.property.PlayerSettingsProperties
+import com.kicker.api.domain.PageRequest
+import com.kicker.api.domain.model.player.PlayerDto
+import com.kicker.api.domain.model.playerStats.PlayerStatsDto
+import com.kicker.api.domain.repository.PlayerDeltaDto
+import com.kicker.api.model.Player
+import com.kicker.api.model.PlayerStats
+import com.kicker.api.repository.PlayerStatsRepository
+import com.kicker.api.utils.DateUtils
+import com.kicker.api.utils.RatingUtils
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service

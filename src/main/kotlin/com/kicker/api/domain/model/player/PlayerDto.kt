@@ -1,7 +1,7 @@
 package com.kicker.api.domain.model.player
 
 import com.fasterxml.jackson.annotation.JsonInclude
-import com.kicker.model.Player
+import com.kicker.api.model.Player
 import kotlin.math.roundToInt
 
 /**

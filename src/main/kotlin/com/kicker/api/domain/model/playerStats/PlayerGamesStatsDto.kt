@@ -1,7 +1,7 @@
 package com.kicker.api.domain.model.playerStats
 
-import com.kicker.domain.model.game.GameDto
-import com.kicker.model.PlayerStats
+import com.kicker.api.domain.model.game.GameDto
+import com.kicker.api.model.PlayerStats
 
 /**
  * @author Yauheni Efimenko

@@ -1,7 +1,7 @@
 package com.kicker.api.component.listener
 
-import com.kicker.model.Game
-import com.kicker.service.PlayerRelationsService
+import com.kicker.api.model.Game
+import com.kicker.api.service.PlayerRelationsService
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional

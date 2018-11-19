@@ -1,15 +1,15 @@
 package com.kicker.api.service
 
-import com.kicker.component.IconManager
-import com.kicker.domain.PageRequest
-import com.kicker.domain.model.player.CreatePlayerRequest
-import com.kicker.domain.model.player.UpdatePlayerPasswordRequest
-import com.kicker.domain.model.player.UpdatePlayerUsernameRequest
-import com.kicker.exception.service.DuplicateUsernameException
-import com.kicker.exception.service.NotFoundPlayerException
-import com.kicker.exception.service.PasswordIncorrectException
-import com.kicker.model.Player
-import com.kicker.repository.PlayerRepository
+import com.kicker.api.component.IconManager
+import com.kicker.api.domain.PageRequest
+import com.kicker.api.domain.model.player.CreatePlayerRequest
+import com.kicker.api.domain.model.player.UpdatePlayerPasswordRequest
+import com.kicker.api.domain.model.player.UpdatePlayerUsernameRequest
+import com.kicker.api.exception.service.DuplicateUsernameException
+import com.kicker.api.exception.service.NotFoundPlayerException
+import com.kicker.api.exception.service.PasswordIncorrectException
+import com.kicker.api.model.Player
+import com.kicker.api.repository.PlayerRepository
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.domain.Page

@@ -1,8 +1,8 @@
 package com.kicker.api.component.schedule
 
-import com.kicker.config.property.PlayerSettingsProperties
-import com.kicker.service.GameService
-import com.kicker.service.PlayerService
+import com.kicker.api.config.property.PlayerSettingsProperties
+import com.kicker.api.service.GameService
+import com.kicker.api.service.PlayerService
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional

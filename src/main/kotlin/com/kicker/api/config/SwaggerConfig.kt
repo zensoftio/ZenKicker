@@ -24,7 +24,7 @@ class SwaggerConfig : WebMvcConfigurationSupport() {
     fun api(): Docket {
         return Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.kicker.controller.api"))
+                .apis(RequestHandlerSelectors.basePackage("com.kicker.api.controller.api"))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo())

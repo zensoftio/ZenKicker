@@ -1,6 +1,6 @@
 package com.kicker.api.domain.repository
 
-import com.kicker.model.Player
+import com.kicker.api.model.Player
 import java.math.BigDecimal
 import java.math.RoundingMode
 import kotlin.math.roundToInt

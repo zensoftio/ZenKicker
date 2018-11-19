@@ -1,12 +1,12 @@
 package com.kicker.api.controller.api
 
-import com.kicker.annotation.CurrentPlayer
-import com.kicker.domain.PageResponse
-import com.kicker.domain.model.player.*
-import com.kicker.exception.controller.MultipartFileException
-import com.kicker.model.Player
-import com.kicker.service.GameService
-import com.kicker.service.PlayerService
+import com.kicker.api.annotation.CurrentPlayer
+import com.kicker.api.domain.PageResponse
+import com.kicker.api.domain.model.player.*
+import com.kicker.api.exception.controller.MultipartFileException
+import com.kicker.api.model.Player
+import com.kicker.api.service.GameService
+import com.kicker.api.service.PlayerService
 import io.swagger.annotations.ApiOperation
 import org.springframework.http.MediaType.*
 import org.springframework.security.core.Authentication

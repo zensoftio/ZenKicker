@@ -1,6 +1,6 @@
 package com.kicker.api.domain
 
-import com.kicker.annotation.Contains
+import com.kicker.api.annotation.Contains
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import javax.validation.constraints.Max

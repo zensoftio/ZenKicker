@@ -1,12 +1,12 @@
 package com.kicker.api.repository
 
-import com.kicker.domain.repository.CountGamesPerDayDto
-import com.kicker.domain.repository.PlayerDeltaDto
-import com.kicker.model.Game
-import com.kicker.model.Player
-import com.kicker.model.PlayerRelations
-import com.kicker.model.PlayerStats
-import com.kicker.model.base.BaseModel
+import com.kicker.api.domain.repository.CountGamesPerDayDto
+import com.kicker.api.domain.repository.PlayerDeltaDto
+import com.kicker.api.model.Game
+import com.kicker.api.model.Player
+import com.kicker.api.model.PlayerRelations
+import com.kicker.api.model.PlayerStats
+import com.kicker.api.model.base.BaseModel
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
@@ -36,7 +36,7 @@ interface GameRepository : BaseRepository<Game> {
     @Query("SELECT g FROM Game g WHERE g.winner1 = ?1 OR g.winner2 = ?1 OR g.loser1 = ?1 OR g.loser2 = ?1")
     fun findAllByPlayer(player: Player, pageable: Pageable): Page<Game>
 
-    @Query("""SELECT new com.kicker.domain.repository.CountGamesPerDayDto(MIN(g.date), COUNT(g))
+    @Query("""SELECT new com.kicker.api.domain.repository.CountGamesPerDayDto(MIN(g.date), COUNT(g))
         FROM Game g WHERE ?1 <= DATE(g.date) AND ?2 >= DATE(g.date) GROUP BY DATE(g.date)""")
     fun countPerDayByIntervalDates(startDate: LocalDate, endDate: LocalDate): List<CountGamesPerDayDto>
 
@@ -67,7 +67,7 @@ interface PlayerStatsRepository : BaseRepository<PlayerStats> {
     /**
      * Getting delta of rating of players for a specific interval of dates
      */
-    @Query("""SELECT new com.kicker.domain.repository.PlayerDeltaDto(s.player, SUM(s.delta) AS deltaSum)
+    @Query("""SELECT new com.kicker.api.domain.repository.PlayerDeltaDto(s.player, SUM(s.delta) AS deltaSum)
         FROM PlayerStats s JOIN Game g ON s.game = g
         AND (?1 <= DATE(g.date) AND ?2 >= DATE(g.date)) AND (s.player.active = true)
         GROUP BY s.player ORDER BY deltaSum DESC""")

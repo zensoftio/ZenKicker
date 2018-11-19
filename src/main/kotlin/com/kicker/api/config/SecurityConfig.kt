@@ -1,8 +1,8 @@
 package com.kicker.api.config
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.kicker.domain.exception.ExceptionResponse
-import com.kicker.service.PlayerService
+import com.kicker.api.domain.exception.ExceptionResponse
+import com.kicker.api.service.PlayerService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpHeaders.CONTENT_TYPE

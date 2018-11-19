@@ -1,11 +1,11 @@
 package com.kicker.api.service
 
-import com.kicker.config.property.PlayerSettingsProperties
-import com.kicker.domain.PageRequest
-import com.kicker.domain.model.game.GameRegistrationRequest
-import com.kicker.model.Game
-import com.kicker.repository.GameRepository
-import com.kicker.utils.DateUtils
+import com.kicker.api.config.property.PlayerSettingsProperties
+import com.kicker.api.domain.PageRequest
+import com.kicker.api.domain.model.game.GameRegistrationRequest
+import com.kicker.api.model.Game
+import com.kicker.api.repository.GameRepository
+import com.kicker.api.utils.DateUtils
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.context.ApplicationEventPublisher

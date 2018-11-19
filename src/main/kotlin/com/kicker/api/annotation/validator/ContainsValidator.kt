@@ -1,7 +1,7 @@
 package com.kicker.api.annotation.validator
 
-import com.kicker.annotation.Contains
-import com.kicker.utils.ConstraintValidatorUtils
+import com.kicker.api.annotation.Contains
+import com.kicker.api.utils.ConstraintValidatorUtils
 import javax.validation.ConstraintValidator
 import javax.validation.ConstraintValidatorContext
 

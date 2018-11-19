@@ -1,7 +1,7 @@
 package com.kicker.api.component.schedule
 
-import com.kicker.service.PlayerService
-import com.kicker.service.PlayerStatsService
+import com.kicker.api.service.PlayerService
+import com.kicker.api.service.PlayerStatsService
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional

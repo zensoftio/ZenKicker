@@ -1,6 +1,6 @@
 package com.kicker.api.annotation
 
-import com.kicker.annotation.validator.FieldMatchValidator
+import com.kicker.api.annotation.validator.FieldMatchValidator
 import javax.validation.Constraint
 import javax.validation.Payload
 import kotlin.reflect.KClass

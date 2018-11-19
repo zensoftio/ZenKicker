@@ -1,6 +1,6 @@
 package com.kicker.api.model
 
-import com.kicker.model.base.BaseModel
+import com.kicker.api.model.base.BaseModel
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import javax.persistence.Column

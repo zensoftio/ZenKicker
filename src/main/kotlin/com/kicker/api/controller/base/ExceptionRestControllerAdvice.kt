@@ -1,9 +1,9 @@
 package com.kicker.api.controller.base
 
-import com.kicker.domain.exception.ErrorDto
-import com.kicker.domain.exception.ExceptionResponse
-import com.kicker.exception.controller.ControllerException
-import com.kicker.exception.service.ServiceException
+import com.kicker.api.domain.exception.ErrorDto
+import com.kicker.api.domain.exception.ExceptionResponse
+import com.kicker.api.exception.controller.ControllerException
+import com.kicker.api.exception.service.ServiceException
 import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR
 import org.springframework.validation.BindException

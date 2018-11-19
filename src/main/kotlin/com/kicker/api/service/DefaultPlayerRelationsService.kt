@@ -1,8 +1,8 @@
 package com.kicker.api.service
 
-import com.kicker.domain.PageRequest
-import com.kicker.model.PlayerRelations
-import com.kicker.repository.PlayerRelationsRepository
+import com.kicker.api.domain.PageRequest
+import com.kicker.api.model.PlayerRelations
+import com.kicker.api.repository.PlayerRelationsRepository
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service

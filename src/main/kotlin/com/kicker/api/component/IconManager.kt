@@ -1,7 +1,7 @@
 package com.kicker.api.component
 
-import com.kicker.config.property.IconsSizeProperties
-import com.kicker.config.property.StaticFoldersProperties
+import com.kicker.api.config.property.IconsSizeProperties
+import com.kicker.api.config.property.StaticFoldersProperties
 import net.coobird.thumbnailator.Thumbnails
 import org.springframework.stereotype.Component
 import java.io.ByteArrayInputStream

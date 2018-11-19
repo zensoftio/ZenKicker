@@ -1,9 +1,9 @@
 package com.kicker.api.controller.api
 
-import com.kicker.domain.PageResponse
-import com.kicker.domain.model.playerRelations.PlayerRelationsDto
-import com.kicker.domain.model.playerRelations.PlayerRelationsPageRequest
-import com.kicker.service.PlayerRelationsService
+import com.kicker.api.domain.PageResponse
+import com.kicker.api.domain.model.playerRelations.PlayerRelationsDto
+import com.kicker.api.domain.model.playerRelations.PlayerRelationsPageRequest
+import com.kicker.api.service.PlayerRelationsService
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable

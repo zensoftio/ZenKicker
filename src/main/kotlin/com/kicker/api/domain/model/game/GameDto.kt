@@ -1,6 +1,6 @@
 package com.kicker.api.domain.model.game
 
-import com.kicker.model.Game
+import com.kicker.api.model.Game
 import java.sql.Timestamp
 
 /**

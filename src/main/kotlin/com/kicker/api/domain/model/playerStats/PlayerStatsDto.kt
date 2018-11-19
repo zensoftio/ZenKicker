@@ -1,6 +1,6 @@
 package com.kicker.api.domain.model.playerStats
 
-import com.kicker.domain.model.player.PlayerDto
+import com.kicker.api.domain.model.player.PlayerDto
 
 /**
  * @author Yauheni Efimenko
