@@ -70,7 +70,7 @@ class DefaultPlayerStatsService(
     /*
     * Current week is number 0, so 1 is last week
     * */
-    override fun getDeltaPlayersForLastWeek(): List<PlayerDeltaDto> {
+    override fun getDeltaPlayersDuringLastWeek(): List<PlayerDeltaDto> {
         val dates = DateUtils.getIntervalDatesOfWeek(1)
         return repository.calculateDeltaPlayersForIntervalDates(dates.first, dates.second)
     }

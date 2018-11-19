@@ -4,10 +4,12 @@ import com.kicker.domain.PageResponse
 import com.kicker.domain.model.playerRelations.PlayerRelationsDto
 import com.kicker.domain.model.playerRelations.PlayerRelationsPageRequest
 import com.kicker.service.PlayerRelationsService
+import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import springfox.documentation.annotations.ApiIgnore
 
 /**
  * @author Yauheni Efimenko
@@ -18,8 +20,12 @@ class PlayerRelationsController(
         private val service: PlayerRelationsService
 ) {
 
+    @ApiOperation(value = "Get all relations by player`s id", notes = """Pageable.
+        * sortBy - [id,winningPercentage], default:winningPercentage
+        * sortDirection - [ASC,DESC], default:DESC
+    """)
     @GetMapping("/{playerId}/relations")
-    fun getAllByPlayer(@PathVariable playerId: Long, pageRequest: PlayerRelationsPageRequest): PageResponse<PlayerRelationsDto> {
+    fun getAllByPlayer(@PathVariable playerId: Long, @ApiIgnore pageRequest: PlayerRelationsPageRequest): PageResponse<PlayerRelationsDto> {
         return PageResponse(service.getAllByPlayer(playerId, pageRequest).map { PlayerRelationsDto(it) })
     }
 
