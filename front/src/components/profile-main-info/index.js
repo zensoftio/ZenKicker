@@ -20,7 +20,10 @@ class ProfileMainInfo extends Component {
   }
 
   render() {
-    const {rating, countGames, rated, isCurrent, countLosses, countWins, goalsAgainst, goalsFor} = this.props;
+    const {
+      rating, countGames, rated, isCurrent, countLosses, countWins, goalsAgainst, goalsFor, currentLossStreak,
+      currentWinStreak, longestLossStreak, longestWinStreak
+    } = this.props;
     const {uploadPhotoError} = this.state;
 
     const countWinsPercents = countGames ? Math.round(parseFloat(countWins * 100 / countGames) * 100) / 100 : 0;
@@ -38,7 +41,7 @@ class ProfileMainInfo extends Component {
           <EditingBlock>
             <UsernameBlock isCurrent={isCurrent}/>
             {
-              isCurrent && <PasswordBlock />
+              isCurrent && <PasswordBlock/>
             }
           </EditingBlock>
           <StatisticsContent>
@@ -50,6 +53,10 @@ class ProfileMainInfo extends Component {
               <Field>Games lost: <span>({countLossesPercents}%) {countLosses}</span></Field>
               <Field>Goals for: <span>{goalsFor}</span></Field>
               <Field>Goals against: <span>{goalsAgainst}</span></Field>
+              <Field>Current loss streak: <span>{currentLossStreak}</span></Field>
+              <Field>Longest loss streak: <span>{longestLossStreak}</span></Field>
+              <Field>Current win streak: <span>{currentWinStreak}</span></Field>
+              <Field>Longest win streak: <span>{longestWinStreak}</span></Field>
             </Statistics>
           </StatisticsContent>
         </Info>

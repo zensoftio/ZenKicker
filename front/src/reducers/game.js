@@ -13,7 +13,8 @@ const initState = {
     list: [],
     totalCount: 0
   },
-  gamesPerLastWeek: []
+  gamesPerLastWeek: [],
+  lastGame: null
 };
 
 export const game = (state = initState, action) => {
@@ -26,6 +27,9 @@ export const game = (state = initState, action) => {
 
     case ActionType.Game.GET_LATEST_GAMES_SUCCESS:
       return {...state, latestGames: action.payload};
+
+    case ActionType.Game.GET_LAST_GAME_SUCCESS:
+      return {...state, lastGame: action.payload.list[0]};
 
     case ActionType.Game.GET_PLAYER_GAMES_SUCCESS:
       return {...state, playerGames: action.payload};

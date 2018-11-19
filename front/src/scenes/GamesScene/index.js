@@ -27,7 +27,8 @@ class GamesScene extends Component {
         winner1Name: players.list.length ? players.list.find(player => player.id === game.winner1Id).username : null,
         winner2Name: players.list.length ? players.list.find(player => player.id === game.winner2Id).username : null,
         loser1Name: players.list.length ? players.list.find(player => player.id === game.loser1Id).username : null,
-        loser2Name: players.list.length ? players.list.find(player => player.id === game.loser2Id).username : null
+        loser2Name: players.list.length ? players.list.find(player => player.id === game.loser2Id).username : null,
+        reportedBy: players.list.length ? players.list.find(player => player.id === game.reportedById).username : null,
       }
     ))
 

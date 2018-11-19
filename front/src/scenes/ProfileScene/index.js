@@ -2,7 +2,13 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {getPlayer, getPlayerGames, appendToPlayerGames, getPlayerDeltaStatistic, getPlayerGamesCountStatistic} from '../../actions';
+import {
+  getPlayer,
+  getPlayerGames,
+  appendToPlayerGames,
+  getPlayerDeltaStatistic,
+  getPlayerGamesCountStatistic
+} from '../../actions';
 import {withRouter} from 'react-router-dom';
 import ProfileMainInfo from '../../components/profile-main-info';
 import PlayerGames from '../../components/player-games';
@@ -58,10 +64,15 @@ class ProfileScene extends Component {
 
     return (
       <Content>
-        <ProfileMainInfo countGames={player.countGames} rated={player.rated} rating={player.rating} id={this.props.match.params.id}
-                         username={player.username} isCurrent={isCurrent} countLosses={player.countLosses} countWins={player.countWins}
-                         goalsAgainst={player.goalsAgainst} goalsFor={player.goalsFor}/>
-        <PlayerGames games={mappedGames ? mappedGames : []} appendToGames={actions.appendToPlayerGames} totalCount={playerGames.totalCount}
+        <ProfileMainInfo countGames={player.countGames} rated={player.rated} rating={player.rating}
+                         id={this.props.match.params.id}
+                         username={player.username} isCurrent={isCurrent} countLosses={player.countLosses}
+                         countWins={player.countWins}
+                         goalsAgainst={player.goalsAgainst} goalsFor={player.goalsFor}
+                         currentLossStreak={player.currentLossesStreak} currentWinStreak={player.currentWinningStreak}
+                         longestLossStreak={player.longestLossesStreak} longestWinStreak={player.longestWinningStreak}/>
+        <PlayerGames games={mappedGames ? mappedGames : []} appendToGames={actions.appendToPlayerGames}
+                     totalCount={playerGames.totalCount}
                      playerId={playerId}/>
         <ChartStatistics ratingStatistic={ratingStatistic} gamesCountStatistic={gamesCountStatistic}/>
       </Content>
@@ -93,7 +104,6 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProfileScene));
-
 
 const Content = styled.div`
 	display: flex;

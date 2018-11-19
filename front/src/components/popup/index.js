@@ -13,6 +13,7 @@ class Popup extends Component {
   onPopupOpen = () => {
     this.setState({isPopupOpen: true});
     document.getElementsByTagName('BODY')[0].style.overflow = 'hidden';
+    this.props.loadData();
 
   }
   onPopupClose = () => {
