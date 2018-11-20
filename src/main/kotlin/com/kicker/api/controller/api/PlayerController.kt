@@ -1,6 +1,5 @@
 package com.kicker.api.controller.api
 
-import com.kicker.api.annotation.CurrentPlayer
 import com.kicker.api.domain.PageResponse
 import com.kicker.api.domain.model.player.*
 import com.kicker.api.exception.controller.MultipartFileException
@@ -21,8 +20,8 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("/api/players")
 class PlayerController(
-        private val service: PlayerService,
-        private val gameService: GameService
+    private val service: PlayerService,
+    private val gameService: GameService
 ) {
 
     @ApiOperation(value = "Get current player")
@@ -30,14 +29,14 @@ class PlayerController(
     fun getCurrent(@ApiIgnore authentication: Authentication): PlayerDto {
         val player = authentication.principal as Player
         return PlayerDto(service.get(player.id), gameService.countByPlayer(player.id),
-                gameService.countDuring10WeeksByPlayer(player.id))
+            gameService.countDuring10WeeksByPlayer(player.id))
     }
 
     @ApiOperation(value = "Get player by player`s id")
     @GetMapping("/{playerId}")
     fun get(@PathVariable playerId: Long): PlayerDto {
         return PlayerDto(service.get(playerId), gameService.countByPlayer(playerId),
-                gameService.countDuring10WeeksByPlayer(playerId))
+            gameService.countDuring10WeeksByPlayer(playerId))
     }
 
     @ApiOperation(value = "Get all players", notes = """Pageable.
@@ -67,33 +66,35 @@ class PlayerController(
     fun create(@Valid @RequestBody request: CreatePlayerRequest): PlayerDto {
         val player = service.create(request)
         return PlayerDto(player, gameService.countByPlayer(player.id),
-                gameService.countDuring10WeeksByPlayer(player.id))
+            gameService.countDuring10WeeksByPlayer(player.id))
     }
 
     @ApiOperation(value = "Update username of player")
     @PutMapping("/username")
-    fun updateUsername(@CurrentPlayer currentPlayer: Player, @Valid @RequestBody request: UpdatePlayerUsernameRequest): PlayerDto {
-        val player = service.updateUsername(currentPlayer.id, request)
-        return PlayerDto(player, gameService.countByPlayer(player.id),
-                gameService.countDuring10WeeksByPlayer(player.id))
+    fun updateUsername(@ApiIgnore authentication: Authentication, @Valid @RequestBody request: UpdatePlayerUsernameRequest): PlayerDto {
+        val currentPlayer = authentication.principal as Player
+        val persistPlayer = service.updateUsername(currentPlayer.id, request)
+        return PlayerDto(persistPlayer, gameService.countByPlayer(persistPlayer.id),
+            gameService.countDuring10WeeksByPlayer(persistPlayer.id))
     }
 
     @ApiOperation(value = "Update icon of player")
     @PutMapping("/icon")
-    fun updateUsername(@CurrentPlayer currentPlayer: Player, @RequestPart("file") icon: MultipartFile): PlayerDto {
+    fun updateUsername(@ApiIgnore authentication: Authentication, @RequestPart("file") icon: MultipartFile): PlayerDto {
         validateIcon(icon)
-
-        val player = service.updateIcon(currentPlayer.id, icon)
-        return PlayerDto(player, gameService.countByPlayer(player.id),
-                gameService.countDuring10WeeksByPlayer(player.id))
+        val currentPlayer = authentication.principal as Player
+        val persistPlayer = service.updateIcon(currentPlayer.id, icon)
+        return PlayerDto(persistPlayer, gameService.countByPlayer(persistPlayer.id),
+            gameService.countDuring10WeeksByPlayer(persistPlayer.id))
     }
 
     @ApiOperation(value = "Update password of player")
     @PutMapping("/password")
-    fun updatePassword(@CurrentPlayer currentPlayer: Player, @Valid @RequestBody request: UpdatePlayerPasswordRequest): PlayerDto {
-        val player = service.updatePassword(currentPlayer.id, request)
-        return PlayerDto(player, gameService.countByPlayer(player.id),
-                gameService.countDuring10WeeksByPlayer(player.id))
+    fun updatePassword(@ApiIgnore authentication: Authentication, @Valid @RequestBody request: UpdatePlayerPasswordRequest): PlayerDto {
+        val currentPlayer = authentication.principal as Player
+        val persistPlayer = service.updatePassword(currentPlayer.id, request)
+        return PlayerDto(persistPlayer, gameService.countByPlayer(persistPlayer.id),
+            gameService.countDuring10WeeksByPlayer(persistPlayer.id))
     }
 
     private fun validateIcon(icon: MultipartFile) {
@@ -102,7 +103,7 @@ class PlayerController(
         }
 
         if (icon.contentType != IMAGE_JPEG_VALUE && icon.contentType != IMAGE_PNG_VALUE
-                && icon.contentType != IMAGE_GIF_VALUE) {
+            && icon.contentType != IMAGE_GIF_VALUE) {
             throw MultipartFileException("Incorrect file type, ${icon.contentType}")
         }
     }
