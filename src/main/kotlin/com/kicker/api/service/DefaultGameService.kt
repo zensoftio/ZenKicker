@@ -20,10 +20,10 @@ import java.time.LocalDate.now
 @Service
 @Transactional(readOnly = true)
 class DefaultGameService(
-        private val repository: GameRepository,
-        private val playerService: PlayerService,
-        private val eventPublisher: ApplicationEventPublisher,
-        private val playerSettingsProperties: PlayerSettingsProperties
+    private val repository: GameRepository,
+    private val playerService: PlayerService,
+    private val eventPublisher: ApplicationEventPublisher,
+    private val playerSettingsProperties: PlayerSettingsProperties
 ) : DefaultBaseService<Game, GameRepository>(repository), GameService {
 
     @Cacheable("games")
@@ -61,7 +61,7 @@ class DefaultGameService(
     override fun countDuring10WeeksByPlayer(playerId: Long): Long {
         val player = playerService.get(playerId)
         return repository.countByPlayerAndIntervalDates(player,
-                DateUtils.getStartDateOfWeek(playerSettingsProperties.countWeeks!! - 1), now())
+            DateUtils.getStartDateOfWeek(playerSettingsProperties.countWeeks!! - 1), now())
     }
 
     override fun countPerDayDuringLast7Days(): List<Long> {
@@ -88,7 +88,8 @@ class DefaultGameService(
         return countGamesPerDayDuringLast7Days
     }
 
-    @CacheEvict(value = ["games", "relations", "playerStats", "gameStats", "deltaPerWeekDuring10Weeks"], allEntries = true)
+    @CacheEvict(value = ["games", "relations", "playerStats", "gameStats", "deltaPerWeekDuring10Weeks", "players",
+        "activePlayers"], allEntries = true)
     @Transactional
     override fun gameRegistration(playerId: Long, request: GameRegistrationRequest): Game {
         val reporter = playerService.get(playerId)
