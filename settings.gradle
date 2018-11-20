@@ -1,4 +1,3 @@
 rootProject.name = 'kicker'
 
 include('front')
-include('telegram-bot')
