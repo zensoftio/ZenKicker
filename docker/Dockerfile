@@ -6,4 +6,4 @@ ADD build/libs/kicker-*.jar ./application.jar
 
 EXPOSE 8080
 
-CMD ["java", "-server", "-jar", "/root/application.jar"]
+CMD java -server -Xmx512M -jar /root/application.jar
