@@ -20,7 +20,8 @@ const Paths = {
     GetAll: base('/players'),
     GetPlayer: (id) => base(`/stats/player/${id}`),
     GetDeltaStatistic: (id) => base(`/stats/delta/player/${id}/dashboard`),
-    GetGamesCountStatistic: (id) => base(`/games/count/player/${id}/dashboard`)
+    GetGamesCountStatistic: (id) => base(`/games/count/player/${id}/dashboard`),
+    GetDeltaPlayers: base('/stats/players/delta')
   }
 };
 

@@ -15,7 +15,8 @@ const initState = {
   },
   player: null,
   deltaStatistic: [],
-  gamesCountStatistic: []
+  gamesCountStatistic: [],
+  loser: null
 };
 
 export const player = (state = initState, action) => {
@@ -28,6 +29,9 @@ export const player = (state = initState, action) => {
 
     case ActionType.Player.GET_TOP_PLAYERS_SUCCESS:
       return {...state, topPlayers: action.payload};
+
+    case ActionType.Player.GET_LOSER_SUCCESS:
+      return {...state, loser: action.payload.list[0]};
 
     case ActionType.Player.GET_PLAYER_SUCCESS:
       const player = { ...action.payload.player, ...action.payload};

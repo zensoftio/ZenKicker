@@ -43,7 +43,6 @@ const AuthenticationContent = styled.div`
     min-width: 30px;
     max-height: 30px;
     min-height: 30px;
-    border-radius: 100%;
   }
 `;
 

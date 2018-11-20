@@ -4,6 +4,8 @@ import defaultPhoto from '../../shared/images/default-photo.png';
 
 const Img = styled.img`
   max-width: 100%;
+  border-radius: 100%;
+  
 `;
 
 export const UserPhoto = ({photo}) => (

@@ -3,24 +3,25 @@ import styled from 'styled-components';
 import moment from 'moment';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {getTopPlayers, getLatestGames, getAllPlayers, getGamesCountPerWeek} from '../../actions';
+import {getTopPlayers, getLatestGames, getAllPlayers, getGamesCountPerWeek, getLoser} from '../../actions';
 import {withRouter} from 'react-router-dom';
 import LatestGames from '../../components/latest-games';
-import TopPlayers from '../../components/top-players';
 import Chart from '../../components/chart';
+import PlayersOfWeek from "../../components/players-of-week";
 
 class DashboardScene extends Component {
 
   componentDidMount() {
-    const {getTopPlayers, getAllPlayers, getLatestGames, getGamesCountPerWeek} = this.props.actions;
+    const {getTopPlayers, getAllPlayers, getLatestGames, getGamesCountPerWeek, getLoser} = this.props.actions;
     getTopPlayers();
     getAllPlayers();
     getLatestGames();
     getGamesCountPerWeek();
+    getLoser();
   }
 
   render() {
-    const {players, topPlayers, latestGames, gamesPerLastWeek} = this.props;
+    const {players, topPlayers, latestGames, gamesPerLastWeek, loser} = this.props;
 
     const mappedLatestGames = players.list && latestGames.list.map(game => (
       {
@@ -46,12 +47,11 @@ class DashboardScene extends Component {
     return (
       <Content>
         <div>
-          <Chart data={mappedGamesCountStatistic} lineDataKey='count' xDataKey='day'
-                 title='Games per day'/>
+          <PlayersOfWeek players={topPlayers} loser={loser}/>
         </div>
         <div>
-          <Title>Top 5 players</Title>
-          <TopPlayers topPlayers={topPlayers.list}/>
+          <Chart data={mappedGamesCountStatistic} lineDataKey='count' xDataKey='day'
+                 title='Games per day'/>
         </div>
         <div>
           <Title>Latest games</Title>
@@ -68,7 +68,8 @@ const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
     topPlayers: state.player.topPlayers,
     players: state.player.players,
     latestGames: state.game.latestGames,
-    gamesPerLastWeek: state.game.gamesPerLastWeek
+    gamesPerLastWeek: state.game.gamesPerLastWeek,
+    loser: state.player.loser
   };
   return props;
 }
@@ -77,7 +78,8 @@ const mapDispatchToProps = (dispatch) => {
     getTopPlayers,
     getLatestGames,
     getAllPlayers,
-    getGamesCountPerWeek
+    getGamesCountPerWeek,
+    getLoser
   };
   const actionMap = {actions: bindActionCreators(actions, dispatch)};
   return actionMap;

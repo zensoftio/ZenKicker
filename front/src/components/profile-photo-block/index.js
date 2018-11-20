@@ -78,7 +78,6 @@ const ProfilePhoto = styled.div`
   margin: 0 20px;
   position: relative;
   overflow: hidden;
-  border-radius: 100%;
   display: flex;
   align-items: center;
   justify-content: center;

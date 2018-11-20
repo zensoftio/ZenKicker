@@ -71,10 +71,10 @@ class ProfileScene extends Component {
                          goalsAgainst={player.goalsAgainst} goalsFor={player.goalsFor}
                          currentLossStreak={player.currentLossesStreak} currentWinStreak={player.currentWinningStreak}
                          longestLossStreak={player.longestLossesStreak} longestWinStreak={player.longestWinningStreak}/>
+        <ChartStatistics ratingStatistic={ratingStatistic} gamesCountStatistic={gamesCountStatistic}/>
         <PlayerGames games={mappedGames ? mappedGames : []} appendToGames={actions.appendToPlayerGames}
                      totalCount={playerGames.totalCount}
                      playerId={playerId}/>
-        <ChartStatistics ratingStatistic={ratingStatistic} gamesCountStatistic={gamesCountStatistic}/>
       </Content>
     );
   }

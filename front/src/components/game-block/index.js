@@ -128,7 +128,6 @@ const Photo = styled.div`
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  border-radius: 100%;
   display: flex;
 `;
 

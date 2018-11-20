@@ -11,7 +11,8 @@ import {
   registerGame,
   getTopPlayers,
   getGamesCountPerWeek,
-  getLastGame
+  getLastGame,
+  getLoser
 } from '../../actions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -88,13 +89,14 @@ class GameRegistration extends Component {
     this.state.isGameRegistration ? this.onRegistrationConfirm() : this.setState({isGameRegistration: true})
   }
 
-  updateData = ({getActivePlayers, getAllPlayers, getLatestGames, getAllGames, getTopPlayers, getGamesCountPerWeek}) => {
+  updateData = ({getActivePlayers, getAllPlayers, getLatestGames, getAllGames, getTopPlayers, getGamesCountPerWeek, getLoser}) => {
     getActivePlayers();
     getAllPlayers();
     getLatestGames();
     getAllGames();
     getTopPlayers();
     getGamesCountPerWeek();
+    getLoser();
   }
 
   onRegistrationConfirm = async () => {
@@ -222,7 +224,8 @@ const mapDispatchToProps = (dispatch) => {
     getAllGames,
     getTopPlayers,
     getGamesCountPerWeek,
-    getLastGame
+    getLastGame,
+    getLoser
   };
   const actionMap = {actions: bindActionCreators(actions, dispatch)};
   return actionMap;

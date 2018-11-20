@@ -33,7 +33,6 @@ const Content = styled(Link)`
   }
 `;
 const Photo = styled.div`
-  border-radius: 100%;
   max-width: 50px;
   min-width: 50px;
   max-height: 50px;

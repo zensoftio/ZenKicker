@@ -94,7 +94,6 @@ const Photo = styled.div`
   min-width: 40px;
   max-height: 40px;
   min-height: 40px;
-  border-radius: 100%;
   justify-content: center;
 `;
 

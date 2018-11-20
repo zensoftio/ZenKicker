@@ -38,11 +38,26 @@ export const getTopPlayers = () => {
     dispatch({type: ActionType.Player.GET_TOP_PLAYERS_REQUEST});
 
     try {
-      const result = await api.get(Paths.Player.GetActive, {params: {limit: 5}});
+      const result = await api.get(Paths.Player.GetActive, {params: {limit: 3}});
       dispatch({type: ActionType.Player.GET_TOP_PLAYERS_SUCCESS, payload: result.data});
     } catch (err) {
       console.warn(err);
       dispatch({type: ActionType.Player.GET_TOP_PLAYERS_FAILURE});
+    }
+  }
+}
+
+export const getLoser = () => {
+  return async (dispatch) => {
+
+    dispatch({type: ActionType.Player.GET_LOSER_REQUEST});
+
+    try {
+      const result = await api.get(Paths.Player.GetActive, {params: {limit: 1, sortDirection: 'ASC'}});
+      dispatch({type: ActionType.Player.GET_LOSER_SUCCESS, payload: result.data});
+    } catch (err) {
+      console.warn(err);
+      dispatch({type: ActionType.Player.GET_LOSER_FAILURE});
     }
   }
 }
