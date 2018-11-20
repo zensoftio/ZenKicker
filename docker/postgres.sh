@@ -39,5 +39,5 @@ docker run \
     -e POSTGRES_USER=${POSTGRES_USER} \
     -e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} \
     -p ${OUTER_PORT}:5432 \
-    postgres
+    postgres:9.6.11
 
