@@ -1,6 +1,5 @@
 package com.kicker.api.controller.api
 
-import com.kicker.api.annotation.CurrentPlayer
 import com.kicker.api.domain.PageResponse
 import com.kicker.api.domain.model.game.GameDto
 import com.kicker.api.domain.model.game.GamePageRequest
@@ -8,6 +7,7 @@ import com.kicker.api.domain.model.game.GameRegistrationRequest
 import com.kicker.api.model.Player
 import com.kicker.api.service.GameService
 import io.swagger.annotations.ApiOperation
+import org.springframework.security.core.Authentication
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import springfox.documentation.annotations.ApiIgnore
@@ -20,7 +20,7 @@ import javax.validation.Valid
 @RequestMapping("/api/games")
 @Validated
 class GameController(
-        private val service: GameService
+    private val service: GameService
 ) {
 
     @ApiOperation("Get game by id")
@@ -48,11 +48,12 @@ class GameController(
     @ApiOperation("Get array of count of games per week during 10 weeks by player`s id")
     @GetMapping("/count/player/{playerId}/dashboard")
     fun countPerWeekDuring10WeeksByPlayer(@PathVariable playerId: Long): List<Long> =
-            service.countPerWeekDuring10WeeksByPlayer(playerId)
+        service.countPerWeekDuring10WeeksByPlayer(playerId)
 
     @ApiOperation("Registration of game")
     @PostMapping("/registration")
-    fun gameRegistration(@CurrentPlayer currentPlayer: Player, @Valid @RequestBody request: GameRegistrationRequest): GameDto {
+    fun gameRegistration(@ApiIgnore authentication: Authentication, @Valid @RequestBody request: GameRegistrationRequest): GameDto {
+        val currentPlayer = authentication.principal as Player
         return GameDto(service.gameRegistration(currentPlayer.id, request))
     }
 
