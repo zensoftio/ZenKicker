@@ -15,6 +15,7 @@ import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDate.now
 
 /**
  * @author Yauheni Efimenko
@@ -22,24 +23,24 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional(readOnly = true)
 class DefaultPlayerStatsService(
-        private val repository: PlayerStatsRepository,
-        private val playerService: PlayerService,
-        private val gameService: GameService,
-        private val playerSettingsProperties: PlayerSettingsProperties,
-        private val gamesSettingsProperties: GamesSettingsProperties
+    private val repository: PlayerStatsRepository,
+    private val playerService: PlayerService,
+    private val gameService: GameService,
+    private val playerSettingsProperties: PlayerSettingsProperties,
+    private val gamesSettingsProperties: GamesSettingsProperties
 ) : DefaultBaseService<PlayerStats, PlayerStatsRepository>(repository), PlayerStatsService {
 
     @Cacheable("playerStats")
     override fun getStatsByPlayer(playerId: Long): PlayerStatsDto = PlayerStatsDto(
-            PlayerDto(
-                    playerService.get(playerId),
-                    gameService.countByPlayer(playerId),
-                    gameService.countDuring10WeeksByPlayer(playerId)
-            ),
-            countLossesByPlayer(playerId),
-            countWinsByPlayer(playerId),
-            countGoalsAgainstByPlayer(playerId),
-            countGoalsForByPlayer(playerId)
+        PlayerDto(
+            playerService.get(playerId),
+            gameService.countByPlayer(playerId),
+            gameService.countDuring10WeeksByPlayer(playerId)
+        ),
+        countLossesByPlayer(playerId),
+        countWinsByPlayer(playerId),
+        countGoalsAgainstByPlayer(playerId),
+        countGoalsForByPlayer(playerId)
     )
 
     @Cacheable("gameStats")
@@ -68,11 +69,10 @@ class DefaultPlayerStatsService(
     }
 
     /*
-    * Current week is number 0, so 1 is last week
+    * Current week is number 0
     * */
     override fun getDeltaPlayersDuringLastWeek(): List<PlayerDeltaDto> {
-        val dates = DateUtils.getIntervalDatesOfWeek(1)
-        return repository.calculateDeltaPlayersForIntervalDates(dates.first, dates.second)
+        return repository.calculateDeltaPlayersForIntervalDates(DateUtils.getStartDateOfWeek(0), now())
     }
 
     override fun getActualRatingByPlayer(playerId: Long): Double {
@@ -81,7 +81,7 @@ class DefaultPlayerStatsService(
         for (i in 0..playerSettingsProperties.countWeeks!!) {
             val deltaForWeek = getDeltaByPlayerAndWeeksAgo(playerId, i)
             val obsolescenceDeltaForWeek = RatingUtils.getObsolescenceDelta(deltaForWeek,
-                    playerSettingsProperties.countWeeks!!, i)
+                playerSettingsProperties.countWeeks!!, i)
 
             rating += obsolescenceDeltaForWeek
         }
