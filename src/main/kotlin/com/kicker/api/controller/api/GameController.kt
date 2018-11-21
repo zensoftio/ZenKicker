@@ -20,35 +20,24 @@ import javax.validation.Valid
 @RequestMapping("/api/games")
 @Validated
 class GameController(
-    private val service: GameService
+        private val service: GameService
 ) {
 
-    @ApiOperation("Get game by id")
-    @GetMapping("/{gameId}")
-    fun get(@PathVariable gameId: Long): GameDto = GameDto(service.get(gameId))
-
     @ApiOperation(value = "Get all games", notes = """Pageable.
-        * sortBy - [id,date], default:date
-        * sortDirection - [ASC,DESC], default:DESC
+        * sortBy - [id, date], default:id
+        * sortDirection - [ASC, DESC], default:ASC
+        * offset - [0, +Infinity], default:0
+        * limit - [0, +Infinity], default:10
     """)
     @GetMapping
     fun getAll(@ApiIgnore pageRequest: GamePageRequest): PageResponse<GameDto> {
         return PageResponse(service.getAll(pageRequest).map { GameDto(it) })
     }
 
-    @ApiOperation(value = "Get all games of player by player`s id", notes = """Pageable.
-        * sortBy - [id,date], default:date
-        * sortDirection - [ASC,DESC], default:DESC
-    """)
-    @GetMapping("/player/{playerId}")
-    fun getAllByPlayer(@PathVariable playerId: Long, @ApiIgnore pageRequest: GamePageRequest): PageResponse<GameDto> {
-        return PageResponse(service.getAllByPlayer(playerId, pageRequest).map { GameDto(it) })
-    }
-
     @ApiOperation("Get array of count of games per week during 10 weeks by player`s id")
     @GetMapping("/count/player/{playerId}/dashboard")
     fun countPerWeekDuring10WeeksByPlayer(@PathVariable playerId: Long): List<Long> =
-        service.countPerWeekDuring10WeeksByPlayer(playerId)
+            service.countPerWeekDuring10WeeksByPlayer(playerId)
 
     @ApiOperation("Registration of game")
     @PostMapping("/registration")
@@ -57,7 +46,7 @@ class GameController(
         return GameDto(service.gameRegistration(currentPlayer.id, request))
     }
 
-    @ApiOperation("Get array of count of games per day during last 7 days by player`s id")
+    @ApiOperation("Get array of count of games per day during last 7 days")
     @GetMapping("/count/lastWeek")
     fun getCountPerDayDuringLastWeek(): List<Long> = service.countPerDayDuringLast7Days()
 
