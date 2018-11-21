@@ -22,3 +22,5 @@ docker network rm ${NETWORK_SERVICES_NAME}
 docker rm -vf ${NGINX_SERVICES_NAME}
 # Uncomment when need to delete icons
 #docker volume rm -f ${VOLUME_IMAGES_NAME}
+# Uncomment when need to delete volume for postgres
+#docker rm -vf vc_${POSTGRES_SERVICE_NAME}
