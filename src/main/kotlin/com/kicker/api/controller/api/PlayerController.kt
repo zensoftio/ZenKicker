@@ -8,7 +8,9 @@ import com.kicker.api.domain.model.player.UpdatePlayerPasswordRequest
 import com.kicker.api.domain.model.player.UpdatePlayerUsernameRequest
 import com.kicker.api.exception.controller.MultipartFileException
 import com.kicker.api.model.Player
+import com.kicker.api.model.PlayerStats
 import com.kicker.api.service.PlayerService
+import com.kicker.api.service.PlayerStatsService
 import io.swagger.annotations.ApiOperation
 import org.springframework.http.MediaType.*
 import org.springframework.security.core.Authentication
@@ -23,7 +25,8 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("/api/players")
 class PlayerController(
-        private val service: PlayerService
+        private val service: PlayerService,
+        private val playerStatsService: PlayerStatsService
 ) {
 
     @ApiOperation(value = "Get current player")
@@ -54,6 +57,7 @@ class PlayerController(
     @PostMapping
     fun create(@Valid @RequestBody request: CreatePlayerRequest): PlayerDto {
         val player = service.create(request)
+        playerStatsService.save(PlayerStats(player))
         return PlayerDto(player)
     }
 

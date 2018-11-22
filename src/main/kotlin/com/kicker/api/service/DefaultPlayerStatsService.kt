@@ -18,7 +18,7 @@ class DefaultPlayerStatsService(
 
     override fun getByPlayer(playerId: Long): PlayerStats {
         val player = playerService.get(playerId)
-        return repository.findByPlayer(player) ?: save(PlayerStats(player))
+        return repository.findByPlayer(player)
     }
 
     @Cacheable("statsActivePlayers")
