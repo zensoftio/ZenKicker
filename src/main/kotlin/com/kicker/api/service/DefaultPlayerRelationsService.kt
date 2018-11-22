@@ -24,6 +24,7 @@ class DefaultPlayerRelationsService(
         return repository.findByPlayerAndPartnerPlayerStatsActiveTrue(player, pageRequest)
     }
 
+    @Transactional
     override fun getByPlayerAndPartner(playerId: Long, partnerId: Long): PlayerRelations {
         val player = playerService.get(playerId)
         val partner = playerService.get(partnerId)
