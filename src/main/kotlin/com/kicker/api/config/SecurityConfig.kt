@@ -47,7 +47,7 @@ class SecurityConfig : GlobalMethodSecurityConfiguration() {
             http.cors()
 
             http.authorizeRequests()
-                    .antMatchers(*Companion.AUTH_WHITELIST).permitAll()
+                    .antMatchers(*AUTH_WHITELIST).permitAll()
                     .antMatchers("/sign-up").permitAll()
                     .antMatchers(POST, "/api/players").permitAll()
                     .antMatchers("/**").authenticated()
@@ -61,10 +61,11 @@ class SecurityConfig : GlobalMethodSecurityConfiguration() {
 
         companion object {
             private val AUTH_WHITELIST = arrayOf(
+                    //static content
                     "/css/**",
                     "/js/**",
                     "/images/**",
-
+                    //swagger
                     "/v2/api-docs",
                     "/swagger-resources",
                     "/swagger-resources/**",

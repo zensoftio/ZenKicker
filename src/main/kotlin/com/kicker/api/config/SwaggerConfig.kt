@@ -31,11 +31,23 @@ class SwaggerConfig : WebMvcConfigurationSupport() {
     }
 
     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
-        registry.addResourceHandler("swagger-ui.html")
-                .addResourceLocations("classpath:/META-INF/resources/")
-
-        registry.addResourceHandler("/webjars/**")
-                .addResourceLocations("classpath:/META-INF/resources/webjars/")
+        registry.addResourceHandler(
+                //static content
+                "/css/**",
+                "/js/**",
+                "/images/**",
+                //swagger
+                "/webjars/**",
+                "swagger-ui.html"
+        ).addResourceLocations(
+                //static content
+                "classpath:/static/css/",
+                "classpath:/static/js/",
+                "classpath:/static/images/",
+                //swagger
+                "classpath:/META-INF/resources/webjars/",
+                "classpath:/META-INF/resources/"
+        )
     }
 
     private fun apiInfo(): ApiInfo = ApiInfoBuilder()
