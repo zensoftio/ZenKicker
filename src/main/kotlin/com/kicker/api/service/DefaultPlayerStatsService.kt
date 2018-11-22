@@ -16,10 +16,9 @@ class DefaultPlayerStatsService(
         private val repository: PlayerStatsRepository
 ) : DefaultBaseService<PlayerStats, PlayerStatsRepository>(repository), PlayerStatsService {
 
-    @Transactional
     override fun getByPlayer(playerId: Long): PlayerStats {
         val player = playerService.get(playerId)
-        return repository.findByPlayer(player) ?: save(PlayerStats(player))
+        return repository.findByPlayer(player)
     }
 
     @Cacheable("statsActivePlayers")

@@ -66,7 +66,7 @@ interface PlayerRelationsRepository : BaseRepository<PlayerRelations> {
 @Repository
 interface PlayerStatsRepository : BaseRepository<PlayerStats> {
 
-    fun findByPlayer(player: Player): PlayerStats?
+    fun findByPlayer(player: Player): PlayerStats
 
     fun findAllByActiveTrue(pageable: Pageable): Page<PlayerStats>
 
