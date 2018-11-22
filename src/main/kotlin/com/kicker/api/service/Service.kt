@@ -5,6 +5,7 @@ import com.kicker.api.domain.model.game.GameRegistrationRequest
 import com.kicker.api.domain.model.player.CreatePlayerRequest
 import com.kicker.api.domain.model.player.UpdatePlayerPasswordRequest
 import com.kicker.api.domain.model.player.UpdatePlayerUsernameRequest
+import com.kicker.api.domain.model.playerStats.PlayersDashboard
 import com.kicker.api.model.*
 import com.kicker.api.model.base.BaseModel
 import org.springframework.data.domain.Page
@@ -75,6 +76,8 @@ interface PlayerRelationsService {
 interface PlayerStatsService : BaseService<PlayerStats> {
 
     fun getByPlayer(playerId: Long): PlayerStats
+
+    fun getDashboard(): PlayersDashboard
 
     fun getAllActive(pageRequest: PageRequest): Page<PlayerStats>
 
