@@ -1,5 +1,5 @@
--- Players stats
-CREATE TABLE players_stats (
+-- Players to games
+CREATE TABLE players2games (
   id        BIGSERIAL PRIMARY KEY,
   player_id BIGINT REFERENCES players    NOT NULL,
   game_id   BIGINT REFERENCES games      NOT NULL,

@@ -48,9 +48,6 @@ class DefaultPlayerService(
     @Cacheable("players")
     override fun getAll(pageRequest: PageRequest): Page<Player> = super.getAll(pageRequest)
 
-    @Cacheable("activePlayers")
-    override fun getAllActive(pageRequest: PageRequest): Page<Player> = repository.findAllByActiveTrue(pageRequest)
-
     override fun loadUserByUsername(username: String): UserDetails = getByUsername(username)
             ?: throw UsernameNotFoundException("User with username $username not found")
 
@@ -66,6 +63,7 @@ class DefaultPlayerService(
         return super.save(Player(request.username!!, request.password!!))
     }
 
+    @CacheEvict("players", allEntries = true)
     @Transactional
     override fun updateUsername(playerId: Long, request: UpdatePlayerUsernameRequest): Player {
         if (isExist(request.username!!)) {
@@ -92,23 +90,6 @@ class DefaultPlayerService(
     }
 
     @Transactional
-    override fun updateRating(playerId: Long, newRating: Double): Player {
-        val player = get(playerId)
-        player.rating = newRating
-
-        return super.save(player)
-    }
-
-    @CacheEvict("activePlayers", allEntries = true)
-    @Transactional
-    override fun updateActivity(playerId: Long, active: Boolean): Player {
-        val player = get(playerId)
-        player.active = active
-
-        return super.save(player)
-    }
-
-    @Transactional
     override fun updateIcon(playerId: Long, icon: MultipartFile): Player {
         val player = get(playerId)
         val iconName = UUID.randomUUID().toString() + icon.originalFilename!!
@@ -120,17 +101,6 @@ class DefaultPlayerService(
         return super.save(player)
     }
 
-    @Transactional
-    override fun updateWinAndLossStreak(playerId: Long, won: Boolean): Player {
-        val player = get(playerId)
-
-        player.changeWinAndLossStreak(won)
-
-        return super.save(player)
-    }
-
-    private fun isExist(username: String): Boolean {
-        return getByUsername(username)?.let { true } ?: false
-    }
+    private fun isExist(username: String): Boolean = getByUsername(username)?.let { true } ?: false
 
 }

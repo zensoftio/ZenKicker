@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ENVIRONMENT VARIABLES
-POSTGRES_SERVICE_NAME=postgres_kicker
+POSTGRES_SERVICE_NAME=local_postgres_kicker
 POSTGRES_HOST=postgres
 POSTGRES_DB=kicker
 POSTGRES_USER=postgres

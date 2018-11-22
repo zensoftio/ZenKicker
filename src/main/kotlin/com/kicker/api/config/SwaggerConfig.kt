@@ -71,29 +71,6 @@ class SwaggerConfig : WebMvcConfigurationSupport() {
 
                 ## Errors
 
-                ```json
-                {
-                  "status": 400,
-                  "message": "Method Argument Not Valid",
-                  "errors": [
-                    {
-                      "message": "size must be between 5 and 50",
-                      "field": "password",
-                      "code": "Size"
-                    },
-                    {
-                      "message": "size must be between 5 and 50",
-                      "field": "confirmPassword",
-                      "code": "Size"
-                    },
-                    {
-                      "message": "Passwords must be equal",
-                      "code": "PasswordsEqualsConstraint"
-                    }
-                  ]
-                }
-                ```
-
                 Fields:
                 * status - HTTP status
                 * message - error's message

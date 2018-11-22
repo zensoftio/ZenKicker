@@ -37,10 +37,4 @@ class Game(
         @Column(name = "date", nullable = false, columnDefinition = "TIMESTAMP")
         val date: LocalDateTime = LocalDateTime.now()
 
-) : BaseModel() {
-
-    fun getWinners(): List<Player> = listOf(winner1, winner2)
-
-    fun getLosers(): List<Player> = listOf(loser1, loser2)
-
-}
+) : BaseModel()

@@ -21,7 +21,7 @@ class DefaultPlayerRelationsService(
     @Cacheable("relations")
     override fun getAllByPlayer(playerId: Long, pageRequest: PageRequest): Page<PlayerRelations> {
         val player = playerService.get(playerId)
-        return repository.findByPlayerAndPartnerActiveTrue(player, pageRequest)
+        return repository.findByPlayerAndPartnerPlayerStatsActiveTrue(player, pageRequest)
     }
 
     override fun getByPlayerAndPartner(playerId: Long, partnerId: Long): PlayerRelations {

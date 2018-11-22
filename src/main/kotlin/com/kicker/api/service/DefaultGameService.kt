@@ -20,39 +20,29 @@ import java.time.LocalDate.now
 @Service
 @Transactional(readOnly = true)
 class DefaultGameService(
-    private val repository: GameRepository,
-    private val playerService: PlayerService,
-    private val eventPublisher: ApplicationEventPublisher,
-    private val playerSettingsProperties: PlayerSettingsProperties
+        private val repository: GameRepository,
+        private val playerService: PlayerService,
+        private val eventPublisher: ApplicationEventPublisher,
+        private val playerSettingsProperties: PlayerSettingsProperties
 ) : DefaultBaseService<Game, GameRepository>(repository), GameService {
 
     @Cacheable("games")
-    override fun getAllByPlayer(playerId: Long, pageRequest: PageRequest): Page<Game> {
-        val player = playerService.get(playerId)
-        return repository.findAllByPlayer(player, pageRequest)
-    }
-
-    override fun countByPlayer(playerId: Long): Long {
-        val player = playerService.get(playerId)
-        return repository.countByPlayer(player)
+    override fun getAll(pageRequest: PageRequest): Page<Game> {
+        return super.getAll(pageRequest)
     }
 
     /*
-    * Current week is number 0, so 10 week is number 9
-    * */
+        * Current week is number 0, so 10 week is number 9
+        * */
     override fun countPerWeekDuring10WeeksByPlayer(playerId: Long): List<Long> {
+        val player = playerService.get(playerId)
         val dashboard = mutableListOf<Long>()
         for (weeksAgo in 9 downTo 0) {
-            dashboard.add(countByPlayerAndWeeksAgo(playerId, weeksAgo.toLong()))
+            val dates = DateUtils.getIntervalDatesOfWeek(weeksAgo.toLong())
+            val count = repository.countByPlayerAndIntervalDates(player, dates.first, dates.second)
+            dashboard.add(count)
         }
         return dashboard
-    }
-
-    override fun countByPlayerAndWeeksAgo(playerId: Long, weeksAgo: Long): Long {
-        val player = playerService.get(playerId)
-        val dates = DateUtils.getIntervalDatesOfWeek(weeksAgo)
-
-        return repository.countByPlayerAndIntervalDates(player, dates.first, dates.second)
     }
 
     /*
@@ -61,7 +51,7 @@ class DefaultGameService(
     override fun countDuring10WeeksByPlayer(playerId: Long): Long {
         val player = playerService.get(playerId)
         return repository.countByPlayerAndIntervalDates(player,
-            DateUtils.getStartDateOfWeek(playerSettingsProperties.countWeeks!! - 1), now())
+                DateUtils.getStartDateOfWeek(playerSettingsProperties.countWeeks!! - 1), now())
     }
 
     override fun countPerDayDuringLast7Days(): List<Long> {
@@ -88,8 +78,8 @@ class DefaultGameService(
         return countGamesPerDayDuringLast7Days
     }
 
-    @CacheEvict(value = ["games", "relations", "playerStats", "gameStats", "deltaPerWeekDuring10Weeks", "players",
-        "activePlayers"], allEntries = true)
+    @CacheEvict(value = ["players", "statsActivePlayers", "games", "relations", "playerGames",
+        "deltaPerWeekDuring10Weeks"], allEntries = true)
     @Transactional
     override fun gameRegistration(playerId: Long, request: GameRegistrationRequest): Game {
         val reporter = playerService.get(playerId)

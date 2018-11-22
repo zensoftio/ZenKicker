@@ -21,8 +21,10 @@ class PlayerRelationsController(
 ) {
 
     @ApiOperation(value = "Get all relations by player`s id", notes = """Pageable.
-        * sortBy - [id,winningPercentage], default:winningPercentage
-        * sortDirection - [ASC,DESC], default:DESC
+        * sortBy - [id, winningPercentage], default:id
+        * sortDirection - [ASC, DESC], default:ASC
+        * offset - [0, +Infinity], default:0
+        * limit - [0, +Infinity], default:10
     """)
     @GetMapping("/{playerId}/relations")
     fun getAllByPlayer(@PathVariable playerId: Long, @ApiIgnore pageRequest: PlayerRelationsPageRequest): PageResponse<PlayerRelationsDto> {

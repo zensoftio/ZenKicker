@@ -2,7 +2,6 @@ package com.kicker.api.domain.model.player
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.kicker.api.model.Player
-import kotlin.math.roundToInt
 
 /**
  * @author Yauheni Efimenko
@@ -11,29 +10,13 @@ import kotlin.math.roundToInt
 data class PlayerDto(
         val id: Long,
         val username: String,
-        val rating: Int,
-        val countGames: Long,
-        val rated: Long,
-        val active: Boolean,
-        val iconName: String?,
-        val currentWinningStreak: Int,
-        val currentLossesStreak: Int,
-        val longestWinningStreak: Int,
-        val longestLossesStreak: Int
+        val iconName: String?
 ) {
 
-    constructor(player: Player, countGames: Long, rated: Long) : this(
+    constructor(player: Player) : this(
             player.id,
             player.username,
-            player.rating.roundToInt(),
-            countGames,
-            rated,
-            player.active,
-            player.iconName,
-            player.currentWinningStreak,
-            player.currentLossesStreak,
-            player.longestWinningStreak,
-            player.longestLossesStreak
+            player.iconName
     )
 
 }

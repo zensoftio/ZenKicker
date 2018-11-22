@@ -3,9 +3,7 @@ package com.kicker.api.model
 import com.kicker.api.model.base.BaseModel
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Table
+import javax.persistence.*
 
 /**
  * @author Yauheni Efimenko
@@ -18,38 +16,15 @@ class Player(
         private var username: String,
 
         @Column(name = "password", nullable = false)
-        private var password: String,
-
-        @Column(name = "rating", nullable = false)
-        var rating: Double = PLAYER_RATING,
-
-        @Column(name = "active", nullable = false)
-        var active: Boolean = false,
-
-        @Column(name = "icon_name")
-        var iconName: String? = null
+        private var password: String
 
 ) : BaseModel(), UserDetails {
 
-    @Column(name = "current_winning_streak", nullable = false)
-    var currentWinningStreak: Int = 0
-        private set
+    @Column(name = "icon_name")
+    var iconName: String? = null
 
-    @Column(name = "current_losses_streak", nullable = false)
-    var currentLossesStreak: Int = 0
-        private set
-
-    @Column(name = "longest_winning_streak", nullable = false)
-    var longestWinningStreak: Int = 0
-        private set
-
-    @Column(name = "longest_losses_streak", nullable = false)
-    var longestLossesStreak: Int = 0
-        private set
-
-    companion object {
-        const val PLAYER_RATING: Double = 10000.0
-    }
+    @OneToOne(mappedBy = "player", fetch = FetchType.LAZY)
+    val playerStats: PlayerStats? = null
 
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> = mutableListOf()
@@ -72,22 +47,6 @@ class Player(
 
     fun setPassword(password: String) {
         this.password = password
-    }
-
-    fun changeWinAndLossStreak(won: Boolean) {
-        if (won) {
-            currentWinningStreak++
-            currentLossesStreak = 0
-            if (longestWinningStreak < currentWinningStreak) {
-                longestWinningStreak = currentWinningStreak
-            }
-        } else {
-            currentLossesStreak++
-            currentWinningStreak = 0
-            if (longestLossesStreak < currentLossesStreak) {
-                longestLossesStreak = currentLossesStreak
-            }
-        }
     }
 
 }
