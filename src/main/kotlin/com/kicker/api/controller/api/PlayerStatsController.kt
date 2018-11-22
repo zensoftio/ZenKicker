@@ -3,6 +3,7 @@ package com.kicker.api.controller.api
 import com.kicker.api.domain.PageResponse
 import com.kicker.api.domain.model.playerStats.PlayerStatsDto
 import com.kicker.api.domain.model.playerStats.PlayerStatsPageRequest
+import com.kicker.api.domain.model.playerStats.PlayersDashboard
 import com.kicker.api.service.PlayerStatsService
 import io.swagger.annotations.ApiOperation
 import org.springframework.validation.annotation.Validated
@@ -46,5 +47,9 @@ class PlayerStatsController(
     @GetMapping("/active/stats")
     fun getAllActive(@ApiIgnore pageRequest: PlayerStatsPageRequest): PageResponse<PlayerStatsDto> =
             PageResponse(service.getAllActive(pageRequest).map { PlayerStatsDto(it) })
+
+    @ApiOperation("Get dashboard of players")
+    @GetMapping("/dashboard")
+    fun getDashboard(): PlayersDashboard = service.getDashboard()
 
 }

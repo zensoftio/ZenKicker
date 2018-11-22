@@ -79,7 +79,7 @@ class DefaultGameService(
     }
 
     @CacheEvict(value = ["players", "statsActivePlayers", "games", "relations", "playerGames",
-        "deltaPerWeekDuring10Weeks"], allEntries = true)
+        "deltaPerWeekDuring10Weeks", "playersDashboard"], allEntries = true)
     @Transactional
     override fun gameRegistration(playerId: Long, request: GameRegistrationRequest): Game {
         val reporter = playerService.get(playerId)

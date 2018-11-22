@@ -70,4 +70,6 @@ interface PlayerStatsRepository : BaseRepository<PlayerStats> {
 
     fun findAllByActiveTrue(pageable: Pageable): Page<PlayerStats>
 
+    fun findFirstByActiveTrueOrderByRatingAscIdDesc(): PlayerStats
+
 }
