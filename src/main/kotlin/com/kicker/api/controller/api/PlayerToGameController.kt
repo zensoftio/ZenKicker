@@ -3,7 +3,6 @@ package com.kicker.api.controller.api
 import com.kicker.api.domain.PageRequest
 import com.kicker.api.domain.PageResponse
 import com.kicker.api.domain.model.playerToGame.PlayerToGameDto
-import com.kicker.api.model.PlayerStats
 import com.kicker.api.service.PlayerToGameService
 import io.swagger.annotations.ApiOperation
 import org.springframework.validation.annotation.Validated
@@ -38,6 +37,6 @@ class PlayerToGameController(
     @ApiOperation("Get delta of rating per week during 10 weeks by player`s id")
     @GetMapping("/{playerId}/delta/dashboard")
     fun getDeltaPerWeekDuring10WeeksByPlayer(@PathVariable playerId: Long): List<Int> =
-            service.getDeltaPerWeekDuring10WeeksByPlayer(playerId).map { (PlayerStats.PLAYER_RATING + it).roundToInt() }
+            service.getDeltaPerWeekDuring10WeeksByPlayer(playerId).map { it.roundToInt() }
 
 }
