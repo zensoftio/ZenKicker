@@ -41,6 +41,7 @@ const Photo = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 100%;
 `;
 const Template = styled.div`
   padding-left: 20px;

@@ -17,22 +17,22 @@ const PlayersOfWeek = ({players}) => {
         <PlaceContainer to={`/player/${players.firstPlace.id}`}>
           <PhotoBlock>
             <UserPhoto photo={players.firstPlace.iconName}/>
-            <PlaceIcon src={firstPlaceIcon}/>
           </PhotoBlock>
+          <PlaceIcon src={firstPlaceIcon}/>
           <Name>{players.firstPlace.username}</Name>
         </PlaceContainer>
         <PlaceContainer to={`/player/${players.secondPlace.id}`}>
           <PhotoBlock>
             <UserPhoto photo={players.secondPlace.iconName}/>
-            <PlaceIcon src={secondPlaceIcon}/>
           </PhotoBlock>
+          <PlaceIcon src={secondPlaceIcon}/>
           <Name>{players.secondPlace.username}</Name>
         </PlaceContainer>
         <PlaceContainer to={`/player/${players.thirdPlace.id}`}>
           <PhotoBlock>
             <UserPhoto photo={players.thirdPlace.iconName}/>
-            <PlaceIcon src={thirdPlaceIcon}/>
           </PhotoBlock>
+          <PlaceIcon src={thirdPlaceIcon}/>
           <Name>{players.thirdPlace.username}</Name>
         </PlaceContainer>
       </PlacesContainer>
@@ -40,8 +40,8 @@ const PlayersOfWeek = ({players}) => {
         <PlaceContainer to={`/player/${players.loser.id}`}>
           <PhotoBlock>
             <UserPhoto photo={players.loser.iconName}/>
-            <PlaceIcon src={crabIcon}/>
           </PhotoBlock>
+          <PlaceIcon src={crabIcon}/>
           <Name>{players.loser.username}</Name>
         </PlaceContainer>
       </div>
@@ -73,6 +73,7 @@ const Name = styled.div`
 
 const PlaceContainer = styled(Link)`
   display: flex;
+  position: relative;
   flex-direction: column;
   align-items: center;
   color: #000;
@@ -86,12 +87,16 @@ const PlaceContainer = styled(Link)`
 const PhotoBlock = styled.div`
   width: 120px;
   height: 120px;
-  position: relative;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 `;
 
 const PlaceIcon = styled.img`
   position: absolute;
-  bottom: -15px;
-  right: 0;
+  bottom: 30px;
+  right: 5px;
   height: 60px;
 `;

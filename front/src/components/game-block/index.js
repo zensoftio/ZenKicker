@@ -129,6 +129,7 @@ const Photo = styled.div`
   justify-content: center;
   overflow: hidden;
   display: flex;
+  border-radius: 100%;
 `;
 
 const Score = styled.div`

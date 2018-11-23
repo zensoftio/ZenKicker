@@ -95,6 +95,7 @@ const Photo = styled.div`
   max-height: 40px;
   min-height: 40px;
   justify-content: center;
+  border-radius: 100%;
 `;
 
 const Username = styled.div`

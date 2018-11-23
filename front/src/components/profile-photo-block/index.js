@@ -81,6 +81,7 @@ const ProfilePhoto = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 100%;
 `;
 
 const Button = styled.label`
