@@ -4,7 +4,7 @@ import UserPhoto from "../../components-ui/user-photo";
 import {Link} from "react-router-dom";
 
 const RelationBlock = ({relation}) => (
-  <Content to={`/player/${relation.playerId}`}>
+  <Content to={`/players/${relation.playerId}`}>
     <Photo>
       <UserPhoto photo={relation.iconName}/>
     </Photo>

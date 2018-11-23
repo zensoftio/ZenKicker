@@ -14,21 +14,21 @@ const PlayersOfWeek = ({players}) => {
   return (
     <Content>
       <PlacesContainer>
-        <PlaceContainer to={`/player/${players.firstPlace.id}`}>
+        <PlaceContainer to={`/players/${players.firstPlace.id}`}>
           <PhotoBlock>
             <UserPhoto photo={players.firstPlace.iconName}/>
           </PhotoBlock>
           <PlaceIcon src={firstPlaceIcon}/>
           <Name>{players.firstPlace.username}</Name>
         </PlaceContainer>
-        <PlaceContainer to={`/player/${players.secondPlace.id}`}>
+        <PlaceContainer to={`/players/${players.secondPlace.id}`}>
           <PhotoBlock>
             <UserPhoto photo={players.secondPlace.iconName}/>
           </PhotoBlock>
           <PlaceIcon src={secondPlaceIcon}/>
           <Name>{players.secondPlace.username}</Name>
         </PlaceContainer>
-        <PlaceContainer to={`/player/${players.thirdPlace.id}`}>
+        <PlaceContainer to={`/players/${players.thirdPlace.id}`}>
           <PhotoBlock>
             <UserPhoto photo={players.thirdPlace.iconName}/>
           </PhotoBlock>
@@ -37,7 +37,7 @@ const PlayersOfWeek = ({players}) => {
         </PlaceContainer>
       </PlacesContainer>
       <div>
-        <PlaceContainer to={`/player/${players.loser.id}`}>
+        <PlaceContainer to={`/players/${players.loser.id}`}>
           <PhotoBlock>
             <UserPhoto photo={players.loser.iconName}/>
           </PhotoBlock>

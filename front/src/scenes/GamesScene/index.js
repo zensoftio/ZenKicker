@@ -28,6 +28,7 @@ class GamesScene extends Component {
 
     return (
       <Content>
+        <GamesCount>Games played: {games.totalCount}</GamesCount>
         <AllGames games={mappedGames ? mappedGames : []} appendToGames={actions.appendToGames} totalCount={games.totalCount}/>
       </Content>
 
@@ -59,4 +60,9 @@ const Content = styled.div`
   justify-content: space-between;
 	flex-direction: column;
 	align-items: center;
+`;
+
+const GamesCount = styled.div`
+  font-size: 1.5em;
+  margin-bottom: 20px;
 `;

@@ -18,7 +18,7 @@ export const HorizontalMenu = ({id, iconName, username}) => (
       </Navigation>
       <RightSection>
         <GameRegistration />
-        <User to={`/player/${id}`}>
+        <User to={`/players/${id}`}>
           <Photo>
             <UserPhoto photo={iconName}/>
           </Photo>

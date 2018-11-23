@@ -93,17 +93,19 @@ class GameRegistration extends Component {
   updateData = ({getActivePlayers, getAllPlayers, getLatestGames, getAllGames, getPlayersDashboard, getGamesCountPerWeek,
                   getPlayer, getPlayerDeltaStatistic, getPlayerGames, getPlayerGamesCountStatistic, getRelations}) => {
     const {playerId} = this.state;
+    if (playerId) {
+      getPlayer(playerId);
+      getPlayerDeltaStatistic(playerId);
+      getPlayerGames(playerId);
+      getPlayerGamesCountStatistic(playerId);
+      getRelations(playerId);
+    }
     getActivePlayers();
     getAllPlayers();
     getLatestGames();
     getAllGames();
     getPlayersDashboard();
     getGamesCountPerWeek();
-    getPlayer(playerId);
-    getPlayerDeltaStatistic(playerId);
-    getPlayerGames(playerId);
-    getPlayerGamesCountStatistic(playerId);
-    getRelations(playerId);
   }
 
   onRegistrationConfirm = async () => {

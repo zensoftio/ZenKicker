@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import UserPhoto from '../../components-ui/user-photo';
 
 export const ProfileBlock = ({index, id, username, countGames, rated, rating, iconName}) => (
-  <Content to={`/player/${id}`}>
+  <Content to={`/players/${id}`}>
     <Index>{index}</Index>
     <Photo>
       <UserPhoto photo={iconName}/>
