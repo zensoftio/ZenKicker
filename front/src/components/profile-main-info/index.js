@@ -79,7 +79,7 @@ const StatisticsContent = styled.div`
   justify-content: space-between;
 `;
 const Statistics = styled.div`
-  width: 40%;
+  width: 72%;
 `;
 const Status = styled.div`
   width: 300px;
