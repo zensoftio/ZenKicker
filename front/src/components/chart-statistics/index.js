@@ -11,9 +11,9 @@ const setWeekValue = (week) => {
 const ChartStatistics = ({ratingStatistic, gamesCountStatistic}) => {
 
   const mappedRatingStatistic = ratingStatistic.map((item, index) =>
-    ({rating: item, week: setWeekValue(index)}));
+    ({rating: item, week: setWeekValue(9 - index)}));
   const mappedGamesCountStatistic = gamesCountStatistic.map((item, index) =>
-    ({games: item, week: setWeekValue(index)}));
+    ({games: item, week: setWeekValue(9 - index)}));
 
   return (
     <Content>

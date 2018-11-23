@@ -7,7 +7,7 @@ const Content = styled.div`
   padding: 10px 20px;
   cursor: pointer;
   color: ${props => props.active ? Colors.MAIN_COLOR : 'black'};
-  background-color: ${props => props.active ? '#fafafa' : '#fff'};
+  background-color: ${props => props.active ? '#fff' : Colors.THEME_COLOR};
   width: 90px;
   text-align: center;
   &:hover {
