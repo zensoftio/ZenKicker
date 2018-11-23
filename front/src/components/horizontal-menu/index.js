@@ -37,7 +37,7 @@ const Content = styled.section`
 	display: flex;
 	align-items: center;
 	position: fixed;
-	background-color: #fff;
+	background-color: ${Colors.THEME_COLOR};
 	z-index: 10;
 `;
 
