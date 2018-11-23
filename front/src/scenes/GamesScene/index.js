@@ -6,6 +6,7 @@ import {getAllGames, appendToGames, getAllPlayers} from '../../actions';
 import {withRouter} from 'react-router-dom';
 import AllGames from '../../components/all-games';
 import {getUserInfo} from "../../helpers/get-user-info";
+import {Colors} from "../../helpers/style-variables";
 
 class GamesScene extends Component {
 
@@ -28,7 +29,7 @@ class GamesScene extends Component {
 
     return (
       <Content>
-        <GamesCount>Games played: {games.totalCount}</GamesCount>
+        <GamesCount>{games.totalCount} <span>games played</span></GamesCount>
         <AllGames games={mappedGames ? mappedGames : []} appendToGames={actions.appendToGames} totalCount={games.totalCount}/>
       </Content>
 
@@ -63,6 +64,11 @@ const Content = styled.div`
 `;
 
 const GamesCount = styled.div`
-  font-size: 1.5em;
+  font-size: 3.7em;
   margin-bottom: 20px;
+  color: ${Colors.MAIN_COLOR}
+  padding-left: 125px;
+  span {
+    font-size: .3em;
+  }
 `;
