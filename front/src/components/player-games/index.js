@@ -19,7 +19,9 @@ const PlayerGames = ({games, totalCount, appendToGames, playerId}) => {
                                                     loser2Id={i.loser2Id} winner2Icon={i.winner2Icon} loser1Icon={i.loser1Icon}
                                                     loser2Icon={i.loser2Icon} winner1Name={i.winner1Name}
                                                     winner2Name={i.winner2Name} loser1Name={i.loser1Name}
-                                                    loser2Name={i.loser2Name} won={i.won} delta={i.delta}/>) :
+                                                    loser2Name={i.loser2Name} won={i.won} delta={i.delta}
+                                                    date={i.date} reportedBy={i.reportedBy}
+                                                    reportedById={i.reportedById}/>) :
             <NoContent/>
           }
         </InfiniteScroll>

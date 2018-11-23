@@ -30,8 +30,10 @@ class PasswordBlock extends Component {
   onNewPasswordConfirmChange = (value) => this.setState({newPasswordConfirm: value, passwordError: null})
 
   onChangePasswordClick = async () => {
-    if (this.state.newPassword === '' || this.state.currentPassword === '') return this.setState({passwordError: 'All fields are required'});
-    if (this.state.newPassword !== this.state.currentPassword) return this.setState({passwordError: 'Passwords doesn\'t match'});
+    if (this.state.newPassword === '' || this.state.currentPassword === '' || this.state.newPasswordConfirm === '')
+      return this.setState({passwordError: 'All fields are required'});
+    if (this.state.newPassword !== this.state.newPasswordConfirm)
+      return this.setState({passwordError: 'Passwords doesn\'t match'});
     try {
       const data = {
         currentPassword: this.state.currentPassword,

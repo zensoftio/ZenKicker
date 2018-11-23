@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import Select from 'react-select'
 
-const DropdownInput = ({options, onChange, placeholder, value, isClearable}) => (
+const DropdownInput = ({options, onChange, placeholder, value, isClearable, defaultValue}) => (
   <Content>
-    <CustomSelect value={value} options={options} onChange={onChange} placeholder={placeholder}
-                  isClearable={isClearable}/>
+    <CustomSelect value={value} options={options} onChange={onChange} placeholder={placeholder} isClearable={isClearable}
+                  defaultValue={defaultValue}/>
   </Content>
 )
 

@@ -7,6 +7,20 @@ import signOutIco from '../../shared/images/icons/sign-out.png';
 import UserPhoto from '../../components-ui/user-photo';
 import {Colors} from '../../helpers/style-variables';
 
+export const MainMenu = ({currentUser}) => (
+	<Content>
+		<Title to="/">Zen<span>Kicker</span></Title>
+    <AuthenticationContent>
+      <div>
+        <UserPhoto photo={currentUser.iconName}/>
+        <Username to={`/player/${currentUser.id}`}>{currentUser.username}</Username>
+      </div>
+      <a href="/logout"><SignOut/></a>
+    </AuthenticationContent>
+		<MainMenuLink link="/dashboard">Dashboard</MainMenuLink>
+	</Content>
+)
+
 const Content = styled.section`
 	min-width: 300px;
 	height: 100%;
@@ -67,17 +81,3 @@ const SignOut = styled.div`
   background-position: center;
   background-size: contain;
 `;
-
-export const MainMenu = ({currentUser}) => (
-	<Content>
-		<Title to="/">Zen<span>Kicker</span></Title>
-    <AuthenticationContent>
-      <div>
-        <UserPhoto photo={currentUser.iconName}/>
-        <Username to={`/player/${currentUser.id}`}>{currentUser.username}</Username>
-      </div>
-      <a href="/logout"><SignOut/></a>
-    </AuthenticationContent>
-		<MainMenuLink link="/dashboard">Dashboard</MainMenuLink>
-	</Content>
-)

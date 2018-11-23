@@ -9,10 +9,9 @@ import {
   getAllPlayers,
   getLatestGames,
   registerGame,
-  getTopPlayers,
   getGamesCountPerWeek,
   getLastGame,
-  getLoser
+  getPlayersDashboard
 } from '../../actions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -21,6 +20,8 @@ import {getGoalValues} from '../../helpers/goal-values';
 import {RegisteredGameBlock} from "../registered-game-block";
 
 import reverseIcon from '../../shared/images/icons/reverse.png';
+import {getUserInfo} from "../../helpers/get-user-info";
+import {withRouter} from "react-router-dom";
 
 class GameRegistration extends Component {
   constructor(props) {
@@ -37,15 +38,20 @@ class GameRegistration extends Component {
     }
   }
 
+  componentDidMount() {
+    debugger
+  }
+
   setDefaultValue = (playerId) => {
-    const result = this.props.players.list.find(i => i.id === playerId)
-    return ({value: result.id, label: result.username})
+    const result = this.props.players.list.find(i => i.player.id === playerId)
+    return ({value: result.player.id, label: result.player.username})
   }
 
   setDefaultValues = async () => {
     await this.props.actions.getLastGame();
     const {lastGame} = this.props;
     if (!lastGame) return null;
+
     this.setState({
       winner1: this.setDefaultValue(lastGame.winner1Id),
       winner2: this.setDefaultValue(lastGame.winner2Id),
@@ -89,14 +95,13 @@ class GameRegistration extends Component {
     this.state.isGameRegistration ? this.onRegistrationConfirm() : this.setState({isGameRegistration: true})
   }
 
-  updateData = ({getActivePlayers, getAllPlayers, getLatestGames, getAllGames, getTopPlayers, getGamesCountPerWeek, getLoser}) => {
+  updateData = ({getActivePlayers, getAllPlayers, getLatestGames, getAllGames, getPlayersDashboard, getGamesCountPerWeek}) => {
     getActivePlayers();
     getAllPlayers();
     getLatestGames();
     getAllGames();
-    getTopPlayers();
+    getPlayersDashboard();
     getGamesCountPerWeek();
-    getLoser();
   }
 
   onRegistrationConfirm = async () => {
@@ -124,7 +129,7 @@ class GameRegistration extends Component {
     const {players} = this.props;
     const {winner1, winner2, loser1, loser2} = this.state;
     const chosenPlayers = [winner1 && winner1.value, winner2 && winner2.value, loser1 && loser1.value, loser2 && loser2.value];
-    const mapPlayers = players.list.map(i => ({value: i.id, label: i.username}));
+    const mapPlayers = players.list.map(i => ({value: i.player.id, label: i.player.username}));
     return mapPlayers.filter(i => !chosenPlayers.includes(i.value))
   }
 
@@ -163,16 +168,13 @@ class GameRegistration extends Component {
       )
     }
     const {players} = this.props;
-    const registeredPlayers = {
-      winner1Icon: players.list.length ? players.list.find(player => player.id === winner1.value).iconName : null,
-      winner2Icon: players.list.length ? players.list.find(player => player.id === winner2.value).iconName : null,
-      loser1Icon: players.list.length ? players.list.find(player => player.id === loser1.value).iconName : null,
-      loser2Icon: players.list.length ? players.list.find(player => player.id === loser2.value).iconName : null,
-      winner1Name: players.list.length ? players.list.find(player => player.id === winner1.value).username : null,
-      winner2Name: players.list.length ? players.list.find(player => player.id === winner2.value).username : null,
-      loser1Name: players.list.length ? players.list.find(player => player.id === loser1.value).username : null,
-      loser2Name: players.list.length ? players.list.find(player => player.id === loser2.value).username : null
+    const playersIds = {
+      winner1Id: winner1.value,
+      winner2Id: winner2.value,
+      loser1Id: loser1.value,
+      loser2Id: loser2.value,
     }
+    const registeredPlayers = getUserInfo(players, playersIds);
     return (
       <RegisteredGameBlock losersGoals={losersGoals} winner1Icon={registeredPlayers.winner1Icon}
                            winner2Icon={registeredPlayers.winner2Icon}
@@ -192,9 +194,9 @@ class GameRegistration extends Component {
                loadData={this.setDefaultValues}>
           <InputsContainer>
             <PopupTitle>
-              {!isGameRegistration ? 'Register game' : 'Are you sure?'}
+              {isGameRegistration ? 'Are you sure?' : 'Register game'}
             </PopupTitle>
-            <TeamReverse alt='reverse' src={reverseIcon} onClick={this.teamReverse} />
+            {!isGameRegistration && <TeamReverse alt='reverse' src={reverseIcon} onClick={this.teamReverse} />}
             {this.renderContainer()}
             <RegistrationError>{registrationError}</RegistrationError>
             <ButtonsContainer>
@@ -222,16 +224,15 @@ const mapDispatchToProps = (dispatch) => {
     getActivePlayers,
     getLatestGames,
     getAllGames,
-    getTopPlayers,
+    getPlayersDashboard,
     getGamesCountPerWeek,
     getLastGame,
-    getLoser
   };
   const actionMap = {actions: bindActionCreators(actions, dispatch)};
   return actionMap;
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(GameRegistration);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(GameRegistration));
 
 
 const Content = styled.div``;

@@ -3,37 +3,31 @@ import styled from 'styled-components';
 import moment from 'moment';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {getTopPlayers, getLatestGames, getAllPlayers, getGamesCountPerWeek, getLoser} from '../../actions';
+import {getLatestGames, getAllPlayers, getGamesCountPerWeek, getPlayersDashboard} from '../../actions';
 import {withRouter} from 'react-router-dom';
 import LatestGames from '../../components/latest-games';
 import Chart from '../../components/chart';
 import PlayersOfWeek from "../../components/players-of-week";
+import {getUserInfo} from "../../helpers/get-user-info";
 
 class DashboardScene extends Component {
 
   componentDidMount() {
-    const {getTopPlayers, getAllPlayers, getLatestGames, getGamesCountPerWeek, getLoser} = this.props.actions;
-    getTopPlayers();
+    const {getAllPlayers, getLatestGames, getGamesCountPerWeek, getPlayersDashboard} = this.props.actions;
     getAllPlayers();
     getLatestGames();
     getGamesCountPerWeek();
-    getLoser();
+    getPlayersDashboard();
   }
 
   render() {
-    const {players, topPlayers, latestGames, gamesPerLastWeek, loser} = this.props;
+    const {players, playersDashboard, latestGames, gamesPerLastWeek} = this.props;
 
     const mappedLatestGames = players.list && latestGames.list.map(game => (
       {
         ...game,
-        winner1Icon: players.list.length ? players.list.find(player => player.id === game.winner1Id).iconName : null,
-        winner2Icon: players.list.length ? players.list.find(player => player.id === game.winner2Id).iconName : null,
-        loser1Icon: players.list.length ? players.list.find(player => player.id === game.loser1Id).iconName : null,
-        loser2Icon: players.list.length ? players.list.find(player => player.id === game.loser2Id).iconName : null,
-        winner1Name: players.list.length ? players.list.find(player => player.id === game.winner1Id).username : null,
-        winner2Name: players.list.length ? players.list.find(player => player.id === game.winner2Id).username : null,
-        loser1Name: players.list.length ? players.list.find(player => player.id === game.loser1Id).username : null,
-        loser2Name: players.list.length ? players.list.find(player => player.id === game.loser2Id).username : null
+        ...getUserInfo(players, game),
+        reportedBy: players.list.length ? players.list.find(i => i.player.id === game.reportedById).player.username : null,
       }
     ))
 
@@ -47,7 +41,7 @@ class DashboardScene extends Component {
     return (
       <Content>
         <div>
-          <PlayersOfWeek players={topPlayers} loser={loser}/>
+          <PlayersOfWeek players={playersDashboard}/>
         </div>
         <div>
           <Chart data={mappedGamesCountStatistic} lineDataKey='count' xDataKey='day'
@@ -65,21 +59,19 @@ class DashboardScene extends Component {
 
 const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
   const props = {
-    topPlayers: state.player.topPlayers,
+    playersDashboard: state.player.playersDashboard,
     players: state.player.players,
     latestGames: state.game.latestGames,
     gamesPerLastWeek: state.game.gamesPerLastWeek,
-    loser: state.player.loser
   };
   return props;
 }
 const mapDispatchToProps = (dispatch) => {
   const actions = {
-    getTopPlayers,
     getLatestGames,
     getAllPlayers,
     getGamesCountPerWeek,
-    getLoser
+    getPlayersDashboard
   };
   const actionMap = {actions: bindActionCreators(actions, dispatch)};
   return actionMap;

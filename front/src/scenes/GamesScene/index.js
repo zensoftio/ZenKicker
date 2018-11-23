@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {getAllGames, appendToGames, getAllPlayers} from '../../actions';
 import {withRouter} from 'react-router-dom';
 import AllGames from '../../components/all-games';
+import {getUserInfo} from "../../helpers/get-user-info";
 
 class GamesScene extends Component {
 
@@ -20,15 +21,8 @@ class GamesScene extends Component {
     const mappedGames = games.list.map(game => (
       {
         ...game,
-        winner1Icon: players.list.find(player => player.id === game.winner1Id).iconName || null,
-        winner2Icon: players.list.find(player => player.id === game.winner2Id).iconName || null,
-        loser1Icon: players.list.find(player => player.id === game.loser1Id).iconName || null,
-        loser2Icon: players.list.find(player => player.id === game.loser2Id).iconName || null,
-        winner1Name: players.list.length ? players.list.find(player => player.id === game.winner1Id).username : null,
-        winner2Name: players.list.length ? players.list.find(player => player.id === game.winner2Id).username : null,
-        loser1Name: players.list.length ? players.list.find(player => player.id === game.loser1Id).username : null,
-        loser2Name: players.list.length ? players.list.find(player => player.id === game.loser2Id).username : null,
-        reportedBy: players.list.length ? players.list.find(player => player.id === game.reportedById).username : null,
+        ...getUserInfo(players, game),
+        reportedBy: players.list.length ? players.list.find(i => i.player.id === game.reportedById).player.username : null,
       }
     ))
 

@@ -8,7 +8,7 @@ export const getActivePlayers = () => {
     dispatch({type: ActionType.Player.GET_ACTIVE_PLAYERS_REQUEST});
 
     try {
-      const result = await api.get(Paths.Player.GetActive, {params: {limit: 15}});
+      const result = await api.get(Paths.Player.GetActive, {params: {limit: 15, sortBy: 'rating', sortDirection: 'DESC'}});
       dispatch({type: ActionType.Player.GET_ACTIVE_PLAYERS_SUCCESS, payload: result.data});
     } catch (err) {
       console.warn(err);
@@ -23,7 +23,7 @@ export const getAllPlayers = () => {
     dispatch({type: ActionType.Player.GET_ALL_PLAYERS_REQUEST});
 
     try {
-      const result = await api.get(Paths.Player.GetAll, {params: {limit: 15}});
+      const result = await api.get(Paths.Player.GetAll, {params: {limit: 15, sortBy: 'rating', sortDirection: 'DESC'}});
       dispatch({type: ActionType.Player.GET_ALL_PLAYERS_SUCCESS, payload: result.data});
     } catch (err) {
       console.warn(err);
@@ -32,32 +32,17 @@ export const getAllPlayers = () => {
   }
 }
 
-export const getTopPlayers = () => {
+export const getPlayersDashboard = () => {
   return async (dispatch) => {
 
-    dispatch({type: ActionType.Player.GET_TOP_PLAYERS_REQUEST});
+    dispatch({type: ActionType.Player.GET_PLAYERS_DASHBOARD_REQUEST});
 
     try {
-      const result = await api.get(Paths.Player.GetActive, {params: {limit: 3}});
-      dispatch({type: ActionType.Player.GET_TOP_PLAYERS_SUCCESS, payload: result.data});
+      const result = await api.get(Paths.Player.GetPlayersDashboard);
+      dispatch({type: ActionType.Player.GET_PLAYERS_DASHBOARD_SUCCESS, payload: result.data});
     } catch (err) {
       console.warn(err);
-      dispatch({type: ActionType.Player.GET_TOP_PLAYERS_FAILURE});
-    }
-  }
-}
-
-export const getLoser = () => {
-  return async (dispatch) => {
-
-    dispatch({type: ActionType.Player.GET_LOSER_REQUEST});
-
-    try {
-      const result = await api.get(Paths.Player.GetActive, {params: {limit: 1, sortDirection: 'ASC'}});
-      dispatch({type: ActionType.Player.GET_LOSER_SUCCESS, payload: result.data});
-    } catch (err) {
-      console.warn(err);
-      dispatch({type: ActionType.Player.GET_LOSER_FAILURE});
+      dispatch({type: ActionType.Player.GET_PLAYERS_DASHBOARD_FAILURE});
     }
   }
 }
@@ -81,7 +66,7 @@ export const appendToPlayers = (playersLength) => async (dispatch) => {
   dispatch({type: ActionType.Player.APPEND_TO_PLAYERS_REQUEST});
 
   try {
-    const page = {offset: playersLength, limit: 5};
+    const page = {offset: playersLength, limit: 5, sortBy: 'rating', sortDirection: 'DESC'};
     const result = await api.get(Paths.Player.GetAll, {params: page});
     dispatch({type: ActionType.Player.APPEND_TO_PLAYERS_SUCCESS, payload: result.data});
   } catch (err) {
@@ -94,7 +79,7 @@ export const appendToActivePlayers = (playersLength) => async (dispatch) => {
   dispatch({type: ActionType.Player.APPEND_TO_ACTIVE_PLAYERS_REQUEST});
 
   try {
-    const page = {offset: playersLength, limit: 5};
+    const page = {offset: playersLength, limit: 5, sortBy: 'rating', sortDirection: 'DESC'};
     const result = await api.get(Paths.Player.GetAll, {params: page});
     dispatch({type: ActionType.Player.APPEND_TO_ACTIVE_PLAYERS_SUCCESS, payload: result.data});
   } catch (err) {
@@ -124,11 +109,26 @@ export const getPlayerGamesCountStatistic = (id) => {
     dispatch({type: ActionType.Player.GET_PLAYER_GAMES_COUNT_STATISTIC_REQUEST});
 
     try {
-      const result = await api.get(Paths.Player.GetGamesCountStatistic(id));
+      const result = await api.get(Paths.Game.GetGamesCountStatistic(id));
       dispatch({type: ActionType.Player.GET_PLAYER_GAMES_COUNT_STATISTIC_SUCCESS, payload: result.data});
     } catch (err) {
       console.warn(err);
       dispatch({type: ActionType.Player.GET_PLAYER_GAMES_COUNT_STATISTIC_FAILURE});
+    }
+  }
+}
+
+export const getRelations = (id) => {
+  return async (dispatch) => {
+
+    dispatch({type: ActionType.Player.GET_RELATIONS_REQUEST});
+
+    try {
+      const result = await api.get(Paths.Player.GetRelations(id));
+      dispatch({type: ActionType.Player.GET_RELATIONS_SUCCESS, payload: result.data});
+    } catch (err) {
+      console.warn(err);
+      dispatch({type: ActionType.Player.GET_RELATIONS_FAILURE});
     }
   }
 }

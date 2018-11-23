@@ -7,12 +7,15 @@ import {
   getPlayerGames,
   appendToPlayerGames,
   getPlayerDeltaStatistic,
-  getPlayerGamesCountStatistic
+  getPlayerGamesCountStatistic,
+  getRelations
 } from '../../actions';
 import {withRouter} from 'react-router-dom';
 import ProfileMainInfo from '../../components/profile-main-info';
 import PlayerGames from '../../components/player-games';
 import ChartStatistics from '../../components/chart-statistics';
+import PlayerRelations from "../../components/player-relations";
+import {getUserInfo} from "../../helpers/get-user-info";
 
 class ProfileScene extends Component {
 
@@ -23,6 +26,7 @@ class ProfileScene extends Component {
     actions.getPlayerDeltaStatistic(playerId);
     actions.getPlayerGames(playerId);
     actions.getPlayerGamesCountStatistic(playerId);
+    actions.getRelations(playerId);
   }
 
   componentDidUpdate() {
@@ -34,11 +38,13 @@ class ProfileScene extends Component {
       actions.getPlayerDeltaStatistic(playerId);
       actions.getPlayerGames(playerId);
       actions.getPlayerGamesCountStatistic(playerId);
+      actions.getRelations(playerId);
     }
   }
 
   render() {
-    const {player, match, currentUser, players, playerGames, actions, ratingStatistic, gamesCountStatistic} = this.props;
+    const {player, match, currentUser, players, playerGames, actions, ratingStatistic, gamesCountStatistic, relations} = this.props;
+
     const playerId = match.params.id;
 
     if (!player) return null;
@@ -49,28 +55,31 @@ class ProfileScene extends Component {
         ...game.gameDto,
         delta: game.delta,
         won: game.won,
-        winner1Icon: players.list.find(player => player.id === game.gameDto.winner1Id).iconName || null,
-        winner2Icon: players.list.find(player => player.id === game.gameDto.winner2Id).iconName || null,
-        loser1Icon: players.list.find(player => player.id === game.gameDto.loser1Id).iconName || null,
-        loser2Icon: players.list.find(player => player.id === game.gameDto.loser2Id).iconName || null,
-        winner1Name: players.list.length ? players.list.find(player => player.id === game.gameDto.winner1Id).username : null,
-        winner2Name: players.list.length ? players.list.find(player => player.id === game.gameDto.winner2Id).username : null,
-        loser1Name: players.list.length ? players.list.find(player => player.id === game.gameDto.loser1Id).username : null,
-        loser2Name: players.list.length ? players.list.find(player => player.id === game.gameDto.loser2Id).username : null
+        ...getUserInfo(players, game.gameDto),
+        reportedBy: players.list.length ? players.list.find(i => i.player.id === game.gameDto.reportedById).player.username : null,
       }
     ))
 
     const isCurrent = +playerId === currentUser.id;
+
+    const mappedRelations = relations.list.map(relation => (
+      {
+        ...relation,
+        partnerIcon: players.list.find(i => i.player.id === relation.partnerId).player.iconName || null,
+        partnerName: players.list.find(i => i.player.id === relation.partnerId).player.username || null,
+      }
+    ))
 
     return (
       <Content>
         <ProfileMainInfo countGames={player.countGames} rated={player.rated} rating={player.rating}
                          id={this.props.match.params.id}
                          username={player.username} isCurrent={isCurrent} countLosses={player.countLosses}
-                         countWins={player.countWins}
+                         countWins={player.countWins} winningPercentage={player.winningPercentage}
                          goalsAgainst={player.goalsAgainst} goalsFor={player.goalsFor}
                          currentLossStreak={player.currentLossesStreak} currentWinStreak={player.currentWinningStreak}
                          longestLossStreak={player.longestLossesStreak} longestWinStreak={player.longestWinningStreak}/>
+        <PlayerRelations relations={mappedRelations}/>
         <ChartStatistics ratingStatistic={ratingStatistic} gamesCountStatistic={gamesCountStatistic}/>
         <PlayerGames games={mappedGames ? mappedGames : []} appendToGames={actions.appendToPlayerGames}
                      totalCount={playerGames.totalCount}
@@ -88,6 +97,7 @@ const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
     currentUser: state.user.current,
     ratingStatistic: state.player.deltaStatistic,
     gamesCountStatistic: state.player.gamesCountStatistic,
+    relations: state.player.relations,
   };
   return props;
 }
@@ -97,7 +107,8 @@ const mapDispatchToProps = (dispatch) => {
     getPlayerGames,
     appendToPlayerGames,
     getPlayerGamesCountStatistic,
-    getPlayerDeltaStatistic
+    getPlayerDeltaStatistic,
+    getRelations
   };
   const actionMap = {actions: bindActionCreators(actions, dispatch)};
   return actionMap;

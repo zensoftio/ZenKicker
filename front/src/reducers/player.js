@@ -9,14 +9,14 @@ const initState = {
     list: [],
     totalCount: 0
   },
-  topPlayers: {
-    list: [],
-    totalCount: 0
-  },
+  playersDashboard: null,
   player: null,
   deltaStatistic: [],
   gamesCountStatistic: [],
-  loser: null
+  relations: {
+    list: [],
+    totalCount: 0
+  },
 };
 
 export const player = (state = initState, action) => {
@@ -27,11 +27,11 @@ export const player = (state = initState, action) => {
     case ActionType.Player.GET_ALL_PLAYERS_SUCCESS:
       return {...state, players: action.payload};
 
-    case ActionType.Player.GET_TOP_PLAYERS_SUCCESS:
-      return {...state, topPlayers: action.payload};
+    case ActionType.Player.GET_RELATIONS_SUCCESS:
+      return {...state, relations: action.payload};
 
-    case ActionType.Player.GET_LOSER_SUCCESS:
-      return {...state, loser: action.payload.list[0]};
+    case ActionType.Player.GET_PLAYERS_DASHBOARD_SUCCESS:
+      return {...state, playersDashboard: action.payload};
 
     case ActionType.Player.GET_PLAYER_SUCCESS:
       const player = { ...action.payload.player, ...action.payload};

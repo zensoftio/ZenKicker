@@ -8,45 +8,42 @@ import secondPlaceIcon from '../../shared/images/second-place.png';
 import thirdPlaceIcon from '../../shared/images/third-place.png';
 import crabIcon from '../../shared/images/crab.png';
 
-const PlayersOfWeek = ({players, loser}) => {
-  if (!players.totalCount || players.totalCount < 4 || !loser) return null;
-  const firstPlace = players.list[0];
-  const secondPlace = players.list[1];
-  const thirdPlace = players.list[2];
+const PlayersOfWeek = ({players}) => {
+  if (!players || !players.firstPlace) return null;
 
   return (
     <Content>
       <PlacesContainer>
-        <SecondPlace to={`/player/${secondPlace.id}`}>
-          <SecondPlacePhoto>
-            <UserPhoto photo={secondPlace.iconName}/>
-            <PlaceIcon src={secondPlaceIcon}/>
-          </SecondPlacePhoto>
-          <Name>{secondPlace.username}</Name>
-        </SecondPlace>
-        <FirstPlace to={`/player/${firstPlace.id}`}>
-          <FirstPlacePhoto>
-            <UserPhoto photo={firstPlace.iconName}/>
+        <PlaceContainer to={`/player/${players.firstPlace.id}`}>
+          <PhotoBlock>
+            <UserPhoto photo={players.firstPlace.iconName}/>
             <PlaceIcon src={firstPlaceIcon}/>
-          </FirstPlacePhoto>
-          <Name>{firstPlace.username}</Name>
-        </FirstPlace>
-        <ThirdPlace to={`/player/${thirdPlace.id}`}>
-          <ThirdPlacePhoto>
-            <UserPhoto photo={thirdPlace.iconName}/>
+          </PhotoBlock>
+          <Name>{players.firstPlace.username}</Name>
+        </PlaceContainer>
+        <PlaceContainer to={`/player/${players.secondPlace.id}`}>
+          <PhotoBlock>
+            <UserPhoto photo={players.secondPlace.iconName}/>
+            <PlaceIcon src={secondPlaceIcon}/>
+          </PhotoBlock>
+          <Name>{players.secondPlace.username}</Name>
+        </PlaceContainer>
+        <PlaceContainer to={`/player/${players.thirdPlace.id}`}>
+          <PhotoBlock>
+            <UserPhoto photo={players.thirdPlace.iconName}/>
             <PlaceIcon src={thirdPlaceIcon}/>
-          </ThirdPlacePhoto>
-          <Name>{thirdPlace.username}</Name>
-        </ThirdPlace>
+          </PhotoBlock>
+          <Name>{players.thirdPlace.username}</Name>
+        </PlaceContainer>
       </PlacesContainer>
       <div>
-        <FirstPlace to={`/player/${loser.id}`}>
-          <FirstPlacePhoto>
-            <UserPhoto photo={loser.iconName}/>
+        <PlaceContainer to={`/player/${players.loser.id}`}>
+          <PhotoBlock>
+            <UserPhoto photo={players.loser.iconName}/>
             <PlaceIcon src={crabIcon}/>
-          </FirstPlacePhoto>
-          <Name>{loser.username}</Name>
-        </FirstPlace>
+          </PhotoBlock>
+          <Name>{players.loser.username}</Name>
+        </PlaceContainer>
       </div>
     </Content>
   )
@@ -62,64 +59,33 @@ const Content = styled.div`
 
 const PlacesContainer = styled.div`
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
 `;
 
 const Name = styled.div`
   display: flex;
   font-size: 1.2em;
   margin-top: 10px;
+  max-width: 100px;
+  word-break: break-word;
+  text-align: center;
 `;
 
-const SecondPlace = styled(Link)`
+const PlaceContainer = styled(Link)`
   display: flex;
   flex-direction: column;
   align-items: center;
   color: #000;
   text-decoration: none;
+  padding: 10px;
   &:hover {
-    text-decoration: underline;
+    background-color: #fafafa
   }
 `;
 
-const SecondPlacePhoto = styled.div`
+const PhotoBlock = styled.div`
   width: 120px;
   height: 120px;
-  position: relative;
-`;
-
-const FirstPlace = styled(Link)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0 20px;
-  color: #000;
-  text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-const FirstPlacePhoto = styled.div`
-  width: 150px;
-  height: 150px;
-  position: relative;
-`;
-
-const ThirdPlace = styled(Link)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #000;
-  text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-const ThirdPlacePhoto = styled.div`
-  width: 90px;
-  height: 90px;
   position: relative;
 `;
 

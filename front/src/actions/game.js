@@ -10,7 +10,7 @@ export const getLastGame = () => async (dispatch) => {
   dispatch({type: ActionType.Game.GET_LAST_GAME_REQUEST});
 
   try {
-    const result = await api.get(Paths.Game.GetAll, {params: {limit: 1}});
+    const result = await api.get(Paths.Game.GetAll, {params: {limit: 1, sortBy: 'date', sortDirection: 'DESC'}});
     dispatch({type: ActionType.Game.GET_LAST_GAME_SUCCESS, payload: result.data});
   } catch (err) {
     console.warn(err);
@@ -22,7 +22,7 @@ export const getLatestGames = () => async (dispatch) => {
   dispatch({type: ActionType.Game.GET_LATEST_GAMES_REQUEST});
 
   try {
-    const result = await api.get(Paths.Game.GetAll, {params: {limit: 5}});
+    const result = await api.get(Paths.Game.GetAll, {params: {limit: 5, sortBy: 'date', sortDirection: 'DESC'}});
     dispatch({type: ActionType.Game.GET_LATEST_GAMES_SUCCESS, payload: result.data});
   } catch (err) {
     console.warn(err);
@@ -34,7 +34,7 @@ export const getPlayerGames = (id) => async (dispatch) => {
   dispatch({type: ActionType.Game.GET_PLAYER_GAMES_REQUEST});
 
   try {
-    const result = await api.get(Paths.Game.PlayerGames(id), {params: {limit: 15}});
+    const result = await api.get(Paths.Player.PlayerGames(id), {params: {limit: 15, sortDirection: 'DESC'}});
     dispatch({type: ActionType.Game.GET_PLAYER_GAMES_SUCCESS, payload: result.data});
   } catch (err) {
     console.warn(err);
@@ -46,8 +46,8 @@ export const appendToPlayerGames = (gamesLength, id) => async (dispatch) => {
   dispatch({type: ActionType.Game.APPEND_TO_PLAYER_GAMES_REQUEST});
 
   try {
-    const page = {offset: gamesLength, limit: 5};
-    const result = await api.get(Paths.Game.PlayerGames(id), {params: page});
+    const page = {offset: gamesLength, limit: 5, sortBy: 'date', sortDirection: 'DESC'};
+    const result = await api.get(Paths.Player.PlayerGames(id), {params: page});
     dispatch({type: ActionType.Game.APPEND_TO_PLAYER_GAMES_SUCCESS, payload: result.data});
   } catch (err) {
     console.warn(err);
@@ -59,7 +59,7 @@ export const getAllGames = () => async (dispatch) => {
   dispatch({type: ActionType.Game.GET_ALL_GAMES_REQUEST});
 
   try {
-    const result = await api.get(Paths.Game.GetAll, {params: {limit: 15}});
+    const result = await api.get(Paths.Game.GetAll, {params: {limit: 15, sortBy: 'date', sortDirection: 'DESC'}});
     dispatch({type: ActionType.Game.GET_ALL_GAMES_SUCCESS, payload: result.data});
   } catch (err) {
     console.warn(err);
@@ -73,7 +73,7 @@ export const appendToGames = (gamesLength) => async (dispatch) => {
   try {
 
     const page = {offset: gamesLength, limit: 5};
-    const result = await api.get(Paths.Game.GetAll, {params: page});
+    const result = await api.get(Paths.Game.GetAll, {params: page, sortBy: 'date', sortDirection: 'DESC'});
     dispatch({type: ActionType.Game.APPEND_TO_GAMES_SUCCESS, payload: result.data});
   } catch (err) {
     console.warn(err);

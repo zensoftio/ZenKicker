@@ -24,8 +24,8 @@ class PlayersTabs extends Component {
       return (
         <InfiniteScroll data={players.list} onLoadMore={this.onLoadMorePlayers} totalCount={players.totalCount}>
           {players.list.length ? players.list.map((item, index) =>
-            <ProfileBlock key={item.id} id={item.id} index={index + 1} username={item.username} countGames={item.countGames}
-                          rated={item.rated} rating={item.rating} iconName={item.iconName}/>) :
+            <ProfileBlock key={item.player.id} id={item.player.id} index={index + 1} username={item.player.username} countGames={item.countGames}
+                          rated={item.rated} rating={item.rating} iconName={item.player.iconName}/>) :
             <NoContent/>
           }
         </InfiniteScroll>
@@ -34,8 +34,8 @@ class PlayersTabs extends Component {
     return (
       <InfiniteScroll data={activePlayers.list} onLoadMore={this.onLoadMoreActivePlayers} totalCount={activePlayers.totalCount}>
         {activePlayers.list.length ? activePlayers.list.map((item, index) =>
-          <ProfileBlock key={item.id} id={item.id} index={index + 1} username={item.username} countGames={item.countGames}
-                        rated={item.rated} rating={item.rating} iconName={item.iconName}/>) :
+          <ProfileBlock key={item.player.id} id={item.player.id} index={index + 1} username={item.player.username} countGames={item.countGames}
+                        rated={item.rated} rating={item.rating} iconName={item.player.iconName}/>) :
           <NoContent/>
         }
       </InfiniteScroll>
