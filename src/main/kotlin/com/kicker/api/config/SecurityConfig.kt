@@ -65,6 +65,7 @@ class SecurityConfig : GlobalMethodSecurityConfiguration() {
                     "/css/**",
                     "/js/**",
                     "/images/**",
+                    "/static/**",
                     //swagger
                     "/v2/api-docs",
                     "/swagger-resources",

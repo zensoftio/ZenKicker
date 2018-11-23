@@ -20,6 +20,17 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2
 @EnableSwagger2
 class SwaggerConfig : WebMvcConfigurationSupport() {
 
+    companion object {
+        private val CLASSPATH_RESOURCE_LOCATIONS = arrayOf(
+                "classpath:/META-INF/resources/webjars/",
+                "classpath:/META-INF/resources/",
+                "classpath:/resources/",
+                "classpath:/static/",
+                "classpath:/public/"
+        )
+    }
+
+
     @Bean
     fun api(): Docket {
         return Docket(DocumentationType.SWAGGER_2)
@@ -31,23 +42,9 @@ class SwaggerConfig : WebMvcConfigurationSupport() {
     }
 
     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
-        registry.addResourceHandler(
-                //static content
-                "/css/**",
-                "/js/**",
-                "/images/**",
-                //swagger
-                "/webjars/**",
-                "swagger-ui.html"
-        ).addResourceLocations(
-                //static content
-                "classpath:/static/css/",
-                "classpath:/static/js/",
-                "classpath:/static/images/",
-                //swagger
-                "classpath:/META-INF/resources/webjars/",
-                "classpath:/META-INF/resources/"
-        )
+        if (!registry.hasMappingForPattern("/**")) {
+            registry.addResourceHandler("/**").addResourceLocations(*CLASSPATH_RESOURCE_LOCATIONS);
+        }
     }
 
     private fun apiInfo(): ApiInfo = ApiInfoBuilder()
