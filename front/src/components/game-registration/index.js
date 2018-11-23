@@ -4,14 +4,8 @@ import {Button} from '../../components-ui/buttons/button';
 import Popup from '../popup';
 import DropdownInput from '../../components-ui/dropdown-input';
 import {
-  getActivePlayers,
-  getAllGames,
-  getAllPlayers,
-  getLatestGames,
-  registerGame,
-  getGamesCountPerWeek,
-  getLastGame,
-  getPlayersDashboard
+  getActivePlayers, getAllGames, getAllPlayers, getLatestGames, registerGame, getGamesCountPerWeek, getLastGame,
+  getPlayersDashboard, getPlayer, getPlayerDeltaStatistic, getPlayerGames, getPlayerGamesCountStatistic, getRelations
 } from '../../actions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -35,11 +29,12 @@ class GameRegistration extends Component {
       winner2: null,
       loser1: null,
       loser2: null,
+      playerId: null
     }
   }
 
   componentDidMount() {
-    debugger
+    this.setState({playerId: this.props.location.pathname.split('/')[2]})
   }
 
   setDefaultValue = (playerId) => {
@@ -95,13 +90,20 @@ class GameRegistration extends Component {
     this.state.isGameRegistration ? this.onRegistrationConfirm() : this.setState({isGameRegistration: true})
   }
 
-  updateData = ({getActivePlayers, getAllPlayers, getLatestGames, getAllGames, getPlayersDashboard, getGamesCountPerWeek}) => {
+  updateData = ({getActivePlayers, getAllPlayers, getLatestGames, getAllGames, getPlayersDashboard, getGamesCountPerWeek,
+                  getPlayer, getPlayerDeltaStatistic, getPlayerGames, getPlayerGamesCountStatistic, getRelations}) => {
+    const {playerId} = this.state;
     getActivePlayers();
     getAllPlayers();
     getLatestGames();
     getAllGames();
     getPlayersDashboard();
     getGamesCountPerWeek();
+    getPlayer(playerId);
+    getPlayerDeltaStatistic(playerId);
+    getPlayerGames(playerId);
+    getPlayerGamesCountStatistic(playerId);
+    getRelations(playerId);
   }
 
   onRegistrationConfirm = async () => {
@@ -220,13 +222,8 @@ const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
 }
 const mapDispatchToProps = (dispatch) => {
   const actions = {
-    getAllPlayers,
-    getActivePlayers,
-    getLatestGames,
-    getAllGames,
-    getPlayersDashboard,
-    getGamesCountPerWeek,
-    getLastGame,
+    getAllPlayers, getActivePlayers, getLatestGames, getAllGames, getPlayersDashboard, getGamesCountPerWeek, getLastGame,
+    getPlayer, getPlayerDeltaStatistic, getPlayerGames, getPlayerGamesCountStatistic, getRelations
   };
   const actionMap = {actions: bindActionCreators(actions, dispatch)};
   return actionMap;
