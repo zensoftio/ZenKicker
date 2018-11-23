@@ -6,9 +6,6 @@ import styled from 'styled-components';
 import {
 	getCurrent,
   getAllPlayers,
-  getActivePlayers,
-  getLatestGames,
-  getAllGames
 } from "./actions";
 import DashboardScene from "./scenes/DashboardScene";
 import PlayersScene from "./scenes/PlayersScene";
@@ -39,7 +36,7 @@ class App extends Component {
             <Route exact path="/dashboard" component={DashboardScene}/>
             <Route exact path="/players" component={PlayersScene}/>
             <Route exact path="/games" component={GamesScene}/>
-            <Route exact path="/player/:id" component={ProfileScene}/>
+            <Route exact path="/players/:id" component={ProfileScene}/>
             <Route path="/not-found" component={NotFoundScene}/>
             <Redirect from="/" exact to="/dashboard"/>
             <Redirect from="*" exact to="/not-found"/>
@@ -54,7 +51,6 @@ class App extends Component {
 const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
 	const props = {
     currentUser: state.user.current,
-    players: state.player.players
   };
 	return props;
 }
@@ -62,9 +58,6 @@ const mapDispatchToProps = (dispatch) => {
 	const actions = {
 		getCurrent,
     getAllPlayers,
-    getActivePlayers,
-    getLatestGames,
-    getAllGames
 	};
 	const actionMap = {actions: bindActionCreators(actions, dispatch)};
 	return actionMap;

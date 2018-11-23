@@ -13,7 +13,7 @@ export const MainMenu = ({currentUser}) => (
     <AuthenticationContent>
       <div>
         <UserPhoto photo={currentUser.iconName}/>
-        <Username to={`/player/${currentUser.id}`}>{currentUser.username}</Username>
+        <Username to={`/players/${currentUser.id}`}>{currentUser.username}</Username>
       </div>
       <a href="/logout"><SignOut/></a>
     </AuthenticationContent>

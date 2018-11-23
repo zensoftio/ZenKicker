@@ -12,13 +12,13 @@ export const GameBlock = ({
   <Content>
     <GameContent>
       <Team>
-        <User to={`/player/${winner1Id}`}>
+        <User to={`/players/${winner1Id}`}>
           <Photo>
             <UserPhoto photo={winner1Icon}/>
           </Photo>
           <UsernameLeft>{winner1Name}</UsernameLeft>
         </User>
-        <User to={`/player/${winner2Id}`}>
+        <User to={`/players/${winner2Id}`}>
           <Photo>
             <UserPhoto photo={winner2Icon}/>
           </Photo>
@@ -32,13 +32,13 @@ export const GameBlock = ({
         }
       </Score>
       <Team>
-        <User to={`/player/${loser1Id}`}>
+        <User to={`/players/${loser1Id}`}>
           <UsernameRight>{loser1Name}</UsernameRight>
           <Photo>
             <UserPhoto photo={loser1Icon}/>
           </Photo>
         </User>
-        <User to={`/player/${loser2Id}`}>
+        <User to={`/players/${loser2Id}`}>
           <UsernameRight>{loser2Name}</UsernameRight>
           <Photo>
             <UserPhoto photo={loser2Icon}/>
@@ -49,7 +49,7 @@ export const GameBlock = ({
     {
       reportedBy &&
       <InfoContent>
-        <div>Reported by: <Link to={`/player/${reportedById}`}>{reportedBy}</Link></div>
+        <div>Reported by: <Link to={`/players/${reportedById}`}>{reportedBy}</Link></div>
         <div><span>{moment(date).format('HH:MM, ddd DD, MMM YYYY')}</span></div>
       </InfoContent>
     }
