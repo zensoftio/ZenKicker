@@ -105,7 +105,7 @@ const User = styled(Link)`
     margin-bottom: 0;
   }
   &:hover {
-    background-color: #fafafa
+    background-color: ${Colors.HOVER_COLOR};
   }
 `;
 

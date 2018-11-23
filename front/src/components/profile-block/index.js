@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 import UserPhoto from '../../components-ui/user-photo';
+import {Colors} from "../../helpers/style-variables";
 
 export const ProfileBlock = ({index, id, username, countGames, rated, rating, iconName}) => (
   <Content to={`/players/${id}`}>
@@ -29,7 +30,7 @@ const Content = styled(Link)`
 	  margin-right: 30px;
 	}
   &:hover {
-    background-color: #fafafa
+    background-color: ${Colors.HOVER_COLOR};
   }
 `;
 const Photo = styled.div`

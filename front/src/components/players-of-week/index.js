@@ -7,6 +7,7 @@ import firstPlaceIcon from '../../shared/images/first-place.png';
 import secondPlaceIcon from '../../shared/images/second-place.png';
 import thirdPlaceIcon from '../../shared/images/third-place.png';
 import crabIcon from '../../shared/images/crab.png';
+import {Colors} from "../../helpers/style-variables";
 
 const PlayersOfWeek = ({players}) => {
   if (!players || !players.firstPlace) return null;
@@ -80,7 +81,7 @@ const PlaceContainer = styled(Link)`
   text-decoration: none;
   padding: 10px;
   &:hover {
-    background-color: #fafafa
+    background-color: ${Colors.HOVER_COLOR};
   }
 `;
 
