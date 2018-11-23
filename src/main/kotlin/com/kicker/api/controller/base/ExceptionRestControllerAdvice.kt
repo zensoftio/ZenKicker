@@ -7,8 +7,10 @@ import com.kicker.api.exception.service.ServiceException
 import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR
 import org.springframework.validation.BindException
+import org.springframework.validation.DataBinder
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.annotation.InitBinder
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.multipart.MaxUploadSizeExceededException
@@ -20,6 +22,16 @@ import javax.validation.ConstraintViolationException
  */
 @RestControllerAdvice
 class ExceptionRestControllerAdvice {
+
+    /**
+     * In order to get access to private field in PageRequest
+     * JSR-303 validated property 'maySortBy' does not have a corresponding accessor for Spring data binding -
+     * DataBinder's configuration (bean property versus direct field access)
+     */
+    @InitBinder
+    private fun activateDirectFieldAccess(dataBinder: DataBinder) {
+        dataBinder.initDirectFieldAccess()
+    }
 
     @ResponseStatus(code = BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException::class)

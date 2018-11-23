@@ -6,6 +6,7 @@ import org.springframework.validation.beanvalidation.MethodValidationPostProcess
 
 /**
  * Adding validation on @PathVariable and @RequestParam
+ * In order validate param in method use @Validated over class
  *
  * @author Yauheni Efimenko
  */

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import springfox.documentation.annotations.ApiIgnore
+import javax.validation.Valid
 
 /**
  * @author Yauheni Efimenko
@@ -27,7 +28,7 @@ class PlayerRelationsController(
         * limit - [0, +Infinity], default:10
     """)
     @GetMapping("/{playerId}/relations")
-    fun getAllByPlayer(@PathVariable playerId: Long, @ApiIgnore pageRequest: PlayerRelationsPageRequest): PageResponse<PlayerRelationsDto> {
+    fun getAllByPlayer(@PathVariable playerId: Long, @ApiIgnore @Valid pageRequest: PlayerRelationsPageRequest): PageResponse<PlayerRelationsDto> {
         return PageResponse(service.getAllByPlayer(playerId, pageRequest).map { PlayerRelationsDto(it) })
     }
 

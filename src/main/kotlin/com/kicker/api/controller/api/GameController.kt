@@ -8,7 +8,6 @@ import com.kicker.api.model.Player
 import com.kicker.api.service.GameService
 import io.swagger.annotations.ApiOperation
 import org.springframework.security.core.Authentication
-import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import springfox.documentation.annotations.ApiIgnore
 import javax.validation.Valid
@@ -18,7 +17,6 @@ import javax.validation.Valid
  */
 @RestController
 @RequestMapping("/api/games")
-@Validated
 class GameController(
         private val service: GameService
 ) {
@@ -30,7 +28,7 @@ class GameController(
         * limit - [0, +Infinity], default:10
     """)
     @GetMapping
-    fun getAll(@ApiIgnore pageRequest: GamePageRequest): PageResponse<GameDto> {
+    fun getAll(@ApiIgnore @Valid pageRequest: GamePageRequest): PageResponse<GameDto> {
         return PageResponse(service.getAll(pageRequest).map { GameDto(it) })
     }
 

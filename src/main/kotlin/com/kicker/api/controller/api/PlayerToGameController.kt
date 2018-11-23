@@ -5,12 +5,12 @@ import com.kicker.api.domain.PageResponse
 import com.kicker.api.domain.model.playerToGame.PlayerToGameDto
 import com.kicker.api.service.PlayerToGameService
 import io.swagger.annotations.ApiOperation
-import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import springfox.documentation.annotations.ApiIgnore
+import javax.validation.Valid
 import kotlin.math.roundToInt
 
 /**
@@ -19,7 +19,6 @@ import kotlin.math.roundToInt
 
 @RestController
 @RequestMapping("/api/players")
-@Validated
 class PlayerToGameController(
         private val service: PlayerToGameService
 ) {
@@ -31,7 +30,7 @@ class PlayerToGameController(
         * limit - [0, +Infinity], default:10
     """)
     @GetMapping("/{playerId}/games")
-    fun getPlayerGames(@PathVariable playerId: Long, @ApiIgnore pageRequest: PageRequest): PageResponse<PlayerToGameDto> =
+    fun getPlayerGames(@PathVariable playerId: Long, @ApiIgnore @Valid pageRequest: PageRequest): PageResponse<PlayerToGameDto> =
             PageResponse(service.getPlayerGames(playerId, pageRequest).map { PlayerToGameDto(it) })
 
     @ApiOperation("Get delta of rating per week during 10 weeks by player`s id")

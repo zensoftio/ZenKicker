@@ -6,12 +6,12 @@ import com.kicker.api.domain.model.playerStats.PlayerStatsPageRequest
 import com.kicker.api.domain.model.playerStats.PlayersDashboard
 import com.kicker.api.service.PlayerStatsService
 import io.swagger.annotations.ApiOperation
-import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import springfox.documentation.annotations.ApiIgnore
+import javax.validation.Valid
 
 /**
  * @author Yauheni Efimenko
@@ -19,7 +19,6 @@ import springfox.documentation.annotations.ApiIgnore
 
 @RestController
 @RequestMapping("/api/players")
-@Validated
 class PlayerStatsController(
         private val service: PlayerStatsService
 ) {
@@ -35,7 +34,7 @@ class PlayerStatsController(
         * limit - [0, +Infinity], default:10
     """)
     @GetMapping("/stats")
-    fun getAll(@ApiIgnore pageRequest: PlayerStatsPageRequest): PageResponse<PlayerStatsDto> =
+    fun getAll(@ApiIgnore @Valid pageRequest: PlayerStatsPageRequest): PageResponse<PlayerStatsDto> =
             PageResponse(service.getAll(pageRequest).map { PlayerStatsDto(it) })
 
     @ApiOperation(value = "Get stats of all active players", notes = """Pageable.
@@ -45,7 +44,7 @@ class PlayerStatsController(
         * limit - [0, +Infinity], default:10
     """)
     @GetMapping("/active/stats")
-    fun getAllActive(@ApiIgnore pageRequest: PlayerStatsPageRequest): PageResponse<PlayerStatsDto> =
+    fun getAllActive(@ApiIgnore @Valid pageRequest: PlayerStatsPageRequest): PageResponse<PlayerStatsDto> =
             PageResponse(service.getAllActive(pageRequest).map { PlayerStatsDto(it) })
 
     @ApiOperation("Get dashboard of players")

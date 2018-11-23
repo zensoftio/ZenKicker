@@ -49,7 +49,7 @@ class PlayerController(
         * limit - [0, +Infinity], default:10
     """)
     @GetMapping
-    fun getAll(@ApiIgnore pageRequest: PageRequest): PageResponse<PlayerDto> {
+    fun getAll(@ApiIgnore @Valid pageRequest: PageRequest): PageResponse<PlayerDto> {
         return PageResponse(service.getAll(pageRequest).map { PlayerDto(it) })
     }
 
