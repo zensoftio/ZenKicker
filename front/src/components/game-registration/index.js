@@ -14,7 +14,7 @@ import {getGoalValues} from '../../helpers/goal-values';
 import {RegisteredGameBlock} from "../registered-game-block";
 
 import reverseIcon from '../../shared/images/icons/reverse.png';
-import {getUserInfo} from "../../helpers/get-user-info";
+import {getPlayerInfo} from "../../helpers/get-player-info";
 import {withRouter} from "react-router-dom";
 
 class GameRegistration extends Component {
@@ -178,7 +178,7 @@ class GameRegistration extends Component {
       loser1Id: loser1.value,
       loser2Id: loser2.value,
     }
-    const registeredPlayers = getUserInfo(players, playersIds);
+    const registeredPlayers = getPlayerInfo(players, playersIds);
     return (
       <RegisteredGameBlock losersGoals={losersGoals} winner1Icon={registeredPlayers.winner1Icon}
                            winner2Icon={registeredPlayers.winner2Icon}

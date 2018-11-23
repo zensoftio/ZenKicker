@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {getAllGames, appendToGames, getAllPlayers} from '../../actions';
 import {withRouter} from 'react-router-dom';
 import AllGames from '../../components/all-games';
-import {getUserInfo} from "../../helpers/get-user-info";
+import {getPlayerInfo} from "../../helpers/get-player-info";
 import {Colors} from "../../helpers/style-variables";
 
 class GamesScene extends Component {
@@ -22,7 +22,7 @@ class GamesScene extends Component {
     const mappedGames = games.list.map(game => (
       {
         ...game,
-        ...getUserInfo(players, game),
+        ...getPlayerInfo(players, game),
         reportedBy: players.list.length ? players.list.find(i => i.player.id === game.reportedById).player.username : null,
       }
     ))

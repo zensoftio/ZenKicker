@@ -5,7 +5,6 @@ import {connect} from 'react-redux';
 import styled from 'styled-components';
 import {
 	getCurrent,
-  getAllPlayers,
 } from "./actions";
 import DashboardScene from "./scenes/DashboardScene";
 import PlayersScene from "./scenes/PlayersScene";
@@ -18,7 +17,6 @@ class App extends Component {
 
 	componentDidMount() {
 	  this.props.actions.getCurrent();
-	  this.props.actions.getAllPlayers();
 	}
 
 	render() {
@@ -57,7 +55,6 @@ const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
 const mapDispatchToProps = (dispatch) => {
 	const actions = {
 		getCurrent,
-    getAllPlayers,
 	};
 	const actionMap = {actions: bindActionCreators(actions, dispatch)};
 	return actionMap;

@@ -8,7 +8,7 @@ import {withRouter} from 'react-router-dom';
 import LatestGames from '../../components/latest-games';
 import Chart from '../../components/chart';
 import PlayersOfWeek from "../../components/players-of-week";
-import {getUserInfo} from "../../helpers/get-user-info";
+import {getPlayerInfo} from "../../helpers/get-player-info";
 
 class DashboardScene extends Component {
 
@@ -26,7 +26,7 @@ class DashboardScene extends Component {
     const mappedLatestGames = players.list && latestGames.list.map(game => (
       {
         ...game,
-        ...getUserInfo(players, game),
+        ...getPlayerInfo(players, game),
         reportedBy: players.list.length ? players.list.find(i => i.player.id === game.reportedById).player.username : null,
       }
     ))

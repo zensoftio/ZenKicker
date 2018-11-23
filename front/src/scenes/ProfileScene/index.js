@@ -15,7 +15,7 @@ import ProfileMainInfo from '../../components/profile-main-info';
 import PlayerGames from '../../components/player-games';
 import ChartStatistics from '../../components/chart-statistics';
 import PlayerRelations from "../../components/player-relations";
-import {getUserInfo} from "../../helpers/get-user-info";
+import {getPlayerInfo} from "../../helpers/get-player-info";
 
 class ProfileScene extends Component {
 
@@ -55,7 +55,7 @@ class ProfileScene extends Component {
         ...game.gameDto,
         delta: game.delta,
         won: game.won,
-        ...getUserInfo(players, game.gameDto),
+        ...getPlayerInfo(players, game.gameDto),
         reportedBy: players.list.length ? players.list.find(i => i.player.id === game.gameDto.reportedById).player.username : null,
       }
     ))
