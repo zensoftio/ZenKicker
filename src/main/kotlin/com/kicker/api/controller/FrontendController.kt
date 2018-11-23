@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping
 @Controller
 class FrontendController {
 
-    @GetMapping(value = ["/", "/dashboard", "/group-stage", "/playoffs", "/player/**", "/player", "/not-found"])
+    @GetMapping(value = ["/", "/dashboard", "/group-stage", "/playoffs", "/players/**", "/players", "/not-found"])
     fun frontend(): String = "index"
 
     @GetMapping("/login")
