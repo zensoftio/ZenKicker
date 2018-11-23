@@ -43,15 +43,12 @@ class DefaultPlayerService(
     override fun getByUsername(username: String): Player? = repository.findByUsername(username)
 
     @Cacheable("players")
-    override fun getAll(): List<Player> = super.getAll()
-
-    @Cacheable("players")
     override fun getAll(pageRequest: PageRequest): Page<Player> = super.getAll(pageRequest)
 
     override fun loadUserByUsername(username: String): UserDetails = getByUsername(username)
             ?: throw UsernameNotFoundException("User with username $username not found")
 
-    @CacheEvict("players", allEntries = true)
+    @CacheEvict("players", "statsPlayers", allEntries = true)
     @Transactional
     override fun create(request: CreatePlayerRequest): Player {
         if (isExist(request.username!!)) {
@@ -63,7 +60,7 @@ class DefaultPlayerService(
         return super.save(Player(request.username!!, request.password!!))
     }
 
-    @CacheEvict("players", allEntries = true)
+    @CacheEvict("players", "playersDashboard", "statsPlayers", "statsActivePlayers", allEntries = true)
     @Transactional
     override fun updateUsername(playerId: Long, request: UpdatePlayerUsernameRequest): Player {
         if (isExist(request.username!!)) {
@@ -89,6 +86,7 @@ class DefaultPlayerService(
         return super.save(player)
     }
 
+    @CacheEvict("players", "playersDashboard", "statsPlayers", "statsActivePlayers", allEntries = true)
     @Transactional
     override fun updateIcon(playerId: Long, icon: MultipartFile): Player {
         val player = get(playerId)

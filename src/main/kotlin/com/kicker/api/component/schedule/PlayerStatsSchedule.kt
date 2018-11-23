@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional
  */
 
 @Component
-class PlayerRatingSchedule(
+class PlayerStatsSchedule(
         private val playerService: PlayerService,
         private val playerStatsService: PlayerStatsService,
         private val playerToGameService: PlayerToGameService,
@@ -22,7 +22,7 @@ class PlayerRatingSchedule(
 ) {
 
     @Scheduled(cron = "0 0 0 * * MON")
-    @CacheEvict("statsActivePlayers", allEntries = true)
+    @CacheEvict("statsPlayers", "statsActivePlayers", allEntries = true)
     @Transactional
     fun schedulePlayersRating() {
         playerService.getAll().forEach {
