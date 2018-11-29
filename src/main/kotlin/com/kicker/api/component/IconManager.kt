@@ -1,7 +1,6 @@
 package com.kicker.api.component
 
 import com.kicker.api.config.property.IconsSizeProperties
-import com.kicker.api.config.property.StaticFoldersProperties
 import net.coobird.thumbnailator.Thumbnails
 import org.springframework.stereotype.Component
 import java.io.ByteArrayInputStream
@@ -18,11 +17,10 @@ import javax.imageio.ImageIO
 
 @Component
 class IconManager(
-        private val iconsSizeProperties: IconsSizeProperties,
-        foldersProperties: StaticFoldersProperties
+        private val iconsSizeProperties: IconsSizeProperties
 ) {
 
-    private val iconsDirectory = Paths.get("${foldersProperties.images!!}/icons")
+    private val iconsDirectory = Paths.get("images/icons")
 
 
     @PostConstruct

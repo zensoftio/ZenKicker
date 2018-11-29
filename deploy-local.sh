@@ -8,8 +8,6 @@ POSTGRES_USER=postgres
 POSTGRES_PASSWORD=123
 OUTER_PORT=5441
 
-STATIC_FOLDERS_IMAGES=images
-
 NGINX_SERVICE_NAME=nginx
 NGINX_CONF_FILE_PATH=docker/nginx/nginx.conf
 
@@ -34,9 +32,9 @@ sh docker/postgres.sh ${POSTGRES_SERVICE_NAME} \
                         ${OUTER_PORT}
 
 # CREATE DIRECTORY FOR STATIC IMAGES
-mkdir ${STATIC_FOLDERS_IMAGES}
+mkdir images
 
 # RUN NGINX
 sh docker/nginx/nginx.sh ${NGINX_SERVICE_NAME} \
-                            ${PWD}/${STATIC_FOLDERS_IMAGES} \
+                            ${PWD}/images \
                             ${NGINX_CONF_FILE_PATH}
