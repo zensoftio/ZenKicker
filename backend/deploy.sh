@@ -33,7 +33,7 @@ then
 fi
 
 # BUILD APP
-./gradlew clean assemble
+../gradlew clean assemble
 
 # CREATE IMAGE APP
 docker build -t ${APP_IMAGE_NAME}:latest -f docker/Dockerfile .

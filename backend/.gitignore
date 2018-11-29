@@ -1,6 +1,4 @@
 # IntelliJ
-.idea/
-*.iml
 out/
 
 ### Kotlin template
@@ -20,6 +18,4 @@ out/
 *.rar
 
 # Gradle
-.gradle/
 build/
-gradle/

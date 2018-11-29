@@ -22,7 +22,7 @@ then
 fi
 
 # BUILD APP
-./gradlew clean assemble
+../gradlew clean assemble
 
 # RUN POSTGRES
 sh docker/postgres.sh ${POSTGRES_SERVICE_NAME} \
