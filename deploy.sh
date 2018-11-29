@@ -28,7 +28,7 @@ sh docker/clean.sh ${APP_IMAGE_NAME} \
                     ${NGINX_SERVICE_NAME} \
                     ${VOLUME_IMAGES_NAME}
 
-if [ "$1" = "clean" ];
+if [ "$1" = "-c" ];
 then
     exit 1
 fi

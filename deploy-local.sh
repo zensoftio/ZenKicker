@@ -18,7 +18,7 @@ NGINX_CONF_FILE_PATH=docker/nginx/nginx.conf
 sh docker/clean-local.sh ${POSTGRES_SERVICE_NAME} \
                     ${NGINX_SERVICE_NAME}
 
-if [ "$1" = "clean" ];
+if [ "$1" = "-c" ];
 then
     exit 1
 fi
