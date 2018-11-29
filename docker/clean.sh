@@ -1,11 +1,5 @@
 #!/bin/bash
 
-if [ "$#" -ne 6 ];
-then
-    echo 'Enter parameters: app image name, app service name, postgres service name, network services name, nginx, volume'
-    exit 1
-fi
-
 # ENVIRONMENT VARIABLES
 APP_IMAGE_NAME=$1
 APP_SERVICE_NAME=$2

@@ -3,6 +3,7 @@
 # ENVIRONMENT VARIABLES
 APP_IMAGE_NAME=kicker
 APP_SERVICE_NAME=kicker
+
 NETWORK_SERVICES_NAME=kicker-net
 
 POSTGRES_SERVICE_NAME=postgres_kicker
@@ -70,8 +71,8 @@ docker create \
     ${APP_IMAGE_NAME}
 
 # RUN NGINX
-sh docker/nginx/nginx.sh ${VOLUME_IMAGES_NAME} \
-                            ${NGINX_SERVICE_NAME} \
+sh docker/nginx/nginx.sh ${NGINX_SERVICE_NAME} \
+                            ${VOLUME_IMAGES_NAME} \
                             ${NGINX_CONF_FILE_PATH}
 
 # RUN APP

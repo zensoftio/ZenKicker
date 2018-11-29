@@ -1,14 +1,7 @@
 #!/bin/bash
 
-if [ "$#" -lt 1 ];
-then
-    echo 'Enter mandatory parameter: postgres service name'
-    echo 'You also can enter optional parameters: db name, db user, db password, outer port'
-    exit 1
-fi
-
 # ENVIRONMENT VARIABLES
-POSTGRES_SERVICE_NAME=$1
+POSTGRES_SERVICE_NAME=${1:-postgres}
 POSTGRES_DB=${2:-kicker}
 POSTGRES_USER=${3:-postgres}
 POSTGRES_PASSWORD=${4:-123}

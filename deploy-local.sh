@@ -37,6 +37,6 @@ sh docker/postgres.sh ${POSTGRES_SERVICE_NAME} \
 mkdir ${STATIC_FOLDERS_IMAGES}
 
 # RUN NGINX
-sh docker/nginx/nginx.sh ${PWD}/${STATIC_FOLDERS_IMAGES} \
-                            ${NGINX_SERVICE_NAME} \
+sh docker/nginx/nginx.sh ${NGINX_SERVICE_NAME} \
+                            ${PWD}/${STATIC_FOLDERS_IMAGES} \
                             ${NGINX_CONF_FILE_PATH}
