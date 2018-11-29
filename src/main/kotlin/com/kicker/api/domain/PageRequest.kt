@@ -11,13 +11,8 @@ import javax.validation.constraints.Min
  */
 @Contains(value = "sortBy", map = "maySortBy", message = "Collection is not contains value for sorting")
 open class PageRequest(
-        @field:Min(value = 0)
-        var offset: Int = 0,
-
-        @field:Min(value = 1)
-        @field:Max(100)
-        var limit: Int = 10,
-
+        @field:Min(value = 0) var offset: Int = 0,
+        @field:Min(value = 1) @field:Max(100) var limit: Int = 10,
         var sortDirection: Sort.Direction = Sort.Direction.ASC,
         var sortBy: String = "id",
         private val maySortBy: Map<String, String> = mapOf("id" to "id")
