@@ -16,11 +16,10 @@ OUTER_PORT=5440
 VOLUME_IMAGES_NAME=images_volume
 
 NGINX_SERVICE_NAME=nginx
-NGINX_CONF_FILE_PATH=docker/nginx/nginx.conf
 
 
 # CLEAN ENVIRONMENT
-sh docker/clean.sh ${APP_IMAGE_NAME} \
+sh backend/docker/clean.sh ${APP_IMAGE_NAME} \
                     ${APP_SERVICE_NAME} \
                     ${POSTGRES_SERVICE_NAME} \
                     ${NETWORK_SERVICES_NAME} \
@@ -33,16 +32,16 @@ then
 fi
 
 # BUILD APP
-../gradlew clean assemble
+./gradlew clean assemble
 
 # CREATE IMAGE APP
-docker build -t ${APP_IMAGE_NAME}:latest -f docker/Dockerfile .
+docker build -t ${APP_IMAGE_NAME}:latest -f backend/docker/Dockerfile .
 
 # CREATE NETWORK
 docker network create ${NETWORK_SERVICES_NAME}
 
 # RUN POSTGRES
-sh docker/postgres.sh ${POSTGRES_SERVICE_NAME} \
+sh backend/docker/postgres.sh ${POSTGRES_SERVICE_NAME} \
                         ${POSTGRES_DB} \
                         ${POSTGRES_USER} \
                         ${POSTGRES_PASSWORD} \
@@ -69,9 +68,8 @@ docker create \
     ${APP_IMAGE_NAME}
 
 # RUN NGINX
-sh docker/nginx/nginx.sh ${NGINX_SERVICE_NAME} \
-                            ${VOLUME_IMAGES_NAME} \
-                            ${NGINX_CONF_FILE_PATH}
+sh backend/docker/nginx/nginx.sh ${NGINX_SERVICE_NAME} \
+                            ${VOLUME_IMAGES_NAME}
 
 # RUN APP
 docker start -i ${APP_SERVICE_NAME}

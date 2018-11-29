@@ -2,7 +2,7 @@
 
 NGINX_SERVICE_NAME=${1:-nginx}
 VOLUME_OR_PATH=$2
-CONF_FILE_PATH=${3:-nginx.conf}
+DIRECTORY=`dirname $0`
 
 # CREATE NGINX CONTAINER
 docker create \
@@ -13,7 +13,7 @@ docker create \
     nginx:1.15.7
 
 # COPY CONFIG FOR NGINX TO CONTAINER
-docker cp ${CONF_FILE_PATH} ${NGINX_SERVICE_NAME}:/etc/nginx/conf.d/
+docker cp ${DIRECTORY}/nginx.conf ${NGINX_SERVICE_NAME}:/etc/nginx/conf.d/
 
 # RUN CONTAINER
 docker start nginx

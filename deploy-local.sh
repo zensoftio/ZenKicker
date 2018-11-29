@@ -9,11 +9,9 @@ POSTGRES_PASSWORD=123
 OUTER_PORT=5441
 
 NGINX_SERVICE_NAME=nginx
-NGINX_CONF_FILE_PATH=docker/nginx/nginx.conf
-
 
 # CLEAN ENVIRONMENT
-sh docker/clean-local.sh ${POSTGRES_SERVICE_NAME} \
+sh backend/docker/clean-local.sh ${POSTGRES_SERVICE_NAME} \
                     ${NGINX_SERVICE_NAME}
 
 if [ "$1" = "-c" ];
@@ -22,10 +20,10 @@ then
 fi
 
 # BUILD APP
-../gradlew clean assemble
+./gradlew clean assemble
 
 # RUN POSTGRES
-sh docker/postgres.sh ${POSTGRES_SERVICE_NAME} \
+sh backend/docker/postgres.sh ${POSTGRES_SERVICE_NAME} \
                         ${POSTGRES_DB} \
                         ${POSTGRES_USER} \
                         ${POSTGRES_PASSWORD} \
@@ -35,6 +33,5 @@ sh docker/postgres.sh ${POSTGRES_SERVICE_NAME} \
 mkdir images
 
 # RUN NGINX
-sh docker/nginx/nginx.sh ${NGINX_SERVICE_NAME} \
-                            ${PWD}/images \
-                            ${NGINX_CONF_FILE_PATH}
+sh backend/docker/nginx/nginx.sh ${NGINX_SERVICE_NAME} \
+                            ${PWD}/images
