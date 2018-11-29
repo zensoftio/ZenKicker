@@ -43,7 +43,7 @@ class SwaggerConfig : WebMvcConfigurationSupport() {
 
     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
         if (!registry.hasMappingForPattern("/**")) {
-            registry.addResourceHandler("/**").addResourceLocations(*CLASSPATH_RESOURCE_LOCATIONS);
+            registry.addResourceHandler("/**").addResourceLocations(*CLASSPATH_RESOURCE_LOCATIONS)
         }
     }
 
