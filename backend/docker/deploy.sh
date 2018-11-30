@@ -19,12 +19,12 @@ NGINX_SERVICE_NAME=nginx
 
 
 # CLEAN ENVIRONMENT
-sh backend/docker/clean.sh ${APP_IMAGE_NAME} \
-                    ${APP_SERVICE_NAME} \
-                    ${POSTGRES_SERVICE_NAME} \
-                    ${NETWORK_SERVICES_NAME} \
-                    ${NGINX_SERVICE_NAME} \
-                    ${VOLUME_IMAGES_NAME}
+sh clean.sh ${APP_IMAGE_NAME} \
+                ${APP_SERVICE_NAME} \
+                ${POSTGRES_SERVICE_NAME} \
+                ${NETWORK_SERVICES_NAME} \
+                ${NGINX_SERVICE_NAME} \
+                ${VOLUME_IMAGES_NAME}
 
 if [ "$1" = "-c" ];
 then
@@ -35,11 +35,11 @@ fi
 docker network create ${NETWORK_SERVICES_NAME}
 
 # RUN POSTGRES
-sh backend/docker/postgres.sh ${POSTGRES_SERVICE_NAME} \
-                        ${POSTGRES_DB} \
-                        ${POSTGRES_USER} \
-                        ${POSTGRES_PASSWORD} \
-                        ${OUTER_PORT}
+sh postgres.sh ${POSTGRES_SERVICE_NAME} \
+                    ${POSTGRES_DB} \
+                    ${POSTGRES_USER} \
+                    ${POSTGRES_PASSWORD} \
+                    ${OUTER_PORT}
 
 # CREATE ALIAS FOR HOSTNAME
 docker network connect --alias ${POSTGRES_HOST} \
@@ -62,8 +62,8 @@ docker create \
     ${APP_IMAGE_NAME}
 
 # RUN NGINX
-sh backend/docker/nginx/nginx.sh ${NGINX_SERVICE_NAME} \
-                            ${VOLUME_IMAGES_NAME}
+sh nginx/nginx.sh ${NGINX_SERVICE_NAME} \
+                        ${VOLUME_IMAGES_NAME}
 
 # RUN APP
 docker start -i ${APP_SERVICE_NAME}
