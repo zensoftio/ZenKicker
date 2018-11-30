@@ -72,3 +72,14 @@ sourceSets {
 
 // Front
 processResources.dependsOn(':front:assemble')
+
+build.doLast {
+    def jarDir = "$projectDir/jar"
+    delete jarDir
+    mkdir jarDir
+    // copying *.jar
+    copy {
+        from "$buildDir/libs"
+        into jarDir
+    }
+}

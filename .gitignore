@@ -4,8 +4,6 @@
 out/
 
 ### Kotlin template
-# Compiled class file
-*.class
 
 # Log file
 *.log
