@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ENVIRONMENT VARIABLES
-APP_IMAGE_NAME=kicker
+APP_IMAGE_NAME=efim122/kicker
 APP_SERVICE_NAME=kicker
 
 NETWORK_SERVICES_NAME=kicker-net
@@ -30,12 +30,6 @@ if [ "$1" = "-c" ];
 then
     exit 1
 fi
-
-# BUILD APP
-./gradlew clean assemble
-
-# CREATE IMAGE APP
-docker build -t ${APP_IMAGE_NAME}:latest -f backend/docker/Dockerfile .
 
 # CREATE NETWORK
 docker network create ${NETWORK_SERVICES_NAME}

@@ -2,7 +2,7 @@ FROM openjdk:8-jre-alpine
 
 WORKDIR root/
 
-ADD backend/jar/backend-*.jar ./application.jar
+ADD jar/backend-*.jar ./application.jar
 
 EXPOSE 8080
 

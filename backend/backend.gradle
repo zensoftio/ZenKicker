@@ -74,7 +74,7 @@ sourceSets {
 processResources.dependsOn(':front:assemble')
 
 build.doLast {
-    def jarDir = "$projectDir/jar"
+    def jarDir = "$projectDir/docker/jar"
     delete jarDir
     mkdir jarDir
     // copying *.jar
