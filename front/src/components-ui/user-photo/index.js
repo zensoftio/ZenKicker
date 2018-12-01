@@ -8,7 +8,7 @@ const Img = styled.img`
 
 export const UserPhoto = ({photo}) => (
   photo ?
-    <Img alt="avatar" src={`http://localhost/images/icons/${photo}`}/> :
+    <Img alt="avatar" src={`http://18.220.64.102/images/icons/${photo}`}/> :
     <Img alt="avatar" src={defaultPhoto} />
 )
 

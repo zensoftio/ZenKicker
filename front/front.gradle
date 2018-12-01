@@ -15,11 +15,7 @@ task assemble(type: NpmTask) {
 }
 
 assemble.doLast {
-    println "Merging frontend"
-
     def destinationDir = mkdir "$project.buildDir/resources"
-
-    println "$project"
 
     // copying index.html
     copy {
