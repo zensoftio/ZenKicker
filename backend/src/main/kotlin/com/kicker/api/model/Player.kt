@@ -20,8 +20,8 @@ class Player(
 
 ) : BaseModel(), UserDetails {
 
-    @Column(name = "icon_name")
-    var iconName: String? = null
+    @Column(name = "icon_path")
+    var iconPath: String? = null
 
     @OneToOne(mappedBy = "player", fetch = FetchType.LAZY)
     val playerStats: PlayerStats? = null

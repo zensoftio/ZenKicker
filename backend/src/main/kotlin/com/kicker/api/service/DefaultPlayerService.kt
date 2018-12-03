@@ -1,6 +1,6 @@
 package com.kicker.api.service
 
-import com.kicker.api.component.IconManager
+import com.kicker.api.component.AmazonS3Client
 import com.kicker.api.domain.PageRequest
 import com.kicker.api.domain.model.player.CreatePlayerRequest
 import com.kicker.api.domain.model.player.UpdatePlayerPasswordRequest
@@ -29,7 +29,7 @@ import java.util.*
 class DefaultPlayerService(
         private val repository: PlayerRepository,
         private val passwordEncoder: PasswordEncoder,
-        private val iconManager: IconManager
+        private val amazonS3Client: AmazonS3Client
 ) : DefaultBaseService<Player, PlayerRepository>(repository), PlayerService {
 
     override fun get(id: Long): Player {
@@ -90,12 +90,11 @@ class DefaultPlayerService(
     @Transactional
     override fun updateIcon(playerId: Long, icon: MultipartFile): Player {
         val player = get(playerId)
-        val iconName = UUID.randomUUID().toString() + icon.originalFilename!!
 
-        player.iconName?.let { iconManager.remove(it) }
-        iconManager.save(iconName, icon.bytes)
+        player.iconPath?.let { amazonS3Client.delete(it) }
+        val iconPath = amazonS3Client.upload(icon)
 
-        player.iconName = iconName
+        player.iconPath = iconPath
         return super.save(player)
     }
 

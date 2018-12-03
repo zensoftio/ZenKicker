@@ -47,6 +47,7 @@ dependencies {
     compile('org.apache.commons:commons-collections4:4.0')
     compile('net.coobird:thumbnailator:0.4.8')
     compile('com.github.ben-manes.caffeine:caffeine:2.6.2')
+    compile('com.amazonaws:aws-java-sdk-s3:1.11.461')
 
 //    Swagger
     compile('io.springfox:springfox-swagger2:2.9.0')
