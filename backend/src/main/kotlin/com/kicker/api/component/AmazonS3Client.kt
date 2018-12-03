@@ -10,12 +10,11 @@ import com.amazonaws.services.s3.model.PutObjectRequest
 import com.kicker.api.config.property.AwsProperties
 import com.kicker.api.config.property.IconsSizeProperties
 import net.coobird.thumbnailator.Thumbnails
+import org.apache.commons.io.FilenameUtils
 import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
-import java.awt.image.BufferedImage
 import java.io.ByteArrayInputStream
 import java.io.File
-import java.io.FileOutputStream
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.*
@@ -58,29 +57,29 @@ class AmazonS3Client(
     }
 
     fun delete(fileUrl: String) {
-        val fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1)
-        s3client.deleteObject(DeleteObjectRequest(awsProperties.bucketName, fileName))
+        s3client.deleteObject(DeleteObjectRequest(awsProperties.bucketName, FilenameUtils.getName(fileUrl)))
     }
 
     private fun convertMultiPartToFile(icon: MultipartFile): File {
-        val filename = icon.originalFilename!!
-        val extension = filename.substring(filename.lastIndexOf(".") + 1)
-        val iconName = "${UUID.randomUUID()}.$extension"
+        val file = File(generateFileName(icon.originalFilename!!))
 
-        val bis = ByteArrayInputStream(icon.bytes)
-        var bufferedImage = ImageIO.read(bis)
-
-        bufferedImage = squeeze(bufferedImage)
-
-        val file = File(iconName)
-        val fos = FileOutputStream(file)
-        ImageIO.write(bufferedImage, extension, fos)
-        fos.close()
+        squeeze(icon, file)
 
         return file
     }
 
-    private fun squeeze(bufferedImage: BufferedImage): BufferedImage = Thumbnails.of(bufferedImage)
-            .size(iconsSizeProperties.width!!, iconsSizeProperties.height!!).asBufferedImage()
+    private fun generateFileName(originalFilename: String): String {
+        val extension = FilenameUtils.getExtension(originalFilename)
+        return "${UUID.randomUUID()}${FilenameUtils.EXTENSION_SEPARATOR}$extension"
+    }
+
+    private fun squeeze(icon: MultipartFile, file: File) {
+        val bis = ByteArrayInputStream(icon.bytes)
+        val bufferedImage = ImageIO.read(bis)
+
+        Thumbnails.of(bufferedImage)
+                .size(iconsSizeProperties.width!!, iconsSizeProperties.height!!)
+                .toFile(file)
+    }
 
 }
