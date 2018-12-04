@@ -4,11 +4,11 @@ import {Link} from 'react-router-dom';
 import UserPhoto from '../../components-ui/user-photo';
 import {Colors} from "../../helpers/style-variables";
 
-export const ProfileBlock = ({index, id, username, countGames, rated, rating, iconName}) => (
+export const ProfileBlock = ({index, id, username, countGames, rated, rating, iconPath}) => (
   <Content to={`/players/${id}`}>
     <Index>{index}</Index>
     <Photo>
-      <UserPhoto photo={iconName}/>
+      <UserPhoto photo={iconPath}/>
     </Photo>
     <Username>{username}</Username>
     <Statistics>{countGames}</Statistics>

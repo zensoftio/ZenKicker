@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 const RelationBlock = ({relation}) => (
   <Content to={`/players/${relation.playerId}`}>
     <Photo>
-      <UserPhoto photo={relation.iconName}/>
+      <UserPhoto photo={relation.iconPath}/>
     </Photo>
     <Username>{relation.partnerName}</Username>
   </Content>

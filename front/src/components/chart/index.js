@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid} from 'recharts';
-import {Colors} from '../../helpers/style-variables';
+import {Colors, MediaViews} from '../../helpers/style-variables';
 
 const Chart = ({data, lineDataKey, title, width = 900, height = 200, xDataKey}) => {
 
@@ -29,4 +29,7 @@ const Title = styled.div`
   text-align: center;
   font-size: 1.3em;
   margin: 30px 0;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    font-size: 1.2em;
+  }
 `;

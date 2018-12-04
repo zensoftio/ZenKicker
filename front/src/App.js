@@ -12,6 +12,8 @@ import GamesScene from "./scenes/GamesScene";
 import ProfileScene from "./scenes/ProfileScene";
 import {HorizontalMenu} from './components/horizontal-menu';
 import NotFoundScene from './scenes/NotFoundScene';
+import {MediaViews} from "./helpers/style-variables";
+import MobileMenu from "./components/mobile-menu";
 
 class App extends Component {
 
@@ -21,6 +23,7 @@ class App extends Component {
 
 	render() {
 	  const {currentUser} = this.props;
+	  const isMobile = window.outerWidth <= MediaViews.MOBILE;
 
 	  if (!currentUser || !currentUser.username) {
 	    return null;
@@ -28,7 +31,10 @@ class App extends Component {
 
 		return (
 			<Container>
-				<HorizontalMenu id={currentUser.id} iconName={currentUser.iconName} username={currentUser.username}/>
+        {
+          isMobile ? <MobileMenu id={currentUser.id} iconPath={currentUser.iconPath} username={currentUser.username}/> :
+            <HorizontalMenu id={currentUser.id} iconPath={currentUser.iconPath} username={currentUser.username}/>
+        }
         <Content>
           <Switch>
             <Route exact path="/dashboard" component={DashboardScene}/>
@@ -79,4 +85,7 @@ const Content = styled.div`
 	margin-top: 120px;
 	display: flex;
 	justify-content: center;
+	@media (max-width: ${MediaViews.MOBILE}px) {
+	  margin-top: 90px;
+  }
 `;

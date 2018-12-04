@@ -6,9 +6,9 @@ const Img = styled.img`
   max-width: 100%;  
 `;
 
-export const UserPhoto = ({photo}) => (
-  photo ?
-    <Img alt="avatar" src={`http://18.220.64.102/images/icons/${photo}`}/> :
+export const UserPhoto = ({iconPath}) => (
+  iconPath ?
+    <Img alt="avatar" src={iconPath}/> :
     <Img alt="avatar" src={defaultPhoto} />
 )
 

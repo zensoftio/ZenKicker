@@ -12,7 +12,7 @@ export const MainMenu = ({currentUser}) => (
 		<Title to="/">Zen<span>Kicker</span></Title>
     <AuthenticationContent>
       <div>
-        <UserPhoto photo={currentUser.iconName}/>
+        <UserPhoto photo={currentUser.iconPath}/>
         <Username to={`/players/${currentUser.id}`}>{currentUser.username}</Username>
       </div>
       <a href="/logout"><SignOut/></a>

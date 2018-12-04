@@ -25,7 +25,7 @@ class PlayersTabs extends Component {
         <InfiniteScroll data={players.list} onLoadMore={this.onLoadMorePlayers} totalCount={players.totalCount}>
           {players.list.length ? players.list.map((item, index) =>
             <ProfileBlock key={item.player.id} id={item.player.id} index={index + 1} username={item.player.username} countGames={item.countGames}
-                          rated={item.rated} rating={item.rating} iconName={item.player.iconName}/>) :
+                          rated={item.rated} rating={item.rating} iconPath={item.player.iconPath}/>) :
             <NoContent/>
           }
         </InfiniteScroll>
@@ -35,7 +35,7 @@ class PlayersTabs extends Component {
       <InfiniteScroll data={activePlayers.list} onLoadMore={this.onLoadMoreActivePlayers} totalCount={activePlayers.totalCount}>
         {activePlayers.list.length ? activePlayers.list.map((item, index) =>
           <ProfileBlock key={item.player.id} id={item.player.id} index={index + 1} username={item.player.username} countGames={item.countGames}
-                        rated={item.rated} rating={item.rating} iconName={item.player.iconName}/>) :
+                        rated={item.rated} rating={item.rating} iconPath={item.player.iconPath}/>) :
           <NoContent/>
         }
       </InfiniteScroll>
