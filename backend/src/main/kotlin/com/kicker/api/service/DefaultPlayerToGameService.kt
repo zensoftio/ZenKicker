@@ -7,7 +7,6 @@ import com.kicker.api.model.PlayerToGame
 import com.kicker.api.repository.PlayerToGameRepository
 import com.kicker.api.utils.DateUtils
 import com.kicker.api.utils.RatingUtils
-import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -23,7 +22,6 @@ class DefaultPlayerToGameService(
         private val playerSettingsProperties: PlayerSettingsProperties
 ) : DefaultBaseService<PlayerToGame, PlayerToGameRepository>(repository), PlayerToGameService {
 
-    @Cacheable("playerGames")
     override fun getPlayerGames(playerId: Long, pageRequest: PageRequest): Page<PlayerToGame> {
         val player = playerService.get(playerId)
         return repository.findByPlayer(player, pageRequest)
@@ -32,7 +30,6 @@ class DefaultPlayerToGameService(
     /*
     * Current week is number 0, so 10 week is number 9
     * */
-    @Cacheable("deltaPerWeekDuring10Weeks")
     override fun getDeltaPerWeekDuring10WeeksByPlayer(playerId: Long): List<Double> {
         val dashboard = mutableListOf<Double>()
         for (weeksAgo in 9 downTo 0) {
