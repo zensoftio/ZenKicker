@@ -9,6 +9,7 @@ import LatestGames from '../../components/latest-games';
 import Chart from '../../components/chart';
 import PlayersOfWeek from "../../components/players-of-week";
 import {getPlayerInfo} from "../../helpers/get-player-info";
+import {MediaViews} from "../../helpers/style-variables";
 
 class DashboardScene extends Component {
 
@@ -38,6 +39,9 @@ class DashboardScene extends Component {
     const mappedGamesCountStatistic = gamesPerLastWeek.map((item, index) =>
       ({count: item, day: mappedDaysOfWeek[index]}));
 
+
+    const isMobile = window.outerWidth <= MediaViews.MOBILE;
+
     return (
       <Content>
         <div>
@@ -45,7 +49,7 @@ class DashboardScene extends Component {
         </div>
         <div>
           <Chart data={mappedGamesCountStatistic} lineDataKey='count' xDataKey='day'
-                 title='Games per day'/>
+                 title='Games per day' width={isMobile ? window.outerWidth - 50 : null}/>
         </div>
         <div>
           <Title>Latest games</Title>
@@ -94,6 +98,13 @@ const Content = styled.div`
   &>div:first-child {
     margin-top: 0;
   }
+  
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    width: 100%;
+    &>div {
+      margin-top: 30px;
+    }
+  }
 `;
 
 const Title = styled.div`
@@ -101,4 +112,7 @@ const Title = styled.div`
   margin: 20px 0;
   width: 100%;
   text-align: center;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    font-size: 1.2em;
+  }
 `;

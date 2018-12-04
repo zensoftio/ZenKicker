@@ -13,7 +13,8 @@ import {Colors} from '../../helpers/style-variables';
 import {getGoalValues} from '../../helpers/goal-values';
 import {RegisteredGameBlock} from "../registered-game-block";
 
-import reverseIcon from '../../shared/images/icons/reverse.png';
+
+import CompareArrowsIco from '@material-ui/icons/CompareArrows';
 import {getPlayerInfo} from "../../helpers/get-player-info";
 import {withRouter} from "react-router-dom";
 
@@ -200,7 +201,7 @@ class GameRegistration extends Component {
             <PopupTitle>
               {isGameRegistration ? 'Are you sure?' : 'Register game'}
             </PopupTitle>
-            {!isGameRegistration && <TeamReverse alt='reverse' src={reverseIcon} onClick={this.teamReverse} />}
+            {!isGameRegistration && <TeamReverse onClick={this.teamReverse} />}
             {this.renderContainer()}
             <RegistrationError>{registrationError}</RegistrationError>
             <ButtonsContainer>
@@ -241,9 +242,8 @@ const PopupTitle = styled.div`
   margin-bottom: 40px;
 `;
 
-const TeamReverse = styled.img`
-  width: 50px;
-  height: 50px;
+const TeamReverse = styled(CompareArrowsIco)`
+  font-size: 2em !important;
   cursor: pointer;
   margin-bottom: 20px;
 `;

@@ -36,11 +36,11 @@ class ProfilePhotoBlock extends Component {
 
   render() {
     const {player, isCurrent} = this.props;
-    const id = player.iconName ? player.iconName + Math.random() : Math.random();
+    const id = player.iconPath ? player.iconPath + Math.random() : Math.random();
 
     return (
       <ProfilePhoto>
-        <UserPhoto photo={player.iconName}/>
+        <UserPhoto photo={player.iconPath}/>
         {
           isCurrent &&
           <Button htmlFor={id} >

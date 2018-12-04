@@ -3,7 +3,7 @@ import moment from 'moment';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 import UserPhoto from '../../components-ui/user-photo';
-import {Colors} from "../../helpers/style-variables";
+import {Colors, MediaViews} from "../../helpers/style-variables";
 
 export const GameBlock = ({
                             winner1Icon, winner1Id, winner2Icon, winner2Id, loser1Icon, loser1Id, loser2Icon, loser2Id, losersGoals,
@@ -63,6 +63,11 @@ const Content = styled.div`
   padding: 15px 20px;
   width: max-content;
   min-height: 100px;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    width: 100%;
+    padding: 10px 0;
+    box-sizing: border-box;
+  }
 `;
 
 const InfoContent = styled.div`
@@ -83,16 +88,25 @@ const InfoContent = styled.div`
       color: ${Colors.MAIN_COLOR};
     }
   }
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    font-size: 0.9em;
+  }
 `;
 
 const GameContent = styled.div`
   display: flex;
   align-items: center;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    justify-content: space-between;
+  }
 `;
 
 const Team = styled.div`
   display: flex;
   flex-direction: column;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+  }
+  
 `;
 
 const User = styled(Link)`
@@ -112,12 +126,24 @@ const User = styled(Link)`
 const UsernameLeft = styled.div`
   padding-left: 10px;
   min-width: 150px;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    min-width: 0;
+    width: 55px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
 `;
 
 const UsernameRight = styled.div`
   padding-right: 10px;
   min-width: 150px;
   text-align: right;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    min-width: 0;
+    width: 55px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
 `;
 
 const Photo = styled.div`
@@ -130,11 +156,20 @@ const Photo = styled.div`
   overflow: hidden;
   display: flex;
   border-radius: 100%;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    max-width: 30px;
+    min-width: 30px;
+    max-height: 30px;
+    min-height: 30px;
+  }
 `;
 
 const Score = styled.div`
   padding: 0 40px;
   font-size: 1.3em;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    padding: 0 10px;
+    font-size: 1.1em;
   }
 `;
 

@@ -4,11 +4,11 @@ import {Link} from 'react-router-dom';
 import {MainMenuLink} from "../../components-ui/buttons/main-menu-link";
 import GameRegistration from '../game-registration';
 
-import signOutIco from '../../shared/images/icons/sign-out.png';
+import ExitToAppIco from '@material-ui/icons/ExitToApp';
 import UserPhoto from '../../components-ui/user-photo';
 import {Colors} from '../../helpers/style-variables';
 
-export const HorizontalMenu = ({id, iconName, username}) => (
+export const HorizontalMenu = ({id, iconPath, username}) => (
   <Content>
     <Title to="/">Zen<span>Kicker</span></Title>
     <TopBar>
@@ -16,16 +16,16 @@ export const HorizontalMenu = ({id, iconName, username}) => (
         <MainMenuLink link="/players">Players</MainMenuLink>
         <MainMenuLink link="/games">Games</MainMenuLink>
       </Navigation>
-      <RightSection>
+      <UserSection>
         <GameRegistration />
         <User to={`/players/${id}`}>
           <Photo>
-            <UserPhoto photo={iconName}/>
+            <UserPhoto photo={iconPath}/>
           </Photo>
           <Username>{username}</Username>
         </User>
-        <a href="/logout"><SignOut/></a>
-      </RightSection>
+        <a href="/logout"><LogOutIco/></a>
+      </UserSection>
     </TopBar>
   </Content>
 )
@@ -68,7 +68,7 @@ const Navigation = styled.div`
   margin-left: 200px;
 `;
 
-const RightSection = styled.div`
+const UserSection = styled.div`
   display: flex;
   align-items: center;
   padding: 0 20px;  
@@ -106,11 +106,6 @@ const Username = styled.div`
 	margin-right: 20px;
 `;
 
-const SignOut = styled.div`
-  width: 17px;
-  height: 17px;
-  background-image: url(${signOutIco});
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
+const LogOutIco = styled(ExitToAppIco)`
+  color: #000;
 `;

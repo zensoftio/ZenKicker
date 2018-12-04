@@ -4,3 +4,7 @@ export const Colors = {
   THEME_COLOR: '#fbfbfb',
   HOVER_COLOR: '#f5f5f5'
 }
+
+export const MediaViews = {
+  MOBILE: 820
+}

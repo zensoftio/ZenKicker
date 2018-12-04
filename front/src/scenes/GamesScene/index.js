@@ -6,7 +6,7 @@ import {getAllGames, appendToGames, getAllPlayers} from '../../actions';
 import {withRouter} from 'react-router-dom';
 import AllGames from '../../components/all-games';
 import {getPlayerInfo} from "../../helpers/get-player-info";
-import {Colors} from "../../helpers/style-variables";
+import {Colors, MediaViews} from "../../helpers/style-variables";
 
 class GamesScene extends Component {
 
@@ -66,9 +66,13 @@ const Content = styled.div`
 const GamesCount = styled.div`
   font-size: 3.7em;
   margin-bottom: 20px;
-  color: ${Colors.MAIN_COLOR}
+  color: ${Colors.MAIN_COLOR};
   padding-left: 125px;
   span {
     font-size: .3em;
+  }
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    font-size: 2.5em;
+    padding-left: 0;
   }
 `;

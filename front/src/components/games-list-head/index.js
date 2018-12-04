@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import {MediaViews} from "../../helpers/style-variables";
 
 const GamesListHead = () => (
   <Content>
@@ -19,6 +20,9 @@ const Content = styled.div`
 	min-width: 300px;
 	box-sizing: border-box;
 	font-size: 1.2em;
+	@media (max-width: ${MediaViews.MOBILE}px) {
+    font-size: 1.1em;
+  }
 `;
 
 const Winners = styled.div`

@@ -28,12 +28,10 @@ class ProfileMainInfo extends Component {
 
     return (
       <Content>
-        <Status>{getPlayerStatus(rating)}</Status>
         <div>
           <ProfilePhotoBlock isCurrent={isCurrent} setPhotoError={this.setPhotoError}/>
           <ErrorPhotoUpload>{uploadPhotoError}</ErrorPhotoUpload>
         </div>
-
         <Info>
           <EditingBlock>
             <UsernameBlock isCurrent={isCurrent}/>
@@ -41,6 +39,7 @@ class ProfileMainInfo extends Component {
               isCurrent && <PasswordBlock/>
             }
           </EditingBlock>
+          <Status>{getPlayerStatus(rating)}</Status>
           <StatisticsContent>
             <Statistics>
               <Field>Rating: <span>{rating}</span></Field>
@@ -74,7 +73,7 @@ const Info = styled.div`
 `;
 
 const StatisticsContent = styled.div`
-  padding: 40px 20px 0 20px;
+  padding: 20px 20px 0 20px;
   display: flex;
   justify-content: space-between;
 `;
@@ -82,19 +81,11 @@ const Statistics = styled.div`
   width: 72%;
 `;
 const Status = styled.div`
-  width: 300px;
-  color: red;
-  font-size: 2.2em;
+  width: 100%;
+  color: ${Colors.MAIN_COLOR};
+  font-size: 1.6em;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  transform: rotate(-20deg);
-  font-weight: bold;
-  text-align: center;
-  position: absolute;
-  top: 230px;
-  z-index: 9;
-  left: 420px;
+  padding: 20px 20px 0 20px;
 `;
 const Field = styled.div`
   font-size: 1.3em;

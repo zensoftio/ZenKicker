@@ -65,8 +65,8 @@ class ProfileScene extends Component {
     const mappedRelations = relations.list.map(relation => (
       {
         ...relation,
-        partnerIcon: players.list.find(i => i.player.id === relation.partnerId).player.iconName || null,
-        partnerName: players.list.find(i => i.player.id === relation.partnerId).player.username || null,
+        partnerIcon: players.list.length && (players.list.find(i => i.player.id === relation.partnerId).player.iconPath || null),
+        partnerName: players.list.length && (players.list.find(i => i.player.id === relation.partnerId).player.username || null),
       }
     ))
 

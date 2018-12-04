@@ -7,7 +7,7 @@ import firstPlaceIcon from '../../shared/images/first-place.png';
 import secondPlaceIcon from '../../shared/images/second-place.png';
 import thirdPlaceIcon from '../../shared/images/third-place.png';
 import crabIcon from '../../shared/images/crab.png';
-import {Colors} from "../../helpers/style-variables";
+import {Colors, MediaViews} from "../../helpers/style-variables";
 
 const PlayersOfWeek = ({players}) => {
   if (!players || !players.firstPlace) return null;
@@ -17,21 +17,21 @@ const PlayersOfWeek = ({players}) => {
       <PlacesContainer>
         <PlaceContainer to={`/players/${players.firstPlace.id}`}>
           <PhotoBlock>
-            <UserPhoto photo={players.firstPlace.iconName}/>
+            <UserPhoto photo={players.firstPlace.iconPath}/>
           </PhotoBlock>
           <PlaceIcon src={firstPlaceIcon}/>
           <Name>{players.firstPlace.username}</Name>
         </PlaceContainer>
         <PlaceContainer to={`/players/${players.secondPlace.id}`}>
           <PhotoBlock>
-            <UserPhoto photo={players.secondPlace.iconName}/>
+            <UserPhoto photo={players.secondPlace.iconPath}/>
           </PhotoBlock>
           <PlaceIcon src={secondPlaceIcon}/>
           <Name>{players.secondPlace.username}</Name>
         </PlaceContainer>
         <PlaceContainer to={`/players/${players.thirdPlace.id}`}>
           <PhotoBlock>
-            <UserPhoto photo={players.thirdPlace.iconName}/>
+            <UserPhoto photo={players.thirdPlace.iconPath}/>
           </PhotoBlock>
           <PlaceIcon src={thirdPlaceIcon}/>
           <Name>{players.thirdPlace.username}</Name>
@@ -40,7 +40,7 @@ const PlayersOfWeek = ({players}) => {
       <div>
         <PlaceContainer to={`/players/${players.loser.id}`}>
           <PhotoBlock>
-            <UserPhoto photo={players.loser.iconName}/>
+            <UserPhoto photo={players.loser.iconPath}/>
           </PhotoBlock>
           <PlaceIcon src={crabIcon}/>
           <Name>{players.loser.username}</Name>
@@ -56,6 +56,11 @@ const Content = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const PlacesContainer = styled.div`
@@ -93,6 +98,10 @@ const PhotoBlock = styled.div`
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    width: 60px;
+    height: 60px;
+  }
 `;
 
 const PlaceIcon = styled.img`
@@ -100,4 +109,7 @@ const PlaceIcon = styled.img`
   bottom: 30px;
   right: 5px;
   height: 60px;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    height: 35px
+  }
 `;
