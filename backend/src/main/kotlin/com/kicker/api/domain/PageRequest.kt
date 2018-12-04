@@ -14,15 +14,25 @@ open class PageRequest(
         @field:Min(value = 0) var offset: Int = 0,
         @field:Min(value = 1) @field:Max(100) var limit: Int = 10,
         var sortDirection: Sort.Direction = Sort.Direction.ASC,
-        var sortBy: String = "id",
-        private val maySortBy: Map<String, String> = mapOf("id" to "id")
+        var sortBy: String = ID_FIELD,
+        private val maySortBy: Map<String, String> = mapOf(ID_FIELD to ID_FIELD)
 ) : Pageable {
+
+    companion object {
+        private const val ID_FIELD = "id"
+    }
+
 
     override fun getPageNumber(): Int = (offset / limit + 1)
 
     override fun hasPrevious(): Boolean = offset > 0
 
-    override fun getSort(): Sort = Sort(sortDirection, maySortBy[sortBy])
+    override fun getSort(): Sort {
+        if (sortBy == ID_FIELD) {
+            return Sort(sortDirection, maySortBy[sortBy])
+        }
+        return Sort(sortDirection, maySortBy[sortBy], ID_FIELD)
+    }
 
     override fun next(): Pageable = PageRequest(offset + limit, limit, sortDirection, sortBy, maySortBy)
 
