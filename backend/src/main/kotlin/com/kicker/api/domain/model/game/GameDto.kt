@@ -1,5 +1,6 @@
 package com.kicker.api.domain.model.game
 
+import com.kicker.api.domain.model.player.PlayerDto
 import com.kicker.api.model.Game
 import java.sql.Timestamp
 
@@ -9,22 +10,22 @@ import java.sql.Timestamp
 data class GameDto(
         val id: Long,
         val losersGoals: Int,
-        val winner1Id: Long,
-        val winner2Id: Long,
-        val loser1Id: Long,
-        val loser2Id: Long,
-        val reportedById: Long,
+        val winner1: PlayerDto,
+        val winner2: PlayerDto,
+        val loser1: PlayerDto,
+        val loser2: PlayerDto,
+        val reportedBy: PlayerDto,
         val date: Long
 ) {
 
     constructor(game: Game) : this(
             game.id,
             game.losersGoals,
-            game.winner1.id,
-            game.winner2.id,
-            game.loser1.id,
-            game.loser2.id,
-            game.reportedBy.id,
+            PlayerDto(game.winner1),
+            PlayerDto(game.winner2),
+            PlayerDto(game.loser1),
+            PlayerDto(game.loser2),
+            PlayerDto(game.reportedBy),
             Timestamp.valueOf(game.date).time
     )
 
