@@ -24,7 +24,7 @@ export const HorizontalMenu = ({id, iconPath, username}) => (
           </Photo>
           <Username>{username}</Username>
         </User>
-        <a href="/logout"><ExitToAppIco/></a>
+        <a href="/logout"><LogOutIco/></a>
       </UserSection>
     </TopBar>
   </Content>
@@ -104,4 +104,8 @@ const Username = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
 	margin-right: 20px;
+`;
+
+const LogOutIco = styled(ExitToAppIco)`
+  color: #000;
 `;
