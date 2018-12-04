@@ -5,8 +5,6 @@ import com.kicker.api.domain.model.playerStats.PlayerStatsPageRequest
 import com.kicker.api.domain.model.playerStats.PlayersDashboard
 import com.kicker.api.model.PlayerStats
 import com.kicker.api.repository.PlayerStatsRepository
-import org.springframework.cache.annotation.CacheEvict
-import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Sort.Direction.DESC
 import org.springframework.stereotype.Service
@@ -24,7 +22,6 @@ class DefaultPlayerStatsService(
         return repository.findByPlayer(player)
     }
 
-    @Cacheable("playersDashboard")
     override fun getDashboard(): PlayersDashboard {
         val pageRequest = PlayerStatsPageRequest().apply { limit = 0; sortBy = "rating" }
         if (getAllActive(pageRequest).totalElements < 4) {
@@ -46,13 +43,8 @@ class DefaultPlayerStatsService(
         )
     }
 
-    @Cacheable("statsPlayers")
-    override fun getAll(pageRequest: PageRequest): Page<PlayerStats> = super.getAll(pageRequest)
-
-    @Cacheable("statsActivePlayers")
     override fun getAllActive(pageRequest: PageRequest): Page<PlayerStats> = repository.findAllByActiveTrue(pageRequest)
 
-    @CacheEvict("statsPlayers", "statsActivePlayers", allEntries = true)
     @Transactional
     override fun updateActivity(playerId: Long, active: Boolean): PlayerStats {
         val playerStats = getByPlayer(playerId)

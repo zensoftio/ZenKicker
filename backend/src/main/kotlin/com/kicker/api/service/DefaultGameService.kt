@@ -1,15 +1,11 @@
 package com.kicker.api.service
 
 import com.kicker.api.config.property.PlayerSettingsProperties
-import com.kicker.api.domain.PageRequest
 import com.kicker.api.domain.model.game.GameRegistrationRequest
 import com.kicker.api.model.Game
 import com.kicker.api.repository.GameRepository
 import com.kicker.api.utils.DateUtils
-import org.springframework.cache.annotation.CacheEvict
-import org.springframework.cache.annotation.Cacheable
 import org.springframework.context.ApplicationEventPublisher
-import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate.now
@@ -25,11 +21,6 @@ class DefaultGameService(
         private val eventPublisher: ApplicationEventPublisher,
         private val playerSettingsProperties: PlayerSettingsProperties
 ) : DefaultBaseService<Game, GameRepository>(repository), GameService {
-
-    @Cacheable("games")
-    override fun getAll(pageRequest: PageRequest): Page<Game> {
-        return super.getAll(pageRequest)
-    }
 
     /*
         * Current week is number 0, so 10 week is number 9
@@ -78,8 +69,6 @@ class DefaultGameService(
         return countGamesPerDayDuringLast7Days
     }
 
-    @CacheEvict(value = ["games", "relations", "playersDashboard", "statsPlayers", "statsActivePlayers", "playerGames",
-        "deltaPerWeekDuring10Weeks"], allEntries = true)
     @Transactional
     override fun gameRegistration(playerId: Long, request: GameRegistrationRequest): Game {
         val reporter = playerService.get(playerId)

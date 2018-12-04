@@ -1,7 +1,6 @@
 package com.kicker.api.service
 
 import com.kicker.api.component.AmazonS3Client
-import com.kicker.api.domain.PageRequest
 import com.kicker.api.domain.model.player.CreatePlayerRequest
 import com.kicker.api.domain.model.player.UpdatePlayerPasswordRequest
 import com.kicker.api.domain.model.player.UpdatePlayerUsernameRequest
@@ -10,9 +9,6 @@ import com.kicker.api.exception.service.NotFoundPlayerException
 import com.kicker.api.exception.service.PasswordIncorrectException
 import com.kicker.api.model.Player
 import com.kicker.api.repository.PlayerRepository
-import org.springframework.cache.annotation.CacheEvict
-import org.springframework.cache.annotation.Cacheable
-import org.springframework.data.domain.Page
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -42,13 +38,9 @@ class DefaultPlayerService(
 
     override fun getByUsername(username: String): Player? = repository.findByUsername(username)
 
-    @Cacheable("players")
-    override fun getAll(pageRequest: PageRequest): Page<Player> = super.getAll(pageRequest)
-
     override fun loadUserByUsername(username: String): UserDetails = getByUsername(username)
             ?: throw UsernameNotFoundException("User with username $username not found")
 
-    @CacheEvict("players", "statsPlayers", allEntries = true)
     @Transactional
     override fun create(request: CreatePlayerRequest): Player {
         if (isExist(request.username!!)) {
@@ -60,7 +52,6 @@ class DefaultPlayerService(
         return super.save(Player(request.username!!, request.password!!))
     }
 
-    @CacheEvict("players", "playersDashboard", "statsPlayers", "statsActivePlayers", allEntries = true)
     @Transactional
     override fun updateUsername(playerId: Long, request: UpdatePlayerUsernameRequest): Player {
         if (isExist(request.username!!)) {
@@ -86,7 +77,6 @@ class DefaultPlayerService(
         return super.save(player)
     }
 
-    @CacheEvict("players", "playersDashboard", "statsPlayers", "statsActivePlayers", allEntries = true)
     @Transactional
     override fun updateIcon(playerId: Long, icon: MultipartFile): Player {
         val player = get(playerId)
