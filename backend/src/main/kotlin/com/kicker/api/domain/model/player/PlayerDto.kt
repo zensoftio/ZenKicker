@@ -8,13 +8,13 @@ import com.kicker.api.model.Player
 data class PlayerDto(
         val id: Long,
         val username: String,
-        val iconName: String?
+        val iconPath: String?
 ) {
 
     constructor(player: Player) : this(
             player.id,
             player.username,
-            player.iconName
+            player.iconPath
     )
 
 }
