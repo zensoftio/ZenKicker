@@ -5,4 +5,10 @@ import com.kicker.api.domain.PageRequest
 /**
  * @author Yauheni Efimenko
  */
-class PlayerRelationsPageRequest : PageRequest(maySortBy = mapOf("id" to "id", "winningPercentage" to "winningPercentage"))
+class PlayerRelationsPageRequest : PageRequest(setSortBy = setOf(ID_FIELD, WINNING_PERCENTAGE_FIELD)) {
+
+    companion object {
+        const val WINNING_PERCENTAGE_FIELD = "winningPercentage"
+    }
+
+}

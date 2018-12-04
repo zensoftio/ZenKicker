@@ -78,7 +78,7 @@ class DefaultGameService(
         return countGamesPerDayDuringLast7Days
     }
 
-    @CacheEvict(value = ["games", "relations", "playersDashboard", "statsPlayers", "statsActivePlayers", "playerGames",
+    @CacheEvict(value = ["games", "relations", "statsPlayers", "statsActivePlayers", "playerGames",
         "deltaPerWeekDuring10Weeks"], allEntries = true)
     @Transactional
     override fun gameRegistration(playerId: Long, request: GameRegistrationRequest): Game {
