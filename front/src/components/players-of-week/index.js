@@ -75,6 +75,9 @@ const Name = styled.div`
   max-width: 100px;
   word-break: break-word;
   text-align: center;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    font-size: 0.9em;
+  }
 `;
 
 const PlaceContainer = styled(Link)`
@@ -106,10 +109,11 @@ const PhotoBlock = styled.div`
 
 const PlaceIcon = styled.img`
   position: absolute;
-  bottom: 30px;
-  right: 5px;
+  top: 80px;
+  right: 10px;
   height: 60px;
   @media (max-width: ${MediaViews.MOBILE}px) {
-    height: 35px
+    height: 35px;
+    top: 50px;
   }
 `;

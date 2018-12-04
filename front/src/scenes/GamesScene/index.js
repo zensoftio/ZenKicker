@@ -5,7 +5,6 @@ import {connect} from 'react-redux';
 import {getAllGames, appendToGames, getAllPlayers} from '../../actions';
 import {withRouter} from 'react-router-dom';
 import AllGames from '../../components/all-games';
-import {getPlayerInfo} from "../../helpers/get-player-info";
 import {Colors, MediaViews} from "../../helpers/style-variables";
 
 class GamesScene extends Component {
@@ -17,20 +16,12 @@ class GamesScene extends Component {
   }
 
   render() {
-    const {players, games, actions} = this.props;
-
-    const mappedGames = games.list.map(game => (
-      {
-        ...game,
-        ...getPlayerInfo(players, game),
-        reportedBy: players.list.length ? players.list.find(i => i.player.id === game.reportedById).player.username : null,
-      }
-    ))
+    const {games, actions} = this.props;
 
     return (
       <Content>
         <GamesCount>{games.totalCount} <span>games played</span></GamesCount>
-        <AllGames games={mappedGames ? mappedGames : []} appendToGames={actions.appendToGames} totalCount={games.totalCount}/>
+        <AllGames games={games.list.length ? games.list : []} appendToGames={actions.appendToGames} totalCount={games.totalCount}/>
       </Content>
 
     );
@@ -39,7 +30,6 @@ class GamesScene extends Component {
 
 const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
   const props = {
-    players: state.player.players,
     games: state.game.games,
   };
   return props;

@@ -13,6 +13,7 @@ export default DropdownInput;
 
 const Content = styled.div`
   padding: 10px;
+  
 `;
 
 const CustomSelect = styled(Select)`

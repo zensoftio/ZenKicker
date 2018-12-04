@@ -5,6 +5,7 @@ import {ProfileBlock} from '../profile-block';
 import PlayersListHead from '../players-list-head';
 import InfiniteScroll from '../infinite-scroll';
 import {NoContent} from '../no-content';
+import {MediaViews} from "../../helpers/style-variables";
 
 class PlayersTabs extends Component {
   constructor(props) {
@@ -20,12 +21,13 @@ class PlayersTabs extends Component {
   renderTab = () => {
     const {players, activePlayers} = this.props;
     const {isAllPlayersTab} = this.state;
+    const isMobile = window.outerWidth <= MediaViews.MOBILE;
     if (isAllPlayersTab) {
       return (
         <InfiniteScroll data={players.list} onLoadMore={this.onLoadMorePlayers} totalCount={players.totalCount}>
           {players.list.length ? players.list.map((item, index) =>
             <ProfileBlock key={item.player.id} id={item.player.id} index={index + 1} username={item.player.username} countGames={item.countGames}
-                          rated={item.rated} rating={item.rating} iconPath={item.player.iconPath}/>) :
+                          rated={item.rated} rating={item.rating} iconPath={item.player.iconPath} isMobile={isMobile}/>) :
             <NoContent/>
           }
         </InfiniteScroll>
@@ -35,7 +37,7 @@ class PlayersTabs extends Component {
       <InfiniteScroll data={activePlayers.list} onLoadMore={this.onLoadMoreActivePlayers} totalCount={activePlayers.totalCount}>
         {activePlayers.list.length ? activePlayers.list.map((item, index) =>
           <ProfileBlock key={item.player.id} id={item.player.id} index={index + 1} username={item.player.username} countGames={item.countGames}
-                        rated={item.rated} rating={item.rating} iconPath={item.player.iconPath}/>) :
+                        rated={item.rated} rating={item.rating} iconPath={item.player.iconPath} isMobile={isMobile}/>) :
           <NoContent/>
         }
       </InfiniteScroll>
@@ -53,7 +55,7 @@ class PlayersTabs extends Component {
           <TabButton name='active' onButtonClick={this.setActivePlayersTab} isActive={!isAllPlayersTab}/>
           <TabButton name='all' onButtonClick={this.setAllPlayersTab} isActive={isAllPlayersTab}/>
         </TabButtonContainer>
-        <PlayersListHead />
+        <PlayersListHead/>
         <Players>
           {this.renderTab()}
         </Players>
@@ -67,6 +69,9 @@ export default PlayersTabs;
 
 const Content = styled.div`
   width: 900px;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    width: 100%;
+  }
 `;
 const TabButtonContainer = styled.div`
   display: flex;
@@ -74,6 +79,10 @@ const TabButtonContainer = styled.div`
 	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 	width: max-content;
 	font-size: 1.2em;
+	@media (max-width: ${MediaViews.MOBILE}px) {
+    font-size: 1em;
+    width: 100%;
+  }
 `;
 
 const Players = styled.div`
@@ -84,4 +93,11 @@ const Players = styled.div`
 	width: 100%;
 	overflow-y: auto;
 	overflow-x: hidden;
+	
+	&>div {
+	  width: 100%;
+	}
+	@media (max-width: ${MediaViews.MOBILE}px) {
+    max-height: calc(100vh - 200px);
+  }
 `;

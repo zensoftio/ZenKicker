@@ -2,12 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 import {Doughnut} from 'react-chartjs';
 
-const DoughnutChart = ({data, options, gamesCount}) => (
-  <Content>
-    <Doughnut data={data} options={options} width={500} height={250}/>
-    <GamesCount>{gamesCount}<span>games</span></GamesCount>
-  </Content>
-)
+const DoughnutChart = ({data, options, gamesCount, isMobile}) => {
+
+  const width = isMobile ? window.outerWidth : 500;
+  return (
+    <Content>
+      <Doughnut data={data} options={options} width={width} height={250}/>
+      <GamesCount>{gamesCount}<span>games</span></GamesCount>
+    </Content>
+  )
+}
 
 export default DoughnutChart;
 

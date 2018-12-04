@@ -4,7 +4,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import styled from 'styled-components';
 import {
-	getCurrent,
+	getCurrent
 } from "./actions";
 import DashboardScene from "./scenes/DashboardScene";
 import PlayersScene from "./scenes/PlayersScene";
@@ -60,7 +60,7 @@ const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
 }
 const mapDispatchToProps = (dispatch) => {
 	const actions = {
-		getCurrent,
+		getCurrent
 	};
 	const actionMap = {actions: bindActionCreators(actions, dispatch)};
 	return actionMap;
@@ -87,5 +87,6 @@ const Content = styled.div`
 	justify-content: center;
 	@media (max-width: ${MediaViews.MOBILE}px) {
 	  margin-top: 90px;
+	  padding: 0 20px;
   }
 `;

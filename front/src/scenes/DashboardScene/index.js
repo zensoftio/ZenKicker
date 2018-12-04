@@ -8,7 +8,6 @@ import {withRouter} from 'react-router-dom';
 import LatestGames from '../../components/latest-games';
 import Chart from '../../components/chart';
 import PlayersOfWeek from "../../components/players-of-week";
-import {getPlayerInfo} from "../../helpers/get-player-info";
 import {MediaViews} from "../../helpers/style-variables";
 
 class DashboardScene extends Component {
@@ -22,15 +21,7 @@ class DashboardScene extends Component {
   }
 
   render() {
-    const {players, playersDashboard, latestGames, gamesPerLastWeek} = this.props;
-
-    const mappedLatestGames = players.list && latestGames.list.map(game => (
-      {
-        ...game,
-        ...getPlayerInfo(players, game),
-        reportedBy: players.list.length ? players.list.find(i => i.player.id === game.reportedById).player.username : null,
-      }
-    ))
+    const {playersDashboard, latestGames, gamesPerLastWeek} = this.props;
 
     const daysOfWeek = moment.weekdays();
     const dayIndex = daysOfWeek.indexOf(moment().format('dddd'));
@@ -39,9 +30,7 @@ class DashboardScene extends Component {
     const mappedGamesCountStatistic = gamesPerLastWeek.map((item, index) =>
       ({count: item, day: mappedDaysOfWeek[index]}));
 
-
     const isMobile = window.outerWidth <= MediaViews.MOBILE;
-
     return (
       <Content>
         <div>
@@ -49,11 +38,11 @@ class DashboardScene extends Component {
         </div>
         <div>
           <Chart data={mappedGamesCountStatistic} lineDataKey='count' xDataKey='day'
-                 title='Games per day' width={isMobile ? window.outerWidth - 50 : null}/>
+                 title='Games per day' width={isMobile ? window.outerWidth - 50 : undefined}/>
         </div>
         <div>
           <Title>Latest games</Title>
-          <LatestGames latestGames={mappedLatestGames}/>
+          <LatestGames latestGames={latestGames.list}/>
         </div>
       </Content>
 
@@ -64,7 +53,7 @@ class DashboardScene extends Component {
 const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
   const props = {
     playersDashboard: state.player.playersDashboard,
-    players: state.player.players,
+    fullListOfPlayers: state.player.fullListOfPlayers,
     latestGames: state.game.latestGames,
     gamesPerLastWeek: state.game.gamesPerLastWeek,
   };

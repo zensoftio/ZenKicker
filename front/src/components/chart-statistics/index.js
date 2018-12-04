@@ -8,7 +8,7 @@ const setWeekValue = (week) => {
   return `${week} weeks ago`;
 }
 
-const ChartStatistics = ({ratingStatistic, gamesCountStatistic}) => {
+const ChartStatistics = ({ratingStatistic, gamesCountStatistic, isMobile}) => {
 
   const mappedRatingStatistic = ratingStatistic.map((item, index) =>
     ({rating: item, week: setWeekValue(9 - index)}));
@@ -17,8 +17,10 @@ const ChartStatistics = ({ratingStatistic, gamesCountStatistic}) => {
 
   return (
     <Content>
-      <Chart data={mappedRatingStatistic} lineDataKey='rating' xDataKey='week' title='Rating per week'/>
-      <Chart data={mappedGamesCountStatistic} lineDataKey='games' xDataKey='week' title='Count of games per week'/>
+      <Chart data={mappedRatingStatistic} lineDataKey='rating' xDataKey='week' title='Rating per week'
+             width={isMobile ? window.outerWidth - 50 : undefined}/>
+      <Chart data={mappedGamesCountStatistic} lineDataKey='games' xDataKey='week' title='Count of games per week'
+             width={isMobile ? window.outerWidth - 50 : undefined}/>
     </Content>
   )
 }

@@ -4,8 +4,9 @@ import {GameBlock} from '../../components/game-block';
 import InfiniteScroll  from '../infinite-scroll';
 import GamesListHead  from '../games-list-head';
 import {NoContent}  from '../no-content';
+import {MediaViews} from "../../helpers/style-variables";
 
-const PlayerGames = ({games, totalCount, appendToGames, playerId}) => {
+const PlayerGames = ({games, totalCount, appendToGames, playerId, isMobile}) => {
 
   const onLoadMore = () => appendToGames(games.length, playerId);
 
@@ -14,14 +15,17 @@ const PlayerGames = ({games, totalCount, appendToGames, playerId}) => {
       <GamesListHead/>
       <LatestGames>
         <InfiniteScroll data={games} onLoadMore={onLoadMore} totalCount={totalCount}>
-          {games.length ? games.map(i => <GameBlock key={i.id} losersGoals={i.losersGoals} winner1Icon={i.winner1Icon}
-                                                    winner1Id={i.winner1Id} winner2Id={i.winner2Id} loser1Id={i.loser1Id}
-                                                    loser2Id={i.loser2Id} winner2Icon={i.winner2Icon} loser1Icon={i.loser1Icon}
-                                                    loser2Icon={i.loser2Icon} winner1Name={i.winner1Name}
-                                                    winner2Name={i.winner2Name} loser1Name={i.loser1Name}
-                                                    loser2Name={i.loser2Name} won={i.won} delta={i.delta}
-                                                    date={i.date} reportedBy={i.reportedBy}
-                                                    reportedById={i.reportedById}/>) :
+          {games.length ? games.map(i => <GameBlock  key={i.id} losersGoals={i.losersGoals} isMobile={isMobile}
+                                                     winner1Icon={i.winner1.iconPath} winner1Id={i.winner1.id}
+                                                     winner1Name={i.winner1.username}
+                                                     winner2Id={i.winner2.id} winner2Icon={i.winner2.iconPath}
+                                                     winner2Name={i.winner2.username}
+                                                     loser1Id={i.loser1.id} loser1Icon={i.loser1.iconPath}
+                                                     loser1Name={i.loser1.username}
+                                                     loser2Id={i.loser2.id} loser2Icon={i.loser2.iconPath}
+                                                     loser2Name={i.loser2.username} date={i.date}
+                                                     reportedBy={i.reportedBy.username} reportedById={i.reportedBy.id}
+                                                     won={i.won} delta={i.delta}/>) :
             <NoContent/>
           }
         </InfiniteScroll>
@@ -35,6 +39,9 @@ export default PlayerGames;
 const Content = styled.div`
   margin-top: 50px;
   width: max-content;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    width: 100%;
+  }
 `;
 
 const LatestGames = styled.div`
@@ -43,5 +50,8 @@ const LatestGames = styled.div`
 	align-items: center;
 	max-height: 700px;
 	overflow: auto;
+	@media (max-width: ${MediaViews.MOBILE}px) {
+    max-height: calc(100vh - 100px);
+  }
 `;
 

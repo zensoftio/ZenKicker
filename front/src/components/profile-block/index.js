@@ -2,14 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 import UserPhoto from '../../components-ui/user-photo';
-import {Colors} from "../../helpers/style-variables";
+import {Colors, MediaViews} from "../../helpers/style-variables";
 
-export const ProfileBlock = ({index, id, username, countGames, rated, rating, iconPath}) => (
+export const ProfileBlock = ({index, id, username, countGames, rated, rating, iconPath, isMobile}) => (
   <Content to={`/players/${id}`}>
     <Index>{index}</Index>
-    <Photo>
-      <UserPhoto photo={iconPath}/>
-    </Photo>
+    {
+      !isMobile &&
+      <Photo>
+        <UserPhoto photo={iconPath}/>
+      </Photo>
+    }
     <Username>{username}</Username>
     <Statistics>{countGames}</Statistics>
     <Statistics>{rated}</Statistics>
@@ -31,6 +34,11 @@ const Content = styled(Link)`
 	}
   &:hover {
     background-color: ${Colors.HOVER_COLOR};
+  }
+  
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    font-size: 0.8em;
+    padding: 10px;
   }
 `;
 const Photo = styled.div`
@@ -56,16 +64,29 @@ const Index = styled.div`
   min-width: 50px;
   overflow: hidden;
   text-overflow: ellipsis;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    max-width: 10%;
+    min-width: 10%;
+  }
 `;
 
 const Username = styled(Template)`
   max-width: 280px;
   min-width: 280px;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    max-width: 20%;
+    min-width: 20%;
+    padding-left: 0;
+  }
 `;
 
 const Statistics = styled(Template)`
   max-width: 160px;
   min-width: 160px;
   text-align: right;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    max-width: 23.3%;
+    min-width: 23.3%;
+  }
 `;
 

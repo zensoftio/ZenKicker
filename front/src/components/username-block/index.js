@@ -4,7 +4,7 @@ import {updateUsername} from '../../actions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {getPlayer, getCurrent} from "../../actions";
-import {Colors} from '../../helpers/style-variables';
+import {Colors, MediaViews} from '../../helpers/style-variables';
 
 class UsernameBlock extends Component {
   constructor(props) {
@@ -72,6 +72,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(UsernameBlock);
 const Content = styled.div`
   display: flex;
   position: relative;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    margin-bottom: 20px;
+  }
 `;
 
 const Username = styled.div`
@@ -79,6 +82,9 @@ const Username = styled.div`
   padding: 5px 40px 5px 10px;
   width: 400px;
   box-sizing: border-box;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    text-align: center;
+  }
 `;
 
 const UsernameInput = styled.input`
@@ -95,6 +101,10 @@ const UsernameInput = styled.input`
   }
   &:focus {
 		background-color: #f7f7f7
+  }
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    text-align: center;
+    width: 100%;
   }
 `;
 

@@ -1,7 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import {capitalizeString} from '../../../helpers/string-helpers';
-import {Colors} from '../../../helpers/style-variables';
+import {Colors, MediaViews} from '../../../helpers/style-variables';
+
+const TabButton = ({name, onButtonClick, isActive}) =>
+  <Content active={isActive} onClick={onButtonClick}>{capitalizeString(name)}</Content>
+
+export default TabButton;
 
 const Content = styled.div`
   padding: 10px 20px;
@@ -13,9 +18,7 @@ const Content = styled.div`
   &:hover {
     background-color: ${props => props.active ? '#fafafa' : '#fdfdfd'};
   }
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    width: 100%;
+  }
 `;
-
-const TabButton = ({name, onButtonClick, isActive}) =>
-  <Content active={isActive} onClick={onButtonClick}>{capitalizeString(name)}</Content>
-
-export default TabButton;

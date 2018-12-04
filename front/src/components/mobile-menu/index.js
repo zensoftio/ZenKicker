@@ -19,11 +19,13 @@ class MobileMenu extends React.Component {
     }
   }
 
-  onMenuOpen = () => this.setState({isOpen: !this.state.isOpen});
+  onMenuClick = () => this.setState({isOpen: !this.state.isOpen});
+  onMenuClose = () => this.setState({isOpen: false});
+
 
   handleOnBackgroundClick = (e) => {
     if (e.target.classList.contains(Content.styledComponentId)) {
-      this.setState({isOpen: false})
+      this.onMenuClose();
     }
   }
 
@@ -32,23 +34,23 @@ class MobileMenu extends React.Component {
     return(
       <Content onClick={this.handleOnBackgroundClick}>
         <Title to="/">Zen<span>Kicker</span></Title>
-        <MenuButton onClick={this.onMenuOpen}>{this.state.isOpen ?  <CloseIco /> : <MenuIco />}</MenuButton>
+        <MenuButton onClick={this.onMenuClick}>{this.state.isOpen ?  <CloseIco /> : <MenuIco />}</MenuButton>
         {
           this.state.isOpen &&
           <TopBar>
             <UserSection>
-              <User to={`/players/${id}`}>
+              <User to={`/players/${id}`} onClick={this.onMenuClose}>
                 <Photo>
                   <UserPhoto photo={iconPath}/>
                 </Photo>
                 <Username>{username}</Username>
               </User>
-              <a href="/logout"><LogOutIco/></a>
+              <a href="/logout" onClick={this.onMenuClose}><LogOutIco/></a>
             </UserSection>
             <GameRegistration />
             <Navigation>
-              <MainMenuLink link="/players">Players</MainMenuLink>
-              <MainMenuLink link="/games">Games</MainMenuLink>
+              <MainMenuLink link="/players"  onClick={this.onMenuClose}>Players</MainMenuLink>
+              <MainMenuLink link="/games"  onClick={this.onMenuClose}>Games</MainMenuLink>
             </Navigation>
           </TopBar>
         }
@@ -59,7 +61,7 @@ class MobileMenu extends React.Component {
 
 export default MobileMenu;
 
-const Content = styled.section`
+const Content = styled.div`
 	width: 100%;
 	height: 50px;
 	min-height: 50px;
@@ -67,6 +69,9 @@ const Content = styled.section`
 	justify-content: space-between;
 	align-items: center;
 	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
 	background-color: ${Colors.THEME_COLOR};
 	z-index: 10;
 	box-sizing: border-box;

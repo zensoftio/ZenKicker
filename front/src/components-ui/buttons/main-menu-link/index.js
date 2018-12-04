@@ -3,6 +3,12 @@ import styled from 'styled-components';
 import {NavLink} from 'react-router-dom';
 import {Colors} from '../../../helpers/style-variables';
 
+export const MainMenuLink = ({children, link, onClick}) => (
+	<LinkButton to={link} activeClassName='active' onClick={onClick ? onClick : null}>
+		<MenuItem>{children.replace('_', ' ')}</MenuItem>
+	</LinkButton>
+)
+
 const LinkButton = styled(NavLink)`
   padding: 22px 25px 10px 25px;
   margin: 0 10px;
@@ -28,9 +34,3 @@ const MenuItem = styled.span`
   opacity: 0.5;
   text-transform: capitalize;
 `;
-
-export const MainMenuLink = ({children, link}) => (
-	<LinkButton to={link} activeClassName='active'>
-		<MenuItem>{children.replace('_', ' ')}</MenuItem>
-	</LinkButton>
-)

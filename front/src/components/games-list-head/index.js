@@ -21,7 +21,8 @@ const Content = styled.div`
 	box-sizing: border-box;
 	font-size: 1.2em;
 	@media (max-width: ${MediaViews.MOBILE}px) {
-    font-size: 1.1em;
+    font-size: 1em;
+    padding: 10px;
   }
 `;
 
