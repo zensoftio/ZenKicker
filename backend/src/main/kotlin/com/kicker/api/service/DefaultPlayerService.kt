@@ -57,10 +57,10 @@ class DefaultPlayerService(
 
         request.password = passwordEncoder.encode(request.password)
 
-        return super.save(Player(request.username!!, request.password!!))
+        return repository.save(Player(request.username!!, request.password!!))
     }
 
-    @CacheEvict("players", "statsPlayers", "statsActivePlayers", allEntries = true)
+    @CacheEvict("players", "playersDashboard", "statsPlayers", "statsActivePlayers", allEntries = true)
     @Transactional
     override fun updateUsername(playerId: Long, request: UpdatePlayerUsernameRequest): Player {
         if (isExist(request.username!!)) {
@@ -70,7 +70,7 @@ class DefaultPlayerService(
         val player = get(playerId)
         player.username = request.username!!
 
-        return super.save(player)
+        return repository.save(player)
     }
 
     @Transactional
@@ -83,10 +83,10 @@ class DefaultPlayerService(
 
         player.password = passwordEncoder.encode(request.newPassword)
 
-        return super.save(player)
+        return repository.save(player)
     }
 
-    @CacheEvict("players", "statsPlayers", "statsActivePlayers", allEntries = true)
+    @CacheEvict("players", "playersDashboard", "statsPlayers", "statsActivePlayers", allEntries = true)
     @Transactional
     override fun updateIcon(playerId: Long, icon: MultipartFile): Player {
         val player = get(playerId)
@@ -95,7 +95,7 @@ class DefaultPlayerService(
         val iconPath = amazonS3Client.upload(icon)
 
         player.iconPath = iconPath
-        return super.save(player)
+        return repository.save(player)
     }
 
     private fun isExist(username: String): Boolean = getByUsername(username)?.let { true } ?: false

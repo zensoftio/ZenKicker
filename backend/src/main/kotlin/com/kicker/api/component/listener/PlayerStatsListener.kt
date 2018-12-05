@@ -55,6 +55,7 @@ class PlayerStatsListener(
         } else {
             stats.addGame(won, gamesSettingsProperties.defaultMaxScore!!, game.losersGoals, delta)
         }
+        playerStatsService.save(stats)
         playerToGameService.save(PlayerToGame(stats.player, game, won, delta))
     }
 

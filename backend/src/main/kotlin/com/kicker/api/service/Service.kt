@@ -83,4 +83,6 @@ interface PlayerStatsService : BaseService<PlayerStats> {
 
     fun updateActivity(playerId: Long, active: Boolean): PlayerStats
 
+    fun updateRatingAndRated(player: Player): PlayerStats
+
 }

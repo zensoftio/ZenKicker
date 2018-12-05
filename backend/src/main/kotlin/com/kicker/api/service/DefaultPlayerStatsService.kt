@@ -4,6 +4,7 @@ import com.kicker.api.domain.PageRequest
 import com.kicker.api.domain.model.playerStats.PlayerStatsPageRequest
 import com.kicker.api.domain.model.playerStats.PlayerStatsPageRequest.Companion.RATING_FIELD
 import com.kicker.api.domain.model.playerStats.PlayersDashboard
+import com.kicker.api.model.Player
 import com.kicker.api.model.PlayerStats
 import com.kicker.api.repository.PlayerStatsRepository
 import org.springframework.cache.annotation.CacheEvict
@@ -17,7 +18,9 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true)
 class DefaultPlayerStatsService(
         private val playerService: PlayerService,
-        private val repository: PlayerStatsRepository
+        private val repository: PlayerStatsRepository,
+        private val playerToGameService: PlayerToGameService,
+        private val gameService: GameService
 ) : DefaultBaseService<PlayerStats, PlayerStatsRepository>(repository), PlayerStatsService {
 
     override fun getByPlayer(playerId: Long): PlayerStats {
@@ -25,6 +28,7 @@ class DefaultPlayerStatsService(
         return repository.findByPlayer(player)
     }
 
+    @Cacheable("playersDashboard")
     override fun getDashboard(): PlayersDashboard {
         val pageRequest = PlayerStatsPageRequest().apply { limit = 0; sortBy = RATING_FIELD }
 
@@ -58,9 +62,21 @@ class DefaultPlayerStatsService(
     @Transactional
     override fun updateActivity(playerId: Long, active: Boolean): PlayerStats {
         val playerStats = getByPlayer(playerId)
+
         playerStats.active = active
 
-        return super.save(playerStats)
+        return repository.save(playerStats)
+    }
+
+    @CacheEvict("playersDashboard", "statsPlayers", "statsActivePlayers", allEntries = true)
+    @Transactional
+    override fun updateRatingAndRated(player: Player): PlayerStats {
+        val stats = getByPlayer(player.id)
+
+        stats.rating = playerToGameService.getActualRatingByPlayer(player.id)
+        stats.rated = gameService.countDuring10WeeksByPlayer(player.id).toInt()
+
+        return repository.save(stats)
     }
 
 }
