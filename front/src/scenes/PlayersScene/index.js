@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {getActivePlayers, getAllPlayers, appendToPlayers, appendToActivePlayers} from '../../actions';
 import {withRouter} from 'react-router-dom';
 import PlayersTabs from '../../components/players-tabs';
+import {MediaViews} from "../../helpers/style-variables";
 
 class PlayersScene extends Component {
 
@@ -16,7 +17,6 @@ class PlayersScene extends Component {
 
   render() {
     const {players, activePlayers, actions} = this.props;
-
     return (
       <Content>
         <PlayersTabs players={players} activePlayers={activePlayers} appendToPlayers={actions.appendToPlayers}
@@ -51,4 +51,7 @@ const Content = styled.div`
   justify-content: center;
 	flex-direction: column;
 	align-items: center;
+	@media (max-width: ${MediaViews.MOBILE}px) {
+    width: 100%;
+  }
 `;

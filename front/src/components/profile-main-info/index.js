@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import UsernameBlock from '../username-block';
 import ProfilePhotoBlock from '../profile-photo-block';
 import PasswordBlock from '../password-block';
-import {Colors} from '../../helpers/style-variables';
+import {Colors, MediaViews} from '../../helpers/style-variables';
 import {getPlayerStatus} from '../../helpers/get-player-status';
 
 class ProfileMainInfo extends Component {
@@ -66,6 +66,11 @@ export default ProfileMainInfo
 const Content = styled.div`
   display: flex;
   width: 900px;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const Info = styled.div`
@@ -76,9 +81,15 @@ const StatisticsContent = styled.div`
   padding: 20px 20px 0 20px;
   display: flex;
   justify-content: space-between;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    padding: 10px;
+  }
 `;
 const Statistics = styled.div`
   width: 72%;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    width: 100%;
+  }
 `;
 const Status = styled.div`
   width: 100%;
@@ -86,6 +97,11 @@ const Status = styled.div`
   font-size: 1.6em;
   display: flex;
   padding: 20px 20px 0 20px;
+  
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    box-sizing: border-box;
+    justify-content: center;
+  }
 `;
 const Field = styled.div`
   font-size: 1.3em;
@@ -99,6 +115,9 @@ const Field = styled.div`
     padding-left: 10px;
     color: ${Colors.MAIN_COLOR};
   }
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    font-size: 1.1em;
+  }
 `;
 
 const ErrorPhotoUpload = styled.div`
@@ -110,4 +129,8 @@ const ErrorPhotoUpload = styled.div`
 const EditingBlock = styled.div`
   display: flex;
   justify-content: space-between;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    flex-direction: column;
+    align-items: center;
+}
 `;

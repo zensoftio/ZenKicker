@@ -7,23 +7,29 @@ import {Colors, MediaViews} from "../../helpers/style-variables";
 
 export const GameBlock = ({
                             winner1Icon, winner1Id, winner2Icon, winner2Id, loser1Icon, loser1Id, loser2Icon, loser2Id, losersGoals,
-                            winner1Name, winner2Name, loser1Name, loser2Name, won, delta, reportedBy, date, reportedById
+                            winner1Name, winner2Name, loser1Name, loser2Name, won, delta, reportedBy, date, reportedById, isMobile
                           }) => (
   <Content>
     <GameContent>
       <Team>
-        <User to={`/players/${winner1Id}`}>
-          <Photo>
-            <UserPhoto photo={winner1Icon}/>
-          </Photo>
+        <LeftUser to={`/players/${winner1Id}`}>
+          {
+            !isMobile &&
+            <Photo>
+              <UserPhoto photo={winner1Icon}/>
+            </Photo>
+          }
           <UsernameLeft>{winner1Name}</UsernameLeft>
-        </User>
-        <User to={`/players/${winner2Id}`}>
-          <Photo>
-            <UserPhoto photo={winner2Icon}/>
-          </Photo>
+        </LeftUser>
+        <LeftUser to={`/players/${winner2Id}`}>
+          {
+            !isMobile &&
+            <Photo>
+              <UserPhoto photo={winner2Icon}/>
+            </Photo>
+          }
           <UsernameLeft>{winner2Name}</UsernameLeft>
-        </User>
+        </LeftUser>
       </Team>
       <Score>
         <span>10</span> : <span>{losersGoals}</span>
@@ -32,18 +38,24 @@ export const GameBlock = ({
         }
       </Score>
       <Team>
-        <User to={`/players/${loser1Id}`}>
+        <RightUser to={`/players/${loser1Id}`}>
           <UsernameRight>{loser1Name}</UsernameRight>
-          <Photo>
-            <UserPhoto photo={loser1Icon}/>
-          </Photo>
-        </User>
-        <User to={`/players/${loser2Id}`}>
+          {
+            !isMobile &&
+            <Photo>
+              <UserPhoto photo={loser1Icon}/>
+            </Photo>
+          }
+        </RightUser>
+        <RightUser to={`/players/${loser2Id}`}>
           <UsernameRight>{loser2Name}</UsernameRight>
-          <Photo>
-            <UserPhoto photo={loser2Icon}/>
-          </Photo>
-        </User>
+          {
+            !isMobile &&
+            <Photo>
+              <UserPhoto photo={loser2Icon}/>
+            </Photo>
+          }
+        </RightUser>
       </Team>
     </GameContent>
     {
@@ -61,12 +73,11 @@ const Content = styled.div`
   border-bottom: #efefef solid 1px;
   flex-direction: column;
   padding: 15px 20px;
-  width: max-content;
+  width: 100%;
+  box-sizing: border-box;
   min-height: 100px;
   @media (max-width: ${MediaViews.MOBILE}px) {
-    width: 100%;
     padding: 10px 0;
-    box-sizing: border-box;
   }
 `;
 
@@ -96,17 +107,15 @@ const InfoContent = styled.div`
 const GameContent = styled.div`
   display: flex;
   align-items: center;
-  @media (max-width: ${MediaViews.MOBILE}px) {
-    justify-content: space-between;
-  }
+  justify-content: space-between;
 `;
 
 const Team = styled.div`
   display: flex;
   flex-direction: column;
   @media (max-width: ${MediaViews.MOBILE}px) {
+    font-size: 0.9em;
   }
-  
 `;
 
 const User = styled(Link)`
@@ -123,26 +132,36 @@ const User = styled(Link)`
   }
 `;
 
-const UsernameLeft = styled.div`
-  padding-left: 10px;
+const LeftUser = styled(User)`
+  justify-content: flex-start;
+`;
+
+const RightUser = styled(User)`
+  justify-content: flex-end;
+`;
+
+const Username = styled.div`
   min-width: 150px;
   @media (max-width: ${MediaViews.MOBILE}px) {
     min-width: 0;
-    width: 55px;
+    width: 120px;
     text-overflow: ellipsis;
     overflow: hidden;
   }
 `;
 
-const UsernameRight = styled.div`
+const UsernameLeft = styled(Username)`
+  padding-left: 10px;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    padding-left: 0;
+  }
+`;
+
+const UsernameRight = styled(Username)`
   padding-right: 10px;
-  min-width: 150px;
   text-align: right;
   @media (max-width: ${MediaViews.MOBILE}px) {
-    min-width: 0;
-    width: 55px;
-    text-overflow: ellipsis;
-    overflow: hidden;
+    padding-right: 5px;
   }
 `;
 

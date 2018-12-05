@@ -30,7 +30,7 @@ class PlayerRelations extends React.Component {
     })
   }
 
-  getRelation = (playerId) => this.props.relations.find(i => i.partnerId === playerId)
+  getRelation = (playerId) => this.props.relations.find(i => i.partner.id === playerId)
 
   setDoughnutChartData = (percent) => ([
     {
@@ -46,12 +46,13 @@ class PlayerRelations extends React.Component {
   ])
 
   setPieChartData = (relations) =>
-    relations.map((relation, index) => ({value: relation.countGames, label: relation.partnerName, ...ChartColors[index]}))
+    relations.map((relation, index) => ({value: relation.countGames, label: relation.partner.username, ...ChartColors[index]}))
 
-  getOptions = () => this.props.relations.map(i => ({value: i.partnerId, label: i.partnerName}))
+  getOptions = () => this.props.relations.map(i => ({value: i.partner.id, label: i.partner.username}))
 
   render() {
-    const {relations} = this.props;
+    const {relations, isMobile} = this.props;
+
     if (!relations.length) return null;
 
     const {doughnutChartData, isPieChartVisible, isDoughnutChartVisible} = this.state;
@@ -64,10 +65,10 @@ class PlayerRelations extends React.Component {
           }
         </Title>
         {
-          isPieChartVisible && <PieChart data={this.setPieChartData(relations)}/>
+          isPieChartVisible && <PieChart data={this.setPieChartData(relations)} isMobile={isMobile}/>
         }
         {
-          isDoughnutChartVisible && <DoughnutChart data={doughnutChartData} gamesCount={this.state.countGames}/>
+          isDoughnutChartVisible && <DoughnutChart data={doughnutChartData} gamesCount={this.state.countGames} isMobile={isMobile}/>
         }
         <DropdownInput isClearable options={this.getOptions()} onChange={this.onPlayerChange} placeholder='Select player'/>
       </Content>

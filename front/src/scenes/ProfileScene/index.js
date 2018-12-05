@@ -15,7 +15,7 @@ import ProfileMainInfo from '../../components/profile-main-info';
 import PlayerGames from '../../components/player-games';
 import ChartStatistics from '../../components/chart-statistics';
 import PlayerRelations from "../../components/player-relations";
-import {getPlayerInfo} from "../../helpers/get-player-info";
+import {MediaViews} from "../../helpers/style-variables";
 
 class ProfileScene extends Component {
 
@@ -43,7 +43,7 @@ class ProfileScene extends Component {
   }
 
   render() {
-    const {player, match, currentUser, players, playerGames, actions, ratingStatistic, gamesCountStatistic, relations} = this.props;
+    const {player, match, currentUser, playerGames, actions, ratingStatistic, gamesCountStatistic, relations} = this.props;
 
     const playerId = match.params.id;
 
@@ -55,21 +55,11 @@ class ProfileScene extends Component {
         ...game.gameDto,
         delta: game.delta,
         won: game.won,
-        ...getPlayerInfo(players, game.gameDto),
-        reportedBy: players.list.length ? players.list.find(i => i.player.id === game.gameDto.reportedById).player.username : null,
       }
     ))
 
     const isCurrent = +playerId === currentUser.id;
-
-    const mappedRelations = relations.list.map(relation => (
-      {
-        ...relation,
-        partnerIcon: players.list.length && (players.list.find(i => i.player.id === relation.partnerId).player.iconPath || null),
-        partnerName: players.list.length && (players.list.find(i => i.player.id === relation.partnerId).player.username || null),
-      }
-    ))
-
+    const isMobile = window.outerWidth <= MediaViews.MOBILE;
     return (
       <Content>
         <ProfileMainInfo countGames={player.countGames} rated={player.rated} rating={player.rating}
@@ -79,11 +69,10 @@ class ProfileScene extends Component {
                          goalsAgainst={player.goalsAgainst} goalsFor={player.goalsFor}
                          currentLossStreak={player.currentLossesStreak} currentWinStreak={player.currentWinningStreak}
                          longestLossStreak={player.longestLossesStreak} longestWinStreak={player.longestWinningStreak}/>
-        <PlayerRelations relations={mappedRelations}/>
-        <ChartStatistics ratingStatistic={ratingStatistic} gamesCountStatistic={gamesCountStatistic}/>
+        <PlayerRelations relations={relations.list} isMobile={isMobile}/>
+        <ChartStatistics ratingStatistic={ratingStatistic} gamesCountStatistic={gamesCountStatistic} isMobile={isMobile}/>
         <PlayerGames games={mappedGames ? mappedGames : []} appendToGames={actions.appendToPlayerGames}
-                     totalCount={playerGames.totalCount}
-                     playerId={playerId}/>
+                     totalCount={playerGames.totalCount} isMobile={isMobile} playerId={playerId}/>
       </Content>
     );
   }
@@ -92,12 +81,12 @@ class ProfileScene extends Component {
 const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
   const props = {
     player: state.player.player,
-    players: state.player.players,
     playerGames: state.game.playerGames,
     currentUser: state.user.current,
     ratingStatistic: state.player.deltaStatistic,
     gamesCountStatistic: state.player.gamesCountStatistic,
     relations: state.player.relations,
+    fullListOfPlayers: state.player.fullListOfPlayers
   };
   return props;
 }
@@ -120,4 +109,5 @@ const Content = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	width: 100%;
 `;
