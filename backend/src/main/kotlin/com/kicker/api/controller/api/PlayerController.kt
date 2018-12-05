@@ -44,7 +44,7 @@ class PlayerController(
 
     @ApiOperation(value = "Search players by keyword")
     @GetMapping("/search/{keyword}")
-    fun get(@PathVariable keyword: String): PageResponse<PlayerDto> {
+    fun searchByKeyword(@PathVariable keyword: String): PageResponse<PlayerDto> {
         val players = service.searchByKeyword(keyword)
         return PageResponse(players.size.toLong(), players.map { PlayerDto(it) })
     }

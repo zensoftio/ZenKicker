@@ -42,7 +42,7 @@ class DefaultPlayerService(
 
     override fun getByUsername(username: String): Player? = repository.findByUsername(username)
 
-    override fun searchByKeyword(keyword: String): List<Player> = repository.findByUsernameLike(keyword)
+    override fun searchByKeyword(keyword: String): List<Player> = repository.searchByKeyword(keyword)
 
     @Cacheable("players")
     override fun getAll(pageRequest: PageRequest): Page<Player> = super.getAll(pageRequest)
