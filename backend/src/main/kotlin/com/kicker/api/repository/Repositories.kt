@@ -22,6 +22,9 @@ interface PlayerRepository : BaseRepository<Player> {
 
     fun findByUsername(username: String): Player?
 
+    @Query("""SELECT p FROM Player p WHERE username LIKE %?1%""")
+    fun searchByKeyword(keyword: String): List<Player>
+
 }
 
 @Repository

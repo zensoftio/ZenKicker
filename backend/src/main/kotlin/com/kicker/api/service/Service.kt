@@ -31,6 +31,8 @@ interface PlayerService : BaseService<Player>, UserDetailsService {
 
     fun getByUsername(username: String): Player?
 
+    fun searchByKeyword(keyword: String): List<Player>
+
     fun create(request: CreatePlayerRequest): Player
 
     fun updateUsername(playerId: Long, request: UpdatePlayerUsernameRequest): Player

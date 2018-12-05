@@ -45,7 +45,6 @@ dependencies {
 //    Util
     api('com.amazonaws:aws-java-sdk-s3:1.11.461')
     api('org.apache.commons:commons-lang3:3.7')
-//    compile('org.apache.commons:commons-collections4:4.0')
     api('commons-io:commons-io:2.6')
     api('net.coobird:thumbnailator:0.4.8')
     api('com.github.ben-manes.caffeine:caffeine:2.6.2')

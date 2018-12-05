@@ -42,6 +42,13 @@ class PlayerController(
         return PlayerDto(service.get(playerId))
     }
 
+    @ApiOperation(value = "Search players by keyword")
+    @GetMapping("/search/{keyword}")
+    fun get(@PathVariable keyword: String): PageResponse<PlayerDto> {
+        val players = service.searchByKeyword(keyword)
+        return PageResponse(players.size.toLong(), players.map { PlayerDto(it) })
+    }
+
     @ApiOperation(value = "Get all players", notes = """Pageable.
         * sortBy - [id], default:id
         * sortDirection - [ASC, DESC], default:ASC
