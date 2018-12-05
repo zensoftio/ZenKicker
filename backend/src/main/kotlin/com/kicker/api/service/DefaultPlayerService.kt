@@ -62,7 +62,8 @@ class DefaultPlayerService(
         return repository.save(Player(request.username!!, request.password!!))
     }
 
-    @CacheEvict("players", "playersDashboard", "statsPlayers", "statsActivePlayers", allEntries = true)
+    @CacheEvict("players", "relationsDashboard", "playersDashboard", "statsPlayers", "statsActivePlayers",
+            allEntries = true)
     @Transactional
     override fun updateUsername(playerId: Long, request: UpdatePlayerUsernameRequest): Player {
         if (isExist(request.username!!)) {
@@ -88,7 +89,8 @@ class DefaultPlayerService(
         return repository.save(player)
     }
 
-    @CacheEvict("players", "playersDashboard", "statsPlayers", "statsActivePlayers", allEntries = true)
+    @CacheEvict("players", "relationsDashboard", "playersDashboard", "statsPlayers", "statsActivePlayers",
+            allEntries = true)
     @Transactional
     override fun updateIcon(playerId: Long, icon: MultipartFile): Player {
         val player = get(playerId)

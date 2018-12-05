@@ -64,6 +64,12 @@ interface PlayerRelationsRepository : BaseRepository<PlayerRelations> {
 
     fun findByPlayerAndPartner(player: Player, partner: Player): PlayerRelations?
 
+    fun findFirstByPlayerAndPartnerPlayerStatsActiveTrueOrderByCountGamesDesc(player: Player): PlayerRelations?
+
+    fun findFirstByPlayerAndPartnerPlayerStatsActiveTrueOrderByWinningPercentage(player: Player): PlayerRelations?
+
+    fun findFirstByPlayerAndPartnerPlayerStatsActiveTrueOrderByWinningPercentageDesc(player: Player): PlayerRelations?
+
 }
 
 @Repository

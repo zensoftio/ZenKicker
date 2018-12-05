@@ -1,6 +1,7 @@
 package com.kicker.api.controller.api
 
 import com.kicker.api.domain.PageResponse
+import com.kicker.api.domain.model.playerRelations.PlayerRelationsDashboard
 import com.kicker.api.domain.model.playerRelations.PlayerRelationsDto
 import com.kicker.api.domain.model.playerRelations.PlayerRelationsPageRequest
 import com.kicker.api.service.PlayerRelationsService
@@ -31,5 +32,9 @@ class PlayerRelationsController(
     fun getAllByPlayer(@PathVariable playerId: Long, @ApiIgnore @Valid pageRequest: PlayerRelationsPageRequest): PageResponse<PlayerRelationsDto> {
         return PageResponse(service.getAllByPlayer(playerId, pageRequest).map { PlayerRelationsDto(it) })
     }
+
+    @ApiOperation("Get dashboard of relations of players")
+    @GetMapping("/{playerId}/relations/dashboard")
+    fun getDashboard(@PathVariable playerId: Long): PlayerRelationsDashboard = service.getDashboard(playerId)
 
 }

@@ -5,6 +5,7 @@ import com.kicker.api.domain.model.game.GameRegistrationRequest
 import com.kicker.api.domain.model.player.CreatePlayerRequest
 import com.kicker.api.domain.model.player.UpdatePlayerPasswordRequest
 import com.kicker.api.domain.model.player.UpdatePlayerUsernameRequest
+import com.kicker.api.domain.model.playerRelations.PlayerRelationsDashboard
 import com.kicker.api.domain.model.playerStats.PlayersDashboard
 import com.kicker.api.model.*
 import com.kicker.api.model.base.BaseModel
@@ -70,6 +71,8 @@ interface PlayerRelationsService {
     fun getAllByPlayer(playerId: Long, pageRequest: PageRequest): Page<PlayerRelations>
 
     fun getByPlayerAndPartner(playerId: Long, partnerId: Long): PlayerRelations
+
+    fun getDashboard(playerId: Long): PlayerRelationsDashboard
 
     fun create(playerRelations: PlayerRelations): PlayerRelations
 

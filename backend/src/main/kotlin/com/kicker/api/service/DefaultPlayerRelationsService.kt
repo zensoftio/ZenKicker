@@ -1,6 +1,7 @@
 package com.kicker.api.service
 
 import com.kicker.api.domain.PageRequest
+import com.kicker.api.domain.model.playerRelations.PlayerRelationsDashboard
 import com.kicker.api.model.PlayerRelations
 import com.kicker.api.repository.PlayerRelationsRepository
 import org.springframework.cache.annotation.Cacheable
@@ -32,6 +33,20 @@ class DefaultPlayerRelationsService(
         val playerRelations = repository.findByPlayerAndPartner(player, partner)
 
         return playerRelations ?: create(PlayerRelations(player, partner))
+    }
+
+    @Cacheable("relationsDashboard")
+    override fun getDashboard(playerId: Long): PlayerRelationsDashboard {
+        val player = playerService.get(playerId)
+
+        val bestPartner =
+                repository.findFirstByPlayerAndPartnerPlayerStatsActiveTrueOrderByWinningPercentageDesc(player)
+        val worstPartner =
+                repository.findFirstByPlayerAndPartnerPlayerStatsActiveTrueOrderByWinningPercentage(player)
+        val favoritePartner =
+                repository.findFirstByPlayerAndPartnerPlayerStatsActiveTrueOrderByCountGamesDesc(player)
+
+        return PlayerRelationsDashboard(bestPartner, worstPartner, favoritePartner)
     }
 
     @Transactional
