@@ -9,34 +9,44 @@ import javax.validation.constraints.Min
 /**
  * @author Yauheni Efimenko
  */
-@Contains(value = "sortBy", map = "maySortBy", message = "Collection is not contains value for sorting")
+@Contains(value = "sortBy", set = "setSortBy", message = "Collection is not contains value for sorting")
 open class PageRequest(
         @field:Min(value = 0) var offset: Int = 0,
         @field:Min(value = 1) @field:Max(100) var limit: Int = 10,
         var sortDirection: Sort.Direction = Sort.Direction.ASC,
-        var sortBy: String = "id",
-        private val maySortBy: Map<String, String> = mapOf("id" to "id")
+        var sortBy: String = ID_FIELD,
+        private val setSortBy: Set<String> = setOf(ID_FIELD)
 ) : Pageable {
+
+    companion object {
+        const val ID_FIELD = "id"
+    }
+
 
     override fun getPageNumber(): Int = (offset / limit + 1)
 
     override fun hasPrevious(): Boolean = offset > 0
 
-    override fun getSort(): Sort = Sort(sortDirection, maySortBy[sortBy])
+    override fun getSort(): Sort {
+        if (sortBy == ID_FIELD) {
+            return Sort(sortDirection, ID_FIELD)
+        }
+        return Sort(sortDirection, sortBy, ID_FIELD)
+    }
 
-    override fun next(): Pageable = PageRequest(offset + limit, limit, sortDirection, sortBy, maySortBy)
+    override fun next(): Pageable = PageRequest(offset + limit, limit, sortDirection, sortBy, setSortBy)
 
     override fun getPageSize(): Int = limit
 
     override fun getOffset(): Long = offset.toLong()
 
-    override fun first(): Pageable = PageRequest(0, limit, sortDirection, sortBy, maySortBy)
+    override fun first(): Pageable = PageRequest(0, limit, sortDirection, sortBy, setSortBy)
 
     private fun previous(): Pageable {
         if (hasPrevious()) {
             var newOffset = this.offset - limit
             if (newOffset < 0) newOffset = 0
-            return PageRequest(newOffset, limit, sortDirection, sortBy, maySortBy)
+            return PageRequest(newOffset, limit, sortDirection, sortBy, setSortBy)
         }
         return first()
     }
@@ -53,7 +63,7 @@ open class PageRequest(
         if (limit != other.limit) return false
         if (sortDirection != other.sortDirection) return false
         if (sortBy != other.sortBy) return false
-        if (maySortBy != other.maySortBy) return false
+        if (setSortBy != other.setSortBy) return false
 
         return true
     }
@@ -63,7 +73,7 @@ open class PageRequest(
         result = 31 * result + limit
         result = 31 * result + sortDirection.hashCode()
         result = 31 * result + sortBy.hashCode()
-        result = 31 * result + maySortBy.hashCode()
+        result = 31 * result + setSortBy.hashCode()
         return result
     }
 
