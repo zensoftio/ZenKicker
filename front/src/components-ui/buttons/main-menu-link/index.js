@@ -4,7 +4,7 @@ import {NavLink} from 'react-router-dom';
 import {Colors} from '../../../helpers/style-variables';
 
 export const MainMenuLink = ({children, link, onClick}) => (
-	<LinkButton to={link} activeClassName='active' onClick={onClick ? onClick : null}>
+	<LinkButton exact to={link} activeClassName='active' onClick={onClick ? onClick : null}>
 		<MenuItem>{children.replace('_', ' ')}</MenuItem>
 	</LinkButton>
 )

@@ -15,7 +15,6 @@ import ProfileMainInfo from '../../components/profile-main-info';
 import PlayerGames from '../../components/player-games';
 import ChartStatistics from '../../components/chart-statistics';
 import PlayerRelations from "../../components/player-relations";
-import {getPlayerInfo} from "../../helpers/get-player-info";
 import {MediaViews} from "../../helpers/style-variables";
 
 class ProfileScene extends Component {
