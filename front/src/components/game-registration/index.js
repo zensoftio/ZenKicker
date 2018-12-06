@@ -12,7 +12,7 @@ import {
 } from '../../actions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {Colors} from '../../helpers/style-variables';
+import {Colors, MediaViews} from '../../helpers/style-variables';
 import {getGoalValues} from '../../helpers/goal-values';
 import {RegisteredGameBlock} from "../registered-game-block";
 
@@ -174,14 +174,14 @@ class GameRegistration extends Component {
         </Container>
       )
     }
-
+    const isMobile = window.outerWidth <= MediaViews.MOBILE;
     return (
       <RegisteredGameBlock losersGoals={losersGoals} winner1Icon={winner1.iconPath}
                            winner2Icon={winner2.iconPath}
                            loser1Icon={loser1.iconPath} loser2Icon={loser2.iconPath}
                            winner1Name={winner1.label}
                            winner2Name={winner2.label} loser1Name={loser1.label}
-                           loser2Name={loser2.label}/>
+                           loser2Name={loser2.label} isMobile={isMobile}/>
     )
   }
 
@@ -249,10 +249,17 @@ const Container = styled.div`
   display: flex;
   width: 600px;
   align-items: center;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    width: 100%;
+    flex-direction: column;
+  }
 `;
 
 const Block = styled.div`
   width: 40%;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    width: 100%;
+  }
 `;
 
 const ScoreBlock = styled.div`
@@ -270,7 +277,11 @@ const InputsContainer = styled.div`
   padding: 40px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   border-radius: 2px;
-  background-color: ${Colors.THEME_COLOR}
+  background-color: ${Colors.THEME_COLOR};
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    width: 100%;
+    max-height: calc(100vh - 50px);
+  }
 `;
 
 const RegistrationError = styled.span`

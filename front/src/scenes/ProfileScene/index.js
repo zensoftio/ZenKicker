@@ -13,8 +13,6 @@ import ChartStatistics from '../../components/chart-statistics';
 import PlayerRelations from "../../components/player-relations";
 import {MediaViews} from "../../helpers/style-variables";
 
-import axios from 'axios'
-
 class ProfileScene extends Component {
 
   componentDidMount() {
