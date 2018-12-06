@@ -17,6 +17,11 @@ const initState = {
     list: [],
     totalCount: 0
   },
+  relationsDashboard: null,
+  searchResult: {
+    list: [],
+    totalCount: 0
+  },
 };
 
 export const player = (state = initState, action) => {
@@ -29,6 +34,9 @@ export const player = (state = initState, action) => {
 
     case ActionType.Player.GET_RELATIONS_SUCCESS:
       return {...state, relations: action.payload};
+
+    case ActionType.Player.GET_RELATIONS_DASHBOARD_SUCCESS:
+      return {...state, relationsDashboard: action.payload};
 
     case ActionType.Player.GET_PLAYERS_DASHBOARD_SUCCESS:
       return {...state, playersDashboard: action.payload};
@@ -49,6 +57,9 @@ export const player = (state = initState, action) => {
 
     case ActionType.Player.APPEND_TO_ACTIVE_PLAYERS_SUCCESS:
       return {...state, activePlayers: {totalCount: action.payload.totalCount, list: [...state.activePlayers.list, ...action.payload.list]}};
+
+    case ActionType.Player.GET_SEARCH_RESULT_SUCCESS:
+      return {...state, searchResult: action.payload};
 
     default:
       return state;

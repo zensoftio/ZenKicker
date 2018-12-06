@@ -132,3 +132,33 @@ export const getRelations = (id) => {
     }
   }
 }
+
+export const getRelationsDashboard = (id) => {
+  return async (dispatch) => {
+
+    dispatch({type: ActionType.Player.GET_RELATIONS_DASHBOARD_REQUEST});
+
+    try {
+      const result = await api.get(Paths.Player.GetRelationsDashboard(id));
+      dispatch({type: ActionType.Player.GET_RELATIONS_DASHBOARD_SUCCESS, payload: result.data});
+    } catch (err) {
+      console.warn(err);
+      dispatch({type: ActionType.Player.GET_RELATIONS_DASHBOARD_FAILURE});
+    }
+  }
+}
+
+export const searchPlayers = (keyword) => {
+  return async (dispatch) => {
+
+    dispatch({type: ActionType.Player.GET_SEARCH_RESULT_REQUEST});
+
+    try {
+      const result = await api.get(Paths.Player.SearchPlayer(keyword));
+      dispatch({type: ActionType.Player.GET_SEARCH_RESULT_SUCCESS, payload: result.data});
+    } catch (err) {
+      console.warn(err);
+      dispatch({type: ActionType.Player.GET_SEARCH_RESULT_FAILURE});
+    }
+  }
+}

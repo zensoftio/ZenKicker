@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 import UsernameBlock from '../username-block';
 import ProfilePhotoBlock from '../profile-photo-block';
 import PasswordBlock from '../password-block';
 import {Colors, MediaViews} from '../../helpers/style-variables';
-import {getPlayerStatus} from '../../helpers/get-player-status';
 
 class ProfileMainInfo extends Component {
 
@@ -22,9 +22,32 @@ class ProfileMainInfo extends Component {
   render() {
     const {
       rating, countGames, rated, isCurrent, countLosses, countWins, goalsAgainst, goalsFor, currentLossStreak,
-      currentWinStreak, longestLossStreak, longestWinStreak, winningPercentage
+      currentWinStreak, longestLossStreak, longestWinStreak, winningPercentage, bestPartner, favoritePartner,
+      worstPartner
     } = this.props;
     const {uploadPhotoError} = this.state;
+
+    const bestPartnerObj = bestPartner && {
+      id: bestPartner.partner.id,
+      username: bestPartner.partner.username,
+      winningPercentage: bestPartner.winningPercentage,
+      countGames: bestPartner.countGames,
+      countWins: bestPartner.countWins,
+    }
+
+    const worstPartnerObj = worstPartner && {
+      id: worstPartner.partner.id,
+      username: worstPartner.partner.username,
+      winningPercentage: worstPartner.winningPercentage,
+      countGames: worstPartner.countGames,
+      countWins: worstPartner.countWins,
+    }
+
+    const favoritePartnerObj = favoritePartner && {
+      id: favoritePartner.partner.id,
+      username: favoritePartner.partner.username,
+      countGames: favoritePartner.countGames,
+    }
 
     return (
       <Content>
@@ -39,7 +62,7 @@ class ProfileMainInfo extends Component {
               isCurrent && <PasswordBlock/>
             }
           </EditingBlock>
-          <Status>{getPlayerStatus(rating)}</Status>
+          <Status></Status>
           <StatisticsContent>
             <Statistics>
               <Field>Rating: <span>{rating}</span></Field>
@@ -53,6 +76,36 @@ class ProfileMainInfo extends Component {
               <Field>Longest loss streak: <span>{longestLossStreak}</span></Field>
               <Field>Current win streak: <span>{currentWinStreak}</span></Field>
               <Field>Longest win streak: <span>{longestWinStreak}</span></Field>
+              {
+                bestPartnerObj &&
+                <Field>
+                  Best partner:
+                  <PartnerBlock>
+                    <span><Link to={`/players/${bestPartnerObj.id}`}>{bestPartnerObj.username}</Link></span>
+                    <span>{bestPartnerObj.countWins} wins in {bestPartnerObj.countGames} matches ({bestPartnerObj.winningPercentage}%)</span>
+                  </PartnerBlock>
+                </Field>
+              }
+              {
+                worstPartnerObj &&
+                <Field>
+                  Worst partner:
+                  <PartnerBlock>
+                    <span><Link to={`/players/${worstPartnerObj.id}`}>{worstPartnerObj.username}</Link></span>
+                    <span>{worstPartnerObj.countWins} wins in {worstPartnerObj.countGames} matches ({worstPartnerObj.winningPercentage}%)</span>
+                  </PartnerBlock>
+                </Field>
+              }
+              {
+                favoritePartnerObj &&
+                <Field>
+                  Favorite partner:
+                  <PartnerBlock>
+                    <span><Link to={`/players/${favoritePartnerObj.id}`}>{favoritePartnerObj.username}</Link></span>
+                    <span>{favoritePartnerObj.countGames} matches together</span>
+                  </PartnerBlock>
+                </Field>
+              }
             </Statistics>
           </StatisticsContent>
         </Info>
@@ -108,15 +161,34 @@ const Field = styled.div`
   padding-bottom: 10px;
   display: flex;
   justify-content: space-between;
+  span {
+    color: ${Colors.MAIN_COLOR};
+  }
   &:last-child {
     padding-bottom: 0;
+  }
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    font-size: 1.1em;
+  }
+`;
+
+const PartnerBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  a {
+    text-decoration: none;
+    color: ${Colors.MAIN_COLOR};
+    &:hover {
+      text-decoration: underline;
+    }
   }
   span {
     padding-left: 10px;
     color: ${Colors.MAIN_COLOR};
-  }
-  @media (max-width: ${MediaViews.MOBILE}px) {
-    font-size: 1.1em;
+    &:last-child {
+      font-size: 0.7em;
+    }
   }
 `;
 

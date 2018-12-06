@@ -18,11 +18,13 @@ const Paths = {
   Player: {
     GetActive: base('/players/active/stats'),
     GetRelations: (id) => base(`/players/${id}/relations`),
+    GetRelationsDashboard: (id) => base(`/players/${id}/relations/dashboard`),
     GetAll: base('/players/stats'),
     GetPlayersDashboard: base('/players/dashboard'),
     GetPlayer: (id) => base(`/players/${id}/stats`),
     GetDeltaStatistic: (id) => base(`/players/${id}/delta/dashboard`),
     PlayerGames: (id) => base(`/players/${id}/games`),
+    SearchPlayer: (keyword) => base(`/players/search/${keyword}`),
   }
 };
 

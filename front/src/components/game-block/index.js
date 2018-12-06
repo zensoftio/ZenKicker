@@ -62,7 +62,7 @@ export const GameBlock = ({
       reportedBy &&
       <InfoContent>
         <div>Reported by: <Link to={`/players/${reportedById}`}>{reportedBy}</Link></div>
-        <div><span>{moment(date).format('HH:MM, ddd DD, MMM YYYY')}</span></div>
+        <div><span>{moment(date).format('dddd DD, MMM YYYY')}</span></div>
       </InfoContent>
     }
   </Content>
