@@ -4,7 +4,7 @@ plugins {
     id 'org.jetbrains.kotlin.kapt' version '1.2.71'
     id 'org.jetbrains.kotlin.plugin.spring' version '1.2.71'
     id 'org.jetbrains.kotlin.plugin.jpa' version '1.2.71'
-    id 'org.springframework.boot' version '2.0.3.RELEASE'
+    id 'org.springframework.boot' version '2.0.4.RELEASE'
 }
 
 apply plugin: "io.spring.dependency-management"
