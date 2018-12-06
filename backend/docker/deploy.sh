@@ -73,6 +73,11 @@ docker network connect --alias ${POSTGRES_HOST} \
                                 ${POSTGRES_SERVICE_NAME}
 
 ##################################
+############ CREATE IMAGE ########
+##################################
+docker load -i kicker.file
+
+##################################
 ############ RUN APP #############
 ##################################
 docker run \
