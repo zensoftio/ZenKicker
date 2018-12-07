@@ -9,6 +9,9 @@ export const user = (state = initState, action) => {
     case ActionType.User.GET_CURRENT_USER_SUCCESS:
       return {...state, current: action.payload};
 
+    case ActionType.User.GET_CURRENT_USER_FAILURE:
+      return {...state, current: {}};
+
     default:
       return state;
   }
