@@ -83,7 +83,6 @@ body {
     width: 100%;
     box-sizing: border-box;
     border: none;
-    border-left: solid 3px transparent;
     outline: none;
     text-align: center;
 }
@@ -127,8 +126,12 @@ body {
     .wrapper {
         padding: 40px 20px;
         box-sizing: border-box;
+        min-height: 100vh;
     }
     .logo {
         margin: 0;
+    }
+    .input_block {
+        min-height: 40px;
     }
 }

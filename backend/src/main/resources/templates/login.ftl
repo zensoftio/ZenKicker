@@ -29,8 +29,8 @@
     <div class="check_button_block">
       <button>Let's go!</button>
     </div>
+    <a class="sign-up-link" href="/sign-up">Sign up</a>
   </form>
-  <a class="sign-up-link" href="/sign-up">Sign up</a>
 </section>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
