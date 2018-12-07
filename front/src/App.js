@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Config from 'react-global-configuration';
 import {Switch, Route, Redirect, withRouter} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -22,15 +23,20 @@ class App extends Component {
 	}
 
 	render() {
-	  const {currentUser} = this.props;
-	  const isMobile = window.outerWidth <= MediaViews.MOBILE;
+    const {currentUser, isLogin} = this.props;
+    const isMobile = window.outerWidth <= MediaViews.MOBILE;
 
-	  if (!currentUser || !currentUser.username) {
-	    return null;
+    if (!currentUser) {
+      return null;
     }
 
-		return (
-			<Container>
+    if (isLogin === false) {
+      window.location.href = Config.get('login_callback');
+      return null;
+    }
+
+    return (
+      <Container>
         {
           isMobile ? <MobileMenu id={currentUser.id} iconPath={currentUser.iconPath} username={currentUser.username}/> :
             <HorizontalMenu id={currentUser.id} iconPath={currentUser.iconPath} username={currentUser.username}/>
@@ -46,15 +52,15 @@ class App extends Component {
             <Redirect from="*" exact to="/not-found"/>
           </Switch>
         </Content>
-			</Container>
-
-		);
+      </Container>
+    );
 	}
 }
 
 const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
 	const props = {
     currentUser: state.user.current,
+    isLogin: state.authentication.isLogin
   };
 	return props;
 }

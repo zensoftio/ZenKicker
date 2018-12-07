@@ -6,8 +6,11 @@ import registerServiceWorker from './registerServiceWorker';
 import configureStore from './store';
 import './index.css';
 import App from './App';
+import configuration from "./configuration";
 
 const store = configureStore();
+
+configuration();
 
 ReactDOM.render(
     <Provider store={store}>
