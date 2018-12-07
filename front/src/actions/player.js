@@ -3,13 +3,20 @@ import {api} from "../config/api";
 import {ActionType} from './const';
 import {unauthenticated} from "./authentication";
 
-export const getActivePlayers = () => {
+export const getActivePlayers = (sort) => {
   return async (dispatch) => {
 
     dispatch({type: ActionType.Player.GET_ACTIVE_PLAYERS_REQUEST});
 
     try {
-      const result = await api.get(Paths.Player.GetActive, {params: {limit: 15, sortBy: 'rating', sortDirection: 'DESC'}});
+      const sortBy = (sort && sort.sortBy) ? sort.sortBy : 'rating';
+      const sortDirection = (sort && sort.sortDirection) ? sort.sortDirection : 'DESC';
+      const page = {
+        limit: 15,
+        sortBy: sortBy,
+        sortDirection: sortDirection
+      }
+      const result = await api.get(Paths.Player.GetActive, {params: page});
       dispatch({type: ActionType.Player.GET_ACTIVE_PLAYERS_SUCCESS, payload: result.data});
     } catch (err) {
       if (err.response.status === 401) {
@@ -20,13 +27,20 @@ export const getActivePlayers = () => {
   }
 }
 
-export const getAllPlayers = () => {
+export const getAllPlayers = (sort) => {
   return async (dispatch) => {
 
     dispatch({type: ActionType.Player.GET_ALL_PLAYERS_REQUEST});
 
     try {
-      const result = await api.get(Paths.Player.GetAll, {params: {limit: 15, sortBy: 'rating', sortDirection: 'DESC'}});
+      const sortBy = (sort && sort.sortBy) ? sort.sortBy : 'rating';
+      const sortDirection = (sort && sort.sortDirection) ? sort.sortDirection : 'DESC';
+      const page = {
+        limit: 15,
+        sortBy: sortBy,
+        sortDirection: sortDirection
+      }
+      const result = await api.get(Paths.Player.GetAll, {params: page});
       dispatch({type: ActionType.Player.GET_ALL_PLAYERS_SUCCESS, payload: result.data});
     } catch (err) {
       if (err.response.status === 401) {

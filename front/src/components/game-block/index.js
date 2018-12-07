@@ -61,8 +61,8 @@ export const GameBlock = ({
     {
       reportedBy &&
       <InfoContent>
-        <div>Reported by: <Link to={`/players/${reportedById}`}>{reportedBy}</Link></div>
         <div><span>{moment(date).format('dddd DD, MMM YYYY')}</span></div>
+        <div>Reported by: <Link to={`/players/${reportedById}`}>{reportedBy}</Link></div>
       </InfoContent>
     }
   </Content>
@@ -70,7 +70,7 @@ export const GameBlock = ({
 
 const Content = styled.div`
   display: flex;
-  border-bottom: #efefef solid 1px;
+  margin-bottom: 20px;
   flex-direction: column;
   padding: 15px 20px;
   width: 100%;
@@ -82,8 +82,8 @@ const Content = styled.div`
 `;
 
 const InfoContent = styled.div`
-  padding-top: 15px;
-  font-size: 1.1em;
+  margin-top: 20px;
+  font-size: 0.9em;
   display: flex;
   justify-content: space-between;
   div {
@@ -100,7 +100,7 @@ const InfoContent = styled.div`
     }
   }
   @media (max-width: ${MediaViews.MOBILE}px) {
-    font-size: 0.9em;
+    font-size: 0.7em;
   }
 `;
 

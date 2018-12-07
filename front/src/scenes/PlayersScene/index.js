@@ -20,7 +20,8 @@ class PlayersScene extends Component {
     return (
       <Content>
         <PlayersTabs players={players} activePlayers={activePlayers} appendToPlayers={actions.appendToPlayers}
-                     appendToActivePlayers={actions.appendToActivePlayers}/>
+                     appendToActivePlayers={actions.appendToActivePlayers} getAllPlayersAction={actions.getAllPlayers}
+                     getActivePlayersAction={actions.getActivePlayers}/>
       </Content>
     );
   }

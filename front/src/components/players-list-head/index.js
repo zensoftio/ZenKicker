@@ -2,13 +2,23 @@ import React from 'react';
 import styled from 'styled-components';
 import {MediaViews} from "../../helpers/style-variables";
 
-const PlayersListHead = () => (
+import ExpandLessIco from '@material-ui/icons/ExpandLess';
+import ExpandMoreIco from '@material-ui/icons/ExpandMore';
+
+const isColumnSorting = (sortBy, sortDirection, field) => {
+  if (sortBy === field) {
+      return sortDirection === 'DESC' ? <CustomExpandMoreIco/> : <CustomExpandLessIco/>
+  }
+  return null
+}
+
+const PlayersListHead = ({onSortChange, sortDirection, sortBy}) => (
   <Content>
     <IndexColumn>#</IndexColumn>
     <PlayerColumn>Player</PlayerColumn>
-    <StatisticColumn>Games</StatisticColumn>
-    <StatisticColumn>Rated</StatisticColumn>
-    <StatisticColumn>Rating</StatisticColumn>
+    <StatisticColumn onClick={() => onSortChange('countGames')}>{isColumnSorting(sortBy, sortDirection, 'countGames')}Games</StatisticColumn>
+    <StatisticColumn onClick={() => onSortChange('rated')}>{isColumnSorting(sortBy, sortDirection, 'rated')}Rated</StatisticColumn>
+    <StatisticColumn onClick={() => onSortChange('rating')}>{isColumnSorting(sortBy, sortDirection, 'rating')}Rating</StatisticColumn>
   </Content>
 )
 
@@ -54,9 +64,26 @@ const StatisticColumn = styled.div`
   padding-left: 20px;
   box-sizing: border-box;
   text-align: right;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
   @media (max-width: ${MediaViews.MOBILE}px) {
     max-width: 23.3%;
     min-width: 23.3%;
   }
 `;
 
+const CustomExpandLessIco = styled(ExpandLessIco)`
+  font-size: 1em !important;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    font-size: 1em !important;
+  }
+`;
+
+const CustomExpandMoreIco = styled(ExpandMoreIco)`
+  font-size: 1em !important;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    font-size: 1em !important;
+  }
+`;

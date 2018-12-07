@@ -10,8 +10,11 @@ import {MediaViews} from "../../helpers/style-variables";
 class PlayersTabs extends Component {
   constructor(props) {
     super(props);
+    this.onSortChange = this.onSortChange.bind(this);
     this.state = {
-      isAllPlayersTab: false
+      isAllPlayersTab: false,
+      sortBy: 'rating',
+      sortDirection: 'DESC'
     }
   }
 
@@ -44,18 +47,30 @@ class PlayersTabs extends Component {
     )
   }
 
-  setActivePlayersTab = () => this.setState({isAllPlayersTab: false})
-  setAllPlayersTab = () => this.setState({isAllPlayersTab: true})
+  setActivePlayersTab = () => this.setState({isAllPlayersTab: false});
+  setAllPlayersTab = () => this.setState({isAllPlayersTab: true});
+
+  onSortChange = (value) => {
+    const {getAllPlayersAction, getActivePlayersAction} = this.props;
+    const sortDirection = this.state.sortDirection === 'DESC' ? 'ASC' : 'DESC';
+
+    if (this.state.isAllPlayersTab) {
+      getAllPlayersAction({sortBy: value, sortDirection: sortDirection})
+    } else {
+      getActivePlayersAction({sortBy: value, sortDirection: sortDirection})
+    }
+    this.setState({sortBy: value, sortDirection: sortDirection})
+  }
 
   render() {
-    const {isAllPlayersTab} = this.state;
+    const {isAllPlayersTab, sortBy, sortDirection} = this.state;
     return (
       <Content>
         <TabButtonContainer>
           <TabButton name='active' onButtonClick={this.setActivePlayersTab} isActive={!isAllPlayersTab}/>
           <TabButton name='all' onButtonClick={this.setAllPlayersTab} isActive={isAllPlayersTab}/>
         </TabButtonContainer>
-        <PlayersListHead/>
+        <PlayersListHead onSortChange={this.onSortChange} sortBy={sortBy} sortDirection={sortDirection}/>
         <Players>
           {this.renderTab()}
         </Players>
