@@ -28,7 +28,7 @@ class PlayerStatsController(
     fun getByPlayer(@PathVariable playerId: Long): PlayerStatsDto = PlayerStatsDto(service.getByPlayer(playerId))
 
     @ApiOperation(value = "Get stats of all players", notes = """Pageable.
-        * sortBy - [id, rating], default:id
+        * sortBy - [id, rating, countGames, rated], default:id
         * sortDirection - [ASC, DESC], default:ASC
         * offset - [0, +Infinity], default:0
         * limit - [0, +Infinity], default:10
@@ -38,7 +38,7 @@ class PlayerStatsController(
             PageResponse(service.getAll(pageRequest).map { PlayerStatsDto(it) })
 
     @ApiOperation(value = "Get stats of all active players", notes = """Pageable.
-        * sortBy - [id, rating], default:id
+        * sortBy - [id, rating, countGames, rated], default:id
         * sortDirection - [ASC, DESC], default:ASC
         * offset - [0, +Infinity], default:0
         * limit - [0, +Infinity], default:10

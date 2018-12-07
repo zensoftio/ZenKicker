@@ -22,7 +22,7 @@ interface PlayerRepository : BaseRepository<Player> {
 
     fun findByUsername(username: String): Player?
 
-    @Query("""SELECT p FROM Player p WHERE username LIKE %?1%""")
+    @Query("""SELECT p FROM Player p WHERE LOWER(username) LIKE LOWER(CONCAT('%', ?1,'%'))""")
     fun searchByKeyword(keyword: String): List<Player>
 
 }

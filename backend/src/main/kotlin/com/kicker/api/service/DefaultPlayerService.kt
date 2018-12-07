@@ -50,7 +50,8 @@ class DefaultPlayerService(
     override fun loadUserByUsername(username: String): UserDetails = getByUsername(username)
             ?: throw UsernameNotFoundException("User with username $username not found")
 
-    @CacheEvict("players", "statsPlayers", allEntries = true)
+    @CacheEvict("players", "relations", "relationsDashboard", "playersDashboard", "statsPlayers",
+            "statsActivePlayers", "games", "playerGames", allEntries = true)
     @Transactional
     override fun create(request: CreatePlayerRequest): Player {
         if (isExist(request.username!!)) {
@@ -62,8 +63,8 @@ class DefaultPlayerService(
         return repository.save(Player(request.username!!, request.password!!))
     }
 
-    @CacheEvict("players", "relationsDashboard", "playersDashboard", "statsPlayers", "statsActivePlayers",
-            allEntries = true)
+    @CacheEvict("players", "relations", "relationsDashboard", "playersDashboard", "statsPlayers",
+            "statsActivePlayers", "games", "playerGames", allEntries = true)
     @Transactional
     override fun updateUsername(playerId: Long, request: UpdatePlayerUsernameRequest): Player {
         if (isExist(request.username!!)) {
@@ -89,8 +90,8 @@ class DefaultPlayerService(
         return repository.save(player)
     }
 
-    @CacheEvict("players", "relationsDashboard", "playersDashboard", "statsPlayers", "statsActivePlayers",
-            allEntries = true)
+    @CacheEvict("players", "relations", "relationsDashboard", "playersDashboard", "statsPlayers",
+            "statsActivePlayers", "games", "playerGames", allEntries = true)
     @Transactional
     override fun updateIcon(playerId: Long, icon: MultipartFile): Player {
         val player = get(playerId)
