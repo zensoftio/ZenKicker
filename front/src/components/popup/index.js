@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 import {Button} from '../../components-ui/buttons/button';
+import {MediaViews} from "../../helpers/style-variables";
 
 class Popup extends Component {
   constructor(props) {
@@ -64,4 +65,7 @@ const PopupContainer = styled.div`
   right: 0;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 10;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    align-items: flex-start;
+  }
 `;

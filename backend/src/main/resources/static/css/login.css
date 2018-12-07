@@ -126,7 +126,6 @@ body {
 @media (max-width: 820px) {
     .wrapper {
         padding: 40px 20px;
-        max-height: 100vh;
         box-sizing: border-box;
     }
     .logo {

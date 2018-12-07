@@ -72,8 +72,8 @@ export const appendToGames = (gamesLength) => async (dispatch) => {
 
   try {
 
-    const page = {offset: gamesLength, limit: 5};
-    const result = await api.get(Paths.Game.GetAll, {params: page, sortBy: 'date', sortDirection: 'DESC'});
+    const page = {offset: gamesLength, limit: 5, sortBy: 'date', sortDirection: 'DESC'};
+    const result = await api.get(Paths.Game.GetAll, {params: page});
     dispatch({type: ActionType.Game.APPEND_TO_GAMES_SUCCESS, payload: result.data});
   } catch (err) {
     console.warn(err);

@@ -280,7 +280,8 @@ const InputsContainer = styled.div`
   background-color: ${Colors.THEME_COLOR};
   @media (max-width: ${MediaViews.MOBILE}px) {
     width: 100%;
-    max-height: calc(100vh - 50px);
+    height: calc(100vh - 50px);
+    border-radius: 0;
   }
 `;
 
