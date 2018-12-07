@@ -1,4 +1,4 @@
-package com.kicker.api.config
+package com.kicker.api.config.security
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.kicker.api.domain.exception.ExceptionResponse
@@ -51,6 +51,11 @@ class SecurityConfig : GlobalMethodSecurityConfiguration() {
                     .antMatchers("/sign-up").permitAll()
                     .antMatchers(POST, "/api/players").permitAll()
                     .antMatchers("/**").authenticated()
+
+                    .and()
+
+                    .exceptionHandling()
+                    .authenticationEntryPoint(CustomAuthenticationEntryPoint())
 
                     .and()
 
