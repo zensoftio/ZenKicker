@@ -10,6 +10,10 @@ import javax.validation.constraints.NotBlank
 @Component
 data class KickerProperties(
 
-        @field:NotBlank var host: String? = null
+        @field:NotBlank var host: String? = null,
+
+        @field:NotBlank var username: String? = null,
+
+        @field:NotBlank var password: String? = null
 
 )
