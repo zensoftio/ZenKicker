@@ -22,6 +22,10 @@ const initState = {
     list: [],
     totalCount: 0
   },
+  sort: {
+    sortBy: 'rating',
+    sortDirection: 'DESC'
+  }
 };
 
 export const player = (state = initState, action) => {
@@ -60,6 +64,9 @@ export const player = (state = initState, action) => {
 
     case ActionType.Player.GET_SEARCH_RESULT_SUCCESS:
       return {...state, searchResult: action.payload};
+
+    case ActionType.Player.INIT_SORT:
+      return {...state, sort: action.payload};
 
     default:
       return state;

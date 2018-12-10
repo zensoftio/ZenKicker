@@ -12,14 +12,16 @@ class PlayersTabs extends Component {
     super(props);
     this.onSortChange = this.onSortChange.bind(this);
     this.state = {
-      isAllPlayersTab: false,
-      sortBy: 'rating',
-      sortDirection: 'DESC'
+      isAllPlayersTab: false
     }
   }
 
-  onLoadMorePlayers = () => this.props.appendToPlayers(this.props.players.list.length);
-  onLoadMoreActivePlayers = () => this.props.appendToActivePlayers(this.props.activePlayers.list.length);
+  componentDidMount() {
+    this.props.getActivePlayers()
+  }
+
+  onLoadMorePlayers = () => this.props.appendToPlayers();
+  onLoadMoreActivePlayers = () => this.props.appendToActivePlayers();
 
   renderTab = () => {
     const {players, activePlayers} = this.props;
@@ -47,30 +49,33 @@ class PlayersTabs extends Component {
     )
   }
 
-  setActivePlayersTab = () => this.setState({isAllPlayersTab: false});
-  setAllPlayersTab = () => this.setState({isAllPlayersTab: true});
+  setActivePlayersTab = () => {
+    this.setState({isAllPlayersTab: false});
+    this.props.getActivePlayers()
+  }
+  setAllPlayersTab = () => {
+    this.setState({isAllPlayersTab: true});
+    this.props.getAllPlayers()
+  }
 
   onSortChange = (value) => {
-    const {getAllPlayersAction, getActivePlayersAction} = this.props;
-    const sortDirection = this.state.sortDirection === 'DESC' ? 'ASC' : 'DESC';
+    const {initSort, sort} = this.props;
+    const sortDirection = sort.sortDirection === 'DESC' ? 'ASC' : 'DESC';
+    const isAllPlayers = this.state.isAllPlayersTab;
 
-    if (this.state.isAllPlayersTab) {
-      getAllPlayersAction({sortBy: value, sortDirection: sortDirection})
-    } else {
-      getActivePlayersAction({sortBy: value, sortDirection: sortDirection})
-    }
-    this.setState({sortBy: value, sortDirection: sortDirection})
+    initSort({sortBy: value, sortDirection: sortDirection}, isAllPlayers);
   }
 
   render() {
-    const {isAllPlayersTab, sortBy, sortDirection} = this.state;
+    const {isAllPlayersTab} = this.state;
+    const {sort} = this.props;
     return (
       <Content>
         <TabButtonContainer>
           <TabButton name='active' onButtonClick={this.setActivePlayersTab} isActive={!isAllPlayersTab}/>
           <TabButton name='all' onButtonClick={this.setAllPlayersTab} isActive={isAllPlayersTab}/>
         </TabButtonContainer>
-        <PlayersListHead onSortChange={this.onSortChange} sortBy={sortBy} sortDirection={sortDirection}/>
+        <PlayersListHead onSortChange={this.onSortChange} sortBy={sort.sortBy} sortDirection={sort.sortDirection}/>
         <Players>
           {this.renderTab()}
         </Players>

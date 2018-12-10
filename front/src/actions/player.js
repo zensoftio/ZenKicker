@@ -3,18 +3,26 @@ import {api} from "../config/api";
 import {ActionType} from './const';
 import {unauthenticated} from "./authentication";
 
-export const getActivePlayers = (sort) => {
-  return async (dispatch) => {
+export const initSort = (sort, isAllPlayers) => async (dispatch) => {
+  dispatch({type: ActionType.Player.INIT_SORT, payload: sort});
+  if (isAllPlayers) {
+    dispatch(getAllPlayers())
+  } else {
+    dispatch(getActivePlayers())
+  }
 
+}
+
+export const getActivePlayers = () => {
+  return async (dispatch, getState) => {
     dispatch({type: ActionType.Player.GET_ACTIVE_PLAYERS_REQUEST});
 
     try {
-      const sortBy = (sort && sort.sortBy) ? sort.sortBy : 'rating';
-      const sortDirection = (sort && sort.sortDirection) ? sort.sortDirection : 'DESC';
+      const state = getState();
       const page = {
         limit: 15,
-        sortBy: sortBy,
-        sortDirection: sortDirection
+        sortBy: state.player.sort.sortBy,
+        sortDirection: state.player.sort.sortDirection
       }
       const result = await api.get(Paths.Player.GetActive, {params: page});
       dispatch({type: ActionType.Player.GET_ACTIVE_PLAYERS_SUCCESS, payload: result.data});
@@ -27,18 +35,16 @@ export const getActivePlayers = (sort) => {
   }
 }
 
-export const getAllPlayers = (sort) => {
-  return async (dispatch) => {
-
+export const getAllPlayers = () => {
+  return async (dispatch, getState) => {
     dispatch({type: ActionType.Player.GET_ALL_PLAYERS_REQUEST});
 
     try {
-      const sortBy = (sort && sort.sortBy) ? sort.sortBy : 'rating';
-      const sortDirection = (sort && sort.sortDirection) ? sort.sortDirection : 'DESC';
+      const state = getState();
       const page = {
         limit: 15,
-        sortBy: sortBy,
-        sortDirection: sortDirection
+        sortBy: state.player.sort.sortBy,
+        sortDirection: state.player.sort.sortDirection
       }
       const result = await api.get(Paths.Player.GetAll, {params: page});
       dispatch({type: ActionType.Player.GET_ALL_PLAYERS_SUCCESS, payload: result.data});
@@ -85,11 +91,17 @@ export const getPlayer = (id) => {
   }
 }
 
-export const appendToPlayers = (playersLength) => async (dispatch) => {
+export const appendToPlayers = () => async (dispatch, getState) => {
   dispatch({type: ActionType.Player.APPEND_TO_PLAYERS_REQUEST});
 
   try {
-    const page = {offset: playersLength, limit: 5, sortBy: 'rating', sortDirection: 'DESC'};
+    const state = getState();
+    const page = {
+      offset: state.player.players.list.length,
+      limit: 5,
+      sortBy: state.player.sort.sortBy,
+      sortDirection: state.player.sort.sortDirection
+    };
     const result = await api.get(Paths.Player.GetAll, {params: page});
     dispatch({type: ActionType.Player.APPEND_TO_PLAYERS_SUCCESS, payload: result.data});
   } catch (err) {
@@ -100,11 +112,17 @@ export const appendToPlayers = (playersLength) => async (dispatch) => {
   }
 }
 
-export const appendToActivePlayers = (playersLength) => async (dispatch) => {
+export const appendToActivePlayers = () => async (dispatch, getState) => {
   dispatch({type: ActionType.Player.APPEND_TO_ACTIVE_PLAYERS_REQUEST});
 
   try {
-    const page = {offset: playersLength, limit: 5, sortBy: 'rating', sortDirection: 'DESC'};
+    const state = getState();
+    const page = {
+      offset: state.player.activePlayers.list.length,
+      limit: 5,
+      sortBy: state.player.sort.sortBy,
+      sortDirection: state.player.sort.sortDirection
+    };
     const result = await api.get(Paths.Player.GetAll, {params: page});
     dispatch({type: ActionType.Player.APPEND_TO_ACTIVE_PLAYERS_SUCCESS, payload: result.data});
   } catch (err) {

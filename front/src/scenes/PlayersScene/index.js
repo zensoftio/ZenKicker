@@ -2,26 +2,20 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {getActivePlayers, getAllPlayers, appendToPlayers, appendToActivePlayers} from '../../actions';
+import {getActivePlayers, getAllPlayers, appendToPlayers, appendToActivePlayers, initSort} from '../../actions';
 import {withRouter} from 'react-router-dom';
 import PlayersTabs from '../../components/players-tabs';
 import {MediaViews} from "../../helpers/style-variables";
 
 class PlayersScene extends Component {
 
-  componentDidMount() {
-    const {getActivePlayers, getAllPlayers} = this.props.actions;
-    getActivePlayers();
-    getAllPlayers();
-  }
-
   render() {
-    const {players, activePlayers, actions} = this.props;
+    const {players, activePlayers, sort, actions} = this.props;
     return (
       <Content>
         <PlayersTabs players={players} activePlayers={activePlayers} appendToPlayers={actions.appendToPlayers}
-                     appendToActivePlayers={actions.appendToActivePlayers} getAllPlayersAction={actions.getAllPlayers}
-                     getActivePlayersAction={actions.getActivePlayers}/>
+                     appendToActivePlayers={actions.appendToActivePlayers} initSort={actions.initSort}
+                     sort={sort} getActivePlayers={actions.getActivePlayers} getAllPlayers={actions.getAllPlayers}/>
       </Content>
     );
   }
@@ -31,15 +25,17 @@ const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
   const props = {
     activePlayers: state.player.activePlayers,
     players: state.player.players,
+    sort: state.player.sort
   };
   return props;
 }
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, getState) => {
   const actions = {
     getActivePlayers,
     getAllPlayers,
     appendToPlayers,
-    appendToActivePlayers
+    appendToActivePlayers,
+    initSort
   };
   const actionMap = {actions: bindActionCreators(actions, dispatch)};
   return actionMap;
