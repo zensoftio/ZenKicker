@@ -2,6 +2,7 @@ rootProject.name = 'kicker'
 
 include('backend')
 include('front')
+include('telegram-bot')
 
 rootProject.children.each { subproject ->
     subproject.buildFileName = "${subproject.name}.gradle"

@@ -1,0 +1,12 @@
+plugins {
+    id 'idea'
+    id 'org.jetbrains.kotlin.jvm'
+    id 'org.jetbrains.kotlin.kapt'
+    id 'org.jetbrains.kotlin.plugin.spring'
+    id 'org.springframework.boot'
+}
+
+dependencies {
+//    Telegram
+    implementation('org.telegram:telegrambots-spring-boot-starter:4.1')
+}
