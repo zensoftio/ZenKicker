@@ -64,7 +64,7 @@ class GameRegistration extends Component {
   onWinner2Change = (option) => this.setState({registrationError: null, winner2: option})
   onLoser1Change = (option) => this.setState({registrationError: null, loser1: option})
   onLoser2Change = (option) => this.setState({registrationError: null, loser2: option})
-  onLosersGoalsChange = ({value}) => this.setState({losersGoals: value, registrationError: null})
+  onLosersGoalsChange = (option) => this.setState({losersGoals: option, registrationError: null})
 
   onCancelRegistration = () => {
     if (this.state.isGameRegistration) {
@@ -112,7 +112,7 @@ class GameRegistration extends Component {
       winner2Id: winner2.value,
       loser1Id: loser1.value,
       loser2Id: loser2.value,
-      losersGoals
+      losersGoals: losersGoals.value
     };
     try {
       await registerGame(data);
@@ -163,7 +163,7 @@ class GameRegistration extends Component {
           </Block>
           <ScoreBlock>
             <div>10 :</div>
-            <DropdownInput options={getGoalValues()} onChange={this.onLosersGoalsChange} placeholder=''/>
+            <DropdownInput value={losersGoals} options={getGoalValues} onChange={this.onLosersGoalsChange} placeholder=''/>
           </ScoreBlock>
           <Block>
             <DropdownInput value={loser1} options={this.getFilteredPlayerList()} onInputChange={this.onInputChange}
@@ -176,13 +176,18 @@ class GameRegistration extends Component {
     }
     const isMobile = window.outerWidth <= MediaViews.MOBILE;
     return (
-      <RegisteredGameBlock losersGoals={losersGoals} winner1Icon={winner1.iconPath}
+      <RegisteredGameBlock losersGoals={losersGoals.label} winner1Icon={winner1.iconPath}
                            winner2Icon={winner2.iconPath}
                            loser1Icon={loser1.iconPath} loser2Icon={loser2.iconPath}
                            winner1Name={winner1.label}
                            winner2Name={winner2.label} loser1Name={loser1.label}
                            loser2Name={loser2.label} isMobile={isMobile}/>
     )
+  }
+
+  isButtonDisabled = () => {
+    const {winner1, winner2, loser1, loser2, losersGoals, registrationError} = this.state;
+    return (!winner1 || !winner2  || !loser1  || !loser2  || !losersGoals  || !!registrationError)
   }
 
   render() {
@@ -192,7 +197,7 @@ class GameRegistration extends Component {
       <Content>
         <Popup buttonTitle='Register Game' ref={this.popupChild} clearValues={this.clearValues}
                loadData={this.setDefaultValues}>
-          <InputsContainer>
+          <div>
             <PopupTitle>
               {isGameRegistration ? 'Are you sure?' : 'Register game'}
             </PopupTitle>
@@ -200,11 +205,11 @@ class GameRegistration extends Component {
             {this.renderContainer()}
             <RegistrationError>{registrationError}</RegistrationError>
             <ButtonsContainer>
-              <Button onClick={this.onRegisterGame}>{!isGameRegistration ? 'OK' : 'Confirm'}</Button>
+              <Button isDisabled={this.isButtonDisabled()} onClick={this.onRegisterGame}>{!isGameRegistration ? 'OK' : 'Confirm'}</Button>
               <Indent/>
               <Button onClick={this.onCancelRegistration}>Cancel</Button>
             </ButtonsContainer>
-          </InputsContainer>
+          </div>
         </Popup>
       </Content>
     )
@@ -265,24 +270,6 @@ const Block = styled.div`
 const ScoreBlock = styled.div`
   display: flex;
   align-items: center;
-`;
-
-const InputsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: max-content;
-  height: max-content;
-  background-color: #fff;
-  padding: 40px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  border-radius: 2px;
-  background-color: ${Colors.THEME_COLOR};
-  @media (max-width: ${MediaViews.MOBILE}px) {
-    width: 100%;
-    height: calc(100vh - 50px);
-    border-radius: 0;
-  }
 `;
 
 const RegistrationError = styled.span`

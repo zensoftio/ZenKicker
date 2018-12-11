@@ -19,11 +19,9 @@
     <p class="error"></p>
     <div class="input_block">
       <input name="username" type="text" placeholder="Username">
-      <span/>
     </div>
     <div class="input_block">
       <input name="password" type="password" placeholder="Password">
-      <span/>
       <div class="eye eye_close"></div>
     </div>
     <div class="check_button_block">

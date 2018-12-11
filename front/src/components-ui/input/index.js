@@ -1,50 +1,30 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Colors} from '../../helpers/style-variables';
-
-const Content = styled.div`
-  position: relative;
-  margin: auto;
-  width: 200px;
-  margin-bottom: 20px;
-  
-  span {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 2px;
-    width: 100%;
-    background: ${Colors.MAIN_COLOR};
-    transform: scaleX(0);
-    transform-origin: 0 0;
-    transition: all .15s ease;
-  }
-`;
-
-const InputElement = styled.input`
-  font-size: 1em;
-  padding: 10px 0;
-  width: 100%;
-  box-sizing: border-box;
-  border: none;
-  border-left: solid 3px transparent;
-  outline: none;
-  text-align: center;
- 
-  &:focus {
-    background: none;
-    outline: none;
-    + span {
-      color: ${Colors.MAIN_COLOR};
-      transform: translateY(-26px) scale(.75);
-      transform: scaleX(1);
-    }
-  }
-`;
 
 export const Input = ({value, onChange, placeholder, type = 'text'}) => (
   <Content>
     <InputElement value={value} onChange={onChange} placeholder={placeholder} type={type}/>
-    <span/>
   </Content>
 )
+
+const Content = styled.div`
+  position: relative;
+  width: 280px;
+  margin-bottom: 20px;
+`;
+
+const InputElement = styled.input`
+  font-size: 1em;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  text-align: left;
+  background-color: hsl(0,0%,100%);
+  border: solid 1px hsl(0,0%,80%);
+  border-radius: 4px;
+ 
+  &:focus {
+    border-color: #2684FF;
+  }
+`;

@@ -30,14 +30,15 @@ class PasswordBlock extends Component {
   onNewPasswordConfirmChange = (value) => this.setState({newPasswordConfirm: value, passwordError: null})
 
   onChangePasswordClick = async () => {
-    if (this.state.newPassword === '' || this.state.currentPassword === '' || this.state.newPasswordConfirm === '')
+    const {newPassword, currentPassword, newPasswordConfirm} = this.state;
+    if (newPassword === '' || currentPassword === '' || newPasswordConfirm === '')
       return this.setState({passwordError: 'All fields are required'});
-    if (this.state.newPassword !== this.state.newPasswordConfirm)
+    if (newPassword !== newPasswordConfirm)
       return this.setState({passwordError: 'Passwords doesn\'t match'});
     try {
       const data = {
-        currentPassword: this.state.currentPassword,
-        newPassword: this.state.newPassword
+        currentPassword: currentPassword,
+        newPassword: newPassword
       };
       await updatePassword(data);
       this.clearValues();
@@ -48,12 +49,22 @@ class PasswordBlock extends Component {
     }
   }
 
+  isButtonDisabled = () => {
+    const {newPassword, currentPassword, newPasswordConfirm, passwordError} = this.state;
+    return !newPassword || !newPasswordConfirm || !!passwordError || !currentPassword || (newPassword !== newPasswordConfirm)
+  }
+
+  onCancelClick = () => {
+    this.clearValues();
+    this.popupChild.current.onPopupClose()
+  }
+
   render() {
     const {newPassword, currentPassword, passwordError, newPasswordConfirm} = this.state;
 
     return (
       <Popup buttonTitle='Change password' ref={this.popupChild} clearValues={this.clearValues}>
-        <InputsContainer>
+        <div>
           <PopupTitle>Change password</PopupTitle>
           <Input value={currentPassword} onChange={(e) => this.onCurrentPasswordChange(e.target.value)}
                  placeholder='Enter old password' type='password'/>
@@ -62,8 +73,12 @@ class PasswordBlock extends Component {
           <Input value={newPasswordConfirm} onChange={(e) => this.onNewPasswordConfirmChange(e.target.value)}
                  placeholder='Confirm new password' type='password'/>
           <PasswordError>{passwordError}</PasswordError>
-          <Button onClick={this.onChangePasswordClick}>Confirm</Button>
-        </InputsContainer>
+          <ButtonsContainer>
+            <Button onClick={this.onChangePasswordClick} isDisabled={this.isButtonDisabled()}>Confirm</Button>
+            <Indent/>
+            <Button onClick={this.onCancelClick}>Cancel</Button>
+          </ButtonsContainer>
+        </div>
       </Popup>
     )
   }
@@ -76,17 +91,10 @@ const PopupTitle = styled.div`
   margin-bottom: 40px;
 `;
 
-const InputsContainer = styled.div`
+const ButtonsContainer = styled.div`
   display: flex;
-  flex-direction: column;
   align-items: center;
-  width: max-content;
-  height: max-content;
-  background-color: #fff;
-  padding: 40px 80px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  border-radius: 2px;
-  background-color: ${Colors.THEME_COLOR}
+  justify-content: center;
 `;
 
 const PasswordError = styled.span`
@@ -94,4 +102,8 @@ const PasswordError = styled.span`
   display: flex;
   align-items: center;
   margin: 20px 0;
+`;
+
+const Indent = styled.div`
+  width: 20px;
 `;

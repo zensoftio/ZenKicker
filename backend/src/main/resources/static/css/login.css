@@ -66,38 +66,23 @@ body {
     position: relative;
     align-items: center;
 }
-.input_block span{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 2px;
-    width: 100%;
-    background: #008CE4;
-    transform: scaleX(0);
-    transform-origin: 0 0;
-    transition: all .15s ease;
-}
 .input_block input {
     font-size: 1em;
-    padding: 10px 0;
+    padding: 10px;
     width: 100%;
     box-sizing: border-box;
-    border: none;
+    border: solid 1px hsl(0,0%,80%);
+    border-radius: 4px;
     outline: none;
-    text-align: center;
+    text-align: left;
 }
 .input_block input:focus {
-    background: none;
-    outline: none;
+    border-color: #2684FF;
 }
-.input_block input:focus + span {
-    color: #008CE4;
-    transform: translateY(-26px) scale(.75);
-    transform: scaleX(1);
-}
+
 .check_button_block {
     width: 120px;
-    margin-top: 30px;
+    margin-top: 20px;
 }
 .check_button_block button {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -111,8 +96,10 @@ body {
     outline: none;
 }
 .check_button_block button:hover {
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    border-left: solid 3px #008CE4;
+    box-shadow: 0 3px 4px rgba(0,0,0,0.1);
+}
+.check_button_block button:active {
+    box-shadow: 0 3px 4px rgba(0,0,0,0.2);
 }
 .sign-up-link {
     margin-top: 40px;

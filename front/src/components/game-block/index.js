@@ -61,7 +61,7 @@ export const GameBlock = ({
     {
       reportedBy &&
       <InfoContent>
-        <div><span>{moment(date).format('dddd DD, MMM YYYY')}</span></div>
+        <div>{moment(date).format('dddd DD, MMM YYYY')}</div>
         <div>Reported by: <Link to={`/players/${reportedById}`}>{reportedBy}</Link></div>
       </InfoContent>
     }
@@ -94,9 +94,6 @@ const InfoContent = styled.div`
       &:hover {
         text-decoration: underline;
       }
-    }
-    span {
-      color: ${Colors.MAIN_COLOR};
     }
   }
   @media (max-width: ${MediaViews.MOBILE}px) {
