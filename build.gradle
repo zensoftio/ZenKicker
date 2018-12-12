@@ -7,10 +7,17 @@ plugins {
     id 'org.springframework.boot' version '2.0.4.RELEASE'
 }
 
+repositories {
+    mavenCentral()
+}
+
+
 subprojects {
     group = 'com.kicker'
     version = '0.0.1-SNAPSHOT'
 }
+
+bootJar.enabled = false
 
 gradle.buildFinished {
     project.buildDir.deleteDir()
