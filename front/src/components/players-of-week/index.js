@@ -3,10 +3,6 @@ import styled from "styled-components";
 import UserPhoto from "../../components-ui/user-photo";
 import {Link} from "react-router-dom";
 
-import firstPlaceIcon from '../../shared/images/first-place.png';
-import secondPlaceIcon from '../../shared/images/second-place.png';
-import thirdPlaceIcon from '../../shared/images/third-place.png';
-import crabIcon from '../../shared/images/crab.png';
 import {Colors, MediaViews} from "../../helpers/style-variables";
 
 const PlayersOfWeek = ({players}) => {
@@ -19,21 +15,21 @@ const PlayersOfWeek = ({players}) => {
           <PhotoBlock>
             <UserPhoto photo={players.firstPlace.iconPath}/>
           </PhotoBlock>
-          <PlaceIcon src={firstPlaceIcon}/>
+          <Place><span>1</span>st</Place>
           <Name>{players.firstPlace.username}</Name>
         </PlaceContainer>
         <PlaceContainer to={`/players/${players.secondPlace.id}`}>
           <PhotoBlock>
             <UserPhoto photo={players.secondPlace.iconPath}/>
           </PhotoBlock>
-          <PlaceIcon src={secondPlaceIcon}/>
+          <Place><span>2</span>nd</Place>
           <Name>{players.secondPlace.username}</Name>
         </PlaceContainer>
         <PlaceContainer to={`/players/${players.thirdPlace.id}`}>
           <PhotoBlock>
             <UserPhoto photo={players.thirdPlace.iconPath}/>
           </PhotoBlock>
-          <PlaceIcon src={thirdPlaceIcon}/>
+          <Place><span>3</span>rd</Place>
           <Name>{players.thirdPlace.username}</Name>
         </PlaceContainer>
       </PlacesContainer>
@@ -42,7 +38,7 @@ const PlayersOfWeek = ({players}) => {
           <PhotoBlock>
             <UserPhoto photo={players.loser.iconPath}/>
           </PhotoBlock>
-          <PlaceIcon src={crabIcon}/>
+          <LastPlace>LOSER</LastPlace>
           <Name>{players.loser.username}</Name>
         </PlaceContainer>
       </div>
@@ -66,6 +62,50 @@ const Content = styled.div`
 const PlacesContainer = styled.div`
   display: flex;
   align-items: flex-start;
+`;
+
+const Place = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 90px;
+  right: 0;
+  font-weight: bold;
+  background-color: ${Colors.THEME_COLOR};
+  border-radius: 100%;
+  span {
+    font-size: 1.8em;
+  }
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    font-size: 0.7em;
+    width: 30px;
+    height: 30px;
+    top: 50px;
+    right: 20px;
+    span {
+      font-size: 1.5em;
+    }
+  }
+`;
+
+const LastPlace = styled(Place)`
+  font-size: 1.1em;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  top: 70px;
+  right: -10px;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    font-size: 0.6em;
+    width: 40px;
+    height: 40px;
+    top: 45px;
+    right: 10px;
+  }
 `;
 
 const Name = styled.div`
@@ -105,16 +145,5 @@ const PhotoBlock = styled.div`
   @media (max-width: ${MediaViews.MOBILE}px) {
     width: 60px;
     height: 60px;
-  }
-`;
-
-const PlaceIcon = styled.img`
-  position: absolute;
-  top: 80px;
-  right: 10px;
-  height: 60px;
-  @media (max-width: ${MediaViews.MOBILE}px) {
-    height: 35px;
-    top: 50px;
   }
 `;
