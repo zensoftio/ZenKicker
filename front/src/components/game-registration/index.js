@@ -16,6 +16,8 @@ import {Colors, MediaViews} from '../../helpers/style-variables';
 import {getGoalValues} from '../../helpers/goal-values';
 import {RegisteredGameBlock} from "../registered-game-block";
 
+import AddIco from '@material-ui/icons/Add';
+
 class GameRegistration extends Component {
   constructor(props) {
     super(props);
@@ -195,7 +197,7 @@ class GameRegistration extends Component {
 
     return (
       <Content>
-        <Popup buttonTitle='Register Game' ref={this.popupChild} clearValues={this.clearValues}
+        <Popup buttonTitle='Register Game' buttonIcon={<AddIco/>} ref={this.popupChild} clearValues={this.clearValues}
                loadData={this.setDefaultValues}>
           <div>
             <PopupTitle>

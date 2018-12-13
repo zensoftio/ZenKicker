@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import {MainMenuLink} from "../../components-ui/buttons/main-menu-link";
 import GameRegistration from '../game-registration';
 
+import ExitToAppIco from '@material-ui/icons/ExitToApp';
 import UserPhoto from '../../components-ui/user-photo';
 import {Colors} from '../../helpers/style-variables';
 
@@ -23,6 +24,7 @@ export const HorizontalMenu = ({id, iconPath, username}) => (
           </Photo>
           <Username>{username}</Username>
         </User>
+        <a href="/logout"><LogOutIco/></a>
       </UserSection>
     </TopBar>
   </Content>
@@ -67,7 +69,11 @@ const Navigation = styled.div`
 const UserSection = styled.div`
   display: flex;
   align-items: center;
-  padding: 0 20px;  
+  padding: 0 20px;
+  
+  a {
+    display: flex;
+  }
 `;
 
 const User = styled(Link)`
@@ -77,6 +83,7 @@ const User = styled(Link)`
   padding-left: 60px;
   color: black;
   text-decoration: none;
+  margin-right: 20px;
 	&:hover {
 		text-decoration: underline;
 	}
@@ -99,4 +106,8 @@ const Username = styled.div`
   max-width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
+`;
+
+const LogOutIco = styled(ExitToAppIco)`
+  color: #000;
 `;

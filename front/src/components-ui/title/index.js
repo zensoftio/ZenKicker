@@ -5,7 +5,7 @@ import {MediaViews} from "../../helpers/style-variables";
 export const Title = ({children}) => <Content>{children}</Content>
 
 const Content = styled.div`
-  font-size: 1.3em;
+  font-size: 1.4em;
   margin: 60px 0 40px 0;
   width: 100%;
   text-align: center;

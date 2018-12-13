@@ -2,8 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import {Colors} from '../../../helpers/style-variables';
 
-export const Button = ({children, onClick, isDisabled = false}) => (
+export const Button = ({children, onClick, isDisabled = false, buttonIcon = null}) => (
   <Content isDisabled={isDisabled} onClick={onClick}>
+    {buttonIcon && <Icon>{buttonIcon}</Icon>}
     {children}
   </Content>
 )
@@ -11,7 +12,7 @@ export const Button = ({children, onClick, isDisabled = false}) => (
 const Content = styled.div`
 	width: max-content;
 	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  padding: 12px 25px;
+  padding: 10px 20px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -26,4 +27,9 @@ const Content = styled.div`
   &:active {
     box-shadow: 0 3px 4px rgba(0,0,0,0.2);
   }
+`;
+
+const Icon =  styled.div`
+  margin-right: 10px;
+  display: flex;
 `;

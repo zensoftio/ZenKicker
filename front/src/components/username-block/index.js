@@ -6,19 +6,28 @@ import {connect} from 'react-redux';
 import {getPlayer, getCurrent} from "../../actions";
 import {Colors, MediaViews} from '../../helpers/style-variables';
 
+import EditIco from '@material-ui/icons/Edit';
+import DoneIco from '@material-ui/icons/Done';
+
 class UsernameBlock extends Component {
   constructor(props) {
     super(props);
+    this.onKeyDown = this.onKeyDown.bind(this);
     this.state = {
       username: this.props.player.username,
-      usernameError: null
+      usernameError: null,
+      isSubmitButtonDisplay: false
     }
   }
 
   onUsernameChange = (value) => this.setState({username: value, usernameError: null})
 
-  onUsernameBlur = async () => {
-    if (this.state.username === this.props.player.username) return;
+  onUsernameFocus = () => this.setState({isSubmitButtonDisplay: true})
+
+  onSubmit = async () => {
+    if (this.state.username === this.props.player.username) {
+      return this.setState({isSubmitButtonDisplay: false});
+    };
     try {
       const data = {
         username: this.state.username
@@ -26,22 +35,31 @@ class UsernameBlock extends Component {
       await updateUsername(data);
       this.props.actions.getPlayer(this.props.player.id);
       this.props.actions.getCurrent();
+      this.setState({isSubmitButtonDisplay: false});
     } catch (err) {
       const error = err.response.data.message;
       this.setState({usernameError: error})
     }
   }
 
+  onKeyDown = (e) => e.key === 'Enter' && this.onSubmit()
+
   render() {
-    const {username, usernameError} = this.state;
+    const {username, usernameError, isSubmitButtonDisplay} = this.state;
     const {isCurrent} = this.props;
 
     return (
       <Content>
         {
           isCurrent ?
-            <UsernameInput value={username} onChange={(e) => this.onUsernameChange(e.target.value)}
-                           onBlur={this.onUsernameBlur}/> :
+            <UsernameInputBlock>
+              <EditIco />
+              <UsernameInput value={username} onChange={(e) => this.onUsernameChange(e.target.value)}
+                             onFocus={this.onUsernameFocus} onKeyDown={this.onKeyDown}/>
+              {
+                isSubmitButtonDisplay && <CustomDoneIco onClick={this.onSubmit}/>
+              }
+            </UsernameInputBlock> :
             <Username>{username}</Username>
         }
 
@@ -87,6 +105,11 @@ const Username = styled.div`
   }
 `;
 
+const UsernameInputBlock = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 const UsernameInput = styled.input`
   font-size: 1.7em;
   background-color: #fbfbfb;
@@ -115,4 +138,14 @@ const UsernameError = styled.span`
   position: absolute;
   left: 10px;
   top: -20px;
+`;
+
+const CustomDoneIco = styled(DoneIco)`
+  margin-left: 10px;
+  cursor: pointer;
+  border: 2px solid ${Colors.MAIN_COLOR};
+  border-radius: 5px;
+  width: 1.2em !important;
+  height: 1.2em !important;
+  color: ${Colors.MAIN_COLOR};
 `;

@@ -19,6 +19,7 @@ const LinkButton = styled(NavLink)`
   background: fade_out(black, 0.5);
   border-bottom: 3px solid #efefef;
   text-decoration: none;
+  width: 100%;
 
   &:hover, &.active {
 		border-bottom: solid 3px ${Colors.MAIN_COLOR};
@@ -31,7 +32,7 @@ const LinkButton = styled(NavLink)`
   	border-left: 3px solid #efefef;
   	border-bottom: none;
   	padding: 5px 25px;
-  	margin-bottom: 20px;
+  	margin: 0 0 20px 0;
   
     &:hover, &.active {
 			border-left: solid 3px ${Colors.MAIN_COLOR};

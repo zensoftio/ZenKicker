@@ -32,11 +32,11 @@ class Popup extends Component {
 
   render() {
     const {isPopupOpen} = this.state;
-    const {children, buttonTitle} = this.props;
+    const {children, buttonTitle, buttonIcon} = this.props;
 
     return (
       <Content>
-        <Button onClick={this.onPopupOpen}>{buttonTitle}</Button>
+        <Button buttonIcon={buttonIcon} onClick={this.onPopupOpen}>{buttonTitle}</Button>
         {
           isPopupOpen &&
           <PopupWrapper onClick={this.handleOnBackgroundClick}>

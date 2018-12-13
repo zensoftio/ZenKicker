@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import {MainMenuLink} from "../../components-ui/buttons/main-menu-link";
 import GameRegistration from '../game-registration';
 
+import ExitToAppIco from '@material-ui/icons/ExitToApp';
 import UserPhoto from '../../components-ui/user-photo';
 import {Colors} from '../../helpers/style-variables';
 
@@ -44,8 +45,9 @@ class MobileMenu extends React.Component {
                 </Photo>
                 <Username>{username}</Username>
               </User>
-              <GameRegistration />
+              <a href="/logout"><LogOutIco/></a>
             </UserSection>
+            <GameRegistration />
             <Navigation>
               <MainMenuLink link="/players"  onClick={this.onMenuClose}>Players</MainMenuLink>
               <MainMenuLink link="/games"  onClick={this.onMenuClose}>Games</MainMenuLink>
@@ -107,7 +109,9 @@ const TopBar = styled.div`
 const Navigation = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  width: 100%;
+  margin-top: 20px;
 `;
 
 const UserSection = styled.div`
@@ -145,4 +149,8 @@ const Username = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
 	margin: 0 20px;
+`;
+
+const LogOutIco = styled(ExitToAppIco)`
+  color: #000;
 `;
