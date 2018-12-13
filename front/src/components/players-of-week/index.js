@@ -70,13 +70,14 @@ const PlacesContainer = styled.div`
 
 const Name = styled.div`
   display: flex;
-  font-size: 1.2em;
+  font-size: 1em;
   margin-top: 10px;
   max-width: 100px;
-  word-break: break-word;
+  width: 100px;
   text-align: center;
+  overflow: hidden;
   @media (max-width: ${MediaViews.MOBILE}px) {
-    font-size: 0.9em;
+    font-size: 0.8em;
   }
 `;
 

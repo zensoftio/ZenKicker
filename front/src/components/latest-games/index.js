@@ -4,12 +4,14 @@ import {GameBlock} from '../../components/game-block';
 import GamesListHead from '../games-list-head';
 import {NoContent} from '../no-content';
 import {MediaViews} from "../../helpers/style-variables";
+import {Title} from "../../components-ui/title";
 
 export const LatestGames = ({latestGames}) => {
 
   const isMobile = window.outerWidth <= MediaViews.MOBILE;
   return (
     <div>
+      <Title>Latest games</Title>
       <GamesListHead/>
       <LatestGamesContainer>
         {

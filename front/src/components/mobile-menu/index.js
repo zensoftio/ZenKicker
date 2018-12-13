@@ -9,7 +9,6 @@ import {Colors} from '../../helpers/style-variables';
 
 import MenuIco from '@material-ui/icons/Menu';
 import CloseIco from '@material-ui/icons/Close';
-import ExitToAppIco from '@material-ui/icons/ExitToApp';
 
 class MobileMenu extends React.Component {
   constructor(props) {
@@ -45,9 +44,8 @@ class MobileMenu extends React.Component {
                 </Photo>
                 <Username>{username}</Username>
               </User>
-              <a href="/logout" onClick={this.onMenuClose}><LogOutIco/></a>
+              <GameRegistration />
             </UserSection>
-            <GameRegistration />
             <Navigation>
               <MainMenuLink link="/players"  onClick={this.onMenuClose}>Players</MainMenuLink>
               <MainMenuLink link="/games"  onClick={this.onMenuClose}>Games</MainMenuLink>
@@ -68,12 +66,7 @@ const Content = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
 	background-color: ${Colors.THEME_COLOR};
-	z-index: 10;
 	box-sizing: border-box;
 	padding: 0 20px;
 `;
@@ -101,12 +94,13 @@ const TopBar = styled.div`
 	flex-direction: column;
 	position: fixed;
 	box-sizing: border-box;
-	align-items: center;
+	align-items: flex-start;
 	top: 50px;
 	left: 0;
 	right: 0;
 	padding: 20px;
 	height: calc(100vh - 50px);
+	z-index: 2;
 	background-color: ${Colors.THEME_COLOR};
 `;
 
@@ -151,8 +145,4 @@ const Username = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
 	margin: 0 20px;
-`;
-
-const LogOutIco = styled(ExitToAppIco)`
-  color: #000;
 `;

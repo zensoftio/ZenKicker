@@ -61,7 +61,7 @@ export const GameBlock = ({
     {
       reportedBy &&
       <InfoContent>
-        <div>{moment(date).format('dddd DD, MMM YYYY')}</div>
+        <div>{moment(date).format('ddd DD, MMM YYYY')}</div>
         <div>Reported by: <Link to={`/players/${reportedById}`}>{reportedBy}</Link></div>
       </InfoContent>
     }
@@ -86,6 +86,10 @@ const InfoContent = styled.div`
   font-size: 0.9em;
   display: flex;
   justify-content: space-between;
+  background-color: ${Colors.HOVER_COLOR};
+  padding: 10px 20px;
+  border-radius: 0 0 10px 10px;
+  
   div {
     a {
       text-decoration: none;
@@ -97,6 +101,7 @@ const InfoContent = styled.div`
     }
   }
   @media (max-width: ${MediaViews.MOBILE}px) {
+    padding: 10px;
     font-size: 0.7em;
   }
 `;
@@ -110,9 +115,6 @@ const GameContent = styled.div`
 const Team = styled.div`
   display: flex;
   flex-direction: column;
-  @media (max-width: ${MediaViews.MOBILE}px) {
-    font-size: 0.9em;
-  }
 `;
 
 const User = styled(Link)`
@@ -140,6 +142,7 @@ const RightUser = styled(User)`
 const Username = styled.div`
   min-width: 150px;
   @media (max-width: ${MediaViews.MOBILE}px) {
+    font-size: 0.8em;
     min-width: 0;
     width: 120px;
     text-overflow: ellipsis;
@@ -185,7 +188,7 @@ const Score = styled.div`
   font-size: 1.3em;
   @media (max-width: ${MediaViews.MOBILE}px) {
     padding: 0 10px;
-    font-size: 1.1em;
+    font-size: 1em;
   }
 `;
 

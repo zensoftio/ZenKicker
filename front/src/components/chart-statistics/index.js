@@ -18,9 +18,9 @@ const ChartStatistics = ({ratingStatistic, gamesCountStatistic, isMobile}) => {
   return (
     <Content>
       <Chart data={mappedRatingStatistic} lineDataKey='rating' xDataKey='week' title='Rating per week'
-             width={isMobile ? window.outerWidth - 50 : undefined}/>
+             isMobile={isMobile}/>
       <Chart data={mappedGamesCountStatistic} lineDataKey='games' xDataKey='week' title='Count of games per week'
-             width={isMobile ? window.outerWidth - 50 : undefined}/>
+             isMobile={isMobile}/>
     </Content>
   )
 }

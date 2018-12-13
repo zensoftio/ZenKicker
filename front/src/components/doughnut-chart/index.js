@@ -4,7 +4,7 @@ import {Doughnut} from 'react-chartjs';
 
 const DoughnutChart = ({data, options, gamesCount, isMobile}) => {
 
-  const width = isMobile ? window.outerWidth : 500;
+  const width = isMobile ? window.outerWidth - 3 : 500;
   return (
     <Content>
       <Doughnut data={data} options={options} width={width} height={250}/>

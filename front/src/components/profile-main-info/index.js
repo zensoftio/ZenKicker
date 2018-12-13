@@ -6,6 +6,8 @@ import ProfilePhotoBlock from '../profile-photo-block';
 import PasswordBlock from '../password-block';
 import {Colors, MediaViews} from '../../helpers/style-variables';
 
+import ExitToAppIco from '@material-ui/icons/ExitToApp';
+
 class ProfileMainInfo extends Component {
 
   constructor(props) {
@@ -59,7 +61,11 @@ class ProfileMainInfo extends Component {
           <EditingBlock>
             <UsernameBlock isCurrent={isCurrent}/>
             {
-              isCurrent && <PasswordBlock/>
+              isCurrent &&
+              <div>
+                <PasswordBlock/>
+                <a href="/logout"><LogOutIco/></a>
+              </div>
             }
           </EditingBlock>
           <Status></Status>
@@ -168,7 +174,7 @@ const Field = styled.div`
     padding-bottom: 0;
   }
   @media (max-width: ${MediaViews.MOBILE}px) {
-    font-size: 1.1em;
+    font-size: 1em;
   }
 `;
 
@@ -201,8 +207,20 @@ const ErrorPhotoUpload = styled.div`
 const EditingBlock = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  &>div:last-child {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
   @media (max-width: ${MediaViews.MOBILE}px) {
     flex-direction: column;
-    align-items: center;
-}
+  }
+`;
+
+const LogOutIco = styled(ExitToAppIco)`
+  color: #000;
+  width: 1.2em !important;
+  height: 1.2em !important;
 `;

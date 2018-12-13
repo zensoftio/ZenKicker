@@ -9,8 +9,10 @@ export const Input = ({value, onChange, placeholder, type = 'text'}) => (
 
 const Content = styled.div`
   position: relative;
-  width: 280px;
-  margin-bottom: 20px;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  box-sizing: border-box;
 `;
 
 const InputElement = styled.input`

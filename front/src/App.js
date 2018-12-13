@@ -76,23 +76,27 @@ export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
 
 const Container = styled.div`
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
-  position: relative;
   flex-direction: column;
   align-items: center;
 `;
 
 const Content = styled.div`
 	width: 100%;
-	padding: 0 50px 20px 50px;
-	padding-top: 0;
+	padding: 50px 50px 10px 50px;
 	box-sizing: border-box;
-	margin-top: 120px;
 	display: flex;
 	justify-content: center;
+  height: calc(100vh - 70px);
+  overflow-y: auto;
+	
+	&>div {
+    height: max-content;
+	}
+	
 	@media (max-width: ${MediaViews.MOBILE}px) {
-	  margin-top: 90px;
-	  padding: 0 20px;
+	  height: calc(100vh - 50px);
+	  padding: 20px 20px 0 20px;
   }
 `;

@@ -2,13 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 import {LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid} from 'recharts';
 import {Colors, MediaViews} from '../../helpers/style-variables';
+import {Title} from "../../components-ui/title";
 
-const Chart = ({data, lineDataKey, title, width = 900, height = 200, xDataKey}) => {
+const Chart = ({data, lineDataKey, title, isMobile, xDataKey}) => {
 
   if(!data || !data.length) return null;
 
+  const width = isMobile ? window.outerWidth - 50 : 900;
+  const height = 200;
+
   return (
-    <div>
+    <Content>
       <Title>{title}</Title>
       <LineChart width={width} height={height} data={data} margin={{top: 5, bottom: 5, left: 30, right: 30}}>
         <XAxis dataKey={xDataKey} stroke='#a5a5a5' tickMargin={15} padding={{left: 30}} axisLine={false} tickLine={false}
@@ -19,17 +23,16 @@ const Chart = ({data, lineDataKey, title, width = 900, height = 200, xDataKey}) 
         <CartesianGrid stroke="#f2f2f2" vertical={true} horizontal={false}/>
         <Line type="monotone" dataKey={lineDataKey} stroke={Colors.MAIN_COLOR} />
       </LineChart>
-    </div>
+    </Content>
   )
 }
 
 export default Chart;
 
-const Title = styled.div`
-  text-align: center;
-  font-size: 1.3em;
-  margin: 30px 0;
+const Content = styled.div`
   @media (max-width: ${MediaViews.MOBILE}px) {
-    font-size: 1.2em;
+    .recharts-cartesian-axis-tick {
+      font-size: 0.8em;
+    }
   }
 `;

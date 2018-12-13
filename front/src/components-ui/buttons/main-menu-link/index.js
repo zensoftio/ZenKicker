@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {NavLink} from 'react-router-dom';
-import {Colors} from '../../../helpers/style-variables';
+import {Colors, MediaViews} from '../../../helpers/style-variables';
 
 export const MainMenuLink = ({children, link, onClick}) => (
 	<LinkButton exact to={link} activeClassName='active' onClick={onClick ? onClick : null}>
@@ -20,11 +20,23 @@ const LinkButton = styled(NavLink)`
   border-bottom: 3px solid #efefef;
   text-decoration: none;
 
-  &:hover, &.active{
+  &:hover, &.active {
 		border-bottom: solid 3px ${Colors.MAIN_COLOR};
     span{
       opacity: 1;
     }
+  }
+  
+  @media (max-width: ${MediaViews.MOBILE}px) {
+  	border-left: 3px solid #efefef;
+  	border-bottom: none;
+  	padding: 5px 25px;
+  	margin-bottom: 20px;
+  
+    &:hover, &.active {
+			border-left: solid 3px ${Colors.MAIN_COLOR};
+			border-bottom: none;
+		}
   }
 `;
 

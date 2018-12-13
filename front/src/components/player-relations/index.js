@@ -4,6 +4,7 @@ import DoughnutChart from "../doughnut-chart";
 import DropdownInput from "../../components-ui/dropdown-input";
 import PieChart from "../pie-chart";
 import {ChartColors} from "../../helpers/color-lib";
+import {Title} from "../../components-ui/title";
 
 class PlayerRelations extends React.Component {
   constructor(props) {
@@ -82,10 +83,4 @@ export default PlayerRelations;
 const Content = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const Title = styled.div`
-  text-align: center;
-  font-size: 1.3em;
-  margin: 50px 0 30px 0;
 `;

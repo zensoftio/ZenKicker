@@ -53,7 +53,7 @@ export const appendToPlayerGames = (gamesLength, id) => async (dispatch) => {
   dispatch({type: ActionType.Game.APPEND_TO_PLAYER_GAMES_REQUEST});
 
   try {
-    const page = {offset: gamesLength, limit: 5, sortBy: 'date', sortDirection: 'DESC'};
+    const page = {offset: gamesLength, limit: 5, sortDirection: 'DESC'};
     const result = await api.get(Paths.Player.PlayerGames(id), {params: page});
     dispatch({type: ActionType.Game.APPEND_TO_PLAYER_GAMES_SUCCESS, payload: result.data});
   } catch (err) {

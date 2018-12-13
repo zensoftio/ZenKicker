@@ -38,10 +38,10 @@ class DashboardScene extends Component {
         </div>
         <div>
           <Chart data={mappedGamesCountStatistic} lineDataKey='count' xDataKey='day'
-                 title='Games per day' width={isMobile ? window.outerWidth - 50 : undefined}/>
+                 title='Games per day' isMobile={isMobile}/>
         </div>
         <div>
-          <Title>Latest games</Title>
+          {/*<Title>Latest games</Title>*/}
           <LatestGames latestGames={latestGames.list}/>
         </div>
       </Content>
@@ -79,29 +79,12 @@ const Content = styled.div`
   width: 900px;
   
   &>div {
-    margin-top: 60px;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-  &>div:first-child {
-    margin-top: 0;
-  }
   
   @media (max-width: ${MediaViews.MOBILE}px) {
     width: 100%;
-    &>div {
-      margin-top: 30px;
-    }
-  }
-`;
-
-const Title = styled.div`
-  font-size: 1.3em;
-  margin: 20px 0;
-  width: 100%;
-  text-align: center;
-  @media (max-width: ${MediaViews.MOBILE}px) {
-    font-size: 1.2em;
   }
 `;

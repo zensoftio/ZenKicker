@@ -74,7 +74,7 @@ const PopupWrapper = styled.div`
 
 const PopupContainer = styled.div`
   background-color: #fff;
-  padding: 40px 60px;
+  padding: 40px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   border-radius: 5px;
   background-color: ${Colors.THEME_COLOR};
@@ -82,12 +82,13 @@ const PopupContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: max-content;
+    width: 100%;
     height: max-content;
   }
   @media (max-width: ${MediaViews.MOBILE}px) {
     width: 100%;
     height: calc(100vh - 50px);
     border-radius: 0;
+    padding: 20px;
   }
 `;
