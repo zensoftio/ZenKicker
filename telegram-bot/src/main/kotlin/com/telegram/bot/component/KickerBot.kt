@@ -1,20 +1,24 @@
 package com.telegram.bot.component
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.telegram.bot.config.properties.TelegramBotProperties
+import com.telegram.bot.domain.PageRequest
+import com.telegram.bot.model.dictionary.Menu
+import com.telegram.bot.model.dictionary.Menu.PLAYERS
+import com.telegram.bot.model.dictionary.Menu.HELP
+import com.telegram.bot.service.TelegramService
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.telegram.telegrambots.bots.TelegramLongPollingBot
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.objects.Update
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException
-import java.util.*
-
+import java.util.regex.Pattern
 
 @Component
 class KickerBot(
-        private val telegramBotProperties: TelegramBotProperties
+        private val telegramBotProperties: TelegramBotProperties,
+        private val telegramService: TelegramService
 ) : TelegramLongPollingBot() {
 
     companion object {
@@ -27,52 +31,39 @@ class KickerBot(
     override fun getBotToken(): String = telegramBotProperties.token!!
 
     override fun onUpdateReceived(update: Update) {
-        // We check if the update has a message and the message has text
         if (update.hasMessage() && update.message.hasText()) {
-            val chatId = update.message.chatId
-//            val text = update.message.text
-//            val msg = SendMessage()
-//                    .setChatId(chatId)
-//                    .setText(text)
+            val sendMessage = handleMenu(update.message.text, PageRequest())
 
             try {
-                execute(sendInlineKeyBoardMessage(chatId)) // Sending our message object to user
+                execute(sendMessage.setChatId(update.message.chatId))
             } catch (e: TelegramApiException) {
                 logger.error(e.message, e)
             }
         } else if (update.hasCallbackQuery()) {
+            val dataParts = update.callbackQuery.data.split(Pattern.compile(":{3}"))
+            val pageRequest = jacksonObjectMapper().readValue(dataParts[1], PageRequest::class.java)
+            val sendMessage = handleMenu(dataParts[0], pageRequest)
+
             try {
-                execute(SendMessage()
-                        .setText(update.callbackQuery.data)
-                        .setChatId(update.callbackQuery.message.chatId))
+                execute(sendMessage.setChatId(update.callbackQuery.message.chatId))
             } catch (e: TelegramApiException) {
                 logger.error(e.message, e)
             }
         }
     }
 
-    fun sendInlineKeyBoardMessage(chatId: Long): SendMessage {
-        val inlineKeyboardMarkup = InlineKeyboardMarkup()
-        val inlineKeyboardButton1 = InlineKeyboardButton()
-        val inlineKeyboardButton2 = InlineKeyboardButton()
-        inlineKeyboardButton1.text = "Тык"
-        inlineKeyboardButton1.callbackData = "Button \"Тык\" has been pressed"
-        inlineKeyboardButton2.text = "Тык2"
-        inlineKeyboardButton2.callbackData = "Button \"Тык2\" has been pressed"
-
-        val keyboardButtonsRow1 = ArrayList<InlineKeyboardButton>()
-        val keyboardButtonsRow2 = ArrayList<InlineKeyboardButton>()
-        keyboardButtonsRow1.add(inlineKeyboardButton1)
-        keyboardButtonsRow1.add(InlineKeyboardButton().setText("Fi4a").setCallbackData("CallFi4a"))
-        keyboardButtonsRow2.add(inlineKeyboardButton2)
-
-        val rowList = ArrayList<List<InlineKeyboardButton>>()
-        rowList.add(keyboardButtonsRow1)
-        rowList.add(keyboardButtonsRow2)
-
-        inlineKeyboardMarkup.keyboard = rowList
-
-        return SendMessage().setChatId(chatId).setText("Пример").setReplyMarkup(inlineKeyboardMarkup)
+    private fun handleMenu(data: String, pageRequest: PageRequest): SendMessage {
+        return when (Menu.getItemMenu((data))) {
+            HELP -> {
+                telegramService.getCommands()
+            }
+            PLAYERS -> {
+                telegramService.getPlayers(pageRequest)
+            }
+            null -> {
+                SendMessage().setText("The command hasn`t found!")
+            }
+        }
     }
 
 }
