@@ -2,6 +2,7 @@ package com.telegram.bot.service
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.telegram.bot.config.properties.KickerProperties
+import com.telegram.bot.domain.GameRegistrationRequest
 import com.telegram.bot.domain.PageRequest
 import com.telegram.bot.domain.PlayerDto
 import com.telegram.bot.domain.PlayerStatsDto
@@ -22,10 +23,21 @@ class DefaultApiService(
     private val restTemplate: RestTemplate = RestTemplate()
 
 
+    override fun getPlayer(playerId: Long): PlayerDto {
+        val uri = "${kickerProperties.host}/api/players/$playerId"
+        val httpEntity = HttpEntity(null, login())
+        val body = execute(uri, httpEntity, HttpMethod.GET)
+        val response = jacksonObjectMapper().readTree(body)
+        return PlayerDto(
+                response.path("id").asLong(),
+                response.path("username").asText()
+        )
+    }
+
     override fun getPlayers(pageRequest: PageRequest): List<PlayerDto> {
         val uri = "${kickerProperties.host}/api/players/?offset=${pageRequest.offset}"
         val httpEntity = HttpEntity(null, login())
-        val body = getBody(uri, httpEntity, HttpMethod.GET)
+        val body = execute(uri, httpEntity, HttpMethod.GET)
         val root = jacksonObjectMapper().readTree(body)
         val players = root.get("list").toMutableList()
         return players.map {
@@ -39,7 +51,7 @@ class DefaultApiService(
     override fun getPlayerStats(playerId: Long): PlayerStatsDto {
         val uri = "${kickerProperties.host}/api/players/$playerId/stats"
         val httpEntity = HttpEntity(null, login())
-        val body = getBody(uri, httpEntity, HttpMethod.GET)
+        val body = execute(uri, httpEntity, HttpMethod.GET)
         val response = jacksonObjectMapper().readTree(body)
         return PlayerStatsDto(
                 response.path("rating").asInt(),
@@ -59,7 +71,13 @@ class DefaultApiService(
 
     }
 
-    private fun <T> getBody(uri: String, httpEntity: HttpEntity<T>, httpMethod: HttpMethod): String {
+    override fun gameRegistration(request: GameRegistrationRequest) {
+        val uri = "${kickerProperties.host}/api/games/registration"
+        val httpEntity = HttpEntity(request, login())
+        execute(uri, httpEntity, HttpMethod.POST)
+    }
+
+    private fun <T> execute(uri: String, httpEntity: HttpEntity<T>, httpMethod: HttpMethod): String {
         val response: ResponseEntity<String>
         try {
             response = restTemplate.exchange(uri, httpMethod, httpEntity, String::class.java)

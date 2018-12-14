@@ -17,6 +17,10 @@ object TelegramUtil {
             doSendMessage(text)
                     .setReplyMarkup(pages(command, pageRequest, finished))
 
+    fun doSendMessageAgreement(text: String, command: String, data: String): SendMessage =
+            doSendMessage(text)
+                    .setReplyMarkup(agreement(command, data))
+
     private fun pages(command: String, pageRequest: PageRequest, finished: Boolean = false): ReplyKeyboard {
         val row = mutableListOf<InlineKeyboardButton>()
 
@@ -29,6 +33,15 @@ object TelegramUtil {
             val next = jacksonObjectMapper().writeValueAsString(pageRequest.next())
             row.add(InlineKeyboardButton().setText("Next").setCallbackData("$command:::$next"))
         }
+
+        return InlineKeyboardMarkup().apply { this.keyboard = listOf(row) }
+    }
+
+    private fun agreement(command: String, data: String): ReplyKeyboard {
+        val row = listOf(
+                InlineKeyboardButton().setText("No").setCallbackData("$command:::$data false"),
+                InlineKeyboardButton().setText("Yes").setCallbackData("$command:::$data true")
+        )
 
         return InlineKeyboardMarkup().apply { this.keyboard = listOf(row) }
     }
