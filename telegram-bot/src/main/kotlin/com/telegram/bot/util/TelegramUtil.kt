@@ -11,7 +11,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 object TelegramUtil {
 
     fun doSendMessage(text: String): SendMessage = SendMessage()
-            .setText(text).setParseMode(ParseMode.MARKDOWN)
+            .setText(text).setParseMode(ParseMode.HTML)
 
     fun doSendMessagePageable(text: String, command: String, pageRequest: PageRequest, finished: Boolean = false): SendMessage =
             doSendMessage(text)

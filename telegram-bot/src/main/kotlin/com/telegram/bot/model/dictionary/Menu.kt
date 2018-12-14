@@ -6,7 +6,8 @@ enum class Menu(
 ) {
 
     HELP("/help", "The list of commands"),
-    PLAYERS("/players", "The list of players");
+    PLAYERS("/players", "The list of players"),
+    PLAYER_STATS("/stats", "The stats of player. Example: /stats {player_id}");
 
     companion object {
         fun getItemMenu(command: String): Menu? = values().firstOrNull { it.command == command }

@@ -4,9 +4,12 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.telegram.bot.config.properties.KickerProperties
 import com.telegram.bot.domain.PageRequest
 import com.telegram.bot.domain.PlayerDto
+import com.telegram.bot.domain.PlayerStatsDto
+import com.telegram.bot.exception.BadRequest
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 import java.net.URLEncoder
@@ -33,8 +36,40 @@ class DefaultApiService(
         }
     }
 
-    private fun <T> getBody(uri: String, httpEntity: HttpEntity<T>, httpMethod: HttpMethod): String =
-            restTemplate.exchange(uri, httpMethod, httpEntity, String::class.java).body!!
+    override fun getPlayerStats(playerId: Long): PlayerStatsDto {
+        val uri = "${kickerProperties.host}/api/players/$playerId/stats"
+        val httpEntity = HttpEntity(null, login())
+        val body = getBody(uri, httpEntity, HttpMethod.GET)
+        val response = jacksonObjectMapper().readTree(body)
+        return PlayerStatsDto(
+                response.path("rating").asInt(),
+                response.path("countGames").asInt(),
+                response.path("rated").asInt(),
+                response.path("countWins").asInt(),
+                response.path("countLosses").asInt(),
+                response.path("winningPercentage").asDouble(),
+                response.path("goalsFor").asInt(),
+                response.path("goalsAgainst").asInt(),
+                response.path("currentLossesStreak").asInt(),
+                response.path("longestLossesStreak").asInt(),
+                response.path("currentWinningStreak").asInt(),
+                response.path("longestWinningStreak").asInt(),
+                response.path("active").asBoolean()
+        )
+
+    }
+
+    private fun <T> getBody(uri: String, httpEntity: HttpEntity<T>, httpMethod: HttpMethod): String {
+        val response: ResponseEntity<String>
+        try {
+            response = restTemplate.exchange(uri, httpMethod, httpEntity, String::class.java)
+        } catch (e: Exception) {
+            throw BadRequest("Bad request!!!")
+        }
+
+        return response.body!!
+    }
+
 
     private fun login(): HttpHeaders {
         val username = URLEncoder.encode(kickerProperties.username!!, Charsets.UTF_8.name())
