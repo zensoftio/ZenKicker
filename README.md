@@ -1,7 +1,8 @@
 # Kicker
 
 ## Install app
-Do command by console in root of project: **sh backend/docker/deploy.sh**
+1) To create an **image** in docker from the app and name **"kicker"**.
+2) To run **deploy.sh** in *backend/docker/*
 
 ## Get API docs
 http://{host}/swagger-ui.html#/
