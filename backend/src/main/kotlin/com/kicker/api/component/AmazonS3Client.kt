@@ -40,6 +40,7 @@ class AmazonS3Client(
                 .standard()
                 .withEndpointConfiguration(AwsClientBuilder.EndpointConfiguration(awsProperties.endpointUrl!!,
                         awsProperties.region!!))
+                .withPathStyleAccessEnabled(true)
                 .withCredentials(AWSStaticCredentialsProvider(credentials))
                 .build()
     }
