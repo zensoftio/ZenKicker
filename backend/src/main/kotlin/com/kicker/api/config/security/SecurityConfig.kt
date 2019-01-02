@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse
  * @author Yauheni Efimenko
  */
 @Configuration
-@EnableGlobalMethodSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 class SecurityConfig : GlobalMethodSecurityConfiguration() {
 
     @Bean

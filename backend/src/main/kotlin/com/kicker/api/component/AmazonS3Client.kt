@@ -2,6 +2,7 @@ package com.kicker.api.component
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider
 import com.amazonaws.auth.BasicAWSCredentials
+import com.amazonaws.client.builder.AwsClientBuilder
 import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.AmazonS3ClientBuilder
 import com.amazonaws.services.s3.model.CannedAccessControlList
@@ -37,8 +38,9 @@ class AmazonS3Client(
 
         this.s3client = AmazonS3ClientBuilder
                 .standard()
+                .withEndpointConfiguration(AwsClientBuilder.EndpointConfiguration(awsProperties.endpointUrl!!,
+                        awsProperties.region!!))
                 .withCredentials(AWSStaticCredentialsProvider(credentials))
-                .withRegion(awsProperties.region!!)
                 .build()
     }
 
