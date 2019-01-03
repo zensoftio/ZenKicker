@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker run -d -p 9000:9000 --name minio1 \
+docker run -d -p 9000:9000 --name minio \
   -e "MINIO_ACCESS_KEY=your_access_key" \
   -e "MINIO_SECRET_KEY=your_secret_key" \
   -v /home/${USER}/minio/data:/data \
