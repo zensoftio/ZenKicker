@@ -123,7 +123,7 @@ export const appendToActivePlayers = () => async (dispatch, getState) => {
       sortBy: state.player.sort.sortBy,
       sortDirection: state.player.sort.sortDirection
     };
-    const result = await api.get(Paths.Player.GetAll, {params: page});
+    const result = await api.get(Paths.Player.GetActive, {params: page});
     dispatch({type: ActionType.Player.APPEND_TO_ACTIVE_PLAYERS_SUCCESS, payload: result.data});
   } catch (err) {
     if (err.response.status === 401) {
