@@ -4,19 +4,52 @@ import {Link} from 'react-router-dom';
 import UserPhoto from '../../components-ui/user-photo';
 import {Colors, MediaViews} from "../../helpers/style-variables";
 
-export const ProfileBlock = ({index, id, username, countGames, rated, rating, iconPath, isMobile}) => (
+const renderStatisticColumns = ({countGames, rated, rating, isMobile, longestWinningStreak, longestLossesStreak,
+                                  winningPercentage, renderColumns}) => {
+  if (!isMobile) return (
+    <React.Fragment>
+      <Statistics>{longestWinningStreak}</Statistics>
+      <Statistics>{longestLossesStreak}</Statistics>
+      <Statistics>{winningPercentage}</Statistics>
+      <Statistics>{countGames}</Statistics>
+      <Statistics>{rated}</Statistics>
+      <Statistics>{rating}</Statistics>
+    </React.Fragment>
+  )
+  if (renderColumns === 'firstPart') return (
+    <React.Fragment>
+      <Statistics>{longestWinningStreak}</Statistics>
+      <Statistics>{longestLossesStreak}</Statistics>
+      <Statistics>{winningPercentage}</Statistics>
+    </React.Fragment>
+  )
+  if (renderColumns === 'secondPart') return (
+    <React.Fragment>
+      <Statistics>{countGames}</Statistics>
+      <Statistics>{rated}</Statistics>
+      <Statistics>{rating}</Statistics>
+    </React.Fragment>
+  )
+}
+
+export const ProfileBlock = ({index, id, username, countGames, rated, rating, iconPath, isMobile, longestWinningStreak,
+                               longestLossesStreak, winningPercentage, renderColumns}) => (
   <Content to={`/players/${id}`}>
     <Index>{index}</Index>
+    <User>
+      {
+        !isMobile &&
+        <Photo>
+          <UserPhoto photo={iconPath}/>
+        </Photo>
+      }
+      <Username>{username}</Username>
+    </User>
+
+
     {
-      !isMobile &&
-      <Photo>
-        <UserPhoto photo={iconPath}/>
-      </Photo>
+      renderStatisticColumns({countGames, rated, rating, isMobile, longestWinningStreak, longestLossesStreak, winningPercentage, renderColumns})
     }
-    <Username>{username}</Username>
-    <Statistics>{countGames}</Statistics>
-    <Statistics>{rated}</Statistics>
-    <Statistics>{rating}</Statistics>
   </Content>
 )
 
@@ -41,17 +74,7 @@ const Content = styled(Link)`
     padding: 10px;
   }
 `;
-const Photo = styled.div`
-  max-width: 50px;
-  min-width: 50px;
-  max-height: 50px;
-  min-height: 50px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 100%;
-`;
+
 const Template = styled.div`
   padding-left: 20px;
   overflow: hidden;
@@ -70,23 +93,43 @@ const Index = styled.div`
   }
 `;
 
-const Username = styled(Template)`
-  max-width: 280px;
-  min-width: 280px;
+const User = styled.div`
+  max-width: 220px;
+  min-width: 220px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
   @media (max-width: ${MediaViews.MOBILE}px) {
-    max-width: 20%;
-    min-width: 20%;
+    max-width: 25%;
+    min-width: 25%;
+  }
+`;
+
+const Photo = styled.div`
+  max-width: 50px;
+  min-width: 50px;
+  max-height: 50px;
+  min-height: 50px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+`;
+
+const Username = styled(Template)`
+  @media (max-width: ${MediaViews.MOBILE}px) {
     padding-left: 0;
   }
 `;
 
 const Statistics = styled(Template)`
-  max-width: 160px;
-  min-width: 160px;
+  max-width: 98px;
+  min-width: 98px;
   text-align: right;
   @media (max-width: ${MediaViews.MOBILE}px) {
-    max-width: 23.3%;
-    min-width: 23.3%;
+    max-width: 22%;
+    min-width: 22%;
   }
 `;
 

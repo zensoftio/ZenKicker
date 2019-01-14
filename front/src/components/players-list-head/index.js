@@ -12,13 +12,40 @@ const isColumnSorting = (sortBy, sortDirection, field) => {
   return null
 }
 
-const PlayersListHead = ({onSortChange, sortDirection, sortBy}) => (
+const renderStatisticColumns = ({onSortChange, sortDirection, sortBy, renderColumns, isMobile}) => {
+  if (!isMobile) return (
+    <React.Fragment>
+      <StatisticColumn onClick={() => onSortChange('longestWinningStreak')}>{isColumnSorting(sortBy, sortDirection, 'longestWinningStreak')}LWS</StatisticColumn>
+      <StatisticColumn onClick={() => onSortChange('longestLossesStreak')}>{isColumnSorting(sortBy, sortDirection, 'longestLossesStreak')}LSS</StatisticColumn>
+      <StatisticColumn onClick={() => onSortChange('winningPercentage')}>{isColumnSorting(sortBy, sortDirection, 'winningPercentage')}Win (%)</StatisticColumn>
+      <StatisticColumn onClick={() => onSortChange('countGames')}>{isColumnSorting(sortBy, sortDirection, 'countGames')}Games</StatisticColumn>
+      <StatisticColumn onClick={() => onSortChange('rated')}>{isColumnSorting(sortBy, sortDirection, 'rated')}Rated</StatisticColumn>
+      <StatisticColumn onClick={() => onSortChange('rating')}>{isColumnSorting(sortBy, sortDirection, 'rating')}Rating</StatisticColumn>
+    </React.Fragment>
+  )
+  if (renderColumns === 'firstPart') return (
+    <React.Fragment>
+      <StatisticColumn onClick={() => onSortChange('longestWinningStreak')}>{isColumnSorting(sortBy, sortDirection, 'longestWinningStreak')}LWS</StatisticColumn>
+      <StatisticColumn onClick={() => onSortChange('longestLossesStreak')}>{isColumnSorting(sortBy, sortDirection, 'longestLossesStreak')}LSS</StatisticColumn>
+      <StatisticColumn onClick={() => onSortChange('winningPercentage')}>{isColumnSorting(sortBy, sortDirection, 'winningPercentage')}Win (%)</StatisticColumn>
+    </React.Fragment>
+  )
+  if (renderColumns === 'secondPart') return (
+    <React.Fragment>
+      <StatisticColumn onClick={() => onSortChange('countGames')}>{isColumnSorting(sortBy, sortDirection, 'countGames')}Games</StatisticColumn>
+      <StatisticColumn onClick={() => onSortChange('rated')}>{isColumnSorting(sortBy, sortDirection, 'rated')}Rated</StatisticColumn>
+      <StatisticColumn onClick={() => onSortChange('rating')}>{isColumnSorting(sortBy, sortDirection, 'rating')}Rating</StatisticColumn>
+    </React.Fragment>
+  )
+}
+
+const PlayersListHead = ({onSortChange, sortDirection, sortBy, renderColumns, isMobile}) => (
   <Content>
     <IndexColumn>#</IndexColumn>
     <PlayerColumn>Player</PlayerColumn>
-    <StatisticColumn onClick={() => onSortChange('countGames')}>{isColumnSorting(sortBy, sortDirection, 'countGames')}Games</StatisticColumn>
-    <StatisticColumn onClick={() => onSortChange('rated')}>{isColumnSorting(sortBy, sortDirection, 'rated')}Rated</StatisticColumn>
-    <StatisticColumn onClick={() => onSortChange('rating')}>{isColumnSorting(sortBy, sortDirection, 'rating')}Rating</StatisticColumn>
+    {
+      renderStatisticColumns({onSortChange, sortDirection, sortBy, renderColumns, isMobile})
+    }
   </Content>
 )
 
@@ -32,12 +59,12 @@ const Content = styled.div`
 	width: 100%;
 	box-sizing: border-box;
 	margin-bottom: 5px;
-	font-size: 1.2em;
+	font-size: 1em;
 	
 	@media (max-width: ${MediaViews.MOBILE}px) {
     font-size: 0.8em;
     padding: 10px;
-  }
+  }<
 `;
 
 const IndexColumn = styled.div`
@@ -50,17 +77,17 @@ const IndexColumn = styled.div`
 `;
 
 const PlayerColumn = styled.div`
-  max-width: 330px;
-  min-width: 330px;
+  max-width: 220px;
+  min-width: 220px;
   @media (max-width: ${MediaViews.MOBILE}px) {
-    max-width: 20%;
-    min-width: 20%;
+    max-width: 25%;
+    min-width: 25%;
   }
 `;
 
 const StatisticColumn = styled.div`
-  max-width: 160px;
-  min-width: 160px;
+  max-width: 98px;
+  min-width: 98px;
   padding-left: 20px;
   box-sizing: border-box;
   text-align: right;
@@ -69,8 +96,8 @@ const StatisticColumn = styled.div`
   align-items: center;
   justify-content: flex-end;
   @media (max-width: ${MediaViews.MOBILE}px) {
-    max-width: 23.3%;
-    min-width: 23.3%;
+    max-width: 22%;
+    min-width: 22%;
   }
 `;
 

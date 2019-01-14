@@ -6,13 +6,20 @@ import PlayersListHead from '../players-list-head';
 import InfiniteScroll from '../infinite-scroll';
 import {NoContent} from '../no-content';
 import {MediaViews} from "../../helpers/style-variables";
+import DropdownInput from "../../components-ui/dropdown-input";
+
+const renderColumnOptions = [
+  {value: 'firstPart', label: 'LWS, Lss, Win'},
+  {value: 'secondPart', label: 'Games, Rated, Rating'}
+]
 
 class PlayersTabs extends Component {
   constructor(props) {
     super(props);
     this.onSortChange = this.onSortChange.bind(this);
     this.state = {
-      isAllPlayersTab: false
+      isAllPlayersTab: false,
+      renderColumnsValue: renderColumnOptions[0]
     }
   }
 
@@ -23,16 +30,17 @@ class PlayersTabs extends Component {
   onLoadMorePlayers = () => this.props.appendToPlayers();
   onLoadMoreActivePlayers = () => this.props.appendToActivePlayers();
 
-  renderTab = () => {
+  renderTab = (isMobile) => {
     const {players, activePlayers} = this.props;
-    const {isAllPlayersTab} = this.state;
-    const isMobile = window.outerWidth <= MediaViews.MOBILE;
+    const {isAllPlayersTab, renderColumnsValue} = this.state;
     if (isAllPlayersTab) {
       return (
         <InfiniteScroll data={players.list} onLoadMore={this.onLoadMorePlayers} totalCount={players.totalCount}>
           {players.list.length ? players.list.map((item, index) =>
             <ProfileBlock key={item.player.id} id={item.player.id} index={index + 1} username={item.player.username} countGames={item.countGames}
-                          rated={item.rated} rating={item.rating} iconPath={item.player.iconPath} isMobile={isMobile}/>) :
+                          rated={item.rated} rating={item.rating} iconPath={item.player.iconPath} isMobile={isMobile}
+                          longestWinningStreak={item.longestWinningStreak} longestLossesStreak={item.longestLossesStreak}
+                          winningPercentage={item.winningPercentage} renderColumns={renderColumnsValue.value}/>) :
             <NoContent/>
           }
         </InfiniteScroll>
@@ -42,7 +50,9 @@ class PlayersTabs extends Component {
       <InfiniteScroll data={activePlayers.list} onLoadMore={this.onLoadMoreActivePlayers} totalCount={activePlayers.totalCount}>
         {activePlayers.list.length ? activePlayers.list.map((item, index) =>
           <ProfileBlock key={item.player.id} id={item.player.id} index={index + 1} username={item.player.username} countGames={item.countGames}
-                        rated={item.rated} rating={item.rating} iconPath={item.player.iconPath} isMobile={isMobile}/>) :
+                        rated={item.rated} rating={item.rating} iconPath={item.player.iconPath} isMobile={isMobile}
+                        longestWinningStreak={item.longestWinningStreak} longestLossesStreak={item.longestLossesStreak}
+                        winningPercentage={item.winningPercentage} renderColumns={renderColumnsValue.value}/>) :
           <NoContent/>
         }
       </InfiniteScroll>
@@ -66,18 +76,29 @@ class PlayersTabs extends Component {
     initSort({sortBy: value, sortDirection: sortDirection}, isAllPlayers);
   }
 
+  onOptionChange = (value) => this.setState({renderColumnsValue: value})
+
   render() {
-    const {isAllPlayersTab} = this.state;
+    const {isAllPlayersTab, renderColumnsValue} = this.state;
     const {sort} = this.props;
+
+    const isMobile = window.outerWidth <= MediaViews.MOBILE;
+
     return (
       <Content>
         <TabButtonContainer>
           <TabButton name='active' onButtonClick={this.setActivePlayersTab} isActive={!isAllPlayersTab}/>
           <TabButton name='all' onButtonClick={this.setAllPlayersTab} isActive={isAllPlayersTab}/>
         </TabButtonContainer>
-        <PlayersListHead onSortChange={this.onSortChange} sortBy={sort.sortBy} sortDirection={sort.sortDirection}/>
+        {
+          isMobile &&
+          <DropdownInput value={renderColumnsValue} options={renderColumnOptions}
+                         onChange={this.onOptionChange}/>
+        }
+        <PlayersListHead onSortChange={this.onSortChange} sortBy={sort.sortBy} sortDirection={sort.sortDirection}
+                         renderColumns={renderColumnsValue.value} isMobile={isMobile}/>
         <Players>
-          {this.renderTab()}
+          {this.renderTab(isMobile)}
         </Players>
       </Content>
 
@@ -118,6 +139,6 @@ const Players = styled.div`
 	  width: 100%;
 	}
 	@media (max-width: ${MediaViews.MOBILE}px) {
-    max-height: calc(100vh - 200px);
+    max-height: calc(100vh - 240px);
   }
 `;
