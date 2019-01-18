@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from "prop-types";
+
 import defaultPhoto from '../../shared/images/default-photo.png';
 
 const Img = styled.img`
@@ -11,5 +13,9 @@ export const UserPhoto = ({photo}) => (
     <Img alt="avatar" src={photo}/> :
     <Img alt="avatar" src={defaultPhoto}/>
 )
+
+UserPhoto.propTypes = {
+  photo: PropTypes.string
+}
 
 export default UserPhoto

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {NavLink} from 'react-router-dom';
 import {Colors, MediaViews} from '../../../helpers/style-variables';
@@ -8,6 +9,12 @@ export const MainMenuLink = ({children, link, onClick}) => (
 		<MenuItem>{children.replace('_', ' ')}</MenuItem>
 	</LinkButton>
 )
+
+MainMenuLink.propTypes = {
+  children: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
+  link: PropTypes.string.isRequired
+}
 
 const LinkButton = styled(NavLink)`
   padding: 22px 25px 10px 25px;

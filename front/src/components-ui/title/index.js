@@ -1,8 +1,13 @@
 import React from 'react';
 import styled from "styled-components";
+import PropTypes from "prop-types";
 import {MediaViews} from "../../helpers/style-variables";
 
 export const Title = ({children}) => <Content>{children}</Content>
+
+Title.propTypes = {
+  children: PropTypes.string.isRequired
+}
 
 const Content = styled.div`
   font-size: 1.4em;

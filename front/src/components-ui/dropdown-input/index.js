@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Select from 'react-select'
 
@@ -10,6 +11,25 @@ const DropdownInput = ({options, onChange, placeholder, value, isClearable, defa
 )
 
 export default DropdownInput;
+
+DropdownInput.propTypes = {
+  options: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
+  })),
+  onChange: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
+  value: PropTypes.shape({
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
+  }),
+  isClearable: PropTypes.bool,
+  defaultValue: PropTypes.shape({
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
+  }),
+  onInputChange: PropTypes.func
+}
 
 const Content = styled.div`
   padding: 10px;

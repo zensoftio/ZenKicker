@@ -9,11 +9,8 @@ import uploadIco from '../../shared/images/icons/upload.png';
 import UserPhoto from '../../components-ui/user-photo';
 
 class ProfilePhotoBlock extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      file: null,
-    }
+  state = {
+    file: null,
   }
 
   onChange = (e) => {

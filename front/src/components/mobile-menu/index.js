@@ -12,16 +12,12 @@ import MenuIco from '@material-ui/icons/Menu';
 import CloseIco from '@material-ui/icons/Close';
 
 class MobileMenu extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isOpen: false
-    }
+  state = {
+    isOpen: false
   }
 
   onMenuClick = () => this.setState({isOpen: !this.state.isOpen});
   onMenuClose = () => this.setState({isOpen: false});
-
 
   handleOnBackgroundClick = (e) => {
     if (e.target.classList.contains(Content.styledComponentId)) {

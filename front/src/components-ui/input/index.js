@@ -1,11 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from "prop-types";
 
 export const Input = ({value, onChange, placeholder, type = 'text'}) => (
   <Content>
     <InputElement value={value} onChange={onChange} placeholder={placeholder} type={type}/>
   </Content>
 )
+
+Input.propTypes = {
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
+  type: PropTypes.oneOf(['text', 'password']),
+}
 
 const Content = styled.div`
   position: relative;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {capitalizeString} from '../../../helpers/string-helpers';
 import {Colors, MediaViews} from '../../../helpers/style-variables';
@@ -7,6 +8,12 @@ const TabButton = ({name, onButtonClick, isActive}) =>
   <Content active={isActive} onClick={onButtonClick}>{capitalizeString(name)}</Content>
 
 export default TabButton;
+
+TabButton.propTypes = {
+  name: PropTypes.string.isRequired,
+  onButtonClick: PropTypes.func.isRequired,
+  isActive: PropTypes.bool.isRequired
+}
 
 const Content = styled.div`
   padding: 10px 20px;

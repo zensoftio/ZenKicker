@@ -1,13 +1,21 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {Colors} from '../../../helpers/style-variables';
 
-export const Button = ({children, onClick, isDisabled = false, buttonIcon = null}) => (
+export const Button = ({children, onClick, isDisabled, buttonIcon = null}) => (
   <Content isDisabled={isDisabled} onClick={onClick}>
     {buttonIcon && <Icon>{buttonIcon}</Icon>}
     {children}
   </Content>
 )
+
+Button.propTypes = {
+  children: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  isDisabled: PropTypes.bool,
+  buttonIcon: PropTypes.element
+}
 
 const Content = styled.div`
 	width: max-content;

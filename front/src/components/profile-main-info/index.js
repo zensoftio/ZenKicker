@@ -7,12 +7,8 @@ import PasswordBlock from '../password-block';
 import {Colors, MediaViews} from '../../helpers/style-variables';
 
 class ProfileMainInfo extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      uploadPhotoError: null
-    }
+  state = {
+    uploadPhotoError: null
   }
 
   setPhotoError = (message) => {

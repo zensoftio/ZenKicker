@@ -4,11 +4,8 @@ import {Button} from '../../components-ui/buttons/button';
 import {Colors, MediaViews} from "../../helpers/style-variables";
 
 class Popup extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isPopupOpen: false
-    }
+  state = {
+    isPopupOpen: false
   }
 
   onPopupOpen = () => {

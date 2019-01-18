@@ -7,15 +7,13 @@ import Popup from '../popup';
 import {Colors} from '../../helpers/style-variables';
 
 class PasswordBlock extends Component {
-  constructor(props) {
-    super(props);
-    this.popupChild = React.createRef();
-    this.state = {
-      newPassword: '',
-      currentPassword: '',
-      newPasswordConfirm: '',
-      passwordError: null,
-    }
+  popupChild = React.createRef();
+
+  state = {
+    newPassword: '',
+    currentPassword: '',
+    newPasswordConfirm: '',
+    passwordError: null,
   }
 
   clearValues = () => this.setState({
