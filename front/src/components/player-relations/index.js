@@ -6,7 +6,7 @@ import DropdownInput from "../../components-ui/dropdown-input";
 import PieChart from "../pie-chart";
 import {ChartColors} from "../../helpers/color-lib";
 import {Title} from "../../components-ui/title";
-import {RelationDashboardModel} from "../../common/global-prop-types";
+import {RelationModel} from "../../common/global-prop-types";
 
 class PlayerRelations extends React.Component {
   constructor(props) {
@@ -83,7 +83,7 @@ class PlayerRelations extends React.Component {
 export default PlayerRelations;
 
 PlayerRelations.propTypes = {
-  relations: PropTypes.arrayOf(RelationDashboardModel),
+  relations: PropTypes.arrayOf(RelationModel),
   isMobile: PropTypes.bool.isRequired,
 }
 

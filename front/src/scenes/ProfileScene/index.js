@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from "prop-types";
 import styled from 'styled-components';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -12,6 +13,9 @@ import PlayerGames from '../../components/player-games';
 import ChartStatistics from '../../components/chart-statistics';
 import PlayerRelations from "../../components/player-relations";
 import {MediaViews} from "../../helpers/style-variables";
+import {
+  PlayerGameModel, PlayerModel, PlayerStatsModel, RelationDashboardModel, RelationModel
+} from "../../common/global-prop-types";
 
 class ProfileScene extends Component {
 
@@ -87,7 +91,6 @@ const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
     gamesCountStatistic: state.player.gamesCountStatistic,
     relations: state.player.relations,
     relationsDashboard: state.player.relationsDashboard,
-    fullListOfPlayers: state.player.fullListOfPlayers
   };
   return props;
 }
@@ -101,6 +104,22 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProfileScene));
+
+ProfileScene.propTypes = {
+  player: PlayerStatsModel,
+  playerGames: PropTypes.shape({
+    list: PropTypes.arrayOf(PlayerGameModel),
+    totalCount: PropTypes.number.isRequired
+  }).isRequired,
+  currentUser: PlayerModel.isRequired,
+  ratingStatistic: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+  gamesCountStatistic: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+  relations: PropTypes.shape({
+    list: PropTypes.arrayOf(RelationModel),
+    totalCount: PropTypes.number.isRequired
+  }).isRequired,
+  relationsDashboard: RelationDashboardModel,
+}
 
 const Content = styled.div`
 	display: flex;

@@ -41,10 +41,22 @@ export const PlayerDashboardModel = PropTypes.shape({
   thirdPlace: PlayerModel.isRequired,
 })
 
-export const RelationDashboardModel = PropTypes.shape({
+export const RelationModel = PropTypes.shape({
   countGames: PropTypes.number.isRequired,
   countWins: PropTypes.number.isRequired,
   winningPercentage: PropTypes.number.isRequired,
   partner: PlayerModel.isRequired,
   player: PlayerModel.isRequired,
+})
+
+export const RelationDashboardModel = PropTypes.shape({
+  bestPartner: RelationModel,
+  favouritePartner: RelationModel,
+  worstPartner: RelationModel,
+})
+
+export const PlayerGameModel = PropTypes.shape({
+  delta: PropTypes.number.isRequired,
+  won: PropTypes.bool.isRequired,
+  gameDto: GameModel.isRequired,
 })

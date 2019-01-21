@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from "prop-types";
 import styled from 'styled-components';
 import moment from 'moment';
 import {bindActionCreators} from 'redux';
@@ -9,6 +10,7 @@ import LatestGames from '../../components/latest-games';
 import Chart from '../../components/chart';
 import PlayersOfWeek from "../../components/players-of-week";
 import {MediaViews} from "../../helpers/style-variables";
+import {GameModel, PlayerDashboardModel, PlayerStatsModel} from "../../common/global-prop-types";
 
 class DashboardScene extends Component {
 
@@ -41,7 +43,6 @@ class DashboardScene extends Component {
                  title='Games per day' isMobile={isMobile}/>
         </div>
         <div>
-          {/*<Title>Latest games</Title>*/}
           <LatestGames latestGames={latestGames.list}/>
         </div>
       </Content>
@@ -71,6 +72,16 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DashboardScene));
+
+DashboardScene.propTypes = {
+  playersDashboard: PlayerDashboardModel,
+  fullListOfPlayers: PropTypes.arrayOf(PlayerStatsModel),
+  latestGames: PropTypes.shape({
+    list: PropTypes.arrayOf(GameModel),
+    totalCount: PropTypes.number.isRequired
+  }).isRequired,
+  gamesPerLastWeek: PropTypes.arrayOf(PropTypes.number.isRequired)
+}
 
 const Content = styled.div`
   display: flex;

@@ -6,6 +6,8 @@ import {getAllGames, appendToGames, getAllPlayers} from '../../actions';
 import {withRouter} from 'react-router-dom';
 import AllGames from '../../components/all-games';
 import {Colors, MediaViews} from "../../helpers/style-variables";
+import {GameModel} from "../../common/global-prop-types";
+import PropTypes from "prop-types";
 
 class GamesScene extends Component {
 
@@ -45,6 +47,13 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(GamesScene));
+
+GamesScene.propTypes = {
+  games: PropTypes.shape({
+    list: PropTypes.arrayOf(GameModel),
+    totalCount: PropTypes.number.isRequired
+  }).isRequired,
+}
 
 const Content = styled.div`
   display: flex;

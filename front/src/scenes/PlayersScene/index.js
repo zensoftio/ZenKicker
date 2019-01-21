@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from "prop-types";
 import styled from 'styled-components';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -6,6 +7,7 @@ import {getActivePlayers, getAllPlayers, appendToPlayers, appendToActivePlayers,
 import {withRouter} from 'react-router-dom';
 import PlayersTabs from '../../components/players-tabs';
 import {MediaViews} from "../../helpers/style-variables";
+import {PlayerStatsModel} from "../../common/global-prop-types";
 
 class PlayersScene extends Component {
 
@@ -42,6 +44,21 @@ const mapDispatchToProps = (dispatch, getState) => {
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PlayersScene));
+
+PlayersScene.propTypes = {
+  activePlayers: PropTypes.shape({
+    list: PropTypes.arrayOf(PlayerStatsModel),
+    totalCount: PropTypes.number.isRequired
+  }).isRequired,
+  players: PropTypes.shape({
+    list: PropTypes.arrayOf(PlayerStatsModel),
+    totalCount: PropTypes.number.isRequired
+  }).isRequired,
+  sort: PropTypes.shape({
+    sortBy: PropTypes.string.isRequired,
+    sortDirection: PropTypes.string.isRequired,
+  }).isRequired,
+}
 
 const Content = styled.div`
   display: flex;
