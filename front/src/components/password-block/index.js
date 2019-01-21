@@ -23,9 +23,9 @@ class PasswordBlock extends Component {
     newPasswordConfirm: ''
   })
 
-  onCurrentPasswordChange = (value) => this.setState({currentPassword: value, passwordError: null})
-  onNewPasswordChange = (value) => this.setState({newPassword: value, passwordError: null})
-  onNewPasswordConfirmChange = (value) => this.setState({newPasswordConfirm: value, passwordError: null})
+  onCurrentPasswordChange = (e) => this.setState({currentPassword: e.target.value, passwordError: null})
+  onNewPasswordChange = (e) => this.setState({newPassword: e.target.value, passwordError: null})
+  onNewPasswordConfirmChange = (e) => this.setState({newPasswordConfirm: e.target.value, passwordError: null})
 
   onChangePasswordClick = async () => {
     const {newPassword, currentPassword, newPasswordConfirm} = this.state;
@@ -64,11 +64,11 @@ class PasswordBlock extends Component {
       <Popup buttonTitle='Change password' ref={this.popupChild} clearValues={this.clearValues}>
         <div>
           <PopupTitle>Change password</PopupTitle>
-          <Input value={currentPassword} onChange={(e) => this.onCurrentPasswordChange(e.target.value)}
+          <Input value={currentPassword} onChange={this.onCurrentPasswordChange}
                  placeholder='Enter old password' type='password'/>
-          <Input value={newPassword} onChange={(e) => this.onNewPasswordChange(e.target.value)}
+          <Input value={newPassword} onChange={this.onNewPasswordChange}
                  placeholder='Enter new password' type='password'/>
-          <Input value={newPasswordConfirm} onChange={(e) => this.onNewPasswordConfirmChange(e.target.value)}
+          <Input value={newPasswordConfirm} onChange={this.onNewPasswordConfirmChange}
                  placeholder='Confirm new password' type='password'/>
           <PasswordError>{passwordError}</PasswordError>
           <ButtonsContainer>

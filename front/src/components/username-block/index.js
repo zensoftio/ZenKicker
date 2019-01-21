@@ -21,7 +21,7 @@ class UsernameBlock extends Component {
     }
   }
 
-  onUsernameChange = (value) => this.setState({username: value, usernameError: null})
+  onUsernameChange = (e) => this.setState({username: e.target.value, usernameError: null})
 
   onUsernameFocus = () => this.setState({isSubmitButtonDisplay: true})
 
@@ -55,7 +55,7 @@ class UsernameBlock extends Component {
           isCurrent ?
             <UsernameInputBlock>
               <EditIco />
-              <UsernameInput value={username} onChange={(e) => this.onUsernameChange(e.target.value)}
+              <UsernameInput value={username} onChange={this.onUsernameChange}
                              onFocus={this.onUsernameFocus} onKeyDown={this.onKeyDown}/>
               {
                 isSubmitButtonDisplay && <CustomDoneIco onClick={this.onSubmit}/>
