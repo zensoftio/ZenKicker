@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import styled from 'styled-components';
 import {LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid} from 'recharts';
 import {Colors, MediaViews} from '../../helpers/style-variables';
@@ -28,6 +29,14 @@ const Chart = ({data, lineDataKey, title, isMobile, xDataKey}) => {
 }
 
 export default Chart;
+
+Chart.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  lineDataKey: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  isMobile: PropTypes.bool.isRequired,
+  xDataKey: PropTypes.string.isRequired,
+}
 
 const Content = styled.div`
   @media (max-width: ${MediaViews.MOBILE}px) {

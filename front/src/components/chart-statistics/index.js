@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import Chart from '../chart';
+import PropTypes from "prop-types";
+import Chart from "../chart";
 
 const setWeekValue = (week) => {
   if (week === 0) return 'Current week';
@@ -26,6 +27,12 @@ const ChartStatistics = ({ratingStatistic, gamesCountStatistic, isMobile}) => {
 }
 
 export default ChartStatistics;
+
+ChartStatistics.propTypes = {
+  ratingStatistic: PropTypes.arrayOf(PropTypes.number).isRequired,
+  gamesCountStatistic: PropTypes.arrayOf(PropTypes.number).isRequired,
+  isMobile: PropTypes.bool.isRequired,
+}
 
 const Content = styled.div`
   display: flex;

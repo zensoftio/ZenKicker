@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from "prop-types";
 import styled from 'styled-components';
 import {updatePhoto} from '../../actions/user';
 import {bindActionCreators} from 'redux';
@@ -7,6 +8,7 @@ import {getCurrent, getPlayer} from '../../actions';
 
 import uploadIco from '../../shared/images/icons/upload.png';
 import UserPhoto from '../../components-ui/user-photo';
+import {PlayerModel, PlayerStatsModel} from "../../common/global-prop-types";
 
 class ProfilePhotoBlock extends Component {
   state = {
@@ -66,6 +68,13 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfilePhotoBlock);
+
+ProfilePhotoBlock.propTypes = {
+  currentUser: PlayerModel,
+  player: PlayerStatsModel,
+  isCurrent: PropTypes.bool.isRequired,
+  setPhotoError: PropTypes.func.isRequired,
+}
 
 const ProfilePhoto = styled.div`
   min-width: 150px;

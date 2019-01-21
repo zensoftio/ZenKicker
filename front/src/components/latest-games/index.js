@@ -1,10 +1,12 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import styled from 'styled-components';
 import {GameBlock} from '../../components/game-block';
 import GamesListHead from '../games-list-head';
 import {NoContent} from '../no-content';
 import {MediaViews} from "../../helpers/style-variables";
 import {Title} from "../../components-ui/title";
+import {GameModel} from "../../common/global-prop-types";
 
 export const LatestGames = ({latestGames}) => {
 
@@ -33,6 +35,10 @@ export const LatestGames = ({latestGames}) => {
 }
 
 export default LatestGames
+
+LatestGames.propTypes = {
+  latestGames: PropTypes.arrayOf(GameModel)
+}
 
 const LatestGamesContainer = styled.div`
 	display: flex;

@@ -81,6 +81,6 @@ export const ActionType = {
     GET_GAMES_COUNT_PER_WEEK_FAILURE: 'GET_GAMES_COUNT_PER_WEEK_FAILURE',
   },
   Authentication: {
-    LOGIN: 'LOGIN',
+    IS_LOGIN: 'IS_LOGIN',
   }
 }

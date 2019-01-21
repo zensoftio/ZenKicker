@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import moment from 'moment';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
@@ -67,6 +68,28 @@ export const GameBlock = ({
     }
   </Content>
 )
+
+GameBlock.propTypes = {
+  winner1Icon: PropTypes.string,
+  winner1Id: PropTypes.number.isRequired,
+  winner2Icon: PropTypes.string,
+  winner2Id: PropTypes.number.isRequired,
+  loser1Icon: PropTypes.string,
+  loser1Id: PropTypes.number.isRequired,
+  loser2Icon: PropTypes.string,
+  loser2Id: PropTypes.number.isRequired,
+  losersGoals: PropTypes.number.isRequired,
+  winner1Name: PropTypes.string.isRequired,
+  winner2Name: PropTypes.string.isRequired,
+  loser1Name: PropTypes.string.isRequired,
+  loser2Name: PropTypes.string.isRequired,
+  won: PropTypes.bool,
+  delta: PropTypes.number,
+  reportedBy: PropTypes.string.isRequired,
+  date: PropTypes.number.isRequired,
+  reportedById: PropTypes.number.isRequired,
+  isMobile: PropTypes.bool.isRequired
+}
 
 const Content = styled.div`
   display: flex;

@@ -10,6 +10,7 @@ import {Colors} from '../../helpers/style-variables';
 
 import MenuIco from '@material-ui/icons/Menu';
 import CloseIco from '@material-ui/icons/Close';
+import {PlayerModel} from "../../common/global-prop-types";
 
 class MobileMenu extends React.Component {
   state = {
@@ -56,6 +57,8 @@ class MobileMenu extends React.Component {
 }
 
 export default MobileMenu;
+
+MobileMenu.propTypes = PlayerModel.isRequired;
 
 const Content = styled.div`
 	width: 100%;

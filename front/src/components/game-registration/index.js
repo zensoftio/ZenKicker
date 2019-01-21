@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
+import PropTypes from "prop-types";
 import CompareArrowsIco from '@material-ui/icons/CompareArrows';
 import {withRouter} from "react-router-dom";
 import {Button} from '../../components-ui/buttons/button';
@@ -17,6 +18,7 @@ import {getGoalValues} from '../../helpers/goal-values';
 import {RegisteredGameBlock} from "../registered-game-block";
 
 import AddIco from '@material-ui/icons/Add';
+import {GameModel, PlayerStatsModel} from "../../common/global-prop-types";
 
 class GameRegistration extends Component {
   constructor(props) {
@@ -226,6 +228,7 @@ const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
   };
   return props;
 }
+
 const mapDispatchToProps = (dispatch) => {
   const actions = {
     getAllPlayers, getActivePlayers, getLatestGames, getAllGames, getPlayersDashboard, getGamesCountPerWeek, getLastGame,
@@ -238,6 +241,17 @@ const mapDispatchToProps = (dispatch) => {
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(GameRegistration));
 
+GameRegistration.propTypes = {
+  players: PropTypes.shape({
+    list: PropTypes.arrayOf(PlayerStatsModel),
+    totalCount: PropTypes.number.isRequired
+  }).isRequired,
+  searchResult: PropTypes.shape({
+    list: PropTypes.arrayOf(PlayerStatsModel),
+    totalCount: PropTypes.number.isRequired
+  }).isRequired,
+  lastGame: GameModel,
+}
 
 const Content = styled.div``;
 

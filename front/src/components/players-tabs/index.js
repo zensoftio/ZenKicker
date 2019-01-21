@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from "prop-types";
 import styled from 'styled-components';
 import TabButton from '../../components-ui/buttons/tab-button';
 import {ProfileBlock} from '../profile-block';
@@ -7,6 +8,7 @@ import InfiniteScroll from '../infinite-scroll';
 import {NoContent} from '../no-content';
 import {MediaViews} from "../../helpers/style-variables";
 import DropdownInput from "../../components-ui/dropdown-input";
+import {PlayerStatsModel} from "../../common/global-prop-types";
 
 const renderColumnOptions = [
   {value: 'firstPart', label: 'LWS, Lss, Win'},
@@ -107,6 +109,26 @@ class PlayersTabs extends Component {
 }
 
 export default PlayersTabs;
+
+PlayersTabs.propTypes = {
+  players: PropTypes.shape({
+    list: PropTypes.arrayOf(PlayerStatsModel),
+    totalCount: PropTypes.number.isRequired
+  }).isRequired,
+  activePlayers: PropTypes.shape({
+    list: PropTypes.arrayOf(PlayerStatsModel),
+    totalCount: PropTypes.number.isRequired
+  }).isRequired,
+  appendToPlayers: PropTypes.func.isRequired,
+  appendToActivePlayers: PropTypes.func.isRequired,
+  initSort: PropTypes.func.isRequired,
+  sort: PropTypes.shape({
+    sortBy: PropTypes.string.isRequired,
+    sortDirection: PropTypes.string.isRequired
+  }),
+  getActivePlayers: PropTypes.func.isRequired,
+  getAllPlayers: PropTypes.func.isRequired,
+}
 
 const Content = styled.div`
   width: 900px;

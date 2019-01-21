@@ -6,7 +6,7 @@ const initState = {
 
 export const authentication = (state = initState, action) => {
   switch (action.type) {
-    case ActionType.Authentication.LOGIN:
+    case ActionType.Authentication.IS_LOGIN:
       return {...state, isLogin: action.payload};
 
     default:

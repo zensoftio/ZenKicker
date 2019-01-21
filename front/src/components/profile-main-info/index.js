@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
+import PropTypes from "prop-types";
 import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 import UsernameBlock from '../username-block';
 import ProfilePhotoBlock from '../profile-photo-block';
 import PasswordBlock from '../password-block';
 import {Colors, MediaViews} from '../../helpers/style-variables';
+import {RelationDashboardModel} from "../../common/global-prop-types";
 
 class ProfileMainInfo extends Component {
   state = {
@@ -111,6 +113,25 @@ class ProfileMainInfo extends Component {
 }
 
 export default ProfileMainInfo
+
+ProfileMainInfo.propTypes = {
+  countGames: PropTypes.number.isRequired,
+  rated: PropTypes.number.isRequired,
+  rating: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
+  goalsAgainst: PropTypes.number.isRequired,
+  goalsFor: PropTypes.number.isRequired,
+  bestPartner: RelationDashboardModel,
+  worstPartner: RelationDashboardModel,
+  favoritePartner: RelationDashboardModel,
+  username: PropTypes.string.isRequired,
+  countWins: PropTypes.number.isRequired,
+  winningPercentage: PropTypes.number.isRequired,
+  currentLossStreak: PropTypes.number.isRequired,
+  currentWinStreak: PropTypes.number.isRequired,
+  longestLossStreak: PropTypes.number.isRequired,
+  longestWinStreak: PropTypes.number.isRequired,
+}
 
 const Content = styled.div`
   display: flex;

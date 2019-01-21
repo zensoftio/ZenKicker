@@ -1,10 +1,12 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import DoughnutChart from "../doughnut-chart";
 import DropdownInput from "../../components-ui/dropdown-input";
 import PieChart from "../pie-chart";
 import {ChartColors} from "../../helpers/color-lib";
 import {Title} from "../../components-ui/title";
+import {RelationDashboardModel} from "../../common/global-prop-types";
 
 class PlayerRelations extends React.Component {
   constructor(props) {
@@ -79,6 +81,11 @@ class PlayerRelations extends React.Component {
 }
 
 export default PlayerRelations;
+
+PlayerRelations.propTypes = {
+  relations: PropTypes.arrayOf(RelationDashboardModel),
+  isMobile: PropTypes.bool.isRequired,
+}
 
 const Content = styled.div`
   display: flex;

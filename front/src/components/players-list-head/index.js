@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import styled from 'styled-components';
 import {MediaViews} from "../../helpers/style-variables";
 
@@ -50,6 +51,14 @@ const PlayersListHead = ({onSortChange, sortDirection, sortBy, renderColumns, is
 )
 
 export default PlayersListHead;
+
+PlayersListHead.propTypes = {
+  onSortChange: PropTypes.func.isRequired,
+  sortDirection: PropTypes.string.isRequired,
+  sortBy: PropTypes.string.isRequired,
+  renderColumns: PropTypes.string.isRequired,
+  isMobile: PropTypes.bool.isRequired,
+}
 
 const Content = styled.div`
   display: flex;

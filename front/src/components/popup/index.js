@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from "prop-types";
 import styled from 'styled-components';
 import {Button} from '../../components-ui/buttons/button';
 import {Colors, MediaViews} from "../../helpers/style-variables";
@@ -48,6 +49,11 @@ class Popup extends Component {
 }
 
 export default Popup;
+
+Popup.propTypes = {
+  buttonTitle: PropTypes.string.isRequired,
+  clearValues: PropTypes.func.isRequired
+}
 
 const Content = styled.div`
   display: flex;

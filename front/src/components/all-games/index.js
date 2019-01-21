@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from "prop-types";
 import {GameBlock} from '../../components/game-block';
 import InfiniteScroll from '../infinite-scroll';
 import GamesListHead from '../games-list-head';
 import {NoContent} from '../no-content';
 import {MediaViews} from "../../helpers/style-variables";
+import {GameModel} from "../../common/global-prop-types";
 
 const AllGames = ({games, totalCount, appendToGames}) => {
 
@@ -34,6 +36,12 @@ const AllGames = ({games, totalCount, appendToGames}) => {
 }
 
 export default AllGames;
+
+AllGames.propTypes = {
+  games: PropTypes.oneOfType([PropTypes.arrayOf(GameModel), PropTypes.array]),
+  appendToGames: PropTypes.func.isRequired,
+  totalCount: PropTypes.number.isRequired,
+}
 
 const Content = styled.div`
 `;

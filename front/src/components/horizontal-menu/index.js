@@ -7,6 +7,7 @@ import GameRegistration from '../game-registration';
 import ExitToAppIco from '@material-ui/icons/ExitToApp';
 import UserPhoto from '../../components-ui/user-photo';
 import {Colors} from '../../helpers/style-variables';
+import {PlayerModel} from "../../common/global-prop-types";
 
 export const HorizontalMenu = ({id, iconPath, username}) => (
   <Content>
@@ -29,6 +30,8 @@ export const HorizontalMenu = ({id, iconPath, username}) => (
     </TopBar>
   </Content>
 )
+
+HorizontalMenu.propTypes = PlayerModel.isRequired;
 
 const Content = styled.section`
 	width: 100%;

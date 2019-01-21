@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
+import PropTypes from "prop-types";
 import {updateUsername} from '../../actions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -86,6 +87,10 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UsernameBlock);
+
+UsernameBlock.propTypes = {
+  isCurrent: PropTypes.bool.isRequired,
+}
 
 const Content = styled.div`
   display: flex;

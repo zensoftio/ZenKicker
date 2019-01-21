@@ -4,6 +4,7 @@ import UserPhoto from "../../components-ui/user-photo";
 import {Link} from "react-router-dom";
 
 import {Colors, MediaViews} from "../../helpers/style-variables";
+import {PlayerDashboardModel} from "../../common/global-prop-types";
 
 const PlayersOfWeek = ({players}) => {
   if (!players || !players.firstPlace) return null;
@@ -47,6 +48,10 @@ const PlayersOfWeek = ({players}) => {
 }
 
 export default PlayersOfWeek;
+
+PlayersOfWeek.propTypes = {
+  players: PlayerDashboardModel,
+}
 
 const Content = styled.div`
   display: flex;

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 import UserPhoto from '../../components-ui/user-photo';
 import {Colors, MediaViews} from "../../helpers/style-variables";
+import PropTypes from "prop-types";
 
 const renderStatisticColumns = ({countGames, rated, rating, isMobile, longestWinningStreak, longestLossesStreak,
                                   winningPercentage, renderColumns}) => {
@@ -52,6 +53,21 @@ export const ProfileBlock = ({index, id, username, countGames, rated, rating, ic
     }
   </Content>
 )
+
+ProfileBlock.propTypes = {
+  index: PropTypes.number.isRequired,
+  id: PropTypes.number.isRequired,
+  username: PropTypes.string.isRequired,
+  countGames: PropTypes.number.isRequired,
+  rated: PropTypes.number.isRequired,
+  rating: PropTypes.number.isRequired,
+  iconPath: PropTypes.string,
+  isMobile: PropTypes.bool.isRequired,
+  longestWinningStreak: PropTypes.number.isRequired,
+  longestLossesStreak: PropTypes.number.isRequired,
+  winningPercentage: PropTypes.number.isRequired,
+  renderColumns: PropTypes.string.isRequired,
+}
 
 const Content = styled(Link)`
   display: flex;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import styled from 'styled-components';
 import UserPhoto from '../../components-ui/user-photo';
 import {MediaViews} from "../../helpers/style-variables";
@@ -55,6 +56,19 @@ export const RegisteredGameBlock = ({
     </GameContent>
   </Content>
 )
+
+RegisteredGameBlock.propTypes = {
+  winner1Icon: PropTypes.string,
+  winner2Icon: PropTypes.string,
+  loser1Icon: PropTypes.string,
+  loser2Icon: PropTypes.string,
+  losersGoals: PropTypes.number.isRequired,
+  winner1Name: PropTypes.string.isRequired,
+  winner2Name: PropTypes.string.isRequired,
+  loser1Name: PropTypes.string.isRequired,
+  loser2Name: PropTypes.string.isRequired,
+  isMobile: PropTypes.bool.isRequired
+}
 
 const Content = styled.div`
   display: flex;
