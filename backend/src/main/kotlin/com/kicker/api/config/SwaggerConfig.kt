@@ -1,5 +1,6 @@
 package com.kicker.api.config
 
+import com.kicker.api.config.property.StaticDataProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
@@ -12,13 +13,14 @@ import springfox.documentation.spi.DocumentationType
 import springfox.documentation.spring.web.plugins.Docket
 import springfox.documentation.swagger2.annotations.EnableSwagger2
 
-
 /**
  * @author Yauheni Efimenko
  */
 @Configuration
 @EnableSwagger2
-class SwaggerConfig : WebMvcConfigurationSupport() {
+class SwaggerConfig(
+        private val staticDataProperties: StaticDataProperties
+) : WebMvcConfigurationSupport() {
 
     companion object {
         private val CLASSPATH_RESOURCE_LOCATIONS = arrayOf(
@@ -43,7 +45,8 @@ class SwaggerConfig : WebMvcConfigurationSupport() {
 
     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
         if (!registry.hasMappingForPattern("/**")) {
-            registry.addResourceHandler("/**").addResourceLocations(*CLASSPATH_RESOURCE_LOCATIONS)
+            registry.addResourceHandler("/**")
+                    .addResourceLocations(*CLASSPATH_RESOURCE_LOCATIONS, staticDataProperties.location)
         }
     }
 

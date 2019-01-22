@@ -1,6 +1,6 @@
 package com.kicker.api.service
 
-import com.kicker.api.component.FileManager
+import com.kicker.api.component.IconManager
 import com.kicker.api.domain.PageRequest
 import com.kicker.api.domain.model.player.CreatePlayerRequest
 import com.kicker.api.domain.model.player.UpdatePlayerPasswordRequest
@@ -29,7 +29,7 @@ import java.util.*
 class DefaultPlayerService(
         private val repository: PlayerRepository,
         private val passwordEncoder: PasswordEncoder,
-        private val fileManager: FileManager
+        private val iconManager: IconManager
 ) : DefaultBaseService<Player, PlayerRepository>(repository), PlayerService {
 
     override fun get(id: Long): Player {
@@ -96,8 +96,8 @@ class DefaultPlayerService(
     override fun updateIcon(playerId: Long, icon: MultipartFile): Player {
         val player = get(playerId)
 
-        player.iconPath?.let { fileManager.delete(it) }
-        val iconPath = fileManager.upload(icon)
+        player.iconPath?.let { iconManager.delete(it) }
+        val iconPath = iconManager.upload(icon)
 
         player.iconPath = iconPath
         return repository.save(player)
