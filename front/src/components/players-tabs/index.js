@@ -11,7 +11,7 @@ import DropdownInput from "../../components-ui/dropdown-input";
 import {PlayerStatsModel} from "../../common/global-prop-types";
 
 const renderColumnOptions = [
-  {value: 'firstPart', label: 'LWS, Lss, Win'},
+  {value: 'firstPart', label: 'LWS, LLS, Win'},
   {value: 'secondPart', label: 'Games, Rated, Rating'}
 ]
 
@@ -102,6 +102,14 @@ class PlayersTabs extends Component {
         <Players>
           {this.renderTab(isMobile)}
         </Players>
+        <Helper>
+          <div>
+            * LWS - Longest winning streak
+          </div>
+          <div>
+            * LLS - Longest losses streak
+          </div>
+        </Helper>
       </Content>
 
     );
@@ -136,6 +144,7 @@ const Content = styled.div`
     width: 100%;
   }
 `;
+
 const TabButtonContainer = styled.div`
   display: flex;
   margin-bottom: 20px;
@@ -156,11 +165,19 @@ const Players = styled.div`
 	width: 100%;
 	overflow-y: auto;
 	overflow-x: hidden;
-	
 	&>div {
 	  width: 100%;
 	}
 	@media (max-width: ${MediaViews.MOBILE}px) {
-    max-height: calc(100vh - 240px);
+    max-height: calc(100vh - 280px);
+  }
+`;
+
+
+const Helper = styled.div`
+  margin-top: 20px;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    margin-top: 10px;
+    font-size: 0.8em;
   }
 `;

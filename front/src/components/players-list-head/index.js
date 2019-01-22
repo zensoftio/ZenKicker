@@ -16,8 +16,8 @@ const isColumnSorting = (sortBy, sortDirection, field) => {
 const renderStatisticColumns = ({onSortChange, sortDirection, sortBy, renderColumns, isMobile}) => {
   if (!isMobile) return (
     <React.Fragment>
-      <StatisticColumn onClick={() => onSortChange('longestWinningStreak')}>{isColumnSorting(sortBy, sortDirection, 'longestWinningStreak')}LWS</StatisticColumn>
-      <StatisticColumn onClick={() => onSortChange('longestLossesStreak')}>{isColumnSorting(sortBy, sortDirection, 'longestLossesStreak')}LSS</StatisticColumn>
+      <StatisticColumn onClick={() => onSortChange('longestWinningStreak')}>{isColumnSorting(sortBy, sortDirection, 'longestWinningStreak')}*LWS</StatisticColumn>
+      <StatisticColumn onClick={() => onSortChange('longestLossesStreak')}>{isColumnSorting(sortBy, sortDirection, 'longestLossesStreak')}*LLS</StatisticColumn>
       <StatisticColumn onClick={() => onSortChange('winningPercentage')}>{isColumnSorting(sortBy, sortDirection, 'winningPercentage')}Win (%)</StatisticColumn>
       <StatisticColumn onClick={() => onSortChange('countGames')}>{isColumnSorting(sortBy, sortDirection, 'countGames')}Games</StatisticColumn>
       <StatisticColumn onClick={() => onSortChange('rated')}>{isColumnSorting(sortBy, sortDirection, 'rated')}Rated</StatisticColumn>
@@ -27,7 +27,7 @@ const renderStatisticColumns = ({onSortChange, sortDirection, sortBy, renderColu
   if (renderColumns === 'firstPart') return (
     <React.Fragment>
       <StatisticColumn onClick={() => onSortChange('longestWinningStreak')}>{isColumnSorting(sortBy, sortDirection, 'longestWinningStreak')}LWS</StatisticColumn>
-      <StatisticColumn onClick={() => onSortChange('longestLossesStreak')}>{isColumnSorting(sortBy, sortDirection, 'longestLossesStreak')}LSS</StatisticColumn>
+      <StatisticColumn onClick={() => onSortChange('longestLossesStreak')}>{isColumnSorting(sortBy, sortDirection, 'longestLossesStreak')}LLS</StatisticColumn>
       <StatisticColumn onClick={() => onSortChange('winningPercentage')}>{isColumnSorting(sortBy, sortDirection, 'winningPercentage')}Win (%)</StatisticColumn>
     </React.Fragment>
   )
