@@ -25,7 +25,7 @@ docker rm -vf ${APP_SERVICE_NAME}
 docker rmi -f ${APP_IMAGE_NAME}
 
 # IF -r THAN EXIT SCRIPT
-if [[ "$1" = "-r" ]];
+if [ "$1" = "-r" ];
 then
     docker rm -vf ${POSTGRES_SERVICE_NAME}
     docker network rm ${NETWORK_SERVICES_NAME}
@@ -33,7 +33,7 @@ then
     exit 1
 fi
 
-if [[ "${POSTGRES_SERVICE_EXIST}" = "" ]];
+if [ "${POSTGRES_SERVICE_EXIST}" = "" ];
 then
     ##################################
     ######### CREATE NETWORK #########
@@ -73,6 +73,7 @@ docker run \
     -i \
     --name ${APP_SERVICE_NAME} \
     --network ${NETWORK_SERVICES_NAME} \
+    -v /home/${USER}/data:/root/data \
     -e POSTGRES_HOST=${POSTGRES_HOST} \
     -e POSTGRES_DB=${POSTGRES_DB} \
     -e POSTGRES_USER=${POSTGRES_USER} \
