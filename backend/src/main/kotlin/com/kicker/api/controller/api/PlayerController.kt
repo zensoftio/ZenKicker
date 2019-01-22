@@ -78,7 +78,7 @@ class PlayerController(
 
     @ApiOperation(value = "Update icon of player")
     @PutMapping("/icon")
-    fun updateUsername(@ApiIgnore authentication: Authentication, @RequestPart("file") icon: MultipartFile): PlayerDto {
+    fun updateIcon(@ApiIgnore authentication: Authentication, @RequestPart("file") icon: MultipartFile): PlayerDto {
         validateIcon(icon)
         val currentPlayer = authentication.principal as Player
         val persistPlayer = service.updateIcon(currentPlayer.id, icon)
