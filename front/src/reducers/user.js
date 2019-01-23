@@ -10,7 +10,7 @@ export const user = (state = initState, action) => {
       return {...state, current: action.payload};
 
     case ActionType.User.GET_CURRENT_USER_FAILURE:
-      return {...state, current: {}};
+      return {...state, current: null};
 
     default:
       return state;

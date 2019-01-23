@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from "prop-types";
 import styled from 'styled-components';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -7,7 +8,6 @@ import {withRouter} from 'react-router-dom';
 import AllGames from '../../components/all-games';
 import {Colors, MediaViews} from "../../helpers/style-variables";
 import {GameModel} from "../../common/global-prop-types";
-import PropTypes from "prop-types";
 
 class GamesScene extends Component {
 

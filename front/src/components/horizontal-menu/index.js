@@ -1,4 +1,5 @@
 import React from 'react';
+import Config from 'react-global-configuration';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 import {MainMenuLink} from "../../components-ui/buttons/main-menu-link";
@@ -9,29 +10,42 @@ import UserPhoto from '../../components-ui/user-photo';
 import {Colors} from '../../helpers/style-variables';
 import {PlayerModel} from "../../common/global-prop-types";
 
-export const HorizontalMenu = ({id, iconPath, username}) => (
-  <Content>
-    <Title to="/">Zen<span>Kicker</span></Title>
-    <TopBar>
-      <Navigation>
-        <MainMenuLink link="/players">Players</MainMenuLink>
-        <MainMenuLink link="/games">Games</MainMenuLink>
-      </Navigation>
-      <UserSection>
-        <GameRegistration />
-        <User to={`/players/${id}`}>
-          <Photo>
-            <UserPhoto photo={iconPath}/>
-          </Photo>
-          <Username>{username}</Username>
-        </User>
-        <a href="/logout"><LogOutIco/></a>
-      </UserSection>
-    </TopBar>
-  </Content>
-)
+const signIn = () => window.location.href = Config.get('login_callback')
 
-HorizontalMenu.propTypes = PlayerModel.isRequired;
+export const HorizontalMenu = ({currentUser}) => {
+  return (
+    <Content>
+      <Title to="/">Zen<span>Kicker</span></Title>
+      <TopBar>
+        <Navigation>
+          <MainMenuLink link="/players">Players</MainMenuLink>
+          <MainMenuLink link="/games">Games</MainMenuLink>
+        </Navigation>
+        {
+          currentUser ?
+            <UserSection>
+              <GameRegistration/>
+              <User to={`/players/${currentUser.id}`}>
+                <Photo>
+                  <UserPhoto photo={currentUser.iconPath}/>
+                </Photo>
+                <Username>{currentUser.username}</Username>
+              </User>
+              <a href="/logout"><LogOutIco/></a>
+            </UserSection> :
+            <UserSection>
+              <SignIn onClick={signIn}>Sign In</SignIn>
+            </UserSection>
+        }
+
+      </TopBar>
+    </Content>
+  )
+}
+
+HorizontalMenu.propTypes = {
+  currentUser: PlayerModel
+}
 
 const Content = styled.section`
 	width: 100%;
@@ -113,4 +127,12 @@ const Username = styled.div`
 
 const LogOutIco = styled(ExitToAppIco)`
   color: #000;
+`;
+
+const SignIn = styled.div`
+  color: ${Colors.MAIN_COLOR};
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
 `;

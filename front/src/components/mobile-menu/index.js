@@ -1,4 +1,5 @@
 import React from 'react';
+import Config from 'react-global-configuration';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 import {MainMenuLink} from "../../components-ui/buttons/main-menu-link";
@@ -26,8 +27,10 @@ class MobileMenu extends React.Component {
     }
   }
 
+  signIn = () => window.location.href = Config.get('login_callback')
+
   render() {
-    const {iconPath, username, id} = this.props;
+    const {currentUser} = this.props;
     return(
       <Content onClick={this.handleOnBackgroundClick}>
         <Title to="/">Zen<span>Kicker</span></Title>
@@ -35,16 +38,24 @@ class MobileMenu extends React.Component {
         {
           this.state.isOpen &&
           <TopBar>
-            <UserSection>
-              <User to={`/players/${id}`} onClick={this.onMenuClose}>
-                <Photo>
-                  <UserPhoto photo={iconPath}/>
-                </Photo>
-                <Username>{username}</Username>
-              </User>
-              <a href="/logout"><LogOutIco/></a>
-            </UserSection>
-            <GameRegistration />
+            {
+              currentUser ?
+                <UserSection>
+                  <User to={`/players/${currentUser.id}`} onClick={this.onMenuClose}>
+                    <Photo>
+                      <UserPhoto photo={currentUser.iconPath}/>
+                    </Photo>
+                    <Username>{currentUser.username}</Username>
+                  </User>
+                  <a href="/logout"><LogOutIco/></a>
+                </UserSection> :
+                <UserSection>
+                  <SignIn onClick={this.signIn}>Sign In</SignIn>
+                </UserSection>
+            }
+            {
+              currentUser && <GameRegistration />
+            }
             <Navigation>
               <MainMenuLink link="/players"  onClick={this.onMenuClose}>Players</MainMenuLink>
               <MainMenuLink link="/games"  onClick={this.onMenuClose}>Games</MainMenuLink>
@@ -58,7 +69,9 @@ class MobileMenu extends React.Component {
 
 export default MobileMenu;
 
-MobileMenu.propTypes = PlayerModel.isRequired;
+MobileMenu.propTypes = {
+  currentUser: PlayerModel
+}
 
 const Content = styled.div`
 	width: 100%;
@@ -152,4 +165,12 @@ const Username = styled.div`
 
 const LogOutIco = styled(ExitToAppIco)`
   color: #000;
+`;
+
+const SignIn = styled.div`
+  color: ${Colors.MAIN_COLOR};
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
 `;

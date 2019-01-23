@@ -9,16 +9,19 @@ export const DEV = 'development';
 export default function () {
   let baseConfig = {
     login_callback: 'http://localhost:8080/login',
+    signUp_callback: 'http://localhost:8080/sign-up',
   };
   if (process.env.REACT_APP_ENV === PRODUCTION) {
     baseConfig = {
       ...baseConfig,
-      login_callback: 'http://18.220.64.102:8080/login',
+      login_callback: 'http://new-kicker.zensoft.by/login',
+      signUp_callback: 'http://new-kicker.zensoft.by/sign-up',
     };
   } else if (process.env.REACT_APP_ENV === DEV) {
     baseConfig = {
       ...baseConfig,
       login_callback: 'http://localhost:8080/login',
+      signUp_callback: 'http://localhost:8080/sign-up',
     };
   }
   // Freeze the configuration to prevent runtime modifications

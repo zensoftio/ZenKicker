@@ -1,7 +1,6 @@
 import Paths from "../dicts/paths";
 import {api} from "../config/api";
 import {ActionType} from './const';
-import {authenticated, unauthenticated} from "./authentication";
 
 export const getCurrent = () => {
 	return async (dispatch) => {
@@ -11,12 +10,8 @@ export const getCurrent = () => {
 		try {
 			const result = await api.get(Paths.User.GetCurrent);
 			dispatch({type: ActionType.User.GET_CURRENT_USER_SUCCESS, payload: result.data});
-      authenticated(dispatch);
 		} catch (err) {
 			dispatch({type: ActionType.User.GET_CURRENT_USER_FAILURE});
-      if (err.response.status === 401) {
-        unauthenticated(dispatch);
-      }
 		}
 	}
 }
