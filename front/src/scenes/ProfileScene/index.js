@@ -60,7 +60,7 @@ class ProfileScene extends Component {
       }
     ))
 
-    const isCurrent = +playerId === currentUser.id;
+    const isCurrent = !!currentUser && (+playerId === currentUser.id);
     const isMobile = window.outerWidth <= MediaViews.MOBILE;
     return (
       <Content>
@@ -111,7 +111,7 @@ ProfileScene.propTypes = {
     list: PropTypes.arrayOf(PlayerGameModel),
     totalCount: PropTypes.number.isRequired
   }).isRequired,
-  currentUser: PlayerModel.isRequired,
+  currentUser: PlayerModel,
   ratingStatistic: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
   gamesCountStatistic: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
   relations: PropTypes.shape({
