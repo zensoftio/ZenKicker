@@ -22,6 +22,7 @@ class IconManager(
 
     private val iconsDirectory = Paths.get("data/images/icons")
 
+
     @PostConstruct
     private fun init() {
         if (!Files.exists(iconsDirectory)) {
@@ -59,13 +60,13 @@ class IconManager(
         return "${UUID.randomUUID()}${FilenameUtils.EXTENSION_SEPARATOR}$extension"
     }
 
-    private fun squeeze(iconName: String, bytes: ByteArray) {
+    private fun squeeze(iconPath: String, bytes: ByteArray) {
         val bis = ByteArrayInputStream(bytes)
         val bufferedImage = ImageIO.read(bis)
 
         Thumbnails.of(bufferedImage)
                 .size(iconsSizeProperties.width!!, iconsSizeProperties.height!!)
-                .toFile(iconName)
+                .toFile(iconPath)
     }
 
 }
