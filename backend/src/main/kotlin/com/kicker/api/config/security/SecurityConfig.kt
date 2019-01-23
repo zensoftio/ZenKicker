@@ -6,7 +6,6 @@ import com.kicker.api.service.PlayerService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpHeaders.CONTENT_TYPE
-import org.springframework.http.HttpMethod.POST
 import org.springframework.http.HttpStatus.UNAUTHORIZED
 import org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
@@ -47,10 +46,12 @@ class SecurityConfig : GlobalMethodSecurityConfiguration() {
             http.cors()
 
             http.authorizeRequests()
-                    .antMatchers(*AUTH_WHITELIST).permitAll()
-                    .antMatchers("/sign-up").permitAll()
-                    .antMatchers(POST, "/api/players").permitAll()
-                    .antMatchers("/**").authenticated()
+                    .antMatchers("/api/games/registration").authenticated()
+                    .antMatchers("/api/players/current").authenticated()
+                    .antMatchers("/api/players/username").authenticated()
+                    .antMatchers("/api/players/icon").authenticated()
+                    .antMatchers("/api/players/password").authenticated()
+                    .antMatchers("/**").permitAll()
 
                     .and()
 
@@ -64,23 +65,23 @@ class SecurityConfig : GlobalMethodSecurityConfiguration() {
                     .failureHandler(AuthenticationFailureHandler())
         }
 
-        companion object {
-            private val AUTH_WHITELIST = arrayOf(
-                    //static content
-                    "/css/**",
-                    "/js/**",
-                    "/images/**",
-                    "/static/**",
-                    //swagger
-                    "/v2/api-docs",
-                    "/swagger-resources",
-                    "/swagger-resources/**",
-                    "/configuration/ui",
-                    "/configuration/security",
-                    "/swagger-ui.html",
-                    "/webjars/**"
-            )
-        }
+//        companion object {
+//            private val AUTH_WHITELIST = arrayOf(
+//                    //static content
+//                    "/css/**",
+//                    "/js/**",
+//                    "/images/**",
+//                    "/static/**",
+//                    //swagger
+//                    "/v2/api-docs",
+//                    "/swagger-resources",
+//                    "/swagger-resources/**",
+//                    "/configuration/ui",
+//                    "/configuration/security",
+//                    "/swagger-ui.html",
+//                    "/webjars/**"
+//            )
+//        }
 
     }
 

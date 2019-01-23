@@ -16,4 +16,8 @@ class SwaggerController {
     fun login(@RequestParam username: String, @RequestParam password: String) {
     }
 
+    @PostMapping("/logout")
+    fun logout() {
+    }
+
 }
