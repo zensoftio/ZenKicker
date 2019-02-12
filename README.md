@@ -65,7 +65,7 @@ In case of stopping or deployment of the application, the static data will
 remain in place.
 
 ## Swagger
-In order to be convenient to develop the frontend or microservices the swager 
+In order to be convenient to develop the frontend or microservices the swagger 
 was bolted.
 
 Get Kicker API can be obtained from the following url:
