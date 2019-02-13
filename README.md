@@ -31,8 +31,7 @@ To run the application, you will need preinstalled Docker.
 $ git clone https://github.com/zensoftio/ZenKicker.git
 $ cd ZenKicker
 $ ./gradlew build
-$ docker build -t zensoft/kicker -f docker/Dockerfile .
-$ sh docker/deploy.sh # TODO: Docker-compose
+$ docker-compose up
 ```
 
 
