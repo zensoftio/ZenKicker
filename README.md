@@ -1,6 +1,6 @@
 # Kicker
 
-![Screenshots](docs/screenshots/animation.webp)
+[![Screenshots](docs/screenshots/animation.webp)](http://kicker.zensoft.by)
 
 ## Kicker:  is a table-top game that is loosely based on football
 
