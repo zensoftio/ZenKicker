@@ -1,10 +1,7 @@
 package io.zensoft.kicker.config
 
-import io.zensoft.kicker.config.property.StaticDataProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport
 import springfox.documentation.builders.ApiInfoBuilder
 import springfox.documentation.builders.PathSelectors
 import springfox.documentation.builders.RequestHandlerSelectors
@@ -18,20 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2
  */
 @Configuration
 @EnableSwagger2
-class SwaggerConfig(
-        private val staticDataProperties: StaticDataProperties
-) : WebMvcConfigurationSupport() {
-
-    companion object {
-        private val CLASSPATH_RESOURCE_LOCATIONS = arrayOf(
-                "classpath:/META-INF/resources/webjars/",
-                "classpath:/META-INF/resources/",
-                "classpath:/resources/",
-                "classpath:/static/",
-                "classpath:/public/"
-        )
-    }
-
+class SwaggerConfig {
 
     @Bean
     fun api(): Docket {
@@ -41,13 +25,6 @@ class SwaggerConfig(
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo())
-    }
-
-    override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
-        if (!registry.hasMappingForPattern("/**")) {
-            registry.addResourceHandler("/**")
-                    .addResourceLocations(*CLASSPATH_RESOURCE_LOCATIONS, staticDataProperties.location)
-        }
     }
 
     private fun apiInfo(): ApiInfo = ApiInfoBuilder()
