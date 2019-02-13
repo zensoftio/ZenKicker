@@ -26,8 +26,8 @@ const renderStatisticColumns = ({onSortChange, sortDirection, sortBy, renderColu
   )
   if (renderColumns === 'firstPart') return (
     <React.Fragment>
-      <StatisticColumn onClick={() => onSortChange('longestWinningStreak')}>{isColumnSorting(sortBy, sortDirection, 'longestWinningStreak')}LWS</StatisticColumn>
-      <StatisticColumn onClick={() => onSortChange('longestLossesStreak')}>{isColumnSorting(sortBy, sortDirection, 'longestLossesStreak')}LLS</StatisticColumn>
+      <StatisticColumn onClick={() => onSortChange('longestWinningStreak')}>{isColumnSorting(sortBy, sortDirection, 'longestWinningStreak')}*LWS</StatisticColumn>
+      <StatisticColumn onClick={() => onSortChange('longestLossesStreak')}>{isColumnSorting(sortBy, sortDirection, 'longestLossesStreak')}*LLS</StatisticColumn>
       <StatisticColumn onClick={() => onSortChange('winningPercentage')}>{isColumnSorting(sortBy, sortDirection, 'winningPercentage')}Win (%)</StatisticColumn>
     </React.Fragment>
   )

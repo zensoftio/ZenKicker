@@ -14,8 +14,8 @@ export default function () {
   if (process.env.REACT_APP_ENV === PRODUCTION) {
     baseConfig = {
       ...baseConfig,
-      login_callback: 'http://new-kicker.zensoft.by/login',
-      signUp_callback: 'http://new-kicker.zensoft.by/sign-up',
+      login_callback: 'http://kicker.zensoft.by/login',
+      signUp_callback: 'http://kicker.zensoft.by/sign-up',
     };
   } else if (process.env.REACT_APP_ENV === DEV) {
     baseConfig = {
