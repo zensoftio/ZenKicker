@@ -16,7 +16,7 @@ POSTGRES_PASSWORD=123
 OUTER_PORT=5440
 POSTGRES_SERVICE_EXIST=`docker ps -aq -f name=${POSTGRES_SERVICE_NAME}`
 
-SERVER_HOST=http://new-kicker.zensoft.by
+SERVER_HOST=http://kicker.zensoft.by
 
 ##################################
 ####### CLEAN ENVIRONMENT ########
