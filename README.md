@@ -1,6 +1,5 @@
-# ZenKicker
+![Logo](docs/logo.png)
 
-[![Screenshots](docs/screenshots/animation.webp)](http://kicker.zensoft.by)
 
 ## Kicker:  is a table-top game that is loosely based on football
 
@@ -8,6 +7,8 @@ The aim of the game is to use the control knobs moving the ball into the
 opponent’s goal. There are no unified rules for playing the game, in the 
 sense which rules vary in different countries and even in the cities, and sometimes
 between different clubs in the same city.
+
+[![Screenshots](docs/screenshots/animation.webp)](http://kicker.zensoft.by)
 
 ## For what?
 
