@@ -1,36 +1,54 @@
 plugins {
     id 'idea'
-    id 'org.jetbrains.kotlin.jvm'
-    id 'org.jetbrains.kotlin.kapt'
-    id 'org.jetbrains.kotlin.plugin.spring'
-    id 'org.jetbrains.kotlin.plugin.jpa'
-    id 'org.springframework.boot'
+    id 'org.jetbrains.kotlin.jvm' version '1.3.20'
+    id 'org.jetbrains.kotlin.kapt' version '1.3.20'
+    id 'org.jetbrains.kotlin.plugin.spring' version '1.3.20'
+    id 'org.jetbrains.kotlin.plugin.jpa' version '1.3.20'
+    id 'org.springframework.boot' version '2.1.2.RELEASE'
 }
 
+apply plugin: "io.spring.dependency-management"
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+
 repositories {
+    mavenCentral()
     jcenter()
 }
 
 dependencies {
+    implementation('org.springframework.boot:spring-boot-starter-web')
     implementation('org.springframework.boot:spring-boot-starter-data-jpa')
     implementation('org.springframework.boot:spring-boot-starter-freemarker')
     implementation('org.springframework.boot:spring-boot-starter-security')
     implementation('org.springframework.boot:spring-boot-starter-cache')
 
-//    Util
+    // Util
     implementation('org.apache.commons:commons-lang3:3.7')
     implementation('commons-io:commons-io:2.6')
     implementation('net.coobird:thumbnailator:0.4.8')
     implementation('com.github.ben-manes.caffeine:caffeine:2.6.2')
 
-//    Swagger
+    // Swagger
     implementation('io.springfox:springfox-swagger2:2.9.0')
     implementation('io.springfox:springfox-swagger-ui:2.9.0')
     implementation('org.webjars:swagger-ui:3.17.0')
 
-//    Database
+    // Database
     implementation('org.flywaydb:flyway-core')
     runtimeOnly('org.postgresql:postgresql')
+
+    // Kotlin
+    implementation('com.fasterxml.jackson.module:jackson-module-kotlin')
+    implementation('org.jetbrains.kotlin:kotlin-stdlib-jdk8')
+    implementation('org.jetbrains.kotlin:kotlin-reflect')
+
+    // DevTools
+    runtimeOnly('org.springframework.boot:spring-boot-devtools')
+    kapt('org.springframework.boot:spring-boot-configuration-processor')
+
+    // Test
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
 
 sourceSets {
@@ -40,3 +58,16 @@ sourceSets {
 
 // Front
 processResources.dependsOn(':front:assemble')
+
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+}
+
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+}
