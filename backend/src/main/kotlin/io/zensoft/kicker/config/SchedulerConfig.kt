@@ -16,8 +16,8 @@ class SchedulerConfig : SchedulingConfigurer {
     override fun configureTasks(taskRegistrar: ScheduledTaskRegistrar) {
         val taskScheduler = ThreadPoolTaskScheduler()
         taskScheduler.poolSize = 5
+        taskScheduler.threadNamePrefix = "ScheduledExecutor-"
         taskScheduler.initialize()
-        taskScheduler.setThreadNamePrefix("ScheduledExecutor-")
 
         taskRegistrar.setTaskScheduler(taskScheduler)
     }
