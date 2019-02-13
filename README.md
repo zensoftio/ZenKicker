@@ -15,19 +15,23 @@ between different clubs in the same city.
 The main idea of this is to distract the guys from working as well as to let feel relaxed in 
 free time.
 
-## What s there?
+## What's there?
 
 In order to do the game more interesting the rating system was invented. Employees 
 register new games and compete between each other. 
 
 ## Running
 
-To run application, you will need:
- 1) Download application from repository.
- 2) Download docker and install it in system.
- 3) Build application by gradle.
- 4) Create a docker image from the application and name it as `kicker`.
- 5) Run docker script `{root_project}/backend/docker/deploy.sh`.
+To run the application, you will need preinstalled Docker.
+
+```
+$ git clone https://github.com/zensoftio/ZenKicker.git
+$ cd ZenKicker
+$ ./gradlew build
+$ docker build -t zensoft/kicker -f docker/Dockerfile .
+$ sh docker/deploy.sh # TODO: Docker-compose
+```
+
 
 ## Prerequisites
 
