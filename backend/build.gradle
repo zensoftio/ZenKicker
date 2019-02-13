@@ -53,7 +53,7 @@ dependencies {
 
 sourceSets {
     main.kotlin.srcDirs += 'src/main/kotlin'
-    main.resources.srcDirs += '../front/build/resources'
+    main.resources.srcDirs += '../frontend/build/resources'
 }
 
 // Front
