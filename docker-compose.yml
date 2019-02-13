@@ -21,4 +21,4 @@ services:
       - 8686:8080
     restart: always
     volumes:
-      - ./data:/root/data
+      - ./data:/data

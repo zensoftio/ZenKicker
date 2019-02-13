@@ -20,7 +20,7 @@ class IconManager(
         private val staticDataProperties: StaticDataProperties
 ) {
 
-    private val iconsDirectory = Paths.get("data/images/icons")
+    private val iconsDirectory = Paths.get("${staticDataProperties.getLocationWithoutSchema()}/images/icons")
 
 
     @PostConstruct
