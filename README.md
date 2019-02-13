@@ -1,4 +1,4 @@
-# Kicker
+# ZenKicker
 
 [![Screenshots](docs/screenshots/animation.webp)](http://kicker.zensoft.by)
 
