@@ -57,7 +57,7 @@ sourceSets {
 }
 
 // Front
-processResources.dependsOn(':front:assemble')
+processResources.dependsOn(':frontend:assemble')
 
 
 compileKotlin {
