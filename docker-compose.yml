@@ -16,9 +16,9 @@ services:
       - db.env
     environment:
       POSTGRES_HOST: db
-      SERVER_HOST: http://localhost:8686
+      SERVER_HOST: http://localhost:8080
     ports:
-      - 8686:8080
+      - 8080:8080
     restart: always
     volumes:
       - ./data:/data
