@@ -30,7 +30,7 @@ To run application, you will need:
 
 ## Prerequisites
 
-The **_Kiker application_** uses several environment variables. All variables are required.
+The **_Kicker application_** uses several environment variables. All variables are required.
 
 ### PostgresSQL service
 
