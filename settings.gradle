@@ -1,8 +1,4 @@
 rootProject.name = 'kicker'
 
 include('backend')
-include('front')
-
-rootProject.children.each { subproject ->
-    subproject.buildFileName = "${subproject.name}.gradle"
-}
+include('frontend')
