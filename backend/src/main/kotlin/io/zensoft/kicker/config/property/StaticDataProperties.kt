@@ -18,5 +18,8 @@ data class StaticDataProperties(
          */
         @field:Pattern(regexp = ".*/$")
         @field:NotBlank var location: String? = null
+) {
 
-)
+        fun getLocationWithoutSchema() = location!!.substring(location!!.indexOf(":") + 1)
+
+}

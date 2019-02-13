@@ -72,7 +72,7 @@ Set the **SERVER_HOST** environment variable so that **Frontend** knows where th
 
 ### Static Data
 
-After starting application static the data will be saved in the folder `/root/data` in the file system.
+After starting application static the data will be saved in the folder `/data` in the file system.
 In case the application is stopped or deployed, the static data will 
 remain in place.
 
