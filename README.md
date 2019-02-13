@@ -1,5 +1,7 @@
 # Kicker
 
+![Screenshots](docs/screenshots/animation.webp)
+
 ## Kicker:  is a table-top game that is loosely based on football
 
 The aim of the game is to use the control knobs to move the ball into the 
@@ -71,12 +73,3 @@ was bolted.
 Get Kicker API can be obtained from the following url:
 
 `http://{host}/swagger-ui.html`
-
-## Screenshots
-
-![](/docs/1.png)
-![](/docs/2.png)
-![](/docs/3.png)
-![](/docs/4.png)
-![](/docs/5.png)
-![](/docs/6.png)
