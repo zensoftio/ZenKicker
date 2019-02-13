@@ -1,6 +1,6 @@
 subprojects {
-    group = 'com.kicker'
-    version = '0.0.1-SNAPSHOT'
+    group = 'io.zensoft.kicker'
+    version = '1.0.0'
 }
 
 gradle.buildFinished {
