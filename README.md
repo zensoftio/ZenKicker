@@ -25,7 +25,7 @@ register new games and compete between each other.
 
 ## Running
 
-To run the application, you will need preinstalled Docker.
+To run the application, you will need Java and Docker preinstalled.
 
 ```
 $ git clone https://github.com/zensoftio/ZenKicker.git
