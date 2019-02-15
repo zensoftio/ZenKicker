@@ -80,7 +80,7 @@ deploy:
         docker run -d --name $CONTAINER_NAME --restart always \
           --network kicker-net \
           -p $CONTAINER_PORT:8080 \
-          -v $MOUNT_DIR:/data/ \
+          -v $DATA_DIR:/data/ \
           -e POSTGRES_HOST=$POSTGRES_HOST \
           -e POSTGRES_DB=$POSTGRES_DB \
           -e POSTGRES_USER=$POSTGRES_USER \
