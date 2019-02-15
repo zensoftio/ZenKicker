@@ -30,7 +30,7 @@ interface BaseService<T : BaseModel> {
 
 interface PlayerService : BaseService<Player>, UserDetailsService {
 
-    fun getByUsername(username: String): Player?
+    fun findByUsername(username: String): Player?
 
     fun searchByKeyword(keyword: String): List<Player>
 
