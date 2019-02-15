@@ -51,32 +51,25 @@ package-docker:
 ###########################
 # Deployment
 ###########################
-.deploy:
+.prepare-key-script: &prepare_key
+  - apk add --no-cache openssh-client
+  - eval $(ssh-agent -s)
+  - echo "$SSH_KEY" | tr -d '\r' | ssh-add - > /dev/null
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+  - ssh-keyscan $SSH_HOST >> ~/.ssh/known_hosts
+  - chmod 644 ~/.ssh/known_hosts
+
+deploy:
   stage: deploy
   dependencies: []
   variables:
-    SERVICE_NAME: kicker
-    POSTGRES_HOST: "postgres"
-    POSTGRES_DB: "kicker"
-    POSTGRES_USER: ${POSTGRES_USERNAME}
-    POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    SERVER_HOST: "http://kicker.zensoft.by"
-    OUTER_PORT: 8585
+    CONTAINER_NAME: kicker
+  before_script: *prepare_key
   script:
-    - docker rm -vf ${SERVICE_NAME}
-    - docker rmi -f ${IMAGE_NAME}
-    - docker run \
-      -d \
-      --name ${SERVICE_NAME} \
-      -v /data:/data \
-      -e POSTGRES_HOST=${POSTGRES_HOST} \
-      -e POSTGRES_DB=${POSTGRES_DB} \
-      -e POSTGRES_USER=${POSTGRES_USER} \
-      -e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} \
-      -e SERVER_HOST=${SERVER_HOST} \
-      -p ${OUTER_PORT}:8080 \
-      ${IMAGE_NAME}
+    - ssh $SSH_USER@$SSH_HOST "docker rm -f $CONTAINER_NAME"
+    - ssh $SSH_USER@$SSH_HOST "docker rmi $IMAGE_NAME"
+    - ssh $SSH_USER@$SSH_HOST "docker login -u gitlab-ci-token -p $CI_JOB_TOKEN docker.zensoft.io"
+    - ssh $SSH_USER@$SSH_HOST "docker pull $IMAGE_NAME"
   tags:
     - minsk
-  only:
-    - master
