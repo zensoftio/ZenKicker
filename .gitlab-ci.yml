@@ -55,6 +55,7 @@ package-docker:
   stage: deploy
   dependencies: []
   variables:
+    SERVICE_NAME: kicker
     POSTGRES_HOST: "postgres"
     POSTGRES_DB: "kicker"
     POSTGRES_USER: ${POSTGRES_USERNAME}
