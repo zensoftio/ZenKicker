@@ -88,3 +88,5 @@ deploy:
       "
   tags:
     - minsk
+  only:
+    - master
