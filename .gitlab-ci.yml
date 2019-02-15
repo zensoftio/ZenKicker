@@ -69,8 +69,8 @@ deploy:
     CONTAINER_NAME: kicker
   before_script: *prepare_key
   script:
-    - ssh $SSH_USER@$SSH_HOST "docker rm -f $CONTAINER_NAME"
-    - ssh $SSH_USER@$SSH_HOST "docker rmi $IMAGE_NAME"
+    - ssh $SSH_USER@$SSH_HOST "docker rm -f $CONTAINER_NAME || true"
+    - ssh $SSH_USER@$SSH_HOST "docker rmi $IMAGE_NAME || true"
     - ssh $SSH_USER@$SSH_HOST "docker login -u gitlab-ci-token -p $CI_JOB_TOKEN docker.zensoft.io"
     - ssh $SSH_USER@$SSH_HOST "docker pull $IMAGE_NAME"
   tags:
