@@ -10,6 +10,7 @@ variables:
   IMAGE_NAME: zensoft/kicker
   SERVICE_NAME: kicker
 
+
 ###########################
 # Building
 ###########################
@@ -28,8 +29,7 @@ build-jar:
     paths:
       - /backend/build/libs/*.jar
     expire_in: 1 day
-  only:
-    - master
+
 
 ###########################
 # Packaging
