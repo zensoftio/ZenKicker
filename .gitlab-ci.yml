@@ -8,8 +8,8 @@ stages:
   - deploy
 
 variables:
-  IMAGE_NAME: zensoft/kicker
-  SERVICE_NAME: kicker
+  DOCKER_DRIVER: overlay2
+  IMAGE_NAME: docker.zensoft.io/$CI_PROJECT_PATH
 
 
 ###########################
@@ -46,36 +46,4 @@ package-docker:
     - docker push ${IMAGE_NAME}:${IMAGE_TAG}
   only:
     - master
-
-
-###########################
-# Deployment
-###########################
-.deploy:
-  stage: deploy
-  dependencies: []
-  variables:
-    POSTGRES_HOST: "postgres"
-    POSTGRES_DB: "kicker"
-    POSTGRES_USER: ${POSTGRES_USERNAME}
-    POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    SERVER_HOST: "http://kicker.zensoft.by"
-    OUTER_PORT: 8585
-  services:
-    - postgres:9.6.11
-  script:
-    - docker rm -vf ${SERVICE_NAME}
-    - docker rmi -f ${IMAGE_NAME}
-    - docker run \
-      -d \
-      --name ${SERVICE_NAME} \
-      -v /data:/data \
-      -e POSTGRES_HOST=${POSTGRES_HOST} \
-      -e POSTGRES_DB=${POSTGRES_DB} \
-      -e POSTGRES_USER=${POSTGRES_USER} \
-      -e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} \
-      -e SERVER_HOST=${SERVER_HOST} \
-      -p ${OUTER_PORT}:8080 \
-      ${IMAGE_NAME}
-  only:
-    - master
+    - tags
