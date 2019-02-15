@@ -88,6 +88,5 @@ deploy:
           -e SERVER_HOST=$SERVER_HOST \
           $IMAGE_NAME
       "
-
   tags:
     - minsk
