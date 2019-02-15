@@ -1,20 +1,20 @@
 package io.zensoft.kicker.controller.api
 
+import io.swagger.annotations.ApiOperation
 import io.zensoft.kicker.domain.PageRequest
 import io.zensoft.kicker.domain.PageResponse
 import io.zensoft.kicker.domain.model.player.CreatePlayerRequest
 import io.zensoft.kicker.domain.model.player.PlayerDto
 import io.zensoft.kicker.domain.model.player.UpdatePlayerPasswordRequest
 import io.zensoft.kicker.domain.model.player.UpdatePlayerUsernameRequest
-import io.zensoft.kicker.exception.controller.MultipartFileException
 import io.zensoft.kicker.model.Player
 import io.zensoft.kicker.model.PlayerStats
 import io.zensoft.kicker.service.PlayerService
 import io.zensoft.kicker.service.PlayerStatsService
-import io.swagger.annotations.ApiOperation
 import org.springframework.http.MediaType.*
 import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartException
 import org.springframework.web.multipart.MultipartFile
 import springfox.documentation.annotations.ApiIgnore
 import javax.validation.Valid
@@ -95,12 +95,12 @@ class PlayerController(
 
     private fun validateIcon(icon: MultipartFile) {
         if (icon.isEmpty) {
-            throw MultipartFileException("The uploaded file is empty")
+            throw MultipartException("The uploaded file is empty")
         }
 
         if (icon.contentType != IMAGE_JPEG_VALUE && icon.contentType != IMAGE_PNG_VALUE
                 && icon.contentType != IMAGE_GIF_VALUE) {
-            throw MultipartFileException("Incorrect file type, ${icon.contentType}")
+            throw MultipartException("Incorrect file type, ${icon.contentType}")
         }
     }
 

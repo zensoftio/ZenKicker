@@ -5,8 +5,8 @@ import io.zensoft.kicker.domain.PageRequest
 import io.zensoft.kicker.domain.model.player.CreatePlayerRequest
 import io.zensoft.kicker.domain.model.player.UpdatePlayerPasswordRequest
 import io.zensoft.kicker.domain.model.player.UpdatePlayerUsernameRequest
-import io.zensoft.kicker.exception.service.DuplicateUsernameException
-import io.zensoft.kicker.exception.service.PasswordIncorrectException
+import io.zensoft.kicker.exception.DuplicateUsernameException
+import io.zensoft.kicker.exception.PasswordIncorrectException
 import io.zensoft.kicker.model.Player
 import io.zensoft.kicker.repository.PlayerRepository
 import org.springframework.cache.annotation.CacheEvict

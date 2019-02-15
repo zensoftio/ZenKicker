@@ -29,9 +29,9 @@ class DefaultPlayerToGameService(
         return repository.findByPlayer(player, pageRequest)
     }
 
-    /*
-    * Current week is number 0, so 10 week is number 9
-    * */
+    /**
+     * Current week is number 0, so 10 week is number 9
+     */
     @Cacheable("deltaPerWeekDuring10Weeks")
     override fun getDeltaPerWeekDuring10WeeksByPlayer(playerId: Long): List<Double> {
         val dashboard = mutableListOf<Double>()
