@@ -1,10 +1,11 @@
+image: docker:latest
+services:
+  - docker:dind
+
 stages:
   - build
   - package
   - deploy
-
-services:
-  - docker:dind
 
 variables:
   IMAGE_NAME: zensoft/kicker
@@ -36,23 +37,22 @@ build-jar:
 ###########################
 package-docker:
   stage: package
-  image: docker:latest
   dependencies:
     - build-jar
   script:
-    - export IMAGE_TAG=latest
+    - if [[ ${CI_COMMIT_REF_NAME} == master ]]; then export IMAGE_TAG=latest; else export IMAGE_TAG=${CI_COMMIT_REF_NAME}; fi;
     - docker login -u ${DOCKER_LOGIN} -p ${DOCKER_PASS}
     - docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
     - docker push ${IMAGE_NAME}:${IMAGE_TAG}
   only:
     - master
 
+
 ###########################
 # Deployment
 ###########################
-deploy:
+.deploy:
   stage: deploy
-  image: ${IMAGE_NAME}-deploy
   dependencies: []
   variables:
     POSTGRES_HOST: "postgres"
