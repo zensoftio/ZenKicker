@@ -62,8 +62,6 @@ package-docker:
     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     SERVER_HOST: "http://kicker.zensoft.by"
     OUTER_PORT: 8585
-  services:
-    - postgres:9.6.11
   script:
     - docker rm -vf ${SERVICE_NAME}
     - docker rmi -f ${IMAGE_NAME}
