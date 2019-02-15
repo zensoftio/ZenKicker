@@ -20,7 +20,7 @@ build-jar:
   before_script:
     - export GRADLE_USER_HOME=`pwd`/.gradle
   script:
-    - ./gradlew assemble
+    - ./gradlew build
   cache:
     paths:
       - .gradle/wrapper
