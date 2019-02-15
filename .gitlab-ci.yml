@@ -76,7 +76,7 @@ deploy:
     - ssh $SSH_USER@$SSH_HOST "docker login -u gitlab-ci-token -p $CI_JOB_TOKEN docker.zensoft.io"
     - ssh $SSH_USER@$SSH_HOST "docker pull $IMAGE_NAME"
     - |
-      ssh $SSH_USER@$SSH_HOST "
+      echo $SSH_USER@$SSH_HOST "
         docker run -d --name $CONTAINER_NAME --restart always \
           --network kicker-net \
           -p $CONTAINER_PORT:8080 \
