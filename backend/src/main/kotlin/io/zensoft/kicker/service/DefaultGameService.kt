@@ -31,9 +31,9 @@ class DefaultGameService(
         return super.getAll(pageRequest)
     }
 
-    /*
-        * Current week is number 0, so 10 week is number 9
-        * */
+    /**
+     *  Current week is number 0, so 10 week is number 9
+     */
     override fun countPerWeekDuring10WeeksByPlayer(playerId: Long): List<Long> {
         val player = playerService.get(playerId)
         val dashboard = mutableListOf<Long>()
@@ -45,9 +45,9 @@ class DefaultGameService(
         return dashboard
     }
 
-    /*
-    * Current week is number 0, so 10 week is number 9
-    * */
+    /**
+     *  Current week is number 0, so 10 week is number 9
+     */
     override fun countDuring10WeeksByPlayer(playerId: Long): Long {
         val player = playerService.get(playerId)
         return repository.countByPlayerAndIntervalDates(player,

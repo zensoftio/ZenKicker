@@ -2,8 +2,7 @@ package io.zensoft.kicker.controller.base
 
 import io.zensoft.kicker.domain.exception.ErrorDto
 import io.zensoft.kicker.domain.exception.ExceptionResponse
-import io.zensoft.kicker.exception.controller.ControllerException
-import io.zensoft.kicker.exception.service.ServiceException
+import io.zensoft.kicker.exception.ServiceException
 import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR
 import org.springframework.validation.BindException
@@ -48,11 +47,6 @@ class ExceptionRestControllerAdvice {
     @ResponseStatus(code = BAD_REQUEST)
     @ExceptionHandler(ServiceException::class)
     fun serviceExceptionHandler(exception: ServiceException): ExceptionResponse =
-            ExceptionResponse(BAD_REQUEST.value(), exception.message!!)
-
-    @ResponseStatus(code = BAD_REQUEST)
-    @ExceptionHandler(ControllerException::class)
-    fun controllerExceptionHandler(exception: ControllerException): ExceptionResponse =
             ExceptionResponse(BAD_REQUEST.value(), exception.message!!)
 
     @ResponseStatus(code = BAD_REQUEST)

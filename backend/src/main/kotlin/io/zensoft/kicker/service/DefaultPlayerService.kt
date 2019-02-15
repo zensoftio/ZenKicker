@@ -5,9 +5,8 @@ import io.zensoft.kicker.domain.PageRequest
 import io.zensoft.kicker.domain.model.player.CreatePlayerRequest
 import io.zensoft.kicker.domain.model.player.UpdatePlayerPasswordRequest
 import io.zensoft.kicker.domain.model.player.UpdatePlayerUsernameRequest
-import io.zensoft.kicker.exception.service.DuplicateUsernameException
-import io.zensoft.kicker.exception.service.NotFoundPlayerException
-import io.zensoft.kicker.exception.service.PasswordIncorrectException
+import io.zensoft.kicker.exception.DuplicateUsernameException
+import io.zensoft.kicker.exception.PasswordIncorrectException
 import io.zensoft.kicker.model.Player
 import io.zensoft.kicker.repository.PlayerRepository
 import org.springframework.cache.annotation.CacheEvict
@@ -19,7 +18,6 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.multipart.MultipartFile
-import java.util.*
 
 /**
  * @author Yauheni Efimenko
@@ -32,22 +30,14 @@ class DefaultPlayerService(
         private val iconManager: IconManager
 ) : DefaultBaseService<Player, PlayerRepository>(repository), PlayerService {
 
-    override fun get(id: Long): Player {
-        return try {
-            super.get(id)
-        } catch (e: NoSuchElementException) {
-            throw NotFoundPlayerException("Player with such id: $id not found")
-        }
-    }
-
-    override fun getByUsername(username: String): Player? = repository.findByUsername(username)
+    override fun findByUsername(username: String): Player? = repository.findByUsername(username)
 
     override fun searchByKeyword(keyword: String): List<Player> = repository.searchByKeyword(keyword)
 
     @Cacheable("players")
     override fun getAll(pageRequest: PageRequest): Page<Player> = super.getAll(pageRequest)
 
-    override fun loadUserByUsername(username: String): UserDetails = getByUsername(username)
+    override fun loadUserByUsername(username: String): UserDetails = findByUsername(username)
             ?: throw UsernameNotFoundException("User with username $username not found")
 
     @CacheEvict("players", "relations", "relationsDashboard", "playersDashboard", "statsPlayers",
@@ -97,12 +87,11 @@ class DefaultPlayerService(
         val player = get(playerId)
 
         player.iconPath?.let { iconManager.delete(it) }
-        val iconPath = iconManager.upload(icon)
+        player.iconPath = iconManager.upload(icon)
 
-        player.iconPath = iconPath
         return repository.save(player)
     }
 
-    private fun isExist(username: String): Boolean = getByUsername(username)?.let { true } ?: false
+    private fun isExist(username: String): Boolean = findByUsername(username)?.let { true } ?: false
 
 }
