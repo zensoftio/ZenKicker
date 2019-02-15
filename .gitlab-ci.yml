@@ -28,7 +28,7 @@ build-jar:
       - .gradle/caches
   artifacts:
     paths:
-      - /backend/build/libs/*.jar
+      - backend/build/libs/*.jar
     expire_in: 1 day
 
 
