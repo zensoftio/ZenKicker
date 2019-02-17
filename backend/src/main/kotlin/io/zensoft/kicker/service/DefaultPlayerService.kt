@@ -11,6 +11,7 @@ import io.zensoft.kicker.model.Player
 import io.zensoft.kicker.repository.PlayerRepository
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.cache.annotation.Cacheable
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.data.domain.Page
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UsernameNotFoundException
@@ -27,7 +28,8 @@ import org.springframework.web.multipart.MultipartFile
 class DefaultPlayerService(
         private val repository: PlayerRepository,
         private val passwordEncoder: PasswordEncoder,
-        private val iconManager: IconManager
+        private val iconManager: IconManager,
+        private val eventPublisher: ApplicationEventPublisher
 ) : DefaultBaseService<Player, PlayerRepository>(repository), PlayerService {
 
     override fun findByUsername(username: String): Player? = repository.findByUsername(username)
@@ -50,7 +52,9 @@ class DefaultPlayerService(
 
         request.password = passwordEncoder.encode(request.password)
 
-        return repository.save(Player(request.username!!, request.password!!))
+        val player = repository.save(Player(request.username!!, request.password!!))
+        eventPublisher.publishEvent(player)
+        return player
     }
 
     @CacheEvict("players", "relations", "relationsDashboard", "playersDashboard", "statsPlayers",

@@ -8,9 +8,7 @@ import io.zensoft.kicker.domain.model.player.PlayerDto
 import io.zensoft.kicker.domain.model.player.UpdatePlayerPasswordRequest
 import io.zensoft.kicker.domain.model.player.UpdatePlayerUsernameRequest
 import io.zensoft.kicker.model.Player
-import io.zensoft.kicker.model.PlayerStats
 import io.zensoft.kicker.service.PlayerService
-import io.zensoft.kicker.service.PlayerStatsService
 import org.springframework.http.MediaType.*
 import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.*
@@ -25,8 +23,7 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("/api/players")
 class PlayerController(
-        private val service: PlayerService,
-        private val playerStatsService: PlayerStatsService
+        private val service: PlayerService
 ) {
 
     @ApiOperation(value = "Get current player")
@@ -64,7 +61,6 @@ class PlayerController(
     @PostMapping
     fun create(@Valid @RequestBody request: CreatePlayerRequest): PlayerDto {
         val player = service.create(request)
-        playerStatsService.save(PlayerStats(player))
         return PlayerDto(player)
     }
 

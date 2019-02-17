@@ -9,6 +9,7 @@ import io.zensoft.kicker.model.PlayerStats
 import io.zensoft.kicker.repository.PlayerStatsRepository
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.cache.annotation.Cacheable
+import org.springframework.context.event.EventListener
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Sort.Direction.DESC
 import org.springframework.stereotype.Service
@@ -22,6 +23,12 @@ class DefaultPlayerStatsService(
         private val playerToGameService: PlayerToGameService,
         private val gameService: GameService
 ) : DefaultBaseService<PlayerStats, PlayerStatsRepository>(repository), PlayerStatsService {
+
+    @EventListener
+    @Transactional
+    fun createPlayer(player: Player) {
+        repository.save(PlayerStats(player))
+    }
 
     override fun getByPlayer(playerId: Long): PlayerStats {
         val player = playerService.get(playerId)
@@ -37,12 +44,7 @@ class DefaultPlayerStatsService(
         }
 
         val loser = getAllActive(pageRequest.apply { limit = 1; sortBy = RATING_FIELD })
-
-        val top3 = getAllActive(pageRequest.apply {
-            limit = 3
-            sortBy = RATING_FIELD
-            sortDirection = DESC
-        })
+        val top3 = getAllActive(pageRequest.apply { limit = 3; sortBy = RATING_FIELD; sortDirection = DESC })
 
         return PlayersDashboard(
                 top3.content[0].player,
