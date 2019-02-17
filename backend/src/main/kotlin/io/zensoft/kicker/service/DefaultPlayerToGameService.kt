@@ -34,8 +34,8 @@ class DefaultPlayerToGameService(
     @Cacheable("deltaPerWeekDuring10Weeks")
     override fun getDeltaPerWeekDuring10WeeksByPlayer(playerId: Long): List<Double> {
         val dashboard = mutableListOf<Double>()
-        for (weeksAgo in 9 downTo 0) {
-            dashboard.add(getDeltaByPlayerAndWeeksAgo(playerId, weeksAgo.toLong()))
+        for (weeksAgo in 9 downTo 0L) {
+            dashboard.add(getDeltaByPlayerAndWeeksAgo(playerId, weeksAgo))
         }
         return dashboard
     }
@@ -43,7 +43,7 @@ class DefaultPlayerToGameService(
     override fun getActualRatingByPlayer(playerId: Long): Double {
         var rating = PlayerStats.PLAYER_RATING
 
-        for (i in 0..playerSettingsProperties.countWeeks!!) {
+        for (i in 0 until playerSettingsProperties.countWeeks!!) {
             val deltaForWeek = getDeltaByPlayerAndWeeksAgo(playerId, i)
             val obsolescenceDeltaForWeek = RatingUtils.getObsolescenceDelta(deltaForWeek,
                     playerSettingsProperties.countWeeks!!, i)
