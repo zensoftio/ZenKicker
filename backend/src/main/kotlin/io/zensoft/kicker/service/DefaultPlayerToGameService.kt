@@ -23,7 +23,6 @@ class DefaultPlayerToGameService(
         private val playerSettingsProperties: PlayerSettingsProperties
 ) : DefaultBaseService<PlayerToGame, PlayerToGameRepository>(repository), PlayerToGameService {
 
-    @Cacheable("playerGames")
     override fun getPlayerGames(playerId: Long, pageRequest: PageRequest): Page<PlayerToGame> {
         val player = playerService.get(playerId)
         return repository.findByPlayer(player, pageRequest)

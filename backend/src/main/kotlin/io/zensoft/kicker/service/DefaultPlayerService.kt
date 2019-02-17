@@ -1,7 +1,6 @@
 package io.zensoft.kicker.service
 
 import io.zensoft.kicker.component.IconManager
-import io.zensoft.kicker.domain.PageRequest
 import io.zensoft.kicker.domain.model.player.CreatePlayerRequest
 import io.zensoft.kicker.domain.model.player.UpdatePlayerPasswordRequest
 import io.zensoft.kicker.domain.model.player.UpdatePlayerUsernameRequest
@@ -10,9 +9,7 @@ import io.zensoft.kicker.exception.PasswordIncorrectException
 import io.zensoft.kicker.model.Player
 import io.zensoft.kicker.repository.PlayerRepository
 import org.springframework.cache.annotation.CacheEvict
-import org.springframework.cache.annotation.Cacheable
 import org.springframework.context.ApplicationEventPublisher
-import org.springframework.data.domain.Page
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -36,14 +33,10 @@ class DefaultPlayerService(
 
     override fun searchByKeyword(keyword: String): List<Player> = repository.searchByKeyword(keyword)
 
-    @Cacheable("players")
-    override fun getAll(pageRequest: PageRequest): Page<Player> = super.getAll(pageRequest)
-
     override fun loadUserByUsername(username: String): UserDetails = findByUsername(username)
             ?: throw UsernameNotFoundException("User with username $username not found")
 
-    @CacheEvict("players", "relations", "relationsDashboard", "playersDashboard", "statsPlayers",
-            "statsActivePlayers", "games", "playerGames", allEntries = true)
+    @CacheEvict("relations", "relationsDashboard", "playersDashboard", allEntries = true)
     @Transactional
     override fun create(request: CreatePlayerRequest): Player {
         if (isExist(request.username!!)) {
@@ -57,8 +50,7 @@ class DefaultPlayerService(
         return player
     }
 
-    @CacheEvict("players", "relations", "relationsDashboard", "playersDashboard", "statsPlayers",
-            "statsActivePlayers", "games", "playerGames", allEntries = true)
+    @CacheEvict("relations", "relationsDashboard", "playersDashboard", allEntries = true)
     @Transactional
     override fun updateUsername(playerId: Long, request: UpdatePlayerUsernameRequest): Player {
         if (isExist(request.username!!)) {
@@ -84,8 +76,7 @@ class DefaultPlayerService(
         return repository.save(player)
     }
 
-    @CacheEvict("players", "relations", "relationsDashboard", "playersDashboard", "statsPlayers",
-            "statsActivePlayers", "games", "playerGames", allEntries = true)
+    @CacheEvict("relations", "relationsDashboard", "playersDashboard", allEntries = true)
     @Transactional
     override fun updateIcon(playerId: Long, icon: MultipartFile): Player {
         val player = get(playerId)

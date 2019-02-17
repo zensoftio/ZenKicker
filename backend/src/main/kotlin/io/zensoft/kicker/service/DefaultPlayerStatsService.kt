@@ -54,13 +54,9 @@ class DefaultPlayerStatsService(
         )
     }
 
-    @Cacheable("statsPlayers")
-    override fun getAll(pageRequest: PageRequest): Page<PlayerStats> = super.getAll(pageRequest)
-
-    @Cacheable("statsActivePlayers")
     override fun getAllActive(pageRequest: PageRequest): Page<PlayerStats> = repository.findAllByActiveTrue(pageRequest)
 
-    @CacheEvict("statsPlayers", "statsActivePlayers", allEntries = true)
+    @CacheEvict("playersDashboard", allEntries = true)
     @Transactional
     override fun updateActivity(playerId: Long, active: Boolean): PlayerStats {
         val playerStats = getByPlayer(playerId)
@@ -70,7 +66,7 @@ class DefaultPlayerStatsService(
         return repository.save(playerStats)
     }
 
-    @CacheEvict("playersDashboard", "statsPlayers", "statsActivePlayers", allEntries = true)
+    @CacheEvict("playersDashboard", allEntries = true)
     @Transactional
     override fun updateRatingAndRated(player: Player): PlayerStats {
         val stats = getByPlayer(player.id)
