@@ -74,8 +74,6 @@ interface PlayerRelationsService {
 
     fun getDashboard(playerId: Long): PlayerRelationsDashboard
 
-    fun create(playerRelations: PlayerRelations): PlayerRelations
-
 }
 
 interface PlayerStatsService : BaseService<PlayerStats> {

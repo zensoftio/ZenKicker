@@ -32,7 +32,7 @@ class DefaultPlayerRelationsService(
 
         val playerRelations = repository.findByPlayerAndPartner(player, partner)
 
-        return playerRelations ?: create(PlayerRelations(player, partner))
+        return playerRelations ?: repository.save(PlayerRelations(player, partner))
     }
 
     @Cacheable("relationsDashboard")
@@ -48,8 +48,5 @@ class DefaultPlayerRelationsService(
 
         return PlayerRelationsDashboard(bestPartner, worstPartner, favoritePartner)
     }
-
-    @Transactional
-    override fun create(playerRelations: PlayerRelations): PlayerRelations = repository.save(playerRelations)
 
 }
