@@ -62,26 +62,9 @@ class SecurityConfig : GlobalMethodSecurityConfiguration() {
 
                     .formLogin()
                     .loginPage("/login").permitAll()
+                    .usernameParameter("login")
                     .failureHandler(AuthenticationFailureHandler())
         }
-
-//        companion object {
-//            private val AUTH_WHITELIST = arrayOf(
-//                    //static content
-//                    "/css/**",
-//                    "/js/**",
-//                    "/images/**",
-//                    "/static/**",
-//                    //swagger
-//                    "/v2/api-docs",
-//                    "/swagger-resources",
-//                    "/swagger-resources/**",
-//                    "/configuration/ui",
-//                    "/configuration/security",
-//                    "/swagger-ui.html",
-//                    "/webjars/**"
-//            )
-//        }
 
     }
 

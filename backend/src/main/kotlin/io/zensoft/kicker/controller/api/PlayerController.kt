@@ -3,10 +3,7 @@ package io.zensoft.kicker.controller.api
 import io.swagger.annotations.ApiOperation
 import io.zensoft.kicker.domain.PageRequest
 import io.zensoft.kicker.domain.PageResponse
-import io.zensoft.kicker.domain.model.player.CreatePlayerRequest
-import io.zensoft.kicker.domain.model.player.PlayerDto
-import io.zensoft.kicker.domain.model.player.UpdatePlayerPasswordRequest
-import io.zensoft.kicker.domain.model.player.UpdatePlayerUsernameRequest
+import io.zensoft.kicker.domain.model.player.*
 import io.zensoft.kicker.model.Player
 import io.zensoft.kicker.service.PlayerService
 import org.springframework.http.MediaType.*
@@ -64,11 +61,21 @@ class PlayerController(
         return PlayerDto(player)
     }
 
-    @ApiOperation(value = "Update username of player")
-    @PutMapping("/username")
-    fun updateUsername(@ApiIgnore authentication: Authentication, @Valid @RequestBody request: UpdatePlayerUsernameRequest): PlayerDto {
+    @ApiOperation(value = "Update login of player")
+    @PutMapping("/login")
+    fun updateLogin(@ApiIgnore authentication: Authentication,
+                    @Valid @RequestBody request: UpdatePlayerLoginRequest): PlayerDto {
         val currentPlayer = authentication.principal as Player
-        val persistPlayer = service.updateUsername(currentPlayer.id, request)
+        val persistPlayer = service.updateLogin(currentPlayer.id, request)
+        return PlayerDto(persistPlayer)
+    }
+
+    @ApiOperation(value = "Update full name of player")
+    @PutMapping("/fullName")
+    fun updateFullName(@ApiIgnore authentication: Authentication,
+                       @Valid @RequestBody request: UpdatePlayerFullNameRequest): PlayerDto {
+        val currentPlayer = authentication.principal as Player
+        val persistPlayer = service.updateFullName(currentPlayer.id, request)
         return PlayerDto(persistPlayer)
     }
 
@@ -83,7 +90,8 @@ class PlayerController(
 
     @ApiOperation(value = "Update password of player")
     @PutMapping("/password")
-    fun updatePassword(@ApiIgnore authentication: Authentication, @Valid @RequestBody request: UpdatePlayerPasswordRequest): PlayerDto {
+    fun updatePassword(@ApiIgnore authentication: Authentication,
+                       @Valid @RequestBody request: UpdatePlayerPasswordRequest): PlayerDto {
         val currentPlayer = authentication.principal as Player
         val persistPlayer = service.updatePassword(currentPlayer.id, request)
         return PlayerDto(persistPlayer)

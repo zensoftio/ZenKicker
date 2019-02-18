@@ -12,15 +12,15 @@ import javax.validation.ConstraintValidatorContext
 @Component
 class EmailValidator(domainProperties: DomainProperties) : ConstraintValidator<Email, String> {
 
-    private val regex = "^([a-zA-Z0-9_.-]+)@(${domainProperties.domains.joinToString("|")})$".toRegex()
-
-
-    override fun isValid(email: String, context: ConstraintValidatorContext): Boolean {
-        if (!email.matches(regex)) {
-            return false
+    private val regex: Regex by lazy {
+        if (domainProperties.domains.isEmpty()) {
+            ".+".toRegex()
+        } else {
+            ".+@${domainProperties.domains.joinToString("|", "(", ")")}$".toRegex()
         }
-
-        return true
     }
+
+
+    override fun isValid(email: String, context: ConstraintValidatorContext): Boolean = email.matches(regex)
 
 }

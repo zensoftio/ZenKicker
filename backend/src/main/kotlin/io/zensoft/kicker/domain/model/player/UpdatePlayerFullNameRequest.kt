@@ -5,6 +5,6 @@ import javax.validation.constraints.NotBlank
 /**
  * @author Yauheni Efimenko
  */
-data class UpdatePlayerUsernameRequest(
-        @field:NotBlank var username: String? = null
+class UpdatePlayerFullNameRequest(
+        @field:NotBlank var fullName: String? = null
 )

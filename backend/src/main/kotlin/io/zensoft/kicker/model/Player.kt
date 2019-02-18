@@ -12,8 +12,11 @@ import javax.persistence.*
 @Table(name = "players")
 class Player(
 
-        @Column(name = "username", nullable = false, unique = true)
-        private var username: String,
+        @Column(name = "login", nullable = false, unique = true)
+        var login: String,
+
+        @Column(name = "full_name", nullable = false)
+        var fullName: String,
 
         @Column(name = "password", nullable = false)
         private var password: String
@@ -31,7 +34,7 @@ class Player(
 
     override fun isEnabled(): Boolean = true
 
-    override fun getUsername(): String = username
+    override fun getUsername(): String = login
 
     override fun isCredentialsNonExpired(): Boolean = true
 
@@ -40,10 +43,6 @@ class Player(
     override fun isAccountNonExpired(): Boolean = true
 
     override fun isAccountNonLocked(): Boolean = true
-
-    fun setUsername(username: String) {
-        this.username = username
-    }
 
     fun setPassword(password: String) {
         this.password = password

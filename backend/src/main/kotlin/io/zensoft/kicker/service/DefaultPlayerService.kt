@@ -2,9 +2,10 @@ package io.zensoft.kicker.service
 
 import io.zensoft.kicker.component.IconManager
 import io.zensoft.kicker.domain.model.player.CreatePlayerRequest
+import io.zensoft.kicker.domain.model.player.UpdatePlayerFullNameRequest
+import io.zensoft.kicker.domain.model.player.UpdatePlayerLoginRequest
 import io.zensoft.kicker.domain.model.player.UpdatePlayerPasswordRequest
-import io.zensoft.kicker.domain.model.player.UpdatePlayerUsernameRequest
-import io.zensoft.kicker.exception.DuplicateUsernameException
+import io.zensoft.kicker.exception.DuplicateLoginException
 import io.zensoft.kicker.exception.PasswordIncorrectException
 import io.zensoft.kicker.model.Player
 import io.zensoft.kicker.repository.PlayerRepository
@@ -29,36 +30,45 @@ class DefaultPlayerService(
         private val eventPublisher: ApplicationEventPublisher
 ) : DefaultBaseService<Player, PlayerRepository>(repository), PlayerService {
 
-    override fun findByUsername(username: String): Player? = repository.findByUsername(username)
+    override fun findByLogin(login: String): Player? = repository.findByLogin(login)
 
     override fun searchByKeyword(keyword: String): List<Player> = repository.searchByKeyword(keyword)
 
-    override fun loadUserByUsername(username: String): UserDetails = findByUsername(username)
-            ?: throw UsernameNotFoundException("User with username $username not found")
+    override fun loadUserByUsername(login: String): UserDetails = findByLogin(login)
+            ?: throw UsernameNotFoundException("User with login $login not found")
 
     @CacheEvict("relations", "relationsDashboard", "playersDashboard", allEntries = true)
     @Transactional
     override fun create(request: CreatePlayerRequest): Player {
-        if (isExist(request.username!!)) {
-            throw DuplicateUsernameException("The player with such username already exist")
+        if (isExist(request.login!!)) {
+            throw DuplicateLoginException("The player with such login already exist")
         }
 
         request.password = passwordEncoder.encode(request.password)
 
-        val player = repository.save(Player(request.username!!, request.password!!))
+        val player = repository.save(Player(request.login!!, request.fullName!!, request.password!!))
         eventPublisher.publishEvent(player)
         return player
     }
 
     @CacheEvict("relations", "relationsDashboard", "playersDashboard", allEntries = true)
     @Transactional
-    override fun updateUsername(playerId: Long, request: UpdatePlayerUsernameRequest): Player {
-        if (isExist(request.username!!)) {
-            throw DuplicateUsernameException("The player with such username already exist")
+    override fun updateLogin(playerId: Long, request: UpdatePlayerLoginRequest): Player {
+        if (isExist(request.login!!)) {
+            throw DuplicateLoginException("The player with such login already exist")
         }
 
         val player = get(playerId)
-        player.username = request.username!!
+        player.login = request.login!!
+
+        return repository.save(player)
+    }
+
+    @CacheEvict("relations", "relationsDashboard", "playersDashboard", allEntries = true)
+    @Transactional
+    override fun updateFullName(playerId: Long, request: UpdatePlayerFullNameRequest): Player {
+        val player = get(playerId)
+        player.fullName = request.fullName!!
 
         return repository.save(player)
     }
@@ -87,6 +97,6 @@ class DefaultPlayerService(
         return repository.save(player)
     }
 
-    private fun isExist(username: String): Boolean = findByUsername(username)?.let { true } ?: false
+    private fun isExist(login: String): Boolean = findByLogin(login)?.let { true } ?: false
 
 }
