@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+
+  db:
+    image: postgres:10
+    env_file: db.env
+    restart: always
+
+  kicker:
+    depends_on:
+      - db
+    build: .
+    image: zensoft/kicker
+    env_file:
+      - db.env
+    environment:
+      POSTGRES_HOST: db
+      SERVER_HOST: http://localhost:8080
+    ports:
+      - 8080:8080
+    restart: always
+    volumes:
+      - ./data:/data

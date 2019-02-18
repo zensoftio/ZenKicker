@@ -1,0 +1,93 @@
+image: docker:latest
+services:
+  - docker:dind
+
+stages:
+  - build
+  - package
+  - deploy
+
+variables:
+  DOCKER_DRIVER: overlay2
+  IMAGE_NAME: docker.zensoft.io/$CI_PROJECT_PATH
+
+
+###########################
+# Building
+###########################
+build-jar:
+  stage: build
+  image: openjdk:8-jdk
+  before_script:
+    - export GRADLE_USER_HOME=`pwd`/.gradle
+  script:
+    - ./gradlew build
+  cache:
+    paths:
+      - .gradle/wrapper
+      - .gradle/caches
+  artifacts:
+    paths:
+      - backend/build/libs/*.jar
+    expire_in: 1 day
+
+
+###########################
+# Packaging
+###########################
+package-docker:
+  stage: package
+  dependencies:
+    - build-jar
+  script:
+    - if [[ ${CI_COMMIT_REF_NAME} == master ]]; then export IMAGE_TAG=latest; else export IMAGE_TAG=${CI_COMMIT_REF_NAME}; fi;
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN docker.zensoft.io
+    - docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
+    - docker push ${IMAGE_NAME}:${IMAGE_TAG}
+  only:
+    - master
+    - tags
+
+
+###########################
+# Deployment
+###########################
+.prepare-key-script: &prepare_key
+  - apk add --no-cache openssh-client
+  - eval $(ssh-agent -s)
+  - echo "$SSH_KEY" | tr -d '\r' | ssh-add - > /dev/null
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+  - ssh-keyscan $SSH_HOST >> ~/.ssh/known_hosts
+  - chmod 644 ~/.ssh/known_hosts
+
+deploy:
+  stage: deploy
+  dependencies: []
+  variables:
+    CONTAINER_NAME: kicker
+    CONTAINER_PORT: 8585
+    SERVER_HOST: http://kicker.zensoft.by
+  before_script: *prepare_key
+  script:
+    - ssh $SSH_USER@$SSH_HOST "docker rm -f $CONTAINER_NAME || true"
+    - ssh $SSH_USER@$SSH_HOST "docker rmi $IMAGE_NAME || true"
+    - ssh $SSH_USER@$SSH_HOST "docker login -u gitlab-ci-token -p $CI_JOB_TOKEN docker.zensoft.io"
+    - ssh $SSH_USER@$SSH_HOST "docker pull $IMAGE_NAME"
+    - |
+      ssh $SSH_USER@$SSH_HOST "
+        docker run -d --name $CONTAINER_NAME --restart always \
+          --network kicker-net \
+          -p $CONTAINER_PORT:8080 \
+          -v $DATA_DIR:/data/ \
+          -e POSTGRES_HOST=$POSTGRES_HOST \
+          -e POSTGRES_DB=$POSTGRES_DB \
+          -e POSTGRES_USER=$POSTGRES_USER \
+          -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD \
+          -e SERVER_HOST=$SERVER_HOST \
+          $IMAGE_NAME
+      "
+  tags:
+    - minsk
+  only:
+    - master

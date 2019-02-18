@@ -1,8 +1,4 @@
-subprojects {
-    group = 'com.kicker'
-    version = '0.0.1-SNAPSHOT'
-}
-
-gradle.buildFinished {
-    project.buildDir.deleteDir()
+allprojects {
+    group = 'io.zensoft.kicker'
+    version = '1.0.0'
 }

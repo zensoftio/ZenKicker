@@ -10,28 +10,35 @@ between different clubs in the same city.
 
 [![Screenshots](docs/screenshots/animation.webp)](http://kicker.zensoft.by)
 
+
 ## For what?
 
 The main idea of this is to distract the guys from working as well as to let feel relaxed in 
 free time.
 
-## What s there?
+
+## What's there?
 
 In order to do the game more interesting the rating system was invented. Employees 
 register new games and compete between each other. 
 
+
 ## Running
 
-To run application, you will need:
- 1) Download application from repository.
- 2) Download docker and install it in system.
- 3) Build application by gradle.
- 4) Create a docker image from the application and name it as `kicker`.
- 5) Run docker script `{root_project}/backend/docker/deploy.sh`.
+To run the application, you will need Java and Docker preinstalled.
+
+```
+$ git clone https://github.com/zensoftio/ZenKicker.git
+$ cd ZenKicker
+$ ./gradlew build
+$ docker-compose up
+```
+
 
 ## Prerequisites
 
 The **_Kicker application_** uses several environment variables. All variables are required.
+
 
 ### PostgresSQL service
 
@@ -55,18 +62,22 @@ authentication to your database is more secure than placing this configuration
 in your code. **NOTE:** The user you specify in these two environment variables
 should be a superuser, otherwise you will run into problems.
 
-### Front
+
+### Frontend
 
 * `SERVER_HOST`
 
 Set the **SERVER_HOST** environment variable so that **Frontend** knows where the requests for the icons should be sent to. 
 
+
 ### Static Data
-After starting application static the data will be saved in the folder `/root/data` in the file system.
+
+After starting application static the data will be saved in the folder `/data` in the file system.
 In case the application is stopped or deployed, the static data will 
 remain in place.
 
 ## Swagger
+
 In order to feel free to develop the frontend or microservices the swagger 
 was bolted.
 
