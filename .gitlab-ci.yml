@@ -85,6 +85,7 @@ deploy:
           -e POSTGRES_USER=$POSTGRES_USER \
           -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD \
           -e SERVER_HOST=$SERVER_HOST \
+          -e DOMAINS=$DOMAINS \
           $IMAGE_NAME
       "
   tags:
