@@ -64,8 +64,6 @@ services:
       - ./data:/data
 ```
 
-But application work with postgres database, so you need and you can take step by step instructions in 
-
 
 ## Prerequisites
 
