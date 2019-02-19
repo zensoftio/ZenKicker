@@ -9,7 +9,7 @@ stages:
 
 variables:
   DOCKER_DRIVER: overlay2
-  IMAGE_NAME: docker.zensoft.io/$CI_PROJECT_PATH
+  IMAGE_NAME: zensoftio/kicker
 
 
 ###########################
@@ -41,7 +41,7 @@ package-docker:
     - build-jar
   script:
     - if [[ ${CI_COMMIT_REF_NAME} == master ]]; then export IMAGE_TAG=latest; else export IMAGE_TAG=${CI_COMMIT_REF_NAME}; fi;
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN docker.zensoft.io
+    - docker login -u ${DOCKER_LOGIN} -p ${DOCKER_PASS}
     - docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
     - docker push ${IMAGE_NAME}:${IMAGE_TAG}
   only:
@@ -72,7 +72,7 @@ deploy:
   script:
     - ssh $SSH_USER@$SSH_HOST "docker rm -f $CONTAINER_NAME || true"
     - ssh $SSH_USER@$SSH_HOST "docker rmi $IMAGE_NAME || true"
-    - ssh $SSH_USER@$SSH_HOST "docker login -u gitlab-ci-token -p $CI_JOB_TOKEN docker.zensoft.io"
+    - ssh $SSH_USER@$SSH_HOST "docker login -u ${DOCKER_LOGIN} -p ${DOCKER_PASS}"
     - ssh $SSH_USER@$SSH_HOST "docker pull $IMAGE_NAME"
     - |
       ssh $SSH_USER@$SSH_HOST "
