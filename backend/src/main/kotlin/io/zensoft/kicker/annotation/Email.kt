@@ -12,7 +12,7 @@ import kotlin.reflect.KClass
 @Retention(AnnotationRetention.RUNTIME)
 @Constraint(validatedBy = [(EmailValidator::class)])
 annotation class Email(
-        val message: String = "Email is not valid",
+        val message: String = "is not valid",
         val groups: Array<KClass<out Any>> = [],
         val payload: Array<KClass<out Payload>> = []
 )
