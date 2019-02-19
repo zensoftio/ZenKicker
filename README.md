@@ -64,6 +64,13 @@ services:
       - ./data:/data
 ```
 
+ - db.env:
+```env
+POSTGRES_DB=kicker
+POSTGRES_USER=kicker
+POSTGRES_PASSWORD=&d5yNc6FkoB0
+```
+
 
 ## Prerequisites
 
