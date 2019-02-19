@@ -39,7 +39,7 @@ $(document).ready(function () {
   (function () {
     const $form = $('#sign-up-form');
     const $login = $form.find('input[name="login"]');
-    const $fullName = $form.find('input[name="username"]');
+    const $fullName = $form.find('input[name="fullName"]');
     const $password = $form.find('input[name="password"]');
     const $confirmPassword = $form.find('input[name="confirmPassword"]');
     const $error = $form.find('.error');
