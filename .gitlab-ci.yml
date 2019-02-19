@@ -9,7 +9,7 @@ stages:
 
 variables:
   DOCKER_DRIVER: overlay2
-  IMAGE_NAME: zensoftio/kicker-v2
+  IMAGE_NAME: zensoftio/kicker
 
 
 ###########################
