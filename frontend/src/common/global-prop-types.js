@@ -35,10 +35,10 @@ export const PlayerStatsModel = PropTypes.shape({
 })
 
 export const PlayerDashboardModel = PropTypes.shape({
-  firstPlace: PlayerModel.isRequired,
-  loser: PlayerModel.isRequired,
-  secondPlace: PlayerModel.isRequired,
-  thirdPlace: PlayerModel.isRequired,
+  firstPlace: PlayerModel,
+  loser: PlayerModel,
+  secondPlace: PlayerModel,
+  thirdPlace: PlayerModel,
 })
 
 export const RelationModel = PropTypes.shape({

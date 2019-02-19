@@ -18,39 +18,39 @@ import MobileMenu from "./components/mobile-menu";
 class App extends Component {
 
 	componentDidMount() {
-	  this.props.actions.getCurrent();
+		this.props.actions.getCurrent();
 	}
 
 	render() {
-    const {currentUser} = this.props;
-    const isMobile = window.outerWidth <= MediaViews.MOBILE;
+		const {currentUser} = this.props;
+		const isMobile = window.outerWidth <= MediaViews.MOBILE;
 
-    return (
-      <Container>
-        {
-          isMobile ? <MobileMenu currentUser={currentUser}/> :
-            <HorizontalMenu currentUser={currentUser}/>
-        }
-        <Content>
-          <Switch>
-            <Route exact path="/dashboard" component={DashboardScene}/>
-            <Route exact path="/players" component={PlayersScene}/>
-            <Route exact path="/games" component={GamesScene}/>
-            <Route exact path="/players/:id" component={ProfileScene}/>
-            <Route path="/not-found" component={NotFoundScene}/>
-            <Redirect from="/" exact to="/dashboard"/>
-            <Redirect from="*" exact to="/not-found"/>
-          </Switch>
-        </Content>
-      </Container>
-    );
+		return (
+			<Container>
+				{
+					isMobile ? <MobileMenu currentUser={currentUser}/> :
+						<HorizontalMenu currentUser={currentUser}/>
+				}
+				<Content>
+					<Switch>
+						<Route exact path="/dashboard" component={DashboardScene}/>
+						<Route exact path="/players" component={PlayersScene}/>
+						<Route exact path="/games" component={GamesScene}/>
+						<Route exact path="/players/:id" component={ProfileScene}/>
+						<Route path="/not-found" component={NotFoundScene}/>
+						<Redirect from="/" exact to="/dashboard"/>
+						<Redirect from="*" exact to="/not-found"/>
+					</Switch>
+				</Content>
+			</Container>
+		);
 	}
 }
 
 const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
 	const props = {
-    currentUser: state.user.current,
-  };
+		currentUser: state.user.current,
+	};
 	return props;
 }
 const mapDispatchToProps = (dispatch) => {
