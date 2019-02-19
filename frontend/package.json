@@ -24,6 +24,7 @@
     "styled-components": "^3.3.3"
   },
   "devDependencies": {
+    "http-proxy-middleware": "^0.19.1",
     "redux-logger": "^3.0.6"
   },
   "scripts": {
