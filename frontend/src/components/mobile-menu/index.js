@@ -45,7 +45,7 @@ class MobileMenu extends React.Component {
                     <Photo>
                       <UserPhoto photo={currentUser.iconPath}/>
                     </Photo>
-                    <Username>{currentUser.username}</Username>
+                    <Username>{currentUser.fullName}</Username>
                   </User>
                   <a href="/logout"><LogOutIco/></a>
                 </UserSection> :

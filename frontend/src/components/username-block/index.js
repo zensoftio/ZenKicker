@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 import PropTypes from "prop-types";
-import {updateUsername} from '../../actions';
+import {updateFullName} from '../../actions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {getPlayer, getCurrent} from "../../actions";
@@ -15,25 +15,25 @@ class UsernameBlock extends Component {
     super(props);
     this.onKeyDown = this.onKeyDown.bind(this);
     this.state = {
-      username: this.props.player.username,
+			fullName: this.props.player.fullName,
       usernameError: null,
       isSubmitButtonDisplay: false
     }
   }
 
-  onUsernameChange = (e) => this.setState({username: e.target.value, usernameError: null})
+  onUsernameChange = (e) => this.setState({fullName: e.target.value, usernameError: null})
 
   onUsernameFocus = () => this.setState({isSubmitButtonDisplay: true})
 
   onSubmit = async () => {
-    if (this.state.username === this.props.player.username) {
+    if (this.state.fullName === this.props.player.fullName) {
       return this.setState({isSubmitButtonDisplay: false});
     };
     try {
       const data = {
-        username: this.state.username
+				fullName: this.state.fullName
       };
-      await updateUsername(data);
+      await updateFullName(data);
       this.props.actions.getPlayer(this.props.player.id);
       this.props.actions.getCurrent();
       this.setState({isSubmitButtonDisplay: false});
@@ -46,7 +46,7 @@ class UsernameBlock extends Component {
   onKeyDown = (e) => e.key === 'Enter' && this.onSubmit()
 
   render() {
-    const {username, usernameError, isSubmitButtonDisplay} = this.state;
+    const {fullName, usernameError, isSubmitButtonDisplay} = this.state;
     const {isCurrent} = this.props;
 
     return (
@@ -55,13 +55,13 @@ class UsernameBlock extends Component {
           isCurrent ?
             <UsernameInputBlock>
               <EditIco />
-              <UsernameInput value={username} onChange={this.onUsernameChange}
+              <UsernameInput value={fullName} onChange={this.onUsernameChange}
                              onFocus={this.onUsernameFocus} onKeyDown={this.onKeyDown}/>
               {
                 isSubmitButtonDisplay && <CustomDoneIco onClick={this.onSubmit}/>
               }
             </UsernameInputBlock> :
-            <Username>{username}</Username>
+            <Username>{fullName}</Username>
         }
 
         <UsernameError>{usernameError}</UsernameError>

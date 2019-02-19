@@ -5,7 +5,8 @@ const base = (rest) => `${configuration.apiPrefix}${rest}`;
 const Paths = {
 	User: {
 		GetCurrent: base('/players/current'),
-    UpdateUsername: base(`/players/username`),
+    UpdateFullName: base(`/players/fullName`),
+    UpdateLogin: base(`/players/login`),
     UpdatePassword: base(`/players/password`),
     UpdatePhoto: base(`/players/icon`)
 	},

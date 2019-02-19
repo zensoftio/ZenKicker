@@ -33,7 +33,7 @@ const renderStatisticColumns = ({countGames, rated, rating, isMobile, longestWin
   )
 }
 
-export const ProfileBlock = ({index, id, username, countGames, rated, rating, iconPath, isMobile, longestWinningStreak,
+export const ProfileBlock = ({index, id, fullName, countGames, rated, rating, iconPath, isMobile, longestWinningStreak,
                                longestLossesStreak, winningPercentage, renderColumns}) => (
   <Content to={`/players/${id}`}>
     <Index>{index}</Index>
@@ -44,7 +44,7 @@ export const ProfileBlock = ({index, id, username, countGames, rated, rating, ic
           <UserPhoto photo={iconPath}/>
         </Photo>
       }
-      <Username>{username}</Username>
+      <Username>{fullName}</Username>
     </User>
 
 
@@ -57,7 +57,7 @@ export const ProfileBlock = ({index, id, username, countGames, rated, rating, ic
 ProfileBlock.propTypes = {
   index: PropTypes.number.isRequired,
   id: PropTypes.number.isRequired,
-  username: PropTypes.string.isRequired,
+	fullName: PropTypes.string.isRequired,
   countGames: PropTypes.number.isRequired,
   rated: PropTypes.number.isRequired,
   rating: PropTypes.number.isRequired,

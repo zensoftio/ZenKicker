@@ -17,21 +17,21 @@ const PlayersOfWeek = ({players}) => {
             <UserPhoto photo={players.firstPlace.iconPath}/>
           </PhotoBlock>
           <Place><span>1</span>st</Place>
-          <Name>{players.firstPlace.username}</Name>
+          <Name>{players.firstPlace.fullName}</Name>
         </PlaceContainer>
         <PlaceContainer to={`/players/${players.secondPlace.id}`}>
           <PhotoBlock>
             <UserPhoto photo={players.secondPlace.iconPath}/>
           </PhotoBlock>
           <Place><span>2</span>nd</Place>
-          <Name>{players.secondPlace.username}</Name>
+          <Name>{players.secondPlace.fullName}</Name>
         </PlaceContainer>
         <PlaceContainer to={`/players/${players.thirdPlace.id}`}>
           <PhotoBlock>
             <UserPhoto photo={players.thirdPlace.iconPath}/>
           </PhotoBlock>
           <Place><span>3</span>rd</Place>
-          <Name>{players.thirdPlace.username}</Name>
+          <Name>{players.thirdPlace.fullName}</Name>
         </PlaceContainer>
       </PlacesContainer>
       <div>
@@ -40,7 +40,7 @@ const PlayersOfWeek = ({players}) => {
             <UserPhoto photo={players.loser.iconPath}/>
           </PhotoBlock>
           <LastPlace>LOSER</LastPlace>
-          <Name>{players.loser.username}</Name>
+          <Name>{players.loser.fullName}</Name>
         </PlaceContainer>
       </div>
     </Content>

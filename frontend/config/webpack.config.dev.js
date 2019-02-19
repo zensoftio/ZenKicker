@@ -11,7 +11,6 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
-const proxy = require('http-proxy-middleware');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -34,18 +33,6 @@ module.exports = {
   // This means they will be the "root" imports that are included in JS bundle.
   // The first two entry points enable "hot" CSS and auto-refreshes for JS.
 	mode: 'development',
-	devServer: {
-		proxy: {
-			"/api": {
-				changeOrigin: true,
-				target: "http://localhost:8080"
-			},
-			"/login": {
-				changeOrigin: true,
-				target: "http://localhost:8080"
-			}
-		}
-	},
   entry: [
     // We ship a few polyfills by default:
     require.resolve('./polyfills'),
