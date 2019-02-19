@@ -25,14 +25,46 @@ register new games and compete between each other.
 
 ## Running
 
-To run the application, you will need Java and Docker preinstalled.
+... via Java and Docker.
 
-```
+```bash
 $ git clone https://github.com/zensoftio/ZenKicker.git
 $ cd ZenKicker
 $ ./gradlew build
 $ docker-compose up
 ```
+
+... DockerHub and docker-compose
+
+```yaml
+version: '3'
+
+services:
+
+  db:
+    image: postgres:10
+    env_file: db.env
+    restart: always
+
+  kicker:
+    depends_on:
+      - db
+    build: .
+    image: zensoft/kicker
+    env_file:
+      - db.env
+    environment:
+      POSTGRES_HOST: db
+      SERVER_HOST: http://localhost:8080
+      DOMAINS: ''
+    ports:
+      - 8080:8080
+    restart: always
+    volumes:
+      - ./data:/data
+```
+
+But application work with postgres database, so you need and you can take step by step instructions in 
 
 
 ## Prerequisites
