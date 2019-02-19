@@ -70,6 +70,14 @@ should be a superuser, otherwise you will run into problems.
 Set the **SERVER_HOST** environment variable so that **Frontend** knows where the requests for the icons should be sent to. 
 
 
+### Registration
+
+* `DOMAINS`
+
+Set the **DOMAINS** environment variable in order to application can validate login by **_domains of email_** or set ''
+(empty string) in order to player can register with any login.
+
+
 ### Static Data
 
 After starting application static the data will be saved in the folder `/data` in the file system.

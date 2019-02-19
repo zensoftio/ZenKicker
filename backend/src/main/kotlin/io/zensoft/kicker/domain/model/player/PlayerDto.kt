@@ -7,13 +7,15 @@ import io.zensoft.kicker.model.Player
  */
 data class PlayerDto(
         val id: Long,
-        val username: String,
+        val login: String,
+        val fullName: String,
         val iconPath: String?
 ) {
 
     constructor(player: Player) : this(
             player.id,
-            player.username,
+            player.login,
+            player.fullName,
             player.iconPath
     )
 

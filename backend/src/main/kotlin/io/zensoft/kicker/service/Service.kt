@@ -3,8 +3,9 @@ package io.zensoft.kicker.service
 import io.zensoft.kicker.domain.PageRequest
 import io.zensoft.kicker.domain.model.game.GameRegistrationRequest
 import io.zensoft.kicker.domain.model.player.CreatePlayerRequest
+import io.zensoft.kicker.domain.model.player.UpdatePlayerFullNameRequest
+import io.zensoft.kicker.domain.model.player.UpdatePlayerLoginRequest
 import io.zensoft.kicker.domain.model.player.UpdatePlayerPasswordRequest
-import io.zensoft.kicker.domain.model.player.UpdatePlayerUsernameRequest
 import io.zensoft.kicker.domain.model.playerRelations.PlayerRelationsDashboard
 import io.zensoft.kicker.domain.model.playerStats.PlayersDashboard
 import io.zensoft.kicker.model.*
@@ -30,13 +31,15 @@ interface BaseService<T : BaseModel> {
 
 interface PlayerService : BaseService<Player>, UserDetailsService {
 
-    fun findByUsername(username: String): Player?
+    fun findByLogin(login: String): Player?
 
     fun searchByKeyword(keyword: String): List<Player>
 
     fun create(request: CreatePlayerRequest): Player
 
-    fun updateUsername(playerId: Long, request: UpdatePlayerUsernameRequest): Player
+    fun updateLogin(playerId: Long, request: UpdatePlayerLoginRequest): Player
+
+    fun updateFullName(playerId: Long, request: UpdatePlayerFullNameRequest): Player
 
     fun updatePassword(playerId: Long, request: UpdatePlayerPasswordRequest): Player
 

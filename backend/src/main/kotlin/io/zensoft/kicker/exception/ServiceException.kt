@@ -5,6 +5,6 @@ package io.zensoft.kicker.exception
  */
 open class ServiceException(message: String?) : RuntimeException(message)
 
-class DuplicateUsernameException(message: String?) : ServiceException(message)
+class DuplicateLoginException(message: String?) : ServiceException(message)
 
 class PasswordIncorrectException(message: String?) : ServiceException(message)

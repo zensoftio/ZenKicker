@@ -48,7 +48,8 @@ class SecurityConfig : GlobalMethodSecurityConfiguration() {
             http.authorizeRequests()
                     .antMatchers("/api/games/registration").authenticated()
                     .antMatchers("/api/players/current").authenticated()
-                    .antMatchers("/api/players/username").authenticated()
+                    .antMatchers("/api/players/login").authenticated()
+                    .antMatchers("/api/players/fullName").authenticated()
                     .antMatchers("/api/players/icon").authenticated()
                     .antMatchers("/api/players/password").authenticated()
                     .antMatchers("/**").permitAll()
@@ -62,26 +63,9 @@ class SecurityConfig : GlobalMethodSecurityConfiguration() {
 
                     .formLogin()
                     .loginPage("/login").permitAll()
+                    .usernameParameter("login")
                     .failureHandler(AuthenticationFailureHandler())
         }
-
-//        companion object {
-//            private val AUTH_WHITELIST = arrayOf(
-//                    //static content
-//                    "/css/**",
-//                    "/js/**",
-//                    "/images/**",
-//                    "/static/**",
-//                    //swagger
-//                    "/v2/api-docs",
-//                    "/swagger-resources",
-//                    "/swagger-resources/**",
-//                    "/configuration/ui",
-//                    "/configuration/security",
-//                    "/swagger-ui.html",
-//                    "/webjars/**"
-//            )
-//        }
 
     }
 

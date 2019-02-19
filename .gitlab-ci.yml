@@ -68,6 +68,7 @@ deploy:
     CONTAINER_NAME: kicker
     CONTAINER_PORT: 8585
     SERVER_HOST: http://kicker.zensoft.by
+    DOMAINS: zensoft.io,zensoft.by,zensoft.kg
   before_script: *prepare_key
   script:
     - ssh $SSH_USER@$SSH_HOST "docker rm -f $CONTAINER_NAME || true"
@@ -85,6 +86,7 @@ deploy:
           -e POSTGRES_USER=$POSTGRES_USER \
           -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD \
           -e SERVER_HOST=$SERVER_HOST \
+          -e DOMAINS=$DOMAINS \
           $IMAGE_NAME
       "
   tags:
