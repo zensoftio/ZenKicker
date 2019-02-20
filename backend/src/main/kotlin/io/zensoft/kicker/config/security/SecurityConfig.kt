@@ -2,7 +2,6 @@ package io.zensoft.kicker.config.security
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.zensoft.kicker.domain.exception.ExceptionResponse
-import io.zensoft.kicker.service.PlayerService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpHeaders.CONTENT_TYPE
@@ -10,10 +9,11 @@ import org.springframework.http.HttpStatus.UNAUTHORIZED
 import org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
-import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.core.AuthenticationException
+import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler
@@ -24,9 +24,9 @@ import javax.servlet.http.HttpServletResponse
 /**
  * @author Yauheni Efimenko
  */
-@Configuration
+@EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-class SecurityConfig : GlobalMethodSecurityConfiguration() {
+class SecurityConfig {
 
     @Bean
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
@@ -34,7 +34,7 @@ class SecurityConfig : GlobalMethodSecurityConfiguration() {
 
     @Configuration
     class SecurityConfigurer(
-            private val userDetailsService: PlayerService,
+            private val userDetailsService: UserDetailsService,
             private val passwordEncoder: PasswordEncoder
     ) : WebSecurityConfigurerAdapter() {
 
@@ -48,27 +48,27 @@ class SecurityConfig : GlobalMethodSecurityConfiguration() {
 
             // @formatter:off
             http
-                    .authorizeRequests()
-                        .antMatchers("/api/games/registration").authenticated()
-                        .antMatchers("/api/players/current").authenticated()
-                        .antMatchers("/api/players/login").authenticated()
-                        .antMatchers("/api/players/fullName").authenticated()
-                        .antMatchers("/api/players/icon").authenticated()
-                        .antMatchers("/api/players/password").authenticated()
-                        .antMatchers("/security").authenticated()
-                        .antMatchers("/**").permitAll()
+                .authorizeRequests()
+                    .antMatchers("/api/games/registration").authenticated()
+                    .antMatchers("/api/players/current").authenticated()
+                    .antMatchers("/api/players/login").authenticated()
+                    .antMatchers("/api/players/fullName").authenticated()
+                    .antMatchers("/api/players/icon").authenticated()
+                    .antMatchers("/api/players/password").authenticated()
+                    .antMatchers("/security").authenticated()
+                    .antMatchers("/**").permitAll()
 
-                    .and()
+                .and()
 
-                    .exceptionHandling()
-                        .defaultAuthenticationEntryPointFor(Http401UnauthorizedEntryPoint(), AntPathRequestMatcher("/api/**"))
+                .exceptionHandling()
+                    .defaultAuthenticationEntryPointFor(Http401UnauthorizedEntryPoint(), AntPathRequestMatcher("/api/**"))
 
-                    .and()
+                .and()
 
-                    .formLogin()
-                        .loginPage("/login")
-                        .usernameParameter("login")
-                        .failureHandler(AuthenticationFailureHandler())
+                .formLogin()
+                    .loginPage("/login")
+                    .usernameParameter("login")
+                    .failureHandler(AuthenticationFailureHandler())
             // @formatter:on
         }
 
