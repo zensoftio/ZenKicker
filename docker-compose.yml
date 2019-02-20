@@ -11,7 +11,7 @@ services:
     depends_on:
       - db
     build: .
-    image: zensoft/kicker
+    image: zensoftio/kicker
     env_file:
       - db.env
     environment:
