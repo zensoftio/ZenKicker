@@ -38,7 +38,7 @@ $(document).ready(function () {
 
   (function () {
     const $form = $('#sign-up-form');
-    const $login = $form.find('input[name="login"]');
+    const $email = $form.find('input[name="email"]');
     const $fullName = $form.find('input[name="fullName"]');
     const $password = $form.find('input[name="password"]');
     const $confirmPassword = $form.find('input[name="confirmPassword"]');
@@ -54,7 +54,7 @@ $(document).ready(function () {
           dataType: "json",
           contentType: "application/json; charset=utf-8",
           data: JSON.stringify({
-            login: $login.val(),
+            email: $email.val(),
             fullName: $fullName.val(),
             password: $password.val()
           }),
