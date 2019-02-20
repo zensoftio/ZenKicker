@@ -17,6 +17,7 @@ import org.springframework.security.core.AuthenticationException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
@@ -52,12 +53,13 @@ class SecurityConfig : GlobalMethodSecurityConfiguration() {
                     .antMatchers("/api/players/fullName").authenticated()
                     .antMatchers("/api/players/icon").authenticated()
                     .antMatchers("/api/players/password").authenticated()
+                    .antMatchers("/security").authenticated()
                     .antMatchers("/**").permitAll()
 
                     .and()
 
                     .exceptionHandling()
-                    .authenticationEntryPoint(CustomAuthenticationEntryPoint())
+                        .defaultAuthenticationEntryPointFor(Http401UnauthorizedEntryPoint(), AntPathRequestMatcher("/api/**"))
 
                     .and()
 
