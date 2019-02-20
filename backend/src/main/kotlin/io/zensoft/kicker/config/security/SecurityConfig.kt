@@ -51,7 +51,7 @@ class SecurityConfig {
                 .authorizeRequests()
                     .antMatchers("/api/games/registration").authenticated()
                     .antMatchers("/api/players/current").authenticated()
-                    .antMatchers("/api/players/login").authenticated()
+                    .antMatchers("/api/players/email").authenticated()
                     .antMatchers("/api/players/fullName").authenticated()
                     .antMatchers("/api/players/icon").authenticated()
                     .antMatchers("/api/players/password").authenticated()

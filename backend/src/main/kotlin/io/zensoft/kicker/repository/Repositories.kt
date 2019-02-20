@@ -20,7 +20,7 @@ interface BaseRepository<T : BaseModel> : JpaRepository<T, Long>
 @Repository
 interface PlayerRepository : BaseRepository<Player> {
 
-    fun findByLogin(login: String): Player?
+    fun findByEmail(email: String): Player?
 
     @Query("""SELECT p FROM Player p WHERE LOWER(fullName) LIKE LOWER(CONCAT('%', ?1,'%'))""")
     fun searchByKeyword(keyword: String): List<Player>

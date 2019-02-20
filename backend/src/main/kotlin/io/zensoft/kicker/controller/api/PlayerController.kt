@@ -60,11 +60,11 @@ class PlayerController(
         return PlayerDto(player)
     }
 
-    @ApiOperation(value = "Update login of player")
-    @PutMapping("/login")
-    fun updateLogin(@ApiIgnore @CurrentPlayer currentPlayer: Player,
-                    @Valid @RequestBody request: UpdatePlayerLoginRequest): PlayerDto {
-        val persistPlayer = service.updateLogin(currentPlayer.id, request)
+    @ApiOperation(value = "Update email of player")
+    @PutMapping("/email")
+    fun updateEmail(@ApiIgnore @CurrentPlayer currentPlayer: Player,
+                    @Valid @RequestBody request: UpdatePlayerEmailRequest): PlayerDto {
+        val persistPlayer = service.updateEmail(currentPlayer.id, request)
         return PlayerDto(persistPlayer)
     }
 

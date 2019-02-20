@@ -6,6 +6,6 @@ import javax.validation.constraints.NotBlank
 /**
  * @author Yauheni Efimenko
  */
-data class UpdatePlayerLoginRequest(
-        @field:NotBlank @field:Email var login: String? = null
+data class UpdatePlayerEmailRequest(
+        @field:NotBlank @field:Email var email: String? = null
 )

@@ -12,8 +12,8 @@ import javax.persistence.*
 @Table(name = "players")
 class Player(
 
-        @Column(name = "login", nullable = false, unique = true)
-        var login: String,
+        @Column(name = "email", nullable = false, unique = true)
+        var email: String,
 
         @Column(name = "full_name", nullable = false)
         var fullName: String,
@@ -34,7 +34,7 @@ class Player(
 
     override fun isEnabled(): Boolean = true
 
-    override fun getUsername(): String = login
+    override fun getUsername(): String = email
 
     override fun isCredentialsNonExpired(): Boolean = true
 
