@@ -1,13 +1,13 @@
 package io.zensoft.kicker.controller.api
 
+import io.swagger.annotations.ApiOperation
+import io.zensoft.kicker.annotation.CurrentPlayer
 import io.zensoft.kicker.domain.PageResponse
 import io.zensoft.kicker.domain.model.game.GameDto
 import io.zensoft.kicker.domain.model.game.GamePageRequest
 import io.zensoft.kicker.domain.model.game.GameRegistrationRequest
 import io.zensoft.kicker.model.Player
 import io.zensoft.kicker.service.GameService
-import io.swagger.annotations.ApiOperation
-import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.*
 import springfox.documentation.annotations.ApiIgnore
 import javax.validation.Valid
@@ -39,8 +39,9 @@ class GameController(
 
     @ApiOperation("Registration of game")
     @PostMapping("/registration")
-    fun gameRegistration(@ApiIgnore authentication: Authentication, @Valid @RequestBody request: GameRegistrationRequest): GameDto {
-        val currentPlayer = authentication.principal as Player
+    fun gameRegistration(
+            @ApiIgnore @CurrentPlayer currentPlayer: Player,
+            @Valid @RequestBody request: GameRegistrationRequest): GameDto {
         return GameDto(service.gameRegistration(currentPlayer.id, request))
     }
 
