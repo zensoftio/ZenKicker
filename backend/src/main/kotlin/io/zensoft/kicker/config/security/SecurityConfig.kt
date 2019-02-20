@@ -67,7 +67,7 @@ class SecurityConfig {
 
                 .formLogin()
                     .loginPage("/login")
-                    .usernameParameter("login")
+                    .usernameParameter("email")
                     .failureHandler(AuthenticationFailureHandler())
             // @formatter:on
         }
