@@ -9,7 +9,6 @@ import javax.validation.ConstraintValidatorContext
 /**
  * @author Yauheni Efimenko
  */
-@Component
 class EmailValidator(domainProperties: DomainProperties) : ConstraintValidator<Email, String> {
 
     private val regex: Regex by lazy {
