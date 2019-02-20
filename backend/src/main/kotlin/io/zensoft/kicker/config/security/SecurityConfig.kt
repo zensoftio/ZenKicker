@@ -46,15 +46,17 @@ class SecurityConfig : GlobalMethodSecurityConfiguration() {
             http.csrf().disable()
             http.cors()
 
-            http.authorizeRequests()
-                    .antMatchers("/api/games/registration").authenticated()
-                    .antMatchers("/api/players/current").authenticated()
-                    .antMatchers("/api/players/login").authenticated()
-                    .antMatchers("/api/players/fullName").authenticated()
-                    .antMatchers("/api/players/icon").authenticated()
-                    .antMatchers("/api/players/password").authenticated()
-                    .antMatchers("/security").authenticated()
-                    .antMatchers("/**").permitAll()
+            // @formatter:off
+            http
+                    .authorizeRequests()
+                        .antMatchers("/api/games/registration").authenticated()
+                        .antMatchers("/api/players/current").authenticated()
+                        .antMatchers("/api/players/login").authenticated()
+                        .antMatchers("/api/players/fullName").authenticated()
+                        .antMatchers("/api/players/icon").authenticated()
+                        .antMatchers("/api/players/password").authenticated()
+                        .antMatchers("/security").authenticated()
+                        .antMatchers("/**").permitAll()
 
                     .and()
 
@@ -64,9 +66,10 @@ class SecurityConfig : GlobalMethodSecurityConfiguration() {
                     .and()
 
                     .formLogin()
-                    .loginPage("/login").permitAll()
-                    .usernameParameter("login")
-                    .failureHandler(AuthenticationFailureHandler())
+                        .loginPage("/login")
+                        .usernameParameter("login")
+                        .failureHandler(AuthenticationFailureHandler())
+            // @formatter:on
         }
 
     }

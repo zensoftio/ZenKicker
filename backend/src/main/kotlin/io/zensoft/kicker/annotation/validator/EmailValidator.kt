@@ -2,7 +2,6 @@ package io.zensoft.kicker.annotation.validator
 
 import io.zensoft.kicker.annotation.Email
 import io.zensoft.kicker.config.property.DomainProperties
-import org.springframework.stereotype.Component
 import javax.validation.ConstraintValidator
 import javax.validation.ConstraintValidatorContext
 
