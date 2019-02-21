@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component
 /**
  * @author Yauheni Efimenko
  */
-
 @ConfigurationProperties(prefix = "registration")
 @Component
 class DomainProperties(

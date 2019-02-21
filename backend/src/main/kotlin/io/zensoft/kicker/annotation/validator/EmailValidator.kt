@@ -2,7 +2,6 @@ package io.zensoft.kicker.annotation.validator
 
 import io.zensoft.kicker.annotation.Email
 import io.zensoft.kicker.config.property.DomainProperties
-import org.springframework.stereotype.Component
 import javax.validation.ConstraintValidator
 import javax.validation.ConstraintValidatorContext
 
@@ -20,6 +19,7 @@ class EmailValidator(domainProperties: DomainProperties) : ConstraintValidator<E
     }
 
 
-    override fun isValid(email: String, context: ConstraintValidatorContext): Boolean = email.matches(regex)
+    override fun isValid(email: String?, context: ConstraintValidatorContext): Boolean =
+            email?.matches(regex) ?: true
 
 }

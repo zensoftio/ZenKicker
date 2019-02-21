@@ -25,50 +25,13 @@ register new games and compete between each other.
 
 ## Running
 
-... via Java and Docker.
+To build and run the application, you will need Java and Docker preinstalled.
 
 ```bash
 $ git clone https://github.com/zensoftio/ZenKicker.git
 $ cd ZenKicker
 $ ./gradlew build
 $ docker-compose up
-```
-
-... DockerHub and docker-compose
-
-```yaml
-version: '3'
-
-services:
-
-  db:
-    image: postgres:10
-    env_file: db.env
-    restart: always
-
-  kicker:
-    depends_on:
-      - db
-    build: .
-    image: zensoft/kicker
-    env_file:
-      - db.env
-    environment:
-      POSTGRES_HOST: db
-      SERVER_HOST: http://localhost:8080
-      DOMAINS: ''
-    ports:
-      - 8080:8080
-    restart: always
-    volumes:
-      - ./data:/data
-```
-
- - db.env:
-```env
-POSTGRES_DB=kicker
-POSTGRES_USER=kicker
-POSTGRES_PASSWORD=&d5yNc6FkoB0
 ```
 
 
@@ -112,7 +75,7 @@ Set the **SERVER_HOST** environment variable so that **Frontend** knows where th
 * `DOMAINS`
 
 Set the **DOMAINS** environment variable in order to application can validate login by **_domains of email_** or set ''
-(empty string) in order to player can register with any login.
+(empty string) in order to player can register with any email address.
 
 
 ### Static Data

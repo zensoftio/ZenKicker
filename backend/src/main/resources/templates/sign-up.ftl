@@ -17,7 +17,7 @@
         </#if>
         <p class="error"></p>
         <div class="input_block">
-          <input name="login" type="text" placeholder="Login">
+          <input name="email" type="text" placeholder="Email">
         </div>
         <div class="input_block">
           <input name="fullName" type="text" placeholder="Full name">

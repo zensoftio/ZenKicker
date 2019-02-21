@@ -7,12 +7,12 @@ ALTER TABLE players
   DROP CONSTRAINT players_username_key;
 
 ALTER TABLE players
-  ADD COLUMN login VARCHAR UNIQUE;
+  ADD COLUMN email VARCHAR UNIQUE;
 
-UPDATE players SET login=username;
+UPDATE players SET email=username;
 
 ALTER TABLE players
-  ALTER COLUMN login SET NOT NULL;
+  ALTER COLUMN email SET NOT NULL;
 
 ALTER TABLE players
   RENAME COLUMN username TO full_name;

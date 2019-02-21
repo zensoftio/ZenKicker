@@ -6,7 +6,7 @@ const Paths = {
 	User: {
 		GetCurrent: base('/players/current'),
     UpdateFullName: base(`/players/fullName`),
-    UpdateLogin: base(`/players/login`),
+    UpdateEmail: base(`/players/email`),
     UpdatePassword: base(`/players/password`),
     UpdatePhoto: base(`/players/icon`)
 	},

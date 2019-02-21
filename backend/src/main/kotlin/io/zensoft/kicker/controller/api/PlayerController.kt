@@ -1,13 +1,13 @@
 package io.zensoft.kicker.controller.api
 
 import io.swagger.annotations.ApiOperation
+import io.zensoft.kicker.annotation.CurrentPlayer
 import io.zensoft.kicker.domain.PageRequest
 import io.zensoft.kicker.domain.PageResponse
 import io.zensoft.kicker.domain.model.player.*
 import io.zensoft.kicker.model.Player
 import io.zensoft.kicker.service.PlayerService
 import org.springframework.http.MediaType.*
-import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartException
 import org.springframework.web.multipart.MultipartFile
@@ -25,8 +25,7 @@ class PlayerController(
 
     @ApiOperation(value = "Get current player")
     @GetMapping("/current")
-    fun getCurrent(@ApiIgnore authentication: Authentication): PlayerDto {
-        val currentPlayer = authentication.principal as Player
+    fun getCurrent(@ApiIgnore @CurrentPlayer currentPlayer: Player): PlayerDto {
         return PlayerDto(service.get(currentPlayer.id))
     }
 
@@ -61,38 +60,37 @@ class PlayerController(
         return PlayerDto(player)
     }
 
-    @ApiOperation(value = "Update login of player")
-    @PutMapping("/login")
-    fun updateLogin(@ApiIgnore authentication: Authentication,
-                    @Valid @RequestBody request: UpdatePlayerLoginRequest): PlayerDto {
-        val currentPlayer = authentication.principal as Player
-        val persistPlayer = service.updateLogin(currentPlayer.id, request)
+    @ApiOperation(value = "Update email of player")
+    @PutMapping("/email")
+    fun updateEmail(@ApiIgnore @CurrentPlayer currentPlayer: Player,
+                    @Valid @RequestBody request: UpdatePlayerEmailRequest): PlayerDto {
+        val persistPlayer = service.updateEmail(currentPlayer.id, request)
         return PlayerDto(persistPlayer)
     }
 
     @ApiOperation(value = "Update full name of player")
     @PutMapping("/fullName")
-    fun updateFullName(@ApiIgnore authentication: Authentication,
+    fun updateFullName(@ApiIgnore @CurrentPlayer currentPlayer: Player,
                        @Valid @RequestBody request: UpdatePlayerFullNameRequest): PlayerDto {
-        val currentPlayer = authentication.principal as Player
         val persistPlayer = service.updateFullName(currentPlayer.id, request)
         return PlayerDto(persistPlayer)
     }
 
     @ApiOperation(value = "Update icon of player")
     @PutMapping("/icon")
-    fun updateIcon(@ApiIgnore authentication: Authentication, @RequestPart("file") icon: MultipartFile): PlayerDto {
+    fun updateIcon(
+            @ApiIgnore @CurrentPlayer currentPlayer: Player,
+            @RequestPart("file") icon: MultipartFile): PlayerDto {
         validateIcon(icon)
-        val currentPlayer = authentication.principal as Player
         val persistPlayer = service.updateIcon(currentPlayer.id, icon)
         return PlayerDto(persistPlayer)
     }
 
     @ApiOperation(value = "Update password of player")
     @PutMapping("/password")
-    fun updatePassword(@ApiIgnore authentication: Authentication,
-                       @Valid @RequestBody request: UpdatePlayerPasswordRequest): PlayerDto {
-        val currentPlayer = authentication.principal as Player
+    fun updatePassword(
+            @ApiIgnore @CurrentPlayer currentPlayer: Player,
+            @Valid @RequestBody request: UpdatePlayerPasswordRequest): PlayerDto {
         val persistPlayer = service.updatePassword(currentPlayer.id, request)
         return PlayerDto(persistPlayer)
     }
