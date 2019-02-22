@@ -69,7 +69,7 @@ class ProfileScene extends Component {
                          bestPartner={relationsDashboard && relationsDashboard.bestPartner}
                          worstPartner={relationsDashboard && relationsDashboard.worstPartner}
                          favoritePartner={relationsDashboard && relationsDashboard.favoritePartner}
-                         username={player.username} isCurrent={isCurrent} countLosses={player.countLosses}
+												 fullName={player.fullName} isCurrent={isCurrent} countLosses={player.countLosses}
                          countWins={player.countWins} winningPercentage={player.winningPercentage}
                          currentLossStreak={player.currentLossesStreak} currentWinStreak={player.currentWinningStreak}
                          longestLossStreak={player.longestLossesStreak} longestWinStreak={player.longestWinningStreak}/>

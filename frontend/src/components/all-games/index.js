@@ -19,14 +19,14 @@ const AllGames = ({games, totalCount, appendToGames}) => {
         <InfiniteScroll data={games} onLoadMore={onLoadMore} totalCount={totalCount}>
           {games.length ? games.map(i => <GameBlock key={i.id} losersGoals={i.losersGoals} isMobile={isMobile}
                                                     winner1Icon={i.winner1.iconPath} winner1Id={i.winner1.id}
-                                                    winner1Name={i.winner1.username}
+                                                    winner1Name={i.winner1.fullName}
                                                     winner2Id={i.winner2.id} winner2Icon={i.winner2.iconPath}
-                                                    winner2Name={i.winner2.username}
+                                                    winner2Name={i.winner2.fullName}
                                                     loser1Id={i.loser1.id} loser1Icon={i.loser1.iconPath}
-                                                    loser1Name={i.loser1.username}
+                                                    loser1Name={i.loser1.fullName}
                                                     loser2Id={i.loser2.id} loser2Icon={i.loser2.iconPath}
-                                                    loser2Name={i.loser2.username} date={i.date}
-                                                    reportedBy={i.reportedBy.username} reportedById={i.reportedBy.id}/>) :
+                                                    loser2Name={i.loser2.fullName} date={i.date}
+                                                    reportedBy={i.reportedBy.fullName} reportedById={i.reportedBy.id}/>) :
             <NoContent/>
           }
         </InfiniteScroll>

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 export const PlayerModel = PropTypes.shape({
   iconPath: PropTypes.string,
   id: PropTypes.number.isRequired,
-  username: PropTypes.string.isRequired
+	fullName: PropTypes.string.isRequired
 })
 
 export const GameModel = PropTypes.shape({
