@@ -57,7 +57,7 @@ export const ProfileBlock = ({index, id, fullName, countGames, rated, rating, ic
 ProfileBlock.propTypes = {
   index: PropTypes.number.isRequired,
   id: PropTypes.number.isRequired,
-	fullName: PropTypes.string.isRequired,
+  fullName: PropTypes.string.isRequired,
   countGames: PropTypes.number.isRequired,
   rated: PropTypes.number.isRequired,
   rating: PropTypes.number.isRequired,

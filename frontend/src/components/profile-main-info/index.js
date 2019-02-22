@@ -27,7 +27,7 @@ class ProfileMainInfo extends Component {
 
     const bestPartnerObj = bestPartner && {
       id: bestPartner.partner.id,
-			fullName: bestPartner.partner.fullName,
+      fullName: bestPartner.partner.fullName,
       winningPercentage: bestPartner.winningPercentage,
       countGames: bestPartner.countGames,
       countWins: bestPartner.countWins,
@@ -35,7 +35,7 @@ class ProfileMainInfo extends Component {
 
     const worstPartnerObj = worstPartner && {
       id: worstPartner.partner.id,
-			fullName: worstPartner.partner.fullName,
+      fullName: worstPartner.partner.fullName,
       winningPercentage: worstPartner.winningPercentage,
       countGames: worstPartner.countGames,
       countWins: worstPartner.countWins,
@@ -43,7 +43,7 @@ class ProfileMainInfo extends Component {
 
     const favoritePartnerObj = favoritePartner && {
       id: favoritePartner.partner.id,
-			fullName: favoritePartner.partner.fullName,
+      fullName: favoritePartner.partner.fullName,
       countGames: favoritePartner.countGames,
     }
 
@@ -122,7 +122,7 @@ ProfileMainInfo.propTypes = {
   goalsAgainst: PropTypes.number.isRequired,
   goalsFor: PropTypes.number.isRequired,
   ...RelationDashboardModel.isRequired,
-	fullName: PropTypes.string.isRequired,
+  fullName: PropTypes.string.isRequired,
   countWins: PropTypes.number.isRequired,
   winningPercentage: PropTypes.number.isRequired,
   currentLossStreak: PropTypes.number.isRequired,
