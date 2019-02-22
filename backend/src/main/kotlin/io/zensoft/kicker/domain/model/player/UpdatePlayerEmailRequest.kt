@@ -1,11 +1,10 @@
 package io.zensoft.kicker.domain.model.player
 
 import io.zensoft.kicker.annotation.Email
-import javax.validation.constraints.NotBlank
 
 /**
  * @author Yauheni Efimenko
  */
 data class UpdatePlayerEmailRequest(
-        @field:NotBlank @field:Email var email: String? = null
+        @field:Email var email: String? = null
 )

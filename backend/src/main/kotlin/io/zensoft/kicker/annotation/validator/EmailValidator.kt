@@ -20,6 +20,6 @@ class EmailValidator(domainProperties: DomainProperties) : ConstraintValidator<E
 
 
     override fun isValid(email: String?, context: ConstraintValidatorContext): Boolean =
-            email?.matches(regex) ?: true
+            email?.matches(regex) ?: false
 
 }
