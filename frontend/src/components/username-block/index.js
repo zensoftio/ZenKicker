@@ -15,7 +15,7 @@ class UsernameBlock extends Component {
     super(props);
     this.onKeyDown = this.onKeyDown.bind(this);
     this.state = {
-			fullName: this.props.player.fullName,
+      fullName: this.props.player.fullName,
       usernameError: null,
       isSubmitButtonDisplay: false
     }
@@ -31,7 +31,7 @@ class UsernameBlock extends Component {
     };
     try {
       const data = {
-				fullName: this.state.fullName
+        fullName: this.state.fullName
       };
       await updateFullName(data);
       this.props.actions.getPlayer(this.props.player.id);

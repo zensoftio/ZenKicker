@@ -6,8 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
- - Email field to Player
- - Email validation by domains
+- Added email to the player entity
+- Sign up restrictions by player email domain
 
 ## [1.0.0] - 2019-02-20
 ### Added
