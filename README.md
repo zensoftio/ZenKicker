@@ -25,9 +25,9 @@ Team members can register new games, compare their results and compete with each
 
 ## Running
 
-To run the application, you will need Java and Docker preinstalled.
+To build and run the application, you will need Java and Docker preinstalled.
 
-```
+```bash
 $ git clone https://github.com/zensoftio/ZenKicker.git
 $ cd ZenKicker
 $ ./gradlew build
@@ -70,6 +70,14 @@ otherwise you will run into problems.
 * `SERVER_HOST`
 
 Set the **SERVER_HOST** environment variable so that **Frontend** knows where the requests for the icons should be sent to. 
+
+
+### Registration
+
+* `DOMAINS`
+
+Set the **DOMAINS** environment variable in order to application can validate login by **_domains of email_** or set ''
+(empty string) in order to player can register with any email address.
 
 
 ### Static Data

@@ -27,7 +27,7 @@ class ProfileMainInfo extends Component {
 
     const bestPartnerObj = bestPartner && {
       id: bestPartner.partner.id,
-      username: bestPartner.partner.username,
+      fullName: bestPartner.partner.fullName,
       winningPercentage: bestPartner.winningPercentage,
       countGames: bestPartner.countGames,
       countWins: bestPartner.countWins,
@@ -35,7 +35,7 @@ class ProfileMainInfo extends Component {
 
     const worstPartnerObj = worstPartner && {
       id: worstPartner.partner.id,
-      username: worstPartner.partner.username,
+      fullName: worstPartner.partner.fullName,
       winningPercentage: worstPartner.winningPercentage,
       countGames: worstPartner.countGames,
       countWins: worstPartner.countWins,
@@ -43,7 +43,7 @@ class ProfileMainInfo extends Component {
 
     const favoritePartnerObj = favoritePartner && {
       id: favoritePartner.partner.id,
-      username: favoritePartner.partner.username,
+      fullName: favoritePartner.partner.fullName,
       countGames: favoritePartner.countGames,
     }
 
@@ -79,7 +79,7 @@ class ProfileMainInfo extends Component {
                 <Field>
                   Best partner:
                   <PartnerBlock>
-                    <span><Link to={`/players/${bestPartnerObj.id}`}>{bestPartnerObj.username}</Link></span>
+                    <span><Link to={`/players/${bestPartnerObj.id}`}>{bestPartnerObj.fullName}</Link></span>
                     <span>{bestPartnerObj.countWins} wins in {bestPartnerObj.countGames} matches ({bestPartnerObj.winningPercentage}%)</span>
                   </PartnerBlock>
                 </Field>
@@ -89,7 +89,7 @@ class ProfileMainInfo extends Component {
                 <Field>
                   Worst partner:
                   <PartnerBlock>
-                    <span><Link to={`/players/${worstPartnerObj.id}`}>{worstPartnerObj.username}</Link></span>
+                    <span><Link to={`/players/${worstPartnerObj.id}`}>{worstPartnerObj.fullName}</Link></span>
                     <span>{worstPartnerObj.countWins} wins in {worstPartnerObj.countGames} matches ({worstPartnerObj.winningPercentage}%)</span>
                   </PartnerBlock>
                 </Field>
@@ -99,7 +99,7 @@ class ProfileMainInfo extends Component {
                 <Field>
                   Favorite partner:
                   <PartnerBlock>
-                    <span><Link to={`/players/${favoritePartnerObj.id}`}>{favoritePartnerObj.username}</Link></span>
+                    <span><Link to={`/players/${favoritePartnerObj.id}`}>{favoritePartnerObj.fullName}</Link></span>
                     <span>{favoritePartnerObj.countGames} matches together</span>
                   </PartnerBlock>
                 </Field>
@@ -122,7 +122,7 @@ ProfileMainInfo.propTypes = {
   goalsAgainst: PropTypes.number.isRequired,
   goalsFor: PropTypes.number.isRequired,
   ...RelationDashboardModel.isRequired,
-  username: PropTypes.string.isRequired,
+  fullName: PropTypes.string.isRequired,
   countWins: PropTypes.number.isRequired,
   winningPercentage: PropTypes.number.isRequired,
   currentLossStreak: PropTypes.number.isRequired,

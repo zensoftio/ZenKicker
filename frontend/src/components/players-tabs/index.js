@@ -39,7 +39,7 @@ class PlayersTabs extends Component {
       return (
         <InfiniteScroll data={players.list} onLoadMore={this.onLoadMorePlayers} totalCount={players.totalCount}>
           {players.list.length ? players.list.map((item, index) =>
-            <ProfileBlock key={item.player.id} id={item.player.id} index={index + 1} username={item.player.username} countGames={item.countGames}
+            <ProfileBlock key={item.player.id} id={item.player.id} index={index + 1} fullName={item.player.fullName} countGames={item.countGames}
                           rated={item.rated} rating={item.rating} iconPath={item.player.iconPath} isMobile={isMobile}
                           longestWinningStreak={item.longestWinningStreak} longestLossesStreak={item.longestLossesStreak}
                           winningPercentage={item.winningPercentage} renderColumns={renderColumnsValue.value}/>) :
@@ -51,7 +51,7 @@ class PlayersTabs extends Component {
     return (
       <InfiniteScroll data={activePlayers.list} onLoadMore={this.onLoadMoreActivePlayers} totalCount={activePlayers.totalCount}>
         {activePlayers.list.length ? activePlayers.list.map((item, index) =>
-          <ProfileBlock key={item.player.id} id={item.player.id} index={index + 1} username={item.player.username} countGames={item.countGames}
+          <ProfileBlock key={item.player.id} id={item.player.id} index={index + 1} fullName={item.player.fullName} countGames={item.countGames}
                         rated={item.rated} rating={item.rating} iconPath={item.player.iconPath} isMobile={isMobile}
                         longestWinningStreak={item.longestWinningStreak} longestLossesStreak={item.longestLossesStreak}
                         winningPercentage={item.winningPercentage} renderColumns={renderColumnsValue.value}/>) :

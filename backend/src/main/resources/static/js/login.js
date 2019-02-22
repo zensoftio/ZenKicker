@@ -38,7 +38,7 @@ $(document).ready(function () {
 
   (function () {
     const $form = $('#login-form');
-    const $userName = $form.find('input[name="username"]');
+    const $email = $form.find('input[name="email"]');
     const $password = $form.find('input[name="password"]');
     const $error = $form.find('.error');
 
@@ -49,7 +49,7 @@ $(document).ready(function () {
         type: 'POST',
         contentType: 'application/x-www-form-urlencoded',
         data: {
-          username: $userName.val(),
+          email: $email.val(),
           password: $password.val(),
         },
         success: function (e) {

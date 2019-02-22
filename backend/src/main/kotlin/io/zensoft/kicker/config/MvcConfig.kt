@@ -2,16 +2,18 @@ package io.zensoft.kicker.config
 
 import io.zensoft.kicker.config.property.StaticDataProperties
 import org.springframework.context.annotation.Configuration
+import org.springframework.web.servlet.config.annotation.EnableWebMvc
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 /**
  * @author Yauheni Efimenko
  */
 @Configuration
-class ResourcesConfig(
+@EnableWebMvc
+class MvcConfig(
         private val staticDataProperties: StaticDataProperties
-) : WebMvcConfigurationSupport() {
+) : WebMvcConfigurer {
 
     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
         if (!registry.hasMappingForPattern("/**")) {

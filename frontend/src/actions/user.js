@@ -16,8 +16,8 @@ export const getCurrent = () => {
 	}
 }
 
-export const updateUsername = async (data) => {
-  return await api.put(Paths.User.UpdateUsername, data);
+export const updateFullName = async (data) => {
+  return await api.put(Paths.User.UpdateFullName, data);
 }
 export const updatePassword = async (data) => {
   return await api.put(Paths.User.UpdatePassword, data);

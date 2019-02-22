@@ -47,10 +47,10 @@ class GameRegistration extends Component {
     if (!lastGame) return null;
 
     this.setState({
-      winner1: {value: lastGame.winner1.id, label: lastGame.winner1.username, iconPath: lastGame.winner1.iconPath},
-      winner2: {value: lastGame.winner2.id, label: lastGame.winner2.username, iconPath: lastGame.winner2.iconPath},
-      loser1: {value: lastGame.loser1.id, label: lastGame.loser1.username, iconPath: lastGame.loser1.iconPath},
-      loser2: {value: lastGame.loser2.id, label: lastGame.loser2.username, iconPath: lastGame.loser2.iconPath},
+      winner1: {value: lastGame.winner1.id, label: lastGame.winner1.fullName, iconPath: lastGame.winner1.iconPath},
+      winner2: {value: lastGame.winner2.id, label: lastGame.winner2.fullName, iconPath: lastGame.winner2.iconPath},
+      loser1: {value: lastGame.loser1.id, label: lastGame.loser1.fullName, iconPath: lastGame.loser1.iconPath},
+      loser2: {value: lastGame.loser2.id, label: lastGame.loser2.fullName, iconPath: lastGame.loser2.iconPath},
     })
   }
 
@@ -134,7 +134,7 @@ class GameRegistration extends Component {
     const {searchResult} = this.props;
     const {winner1, winner2, loser1, loser2} = this.state;
     const chosenPlayers = [winner1 && winner1.value, winner2 && winner2.value, loser1 && loser1.value, loser2 && loser2.value];
-    const mapPlayers = searchResult.list.map(i => ({value: i.id, label: i.username, iconPath: i.iconPath}));
+    const mapPlayers = searchResult.list.map(i => ({value: i.id, label: i.fullName, iconPath: i.iconPath}));
     return mapPlayers.filter(i => !chosenPlayers.includes(i.value))
   }
 

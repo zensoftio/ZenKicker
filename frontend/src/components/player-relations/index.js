@@ -49,9 +49,9 @@ class PlayerRelations extends React.Component {
   ])
 
   setPieChartData = (relations) =>
-    relations.map((relation, index) => ({value: relation.countGames, label: relation.partner.username, ...ChartColors[index]}))
+    relations.map((relation, index) => ({value: relation.countGames, label: relation.partner.fullName, ...ChartColors[index]}))
 
-  getOptions = () => this.props.relations.map(i => ({value: i.partner.id, label: i.partner.username}))
+  getOptions = () => this.props.relations.map(i => ({value: i.partner.id, label: i.partner.fullName}))
 
   render() {
     const {relations, isMobile} = this.props;
