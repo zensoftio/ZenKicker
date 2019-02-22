@@ -5,7 +5,7 @@
 
 The aim of the game is to use the control knobs moving the ball into the 
 opponent’s goal. There are no unified rules for playing the game, in the 
-sense which rules vary in different countries and even in the cities, and sometimes
+sense which rules vary in different countries and even in the cities, and sometimes 
 between different clubs in the same city.
 
 [![Screenshots](docs/screenshots/animation.webp)](http://kicker.zensoft.by)
@@ -13,14 +13,14 @@ between different clubs in the same city.
 
 ## For what?
 
-The main idea of this is to distract the guys from working as well as to let feel relaxed in 
-free time.
+The main idea of this game is to help the team have some rest during working hours 
+and to let them have fun in their free time.
 
 
 ## What's there?
 
-In order to do the game more interesting the rating system was invented. Employees 
-register new games and compete between each other. 
+In order to make the game more interesting, we’ve included the rating system. 
+Team members can register new games, compare their results and compete with each other.
 
 
 ## Running
@@ -37,7 +37,8 @@ $ docker-compose up
 
 ## Prerequisites
 
-The **_Kicker application_** uses several environment variables. All variables are required.
+The **_Kicker application_** uses several environment variables. 
+All of them are required to run the application.
 
 
 ### PostgresSQL service
@@ -45,22 +46,23 @@ The **_Kicker application_** uses several environment variables. All variables a
 * `POSTGRES_HOST`
 
 Configure the **POSTGRES_HOST** environment variable to point to the host where 
-you are running your PostgresSQL server. This is required to connect your 
-application to the database.
+you are running your PostgresSQL server. 
+It is required to connect your application to the database.
 
 * `POSTGRES_DB`
 
-Add the name of your PostgreSQL database to the **POSTGRES_DB** environment 
-variable. It lets the application know which database to be connected to.
+Add the name of your PostgreSQL database to the **POSTGRES_DB** environment variable. 
+It lets the application know which database it should be connected to.
 
 * `POSTGRES_USER` & `POSTGRES_PASSWORD`
 
 Set the **POSTGRES_USER** environment variable with the username you want to 
-use to connect to the database.  Set the **POSTGRES_PASSWORD** environment 
-variable which is user's password. Using environment variables to configure user 
-authentication to your database is more secure than placing this configuration 
-in your code. **NOTE:** The user you specify in these two environment variables
-should be a superuser, otherwise you will run into problems.
+use to ensure connection with the database. 
+Set the **POSTGRES_PASSWORD** environment variable which is a user's password. 
+Using environment variables to add user authentication to your database 
+is more secure than to place this configuration in your code. 
+**NOTE:** The user you specify in these two environment variables should be a superuser, 
+otherwise you will run into problems.
 
 
 ### Frontend
@@ -80,15 +82,15 @@ Set the **DOMAINS** environment variable in order to application can validate lo
 
 ### Static Data
 
-After starting application static the data will be saved in the folder `/data` in the file system.
-In case the application is stopped or deployed, the static data will 
-remain in place.
+After the application is started, the static data will be saved in the folder `/data` in the file system.
+In case the application is stopped or deployed, the static data will
+remain safe.
+
 
 ## Swagger
 
-In order to feel free to develop the frontend or microservices the swagger 
-was bolted.
-
-Get Kicker API can be obtained from the following url:
+We’ve used Swagger to enhance your opportunities in frontend and microservices development. 
+ 
+To get Kicker API follow the url:
 
 `http://{host}/swagger-ui.html`
