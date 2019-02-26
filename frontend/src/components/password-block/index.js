@@ -1,107 +1,54 @@
-import React, {Component} from 'react';
-import styled from 'styled-components';
-import {Button} from '../../components-ui/buttons/button';
+import React from 'react';
+import PropTypes from "prop-types";
 import {Input} from '../../components-ui/input';
-import {updatePassword} from '../../actions/user';
-import Popup from '../popup';
-import {Colors} from '../../helpers/style-variables';
+import styled from "styled-components";
+import {Colors, MediaViews} from "../../helpers/style-variables";
 
-class PasswordBlock extends Component {
-  popupChild = React.createRef();
+const PasswordBlock = ({
+                         currentPassword, newPassword, newPasswordConfirm, onCurrentPasswordChange, onNewPasswordChange, onNewPasswordConfirmChange, error
+                       }) => (
 
-  state = {
-    newPassword: '',
-    currentPassword: '',
-    newPasswordConfirm: '',
-    passwordError: null,
-  }
+  <Content>
+    <Label>Password: <ErrorText>{error}</ErrorText></Label>
+    <Input value={currentPassword} onChange={onCurrentPasswordChange}
+           placeholder='Enter current password' type='password'/>
+    <Input value={newPassword} onChange={onNewPasswordChange}
+           placeholder='Enter new password' type='password'/>
+    <Input value={newPasswordConfirm} onChange={onNewPasswordConfirmChange}
+           placeholder='Confirm new password' type='password'/>
+  </Content>
 
-  clearValues = () => this.setState({
-    newPassword: '',
-    currentPassword: '',
-    passwordError: null,
-    newPasswordConfirm: ''
-  })
+);
 
-  onCurrentPasswordChange = (e) => this.setState({currentPassword: e.target.value, passwordError: null})
-  onNewPasswordChange = (e) => this.setState({newPassword: e.target.value, passwordError: null})
-  onNewPasswordConfirmChange = (e) => this.setState({newPasswordConfirm: e.target.value, passwordError: null})
-
-  onChangePasswordClick = async () => {
-    const {newPassword, currentPassword, newPasswordConfirm} = this.state;
-    if (newPassword === '' || currentPassword === '' || newPasswordConfirm === '')
-      return this.setState({passwordError: 'All fields are required'});
-    if (newPassword !== newPasswordConfirm)
-      return this.setState({passwordError: 'Passwords doesn\'t match'});
-    try {
-      const data = {
-        currentPassword: currentPassword,
-        newPassword: newPassword
-      };
-      await updatePassword(data);
-      this.clearValues();
-      this.popupChild.current.onPopupClose()
-    } catch (err) {
-      const error = err.response.data.message;
-      this.setState({passwordError: error});
-    }
-  }
-
-  isButtonDisabled = () => {
-    const {newPassword, currentPassword, newPasswordConfirm, passwordError} = this.state;
-    return !newPassword || !newPasswordConfirm || !!passwordError || !currentPassword || (newPassword !== newPasswordConfirm)
-  }
-
-  onCancelClick = () => {
-    this.clearValues();
-    this.popupChild.current.onPopupClose()
-  }
-
-  render() {
-    const {newPassword, currentPassword, passwordError, newPasswordConfirm} = this.state;
-
-    return (
-      <Popup buttonTitle='Change password' ref={this.popupChild} clearValues={this.clearValues}>
-        <div>
-          <PopupTitle>Change password</PopupTitle>
-          <Input value={currentPassword} onChange={this.onCurrentPasswordChange}
-                 placeholder='Enter old password' type='password'/>
-          <Input value={newPassword} onChange={this.onNewPasswordChange}
-                 placeholder='Enter new password' type='password'/>
-          <Input value={newPasswordConfirm} onChange={this.onNewPasswordConfirmChange}
-                 placeholder='Confirm new password' type='password'/>
-          <PasswordError>{passwordError}</PasswordError>
-          <ButtonsContainer>
-            <Button onClick={this.onChangePasswordClick} isDisabled={this.isButtonDisabled()}>Confirm</Button>
-            <Indent/>
-            <Button onClick={this.onCancelClick}>Cancel</Button>
-          </ButtonsContainer>
-        </div>
-      </Popup>
-    )
-  }
-}
+PasswordBlock.propTypes = {
+  currentPassword: PropTypes.string.isRequired,
+  newPassword: PropTypes.string.isRequired,
+  newPasswordConfirm: PropTypes.string.isRequired,
+  error: PropTypes.string,
+  onCurrentPasswordChange: PropTypes.func.isRequired,
+  onNewPasswordChange: PropTypes.func.isRequired,
+  onNewPasswordConfirmChange: PropTypes.func.isRequired,
+};
 
 export default PasswordBlock;
 
-const PopupTitle = styled.div`
-  font-size: 1.5em;
-  margin-bottom: 40px;
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-bottom: 20px;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    margin-bottom: 10px;
+  }
 `;
 
-const ButtonsContainer = styled.div`
+const Label = styled.div`
+  padding-left: 10px;
   display: flex;
   align-items: center;
-  justify-content: center;
 `;
 
-const PasswordError = styled.span`
+const ErrorText = styled.div`
   color: ${Colors.ERROR_COLOR};
-  display: flex;
-  align-items: center;
-  margin: 20px 0;
-`;
-
-const Indent = styled.div`
-  width: 20px;
+  padding: 0 10px;
 `;

@@ -3,19 +3,18 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {Colors} from '../../../helpers/style-variables';
 
-export const Button = ({children, onClick, isDisabled, buttonIcon = null}) => (
+export const Button = ({children = null, onClick, isDisabled, buttonIcon = null}) => (
   <Content isDisabled={isDisabled} onClick={onClick}>
-    {buttonIcon && <Icon>{buttonIcon}</Icon>}
+    {buttonIcon && <Icon isMargin={children}>{buttonIcon}</Icon>}
     {children}
-  </Content>
-)
+  </Content>);
 
 Button.propTypes = {
-  children: PropTypes.string.isRequired,
+  children: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   isDisabled: PropTypes.bool,
   buttonIcon: PropTypes.element
-}
+};
 
 const Content = styled.div`
 	width: max-content;
@@ -37,7 +36,7 @@ const Content = styled.div`
   }
 `;
 
-const Icon =  styled.div`
-  margin-right: 10px;
+const Icon = styled.div`
+  margin-right: ${({isMargin}) => isMargin ? '10px' : '0'};
   display: flex;
 `;

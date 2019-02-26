@@ -1,26 +1,25 @@
 import React from 'react';
-import styled from 'styled-components';
-
-import {Input} from "../../components-ui/input";
 import PropTypes from "prop-types";
+import {Input} from '../../components-ui/input';
+import styled from "styled-components";
 import {Colors, MediaViews} from "../../helpers/style-variables";
 
-const UsernameBlock = ({fullName, onChange, error}) => (
+const EmailBlock = ({email, onEmailChange, error}) => (
 
   <Content>
-    <Label>Full Name: <ErrorText>{error}</ErrorText></Label>
-    <Input value={fullName} onChange={onChange} placeholder='Enter your full name' type='text'/>
+    <Label>Email: <ErrorText>{error}</ErrorText></Label>
+    <Input value={email} onChange={onEmailChange} placeholder='Enter new email' type='text'/>
   </Content>
 
 );
 
-export default UsernameBlock;
-
-UsernameBlock.propTypes = {
-  fullName: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+EmailBlock.propTypes = {
+  email: PropTypes.string.isRequired,
+  onEmailChange: PropTypes.func.isRequired,
   error: PropTypes.string,
 };
+
+export default EmailBlock;
 
 const Content = styled.div`
   display: flex;

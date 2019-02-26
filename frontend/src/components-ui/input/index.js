@@ -18,7 +18,6 @@ Input.propTypes = {
 const Content = styled.div`
   position: relative;
   width: 100%;
-  margin-bottom: 10px;
   padding: 10px;
   box-sizing: border-box;
 `;

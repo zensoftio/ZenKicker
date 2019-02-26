@@ -17,7 +17,7 @@ import javax.imageio.ImageIO
 @Component
 class IconManager(
         private val iconsSizeProperties: IconsSizeProperties,
-        private val staticDataProperties: StaticDataProperties
+        staticDataProperties: StaticDataProperties
 ) {
 
     private val iconsDirectory = Paths.get("${staticDataProperties.getLocationWithoutSchema()}/images/icons")
@@ -37,7 +37,7 @@ class IconManager(
 
             squeeze(iconPath.toString(), icon.bytes)
 
-            return "${staticDataProperties.iconsUrl}$fileName"
+            return fileName
         } catch (e: Exception) {
             throw IllegalStateException(e.message, e)
         }
