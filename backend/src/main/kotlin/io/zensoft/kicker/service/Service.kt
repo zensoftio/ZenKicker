@@ -87,8 +87,6 @@ interface PlayerStatsService : BaseService<PlayerStats> {
 
     fun getAllActive(pageRequest: PageRequest): Page<PlayerStats>
 
-    fun updateActivity(playerId: Long, active: Boolean): PlayerStats
-
-    fun updateRatingAndRated(player: Player): PlayerStats
+    fun updateStatsAfterWeek(player: Player): PlayerStats
 
 }

@@ -1,6 +1,7 @@
 package io.zensoft.kicker.component.listener
 
 import io.zensoft.kicker.config.property.GamesSettingsProperties
+import io.zensoft.kicker.config.property.PlayerSettingsProperties
 import io.zensoft.kicker.model.Game
 import io.zensoft.kicker.model.PlayerStats
 import io.zensoft.kicker.model.PlayerToGame
@@ -9,7 +10,6 @@ import io.zensoft.kicker.service.PlayerToGameService
 import io.zensoft.kicker.utils.RatingUtils
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
-import org.springframework.transaction.annotation.Transactional
 
 /**
  * @author Yauheni Efimenko
@@ -19,11 +19,11 @@ import org.springframework.transaction.annotation.Transactional
 class PlayerStatsListener(
         private val playerToGameService: PlayerToGameService,
         private val playerStatsService: PlayerStatsService,
-        private val gamesSettingsProperties: GamesSettingsProperties
+        private val gamesSettingsProperties: GamesSettingsProperties,
+        private val playerSettingsProperties: PlayerSettingsProperties
 ) {
 
     @EventListener
-    @Transactional
     fun handleRegistrationGame(game: Game) {
         with(game) {
             val loser1Stats = playerStatsService.getByPlayer(loser1.id)
@@ -55,6 +55,8 @@ class PlayerStatsListener(
         } else {
             stats.addGame(won, gamesSettingsProperties.defaultMaxScore!!, game.losersGoals, delta)
         }
+        stats.active = stats.rated >= playerSettingsProperties.countGames!!
+
         playerStatsService.save(stats)
         playerToGameService.save(PlayerToGame(stats.player, game, won, delta))
     }

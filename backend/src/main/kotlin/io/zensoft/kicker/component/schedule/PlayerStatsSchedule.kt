@@ -2,9 +2,9 @@ package io.zensoft.kicker.component.schedule
 
 import io.zensoft.kicker.service.PlayerService
 import io.zensoft.kicker.service.PlayerStatsService
+import org.springframework.cache.annotation.CacheEvict
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
-import org.springframework.transaction.annotation.Transactional
 
 /**
  * @author Yauheni Efimenko
@@ -16,11 +16,11 @@ class PlayerStatsSchedule(
         private val playerStatsService: PlayerStatsService
 ) {
 
+    @CacheEvict("playersDashboard", allEntries = true)
     @Scheduled(cron = "0 0 0 * * MON")
-    @Transactional
     fun schedulePlayersRating() {
         playerService.getAll().forEach {
-            playerStatsService.updateRatingAndRated(it)
+            playerStatsService.updateStatsAfterWeek(it)
         }
     }
 
