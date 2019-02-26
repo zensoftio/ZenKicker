@@ -19,13 +19,10 @@ import {
 
 class ProfileScene extends Component {
 
-  state = {
-    playerId: this.props.match.params.id
-  };
-
   componentDidMount() {
-    const {actions} = this.props;
-    const {playerId} = this.state;
+    const {match, actions} = this.props;
+    const playerId = match.params.id;
+
     actions.getPlayer(playerId);
     actions.getPlayerDeltaStatistic(playerId);
     actions.getPlayerGames(playerId);
@@ -35,8 +32,8 @@ class ProfileScene extends Component {
   }
 
   componentDidUpdate() {
-    const {player, actions} = this.props;
-    const {playerId} = this.state;
+    const {player, actions, match} = this.props;
+    const playerId = match.params.id;
 
     if (player && player.id !== +playerId) {
       actions.getPlayer(playerId);
@@ -68,7 +65,7 @@ class ProfileScene extends Component {
 
       <Content>
         <ProfileMainInfo countGames={player.countGames} rated={player.rated} rating={player.rating}
-                         id={this.state.playerId} goalsAgainst={player.goalsAgainst} goalsFor={player.goalsFor}
+                         id={playerId} goalsAgainst={player.goalsAgainst} goalsFor={player.goalsFor}
                          bestPartner={relationsDashboard && relationsDashboard.bestPartner} iconPath={player.iconPath}
                          worstPartner={relationsDashboard && relationsDashboard.worstPartner}
                          favoritePartner={relationsDashboard && relationsDashboard.favoritePartner}
