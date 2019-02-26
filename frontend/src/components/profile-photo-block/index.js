@@ -1,80 +1,36 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from "prop-types";
 import styled from 'styled-components';
-import {updatePhoto} from '../../actions/user';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import {getCurrent, getPlayer} from '../../actions';
 
 import uploadIco from '../../shared/images/icons/upload.png';
 import UserPhoto from '../../components-ui/user-photo';
-import {PlayerModel, PlayerStatsModel} from "../../common/global-prop-types";
+import {Colors, MediaViews} from "../../helpers/style-variables";
 
-class ProfilePhotoBlock extends Component {
-  state = {
-    file: null,
-  }
+const ProfilePhotoBlock = ({onPhotoChange, iconPath, error}) => {
+  const id = iconPath ? iconPath + Math.random() : Math.random();
+  return (
 
-  onChange = (e) => {
-    this.setState({file: e.target.files[0]});
-    const data = new FormData();
-    data.append('file', e.target.files[0]);
-    this.uploadPhoto(data);
-  }
-
-  uploadPhoto = async (data) => {
-    try {
-      await updatePhoto(data);
-      this.props.actions.getCurrent();
-      this.props.actions.getPlayer(this.props.player.id);
-      this.props.setPhotoError(null)
-    } catch (err) {
-      this.props.setPhotoError(err.response.data.message);
-    }
-  }
-
-  render() {
-    const {player, isCurrent} = this.props;
-    const id = player.iconPath ? player.iconPath + Math.random() : Math.random();
-
-    return (
+    <>
       <ProfilePhoto>
-        <UserPhoto photo={player.iconPath}/>
-        {
-          isCurrent &&
-          <Button htmlFor={id} >
-            <input id={id} type="file" onChange={this.onChange}/>
-          </Button>
-        }
+        <UserPhoto photo={iconPath}/>
+        <Button htmlFor={id}>
+          <input id={id} type="file" onChange={onPhotoChange}/>
+        </Button>
       </ProfilePhoto>
-    )
-  }
-}
 
-const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
-  const props = {
-    currentUser: state.user.current,
-    player: state.player.player
-  };
-  return props;
-}
-const mapDispatchToProps = (dispatch) => {
-  const actions = {
-    getCurrent,
-    getPlayer,
-  };
-  const actionMap = {actions: bindActionCreators(actions, dispatch)};
-  return actionMap;
-}
+      <ErrorText>{error}</ErrorText>
+    </>
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfilePhotoBlock);
+  );
+};
+
+export default ProfilePhotoBlock;
 
 ProfilePhotoBlock.propTypes = {
-  currentUser: PlayerModel,
-  player: PlayerStatsModel,
-  isCurrent: PropTypes.bool.isRequired,
-  setPhotoError: PropTypes.func.isRequired,
-}
+  iconPath: PropTypes.string,
+  onPhotoChange: PropTypes.func.isRequired,
+  error: PropTypes.string
+};
 
 const ProfilePhoto = styled.div`
   min-width: 150px;
@@ -88,6 +44,12 @@ const ProfilePhoto = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 100%;
+  @media (max-width: ${MediaViews.MOBILE}px) {
+    min-width: 100px;
+    max-width: 100px;
+    min-height: 100px;
+    max-height: 100px;
+  }
 `;
 
 const Button = styled.label`
@@ -109,4 +71,9 @@ const Button = styled.label`
     background-position: center;
     background-size: 40px 40px;
   }
+`;
+
+const ErrorText = styled.div`
+  color: ${Colors.ERROR_COLOR};
+  padding: 0 10px;
 `;

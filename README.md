@@ -73,13 +73,6 @@ is more secure than to place this configuration in your code.
 otherwise you will run into problems.
 
 
-### Frontend
-
-* `SERVER_HOST`
-
-Set the **SERVER_HOST** environment variable so that **Frontend** knows where the requests for the icons should be sent to. 
-
-
 ### Registration
 
 * `DOMAINS`

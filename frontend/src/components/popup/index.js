@@ -7,7 +7,7 @@ import {Colors, MediaViews} from "../../helpers/style-variables";
 class Popup extends Component {
   state = {
     isPopupOpen: false
-  }
+  };
 
   onPopupOpen = () => {
     this.setState({isPopupOpen: true});
@@ -15,45 +15,44 @@ class Popup extends Component {
     if (this.props.loadData) {
       this.props.loadData();
     }
-  }
+  };
   onPopupClose = () => {
     this.setState({isPopupOpen: false});
     document.getElementsByTagName('BODY')[0].style.overflow = 'auto';
-  }
+  };
 
   handleOnBackgroundClick = (e) => {
     if (e.target.classList.contains(PopupWrapper.styledComponentId)) {
       this.onPopupClose();
       this.props.clearValues();
     }
-  }
+  };
 
   render() {
     const {isPopupOpen} = this.state;
     const {children, buttonTitle, buttonIcon} = this.props;
 
     return (
+
       <Content>
         <Button buttonIcon={buttonIcon} onClick={this.onPopupOpen}>{buttonTitle}</Button>
-        {
-          isPopupOpen &&
-          <PopupWrapper onClick={this.handleOnBackgroundClick}>
-            <PopupContainer>
+        {isPopupOpen && <PopupWrapper onClick={this.handleOnBackgroundClick}>
+          <PopupContainer>
             {children}
-            </PopupContainer>
-          </PopupWrapper>
-        }
+          </PopupContainer>
+        </PopupWrapper>}
       </Content>
-    )
+
+    );
   }
 }
 
 export default Popup;
 
 Popup.propTypes = {
-  buttonTitle: PropTypes.string.isRequired,
+  buttonTitle: PropTypes.string,
   clearValues: PropTypes.func.isRequired
-}
+};
 
 const Content = styled.div`
   display: flex;
@@ -79,7 +78,7 @@ const PopupContainer = styled.div`
   background-color: #fff;
   padding: 40px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  border-radius: 5px;
+  border-radius: 2px;
   background-color: ${Colors.THEME_COLOR};
   & > div {
     display: flex;
@@ -90,8 +89,16 @@ const PopupContainer = styled.div`
   }
   @media (max-width: ${MediaViews.MOBILE}px) {
     width: 100%;
-    height: calc(100vh - 50px);
+    min-height: max-content;
+    max-height: calc(100vh - 50px);
     border-radius: 0;
     padding: 20px;
+    margin-top: 50px;
+    & > div {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
   }
 `;

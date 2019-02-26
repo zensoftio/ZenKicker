@@ -11,15 +11,14 @@ import javax.validation.constraints.Pattern
 @Component
 data class StaticDataProperties(
 
-        @field:NotBlank var iconsUrl: String? = null,
-
         /**
          * Location must end in slash '/'
          */
         @field:Pattern(regexp = ".*/$")
         @field:NotBlank var location: String? = null
+
 ) {
 
-        fun getLocationWithoutSchema() = location!!.substring(location!!.indexOf(":") + 1)
+    fun getLocationWithoutSchema() = location!!.substring(location!!.indexOf(":") + 1)
 
 }
