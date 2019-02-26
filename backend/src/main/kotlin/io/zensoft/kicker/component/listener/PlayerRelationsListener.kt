@@ -4,7 +4,6 @@ import io.zensoft.kicker.model.Game
 import io.zensoft.kicker.service.PlayerRelationsService
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
-import org.springframework.transaction.annotation.Transactional
 
 /**
  * @author Yauheni Efimenko
@@ -16,7 +15,6 @@ class PlayerRelationsListener(
 ) {
 
     @EventListener
-    @Transactional
     fun handleRegistrationGame(game: Game) {
         with(game) {
             val winner1ToWinner2 = playerRelationsService.getByPlayerAndPartner(winner1.id, winner2.id)
