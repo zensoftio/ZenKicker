@@ -21,7 +21,7 @@ class DefaultPlayerToGameService(
         private val repository: PlayerToGameRepository,
         private val playerService: PlayerService,
         private val playerSettingsProperties: PlayerSettingsProperties
-) : DefaultBaseService<PlayerToGame, PlayerToGameRepository>(repository), PlayerToGameService {
+) : DefaultBaseService<PlayerToGame>(repository), PlayerToGameService {
 
     override fun getPlayerGames(playerId: Long, pageRequest: PageRequest): Page<PlayerToGame> {
         val player = playerService.get(playerId)

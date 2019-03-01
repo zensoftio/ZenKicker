@@ -6,12 +6,15 @@ import {Colors, MediaViews} from '../../helpers/style-variables';
 import {RelationDashboardModel} from "../../common/global-prop-types";
 import EditProfileInfo from "../edit-profile-info";
 import UserPhoto from "../../components-ui/user-photo";
+import AchievementsBlock from "../achievements-block";
 
 class ProfileMainInfo extends Component {
 
   render() {
     const {
-      rating, countGames, rated, iconPath, countLosses, countWins, goalsAgainst, goalsFor, currentLossStreak, currentWinStreak, longestLossStreak, longestWinStreak, winningPercentage, bestPartner, favoritePartner, worstPartner, fullName, isCurrent, email
+      rating, countGames, rated, iconPath, countLosses, countWins, goalsAgainst, goalsFor, currentLossStreak, achievements,
+      currentWinStreak, longestLossStreak, longestWinStreak, winningPercentage, bestPartner, favoritePartner, worstPartner,
+      fullName, isCurrent, email
     } = this.props;
 
     const bestPartnerObj = bestPartner && {
@@ -43,6 +46,7 @@ class ProfileMainInfo extends Component {
           <ProfilePhoto>
             <UserPhoto photo={iconPath}/>
           </ProfilePhoto>
+          <AchievementsBlock achievements={achievements}/>
         </div>
         <Info>
           <UsernameSettings>
@@ -52,7 +56,6 @@ class ProfileMainInfo extends Component {
                              getPlayer={this.props.getPlayer} fullName={fullName} email={email}/>}
           </UsernameSettings>
           <Email>{email}</Email>
-          <Status></Status>
           <StatisticsContent>
             <Statistics>
               <Field>Rating: <span>{rating}</span></Field>
@@ -153,18 +156,7 @@ const Statistics = styled.div`
     width: 100%;
   }
 `;
-const Status = styled.div`
-  width: 100%;
-  color: ${Colors.MAIN_COLOR};
-  font-size: 1.6em;
-  display: flex;
-  padding: 20px 20px 0 20px;
-  
-  @media (max-width: ${MediaViews.MOBILE}px) {
-    box-sizing: border-box;
-    justify-content: center;
-  }
-`;
+
 const Field = styled.div`
   font-size: 1.1em;
   padding-bottom: 10px;

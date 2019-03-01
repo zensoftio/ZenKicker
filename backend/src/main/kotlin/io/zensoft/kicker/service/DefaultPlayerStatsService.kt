@@ -4,7 +4,6 @@ import io.zensoft.kicker.config.property.PlayerSettingsProperties
 import io.zensoft.kicker.domain.PageRequest
 import io.zensoft.kicker.domain.model.playerStats.PlayerStatsPageRequest
 import io.zensoft.kicker.domain.model.playerStats.PlayerStatsPageRequest.Companion.RATING_FIELD
-import io.zensoft.kicker.domain.model.playerStats.PlayersDashboard
 import io.zensoft.kicker.model.Player
 import io.zensoft.kicker.model.PlayerStats
 import io.zensoft.kicker.repository.PlayerStatsRepository
@@ -18,12 +17,12 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional(readOnly = true)
 class DefaultPlayerStatsService(
+        private val repository: PlayerStatsRepository,
         private val gameService: GameService,
         private val playerService: PlayerService,
-        private val repository: PlayerStatsRepository,
         private val playerToGameService: PlayerToGameService,
         private val playerSettingsProperties: PlayerSettingsProperties
-) : DefaultBaseService<PlayerStats, PlayerStatsRepository>(repository), PlayerStatsService {
+) : DefaultBaseService<PlayerStats>(repository), PlayerStatsService {
 
     @EventListener
     fun createPlayer(player: Player) {
@@ -36,17 +35,17 @@ class DefaultPlayerStatsService(
     }
 
     @Cacheable("playersDashboard")
-    override fun getDashboard(): PlayersDashboard {
+    override fun getDashboard(): List<Player> {
         val pageRequest = PlayerStatsPageRequest().apply { limit = 0; sortBy = RATING_FIELD }
 
         if (getAllActive(pageRequest).totalElements < 4) {
-            return PlayersDashboard()
+            return listOf()
         }
 
         val loser = getAllActive(pageRequest.apply { limit = 1; sortBy = RATING_FIELD })
         val top3 = getAllActive(pageRequest.apply { limit = 3; sortBy = RATING_FIELD; sortDirection = DESC })
 
-        return PlayersDashboard(
+        return listOf(
                 top3.content[0].player,
                 top3.content[1].player,
                 top3.content[2].player,

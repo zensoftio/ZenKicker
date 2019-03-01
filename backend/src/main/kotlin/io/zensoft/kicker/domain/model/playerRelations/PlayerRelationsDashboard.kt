@@ -12,10 +12,10 @@ data class PlayerRelationsDashboard(
         val favoritePartner: PlayerRelationsDto? = null
 ) {
 
-    constructor(bestPartner: PlayerRelations?, worstPartner: PlayerRelations?, favoritePartner: PlayerRelations?) : this(
-            bestPartner?.let { PlayerRelationsDto(it) },
-            worstPartner?.let { PlayerRelationsDto(it) },
-            favoritePartner?.let { PlayerRelationsDto(it) }
+    constructor(bestPartner: PlayerRelations, worstPartner: PlayerRelations, favoritePartner: PlayerRelations) : this(
+            PlayerRelationsDto(bestPartner),
+            PlayerRelationsDto(worstPartner),
+            PlayerRelationsDto(favoritePartner)
     )
 
 }

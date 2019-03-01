@@ -5,7 +5,7 @@ export const PlayerModel = PropTypes.shape({
   id: PropTypes.number.isRequired,
   fullName: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired
-})
+});
 
 export const GameModel = PropTypes.shape({
   date: PropTypes.number.isRequired,
@@ -16,7 +16,7 @@ export const GameModel = PropTypes.shape({
   reportedBy: PlayerModel.isRequired,
   winner1: PlayerModel.isRequired,
   winner2: PlayerModel.isRequired,
-})
+});
 
 export const PlayerStatsModel = PropTypes.shape({
   active: PropTypes.bool.isRequired,
@@ -33,14 +33,14 @@ export const PlayerStatsModel = PropTypes.shape({
   rated: PropTypes.number.isRequired,
   rating: PropTypes.number.isRequired,
   winningPercentage: PropTypes.number.isRequired,
-})
+});
 
 export const PlayerDashboardModel = PropTypes.shape({
   firstPlace: PlayerModel,
   loser: PlayerModel,
   secondPlace: PlayerModel,
   thirdPlace: PlayerModel,
-})
+});
 
 export const RelationModel = PropTypes.shape({
   countGames: PropTypes.number.isRequired,
@@ -48,16 +48,22 @@ export const RelationModel = PropTypes.shape({
   winningPercentage: PropTypes.number.isRequired,
   partner: PlayerModel.isRequired,
   player: PlayerModel.isRequired,
-})
+});
 
 export const RelationDashboardModel = PropTypes.shape({
   bestPartner: RelationModel,
   favouritePartner: RelationModel,
   worstPartner: RelationModel,
-})
+});
 
 export const PlayerGameModel = PropTypes.shape({
   delta: PropTypes.number.isRequired,
   won: PropTypes.bool.isRequired,
   gameDto: GameModel.isRequired,
-})
+});
+
+export const AchievementModel = PropTypes.shape({
+  date: PropTypes.number.isRequired,
+  type: PropTypes.string.isRequired,
+  level: PropTypes.string.isRequired
+});

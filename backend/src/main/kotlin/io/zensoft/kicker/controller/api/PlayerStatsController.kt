@@ -1,11 +1,11 @@
 package io.zensoft.kicker.controller.api
 
+import io.swagger.annotations.ApiOperation
 import io.zensoft.kicker.domain.PageResponse
 import io.zensoft.kicker.domain.model.playerStats.PlayerStatsDto
 import io.zensoft.kicker.domain.model.playerStats.PlayerStatsPageRequest
 import io.zensoft.kicker.domain.model.playerStats.PlayersDashboard
 import io.zensoft.kicker.service.PlayerStatsService
-import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -49,6 +49,14 @@ class PlayerStatsController(
 
     @ApiOperation("Get dashboard of players")
     @GetMapping("/dashboard")
-    fun getDashboard(): PlayersDashboard = service.getDashboard()
+    fun getDashboard(): PlayersDashboard {
+        val dashboard = service.getDashboard()
+
+        if (dashboard.isEmpty()) {
+            return PlayersDashboard()
+        }
+
+        return PlayersDashboard(dashboard[0], dashboard[1], dashboard[2], dashboard[3])
+    }
 
 }
