@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Transactional
  * @author Yauheni Efimenko
  */
 @Transactional(readOnly = true)
-abstract class DefaultBaseService<T : BaseModel, R : BaseRepository<T>>(
-        private val repository: R
+abstract class DefaultBaseService<T : BaseModel>(
+        private val repository: BaseRepository<T>
 ) : BaseService<T> {
 
     override fun get(id: Long): T = repository.findById(id).get()

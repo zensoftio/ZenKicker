@@ -5,7 +5,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {
   getPlayer, getPlayerGames, appendToPlayerGames, getPlayerDeltaStatistic, getPlayerGamesCountStatistic, getRelations,
-  getRelationsDashboard, getCurrent
+  getRelationsDashboard, getCurrent, getPlayerAchievements
 } from '../../actions';
 import {withRouter} from 'react-router-dom';
 import ProfileMainInfo from '../../components/profile-main-info';
@@ -29,6 +29,7 @@ class ProfileScene extends Component {
     actions.getPlayerGamesCountStatistic(playerId);
     actions.getRelations(playerId);
     actions.getRelationsDashboard(playerId);
+    actions.getPlayerAchievements(playerId);
   }
 
   componentDidUpdate() {
@@ -42,11 +43,14 @@ class ProfileScene extends Component {
       actions.getPlayerGamesCountStatistic(playerId);
       actions.getRelations(playerId);
       actions.getRelationsDashboard(playerId);
+      actions.getPlayerAchievements(playerId);
     }
   }
 
   render() {
-    const {player, match, currentUser, playerGames, actions, ratingStatistic, gamesCountStatistic, relations, relationsDashboard} = this.props;
+    const {
+      player, match, currentUser, playerGames, actions, ratingStatistic, gamesCountStatistic, relations, relationsDashboard, achievements
+    } = this.props;
 
     const playerId = match.params.id;
 
@@ -73,7 +77,8 @@ class ProfileScene extends Component {
                          countWins={player.countWins} winningPercentage={player.winningPercentage}
                          currentLossStreak={player.currentLossesStreak} currentWinStreak={player.currentWinningStreak}
                          longestLossStreak={player.longestLossesStreak} longestWinStreak={player.longestWinningStreak}
-                         getPlayer={actions.getPlayer} getCurrent={actions.getCurrent} email={player.email}/>
+                         getPlayer={actions.getPlayer} getCurrent={actions.getCurrent} email={player.email}
+                         achievements={achievements}/>
         <PlayerRelations relations={relations.list} isMobile={isMobile}/>
         <ChartStatistics ratingStatistic={ratingStatistic} gamesCountStatistic={gamesCountStatistic}
                          isMobile={isMobile}/>
@@ -94,6 +99,7 @@ const mapStateToProps = (state) => { // eslint-disable-line no-unused-vars
     gamesCountStatistic: state.player.gamesCountStatistic,
     relations: state.player.relations,
     relationsDashboard: state.player.relationsDashboard,
+    achievements: state.player.achievements,
   };
   return props;
 };
@@ -106,7 +112,8 @@ const mapDispatchToProps = (dispatch) => {
     getPlayerDeltaStatistic,
     getRelations,
     getRelationsDashboard,
-    getCurrent
+    getCurrent,
+    getPlayerAchievements
   };
   const actionMap = {actions: bindActionCreators(actions, dispatch)};
   return actionMap;

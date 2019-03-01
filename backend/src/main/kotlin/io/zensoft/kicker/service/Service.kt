@@ -6,10 +6,10 @@ import io.zensoft.kicker.domain.model.player.CreatePlayerRequest
 import io.zensoft.kicker.domain.model.player.UpdatePlayerEmailRequest
 import io.zensoft.kicker.domain.model.player.UpdatePlayerFullNameRequest
 import io.zensoft.kicker.domain.model.player.UpdatePlayerPasswordRequest
-import io.zensoft.kicker.domain.model.playerRelations.PlayerRelationsDashboard
-import io.zensoft.kicker.domain.model.playerStats.PlayersDashboard
 import io.zensoft.kicker.model.*
 import io.zensoft.kicker.model.base.BaseModel
+import io.zensoft.kicker.model.dictionary.AchievementLevel
+import io.zensoft.kicker.model.dictionary.AchievementType
 import org.springframework.data.domain.Page
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.web.multipart.MultipartFile
@@ -75,7 +75,7 @@ interface PlayerRelationsService {
 
     fun getByPlayerAndPartner(playerId: Long, partnerId: Long): PlayerRelations
 
-    fun getDashboard(playerId: Long): PlayerRelationsDashboard
+    fun getDashboard(playerId: Long): List<PlayerRelations>
 
 }
 
@@ -83,10 +83,18 @@ interface PlayerStatsService : BaseService<PlayerStats> {
 
     fun getByPlayer(playerId: Long): PlayerStats
 
-    fun getDashboard(): PlayersDashboard
+    fun getDashboard(): List<Player>
 
     fun getAllActive(pageRequest: PageRequest): Page<PlayerStats>
 
     fun updateStatsAfterWeek(player: Player): PlayerStats
+
+}
+
+interface AchievementService : BaseService<Achievement> {
+
+    fun getAllByPlayer(playerId: Long): List<Achievement>
+
+    fun achieve(player: Player, type: AchievementType, level: AchievementLevel): Achievement
 
 }

@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Possibility to change email
 - Popup in order to edit personal info
+- Weekly achievements rating
 
 ### Removed
 - Variable 'SERVER_HOST'

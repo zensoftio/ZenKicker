@@ -1,13 +1,13 @@
 package io.zensoft.kicker.service
 
 import io.zensoft.kicker.domain.PageRequest
-import io.zensoft.kicker.domain.model.playerRelations.PlayerRelationsDashboard
 import io.zensoft.kicker.model.PlayerRelations
 import io.zensoft.kicker.repository.PlayerRelationsRepository
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.util.*
 
 /**
  * @author Yauheni Efimenko
@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional
 class DefaultPlayerRelationsService(
         private val repository: PlayerRelationsRepository,
         private val playerService: PlayerService
-) : DefaultBaseService<PlayerRelations, PlayerRelationsRepository>(repository), PlayerRelationsService {
+) : DefaultBaseService<PlayerRelations>(repository), PlayerRelationsService {
 
     @Cacheable("relations")
     override fun getAllByPlayer(playerId: Long, pageRequest: PageRequest): Page<PlayerRelations> {
@@ -36,7 +36,7 @@ class DefaultPlayerRelationsService(
     }
 
     @Cacheable("relationsDashboard")
-    override fun getDashboard(playerId: Long): PlayerRelationsDashboard {
+    override fun getDashboard(playerId: Long): List<PlayerRelations> {
         val player = playerService.get(playerId)
 
         val bestPartner =
@@ -46,7 +46,11 @@ class DefaultPlayerRelationsService(
         val favoritePartner =
                 repository.findFirstByPlayerAndPartnerPlayerStatsActiveTrueOrderByCountGamesDesc(player)
 
-        return PlayerRelationsDashboard(bestPartner, worstPartner, favoritePartner)
+        if (Objects.isNull(bestPartner)) {
+            return listOf()
+        }
+
+        return listOf(bestPartner!!, worstPartner!!, favoritePartner!!)
     }
 
 }

@@ -28,7 +28,7 @@ class DefaultPlayerService(
         private val passwordEncoder: PasswordEncoder,
         private val iconManager: IconManager,
         private val eventPublisher: ApplicationEventPublisher
-) : DefaultBaseService<Player, PlayerRepository>(repository), PlayerService {
+) : DefaultBaseService<Player>(repository), PlayerService {
 
     override fun findByEmail(email: String): Player? = repository.findByEmail(email)
 

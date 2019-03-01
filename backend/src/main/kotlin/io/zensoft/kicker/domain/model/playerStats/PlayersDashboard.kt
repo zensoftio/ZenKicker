@@ -10,11 +10,11 @@ data class PlayersDashboard(
         val loser: PlayerDto? = null
 ) {
 
-    constructor(firstPlace: Player?, secondPlace: Player?, thirdPlace: Player?, loser: Player?) : this(
-            firstPlace?.let { PlayerDto(it) },
-            secondPlace?.let { PlayerDto(it) },
-            thirdPlace?.let { PlayerDto(it) },
-            loser?.let { PlayerDto(it) }
+    constructor(firstPlace: Player, secondPlace: Player, thirdPlace: Player, loser: Player) : this(
+            PlayerDto(firstPlace),
+            PlayerDto(secondPlace),
+            PlayerDto(thirdPlace),
+            PlayerDto(loser)
     )
 
 }

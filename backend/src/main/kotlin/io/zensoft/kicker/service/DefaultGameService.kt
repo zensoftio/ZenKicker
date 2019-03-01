@@ -21,7 +21,7 @@ class DefaultGameService(
         private val playerService: PlayerService,
         private val eventPublisher: ApplicationEventPublisher,
         private val playerSettingsProperties: PlayerSettingsProperties
-) : DefaultBaseService<Game, GameRepository>(repository), GameService {
+) : DefaultBaseService<Game>(repository), GameService {
 
     /**
      *  Current week is number 0, so 10 week is number 9

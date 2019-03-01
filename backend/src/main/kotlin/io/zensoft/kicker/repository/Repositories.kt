@@ -80,3 +80,10 @@ interface PlayerStatsRepository : BaseRepository<PlayerStats> {
     fun findAllByActiveTrue(pageable: Pageable): Page<PlayerStats>
 
 }
+
+@Repository
+interface AchievementRepository : BaseRepository<Achievement> {
+
+    fun findAllByPlayer(player: Player): List<Achievement>
+
+}
