@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.2.1] - 2019-03-04
 ### Fixed
-- Round up to 2 decimal places in 'Games lost' field at Profile page.
+- Round up to 2 decimal places in 'Games lost' field at the Profile page.
 
 ## [1.2.0] - 2019-03-01
 ### Added
