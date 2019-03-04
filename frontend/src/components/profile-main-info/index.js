@@ -62,7 +62,7 @@ class ProfileMainInfo extends Component {
               <Field>Games played: <span>{countGames}</span></Field>
               <Field>Games rated: <span>{rated}</span></Field>
               <Field>Games won: <span>({winningPercentage}%) {countWins}</span></Field>
-              <Field>Games lost: <span>({100 - winningPercentage}%) {countLosses}</span></Field>
+              <Field>Games lost: <span>({Math.round((100 - winningPercentage) *100) / 100}%) {countLosses}</span></Field>
               <Field>Goals for: <span>{goalsFor}</span></Field>
               <Field>Goals against: <span>{goalsAgainst}</span></Field>
               <Field>Current loss streak: <span>{currentLossStreak}</span></Field>
