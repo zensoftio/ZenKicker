@@ -33,6 +33,8 @@ Team members can register new games, compare their results and compete with each
 
 ## Running
 
+### From sources
+
 To build and run the application, you will need Java and Docker preinstalled.
 
 ```bash
@@ -42,6 +44,49 @@ $ ./gradlew build
 $ docker-compose up
 ```
 
+### Dockerimage
+
+```bash
+$ docker run -d --name kicker --restart always \
+             -v $DATA_DIR:/data/ \
+             -e POSTGRES_HOST=$POSTGRES_HOST \
+             -e POSTGRES_DB=$POSTGRES_DB \
+             -e POSTGRES_USER=$POSTGRES_USER \
+             -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD \
+             -e DOMAINS=$DOMAINS \
+             zensoftio/kicker
+```
+
+### Docker Compose
+
+```yml
+version: '3'
+
+services:
+  db:
+    image: postgres:10
+    environment:
+      POSTGRES_DB: db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    restart: always
+
+  kicker:
+    depends_on:
+      - db
+    image: zensoftio/kicker
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_DB: db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      DOMAINS: ''
+    ports:
+      - 8080:8080
+    restart: always
+    volumes:
+      - ./data:/data
+```
 
 ## Prerequisites
 
