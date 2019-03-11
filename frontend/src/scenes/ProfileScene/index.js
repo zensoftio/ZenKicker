@@ -79,7 +79,7 @@ class ProfileScene extends Component {
                          longestLossStreak={player.longestLossesStreak} longestWinStreak={player.longestWinningStreak}
                          getPlayer={actions.getPlayer} getCurrent={actions.getCurrent} email={player.email}
                          achievements={achievements}/>
-        <PlayerRelations relations={relations.list} isMobile={isMobile}/>
+        <PlayerRelations relations={relations.list} isMobile={isMobile} gamesPlayed={player.countGames}/>
         <ChartStatistics ratingStatistic={ratingStatistic} gamesCountStatistic={gamesCountStatistic}
                          isMobile={isMobile}/>
         <PlayerGames games={mappedGames ? mappedGames : []} appendToGames={actions.appendToPlayerGames}
