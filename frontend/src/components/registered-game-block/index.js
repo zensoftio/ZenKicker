@@ -10,7 +10,7 @@ export const RegisteredGameBlock = ({
                           }) => (
   <Content>
     <GameContent>
-      <Team>
+      <LeftTeam>
         <User>
           {
             !isMobile &&
@@ -29,11 +29,11 @@ export const RegisteredGameBlock = ({
           }
           <UsernameLeft>{winner2Name}</UsernameLeft>
         </User>
-      </Team>
+      </LeftTeam>
       <Score>
         <span>10</span> : <span>{losersGoals}</span>
       </Score>
-      <Team>
+      <RightTeam>
         <User>
           <UsernameRight>{loser1Name}</UsernameRight>
           {
@@ -52,7 +52,7 @@ export const RegisteredGameBlock = ({
             </Photo>
           }
         </User>
-      </Team>
+      </RightTeam>
     </GameContent>
   </Content>
 )
@@ -102,6 +102,14 @@ const Team = styled.div`
       margin-top: 20px;
     }
   }
+`;
+
+const LeftTeam = styled(Team)`
+  align-items: flex-start;
+`;
+
+const RightTeam = styled(Team)`
+  align-items: flex-end;
 `;
 
 const User = styled.div`

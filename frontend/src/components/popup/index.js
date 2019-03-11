@@ -89,11 +89,11 @@ const PopupContainer = styled.div`
   }
   @media (max-width: ${MediaViews.MOBILE}px) {
     width: 100%;
-    min-height: max-content;
-    max-height: calc(100vh - 50px);
+    max-height: 100vh;
     border-radius: 0;
     padding: 20px;
-    margin-top: 50px;
+    box-sizing: border-box;
+    overflow-y: auto;
     & > div {
       height: 100%;
       display: flex;
