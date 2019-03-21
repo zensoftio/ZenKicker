@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Fixed
 - Mobile view styles in popups
+- Percentages for game amounts on pie charts are now displayed correctly
 ### Added
 - Percentage of games with player on profile page
 
