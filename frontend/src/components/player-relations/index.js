@@ -49,7 +49,7 @@ class PlayerRelations extends React.Component {
   ])
 
   setPieChartData = (relations) => relations.map((relation, index) =>
-    ({value: relation.countGames, label: `${relation.partner.fullName} (${100 * relation.countGames / this.props.gamesPlayed}%)`, ...ChartColors[index]}))
+    ({value: relation.countGames, label: `${relation.partner.fullName} (${(100 * relation.countGames / this.props.gamesPlayed).toFixed(2)}%)`, ...ChartColors[index]}))
 
   getOptions = () => this.props.relations.map(i => ({value: i.partner.id, label: i.partner.fullName}))
 
