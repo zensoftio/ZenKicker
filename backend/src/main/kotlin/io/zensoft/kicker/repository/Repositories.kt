@@ -60,7 +60,7 @@ interface PlayerToGameRepository : BaseRepository<PlayerToGame> {
 @Repository
 interface PlayerRelationsRepository : BaseRepository<PlayerRelations> {
 
-    fun findByPlayerAndPartnerPlayerStatsActiveTrue(player: Player, pageable: Pageable): Page<PlayerRelations>
+    fun findByPlayerOrderByCountGamesDesc(player: Player, pageable: Pageable): Page<PlayerRelations>
 
     fun findByPlayerAndPartner(player: Player, partner: Player): PlayerRelations?
 
