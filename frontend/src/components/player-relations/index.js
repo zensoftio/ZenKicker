@@ -4,7 +4,7 @@ import styled from "styled-components";
 import DoughnutChart from "../doughnut-chart";
 import DropdownInput from "../../components-ui/dropdown-input";
 import PieChart from "../pie-chart";
-import {ChartColors} from "../../helpers/color-lib";
+import {ChartColors, OtherSectorColor} from "../../helpers/color-lib";
 import {Title} from "../../components-ui/title";
 import {RelationModel} from "../../common/global-prop-types";
 
@@ -48,8 +48,28 @@ class PlayerRelations extends React.Component {
     }
   ])
 
-  setPieChartData = (relations) => relations.map((relation, index) =>
-    ({value: relation.countGames, label: `${relation.partner.fullName} (${(100 * relation.countGames / this.props.gamesPlayed).toFixed(2)}%)`, ...ChartColors[index]}))
+  buildOtherRelation = (playerRelations) => {
+    const otherGames = this.props.gamesPlayed - playerRelations.map(rel => rel.value).reduce((acc, val) => acc + val);
+
+    return {
+      value: otherGames,
+      label: `Other (${this.getPercentage(otherGames, this.props.gamesPlayed)}%)`,
+      ...OtherSectorColor
+    };
+  };
+
+  setPieChartData = (relations) => {
+    const playerRelations = relations.map((relation, index) =>
+      ({
+        value: relation.countGames,
+        label: `${relation.partner.fullName} (${this.getPercentage(relation.countGames, this.props.gamesPlayed)}%)`,
+        ...ChartColors[index]
+      }));
+
+    return [...playerRelations, this.buildOtherRelation(playerRelations)];
+  };
+
+  getPercentage = (games, total) => (100 * games / total).toFixed(2);
 
   getOptions = () => this.props.relations.map(i => ({value: i.partner.id, label: i.partner.fullName}))
 

@@ -119,4 +119,9 @@ export const ChartColors = [
     color: "#582707",
     highlight: "#8e3f0b"
   }
-]
+];
+
+export const OtherSectorColor = {
+  color: "#888888",
+  highlight: "#aaaaaa"
+};
