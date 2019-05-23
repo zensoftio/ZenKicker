@@ -10,8 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Percentages for game amounts on pie charts are now displayed correctly
 ### Added
 - Percentage of games with player on profile page
+- History of stats and relations after every game
 ### Changed
 - Player relationship response
+- PageRequest
 
 ## [1.2.1] - 2019-03-04
 ### Fixed
