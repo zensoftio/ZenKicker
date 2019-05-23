@@ -60,23 +60,41 @@ interface PlayerToGameRepository : BaseRepository<PlayerToGame> {
 @Repository
 interface PlayerRelationsRepository : BaseRepository<PlayerRelations> {
 
-    fun findByPlayerOrderByCountGamesDesc(player: Player, pageable: Pageable): Page<PlayerRelations>
+    @Query("SELECT * FROM players_relations pr INNER JOIN (SELECT player_id, partner_id, max(game_id), " +
+            "max(id) as unqid FROM players_relations GROUP BY player_id, partner_id) unq ON pr.id = unq.unqid " +
+            "WHERE pr.player_id = ?1 ORDER BY pr.count_games DESC", nativeQuery = true)
+    fun findAllByPlayerOrderByCountGamesDesc(playerId: Long, pageable: Pageable): Page<PlayerRelations>
 
-    fun findByPlayerAndPartner(player: Player, partner: Player): PlayerRelations?
+    fun findFirstByPlayerAndPartnerOrderByIdDesc(player: Player, partner: Player): PlayerRelations?
 
-    fun findFirstByPlayerAndPartnerPlayerStatsActiveTrueOrderByCountGamesDesc(player: Player): PlayerRelations?
+    @Query("SELECT * FROM players_relations pr INNER JOIN (SELECT player_id, partner_id, max(game_id), " +
+            "max(id) as unqid FROM players_relations GROUP BY player_id, partner_id) unq ON pr.id = unq.unqid " +
+            "WHERE pr.player_id = ?1 ORDER BY pr.count_games DESC", nativeQuery = true)
+    fun findAllByPlayerOrderByCountGamesDesc(playerId: Long): List<PlayerRelations>
 
-    fun findFirstByPlayerAndPartnerPlayerStatsActiveTrueOrderByWinningPercentage(player: Player): PlayerRelations?
+    @Query("SELECT * FROM players_relations pr INNER JOIN (SELECT player_id, partner_id, max(game_id), " +
+            "max(id) as unqid FROM players_relations GROUP BY player_id, partner_id) unq ON pr.id = unq.unqid " +
+            "WHERE pr.player_id = ?1 ORDER BY pr.winning_percentage ASC", nativeQuery = true)
+    fun findAllByPlayerOrderByWinningPercentage(playerId: Long): List<PlayerRelations>
 
-    fun findFirstByPlayerAndPartnerPlayerStatsActiveTrueOrderByWinningPercentageDesc(player: Player): PlayerRelations?
+    @Query("SELECT * FROM players_relations pr INNER JOIN (SELECT player_id, partner_id, max(game_id), " +
+            "max(id) as unqid FROM players_relations GROUP BY player_id, partner_id) unq ON pr.id = unq.unqid " +
+            "WHERE pr.player_id = ?1 ORDER BY pr.winning_percentage DESC", nativeQuery = true)
+    fun findAllByPlayerOrderByWinningPercentageDesc(playerId: Long): List<PlayerRelations>
 
 }
 
 @Repository
 interface PlayerStatsRepository : BaseRepository<PlayerStats> {
 
-    fun findByPlayer(player: Player): PlayerStats
+    @Query("SELECT * FROM players_stats ps INNER JOIN (SELECT player_id, max(game_id) as g, max(id) as unqid " +
+            "FROM players_stats GROUP BY player_id) unq ON ps.id = unq.unqid", nativeQuery = true)
+    fun getAll(pageable: Pageable): Page<PlayerStats>
 
+    fun findFirstByPlayerOrderByIdDesc(player: Player): PlayerStats
+
+    @Query("SELECT * FROM players_stats ps INNER JOIN (SELECT player_id, max(game_id) as g, max(id) as unqid " +
+            "FROM players_stats GROUP BY player_id) unq ON ps.id = unq.unqid WHERE ps.active = TRUE", nativeQuery = true)
     fun findAllByActiveTrue(pageable: Pageable): Page<PlayerStats>
 
 }

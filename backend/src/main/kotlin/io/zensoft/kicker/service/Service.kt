@@ -21,15 +21,15 @@ interface BaseService<T : BaseModel> {
 
     fun get(id: Long): T
 
-    fun getAll(): List<T>
-
-    fun getAll(pageRequest: PageRequest): Page<T>
-
-    fun save(entity: T): T
+    fun add(entity: T): T
 
 }
 
 interface PlayerService : BaseService<Player>, UserDetailsService {
+
+    fun getAll(): List<Player>
+
+    fun getAll(pageRequest: PageRequest): Page<Player>
 
     fun findByEmail(email: String): Player?
 
@@ -48,6 +48,8 @@ interface PlayerService : BaseService<Player>, UserDetailsService {
 }
 
 interface GameService : BaseService<Game> {
+
+    fun getAll(pageRequest: PageRequest): Page<Game>
 
     fun countPerWeekDuring10WeeksByPlayer(playerId: Long): List<Long>
 
@@ -69,17 +71,19 @@ interface PlayerToGameService : BaseService<PlayerToGame> {
 
 }
 
-interface PlayerRelationsService {
+interface PlayerRelationsService : BaseService<PlayerRelations> {
 
     fun getAllByPlayer(playerId: Long, pageRequest: PageRequest): Page<PlayerRelations>
 
-    fun getByPlayerAndPartner(playerId: Long, partnerId: Long): PlayerRelations
+    fun getByPlayerAndPartner(playerId: Long, partnerId: Long): PlayerRelations?
 
     fun getDashboard(playerId: Long): List<PlayerRelations>
 
 }
 
 interface PlayerStatsService : BaseService<PlayerStats> {
+
+    fun getAll(pageRequest: PageRequest): Page<PlayerStats>
 
     fun getByPlayer(playerId: Long): PlayerStats
 
