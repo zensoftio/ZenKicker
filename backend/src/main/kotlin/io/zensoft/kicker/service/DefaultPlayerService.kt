@@ -1,6 +1,7 @@
 package io.zensoft.kicker.service
 
 import io.zensoft.kicker.component.IconManager
+import io.zensoft.kicker.domain.PageRequest
 import io.zensoft.kicker.domain.model.player.CreatePlayerRequest
 import io.zensoft.kicker.domain.model.player.UpdatePlayerEmailRequest
 import io.zensoft.kicker.domain.model.player.UpdatePlayerFullNameRequest
@@ -11,6 +12,7 @@ import io.zensoft.kicker.model.Player
 import io.zensoft.kicker.repository.PlayerRepository
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.context.ApplicationEventPublisher
+import org.springframework.data.domain.Page
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -29,6 +31,10 @@ class DefaultPlayerService(
         private val iconManager: IconManager,
         private val eventPublisher: ApplicationEventPublisher
 ) : DefaultBaseService<Player>(repository), PlayerService {
+
+    override fun getAll(): List<Player> = repository.findAll()
+
+    override fun getAll(pageRequest: PageRequest): Page<Player> = repository.findAll(pageRequest)
 
     override fun findByEmail(email: String): Player? = repository.findByEmail(email)
 

@@ -1,12 +1,14 @@
 package io.zensoft.kicker.service
 
 import io.zensoft.kicker.config.property.PlayerSettingsProperties
+import io.zensoft.kicker.domain.PageRequest
 import io.zensoft.kicker.domain.model.game.GameRegistrationRequest
 import io.zensoft.kicker.model.Game
 import io.zensoft.kicker.repository.GameRepository
 import io.zensoft.kicker.utils.DateUtils
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.context.ApplicationEventPublisher
+import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate.now
@@ -22,6 +24,8 @@ class DefaultGameService(
         private val eventPublisher: ApplicationEventPublisher,
         private val playerSettingsProperties: PlayerSettingsProperties
 ) : DefaultBaseService<Game>(repository), GameService {
+
+    override fun getAll(pageRequest: PageRequest): Page<Game> = repository.findAll(pageRequest)
 
     /**
      *  Current week is number 0, so 10 week is number 9

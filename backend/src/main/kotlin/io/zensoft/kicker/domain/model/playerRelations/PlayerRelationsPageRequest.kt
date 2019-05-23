@@ -5,10 +5,10 @@ import io.zensoft.kicker.domain.PageRequest
 /**
  * @author Yauheni Efimenko
  */
-class PlayerRelationsPageRequest : PageRequest(setSortBy = setOf(ID_FIELD, WINNING_PERCENTAGE_FIELD)) {
+class PlayerRelationsPageRequest : PageRequest(mapSortBy = mapOf(ID_FIELD, WINNING_PERCENTAGE_FIELD)) {
 
     companion object {
-        const val WINNING_PERCENTAGE_FIELD = "winningPercentage"
+        val WINNING_PERCENTAGE_FIELD = "winningPercentage" to "winning_percentage"
     }
 
 }

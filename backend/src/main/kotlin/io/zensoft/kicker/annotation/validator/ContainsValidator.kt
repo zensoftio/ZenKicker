@@ -11,26 +11,26 @@ import javax.validation.ConstraintValidatorContext
 class ContainsValidator : ConstraintValidator<Contains, Any> {
 
     private lateinit var valueFieldName: String
-    private lateinit var setFieldName: String
+    private lateinit var mapFieldName: String
     private lateinit var message: String
 
 
     override fun initialize(constraintAnnotation: Contains) {
         valueFieldName = constraintAnnotation.value
-        setFieldName = constraintAnnotation.set
+        mapFieldName = constraintAnnotation.map
         message = constraintAnnotation.message
     }
 
     override fun isValid(clazz: Any, context: ConstraintValidatorContext): Boolean {
         val value = ConstraintValidatorUtils.getValueFromField(clazz, valueFieldName)
-        val set = ConstraintValidatorUtils.getValueFromField(clazz, setFieldName) as Set<*>
+        val map = ConstraintValidatorUtils.getValueFromField(clazz, mapFieldName) as Map<*, *>
 
-        val condition = set.contains(value)
+        val condition = map.contains(value)
 
         return when (condition) {
             true -> true
             false -> {
-                ConstraintValidatorUtils.buildConstraintViolation(context, message, setFieldName)
+                ConstraintValidatorUtils.buildConstraintViolation(context, message, mapFieldName)
                 false
             }
         }

@@ -3,7 +3,9 @@ package io.zensoft.kicker.model
 import io.zensoft.kicker.model.base.BaseModel
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
-import javax.persistence.*
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.Table
 
 /**
  * @author Yauheni Efimenko
@@ -25,9 +27,6 @@ class Player(
 
     @Column(name = "icon_path")
     var iconPath: String? = null
-
-    @OneToOne(mappedBy = "player", fetch = FetchType.LAZY)
-    val playerStats: PlayerStats? = null
 
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> = mutableListOf()

@@ -58,36 +58,56 @@ class PlayerStats(
     @Column(name = "active", nullable = false)
     var active: Boolean = false
 
+    @ManyToOne
+    @JoinColumn(name = "game_id")
+    var game: Game? = null
+
     companion object {
         const val PLAYER_RATING: Double = 10000.0
     }
 
+    constructor(playerStats: PlayerStats, game: Game, won: Boolean, goalsAgainst: Int, goalsFor: Int,
+                delta: Double, countGamesForActive: Long) : this(playerStats.player) {
+        this.rating = playerStats.rating
+        this.currentWinningStreak = playerStats.currentWinningStreak
+        this.currentLossesStreak = playerStats.currentLossesStreak
+        this.longestWinningStreak = playerStats.longestWinningStreak
+        this.longestLossesStreak = playerStats.longestLossesStreak
+        this.countWins = playerStats.countWins
+        this.countGames = playerStats.countGames
+        this.rated = playerStats.rated
+        this.winningPercentage = playerStats.winningPercentage
+        this.goalsAgainst = playerStats.goalsAgainst
+        this.goalsFor = playerStats.goalsFor
+        this.active = playerStats.active
+        this.game = game
 
-    fun addGame(won: Boolean, goalsAgainst: Int, goalsFor: Int, delta: Double) {
         if (won) {
-            countWins++
+            this.countWins++
         }
-        rating += delta
+        this.rating += delta
         changeWinAndLossStreak(won)
-        countGames++
-        rated++
-        winningPercentage = countWins.div(countGames.toDouble()) * 100
+        this.countGames++
+        this.rated++
+        this.winningPercentage = this.countWins.div(this.countGames.toDouble()) * 100
         this.goalsAgainst += goalsAgainst
         this.goalsFor += goalsFor
+        this.active = this.rated >= countGamesForActive
     }
+
 
     private fun changeWinAndLossStreak(won: Boolean) {
         if (won) {
-            currentWinningStreak++
-            currentLossesStreak = 0
-            if (longestWinningStreak < currentWinningStreak) {
-                longestWinningStreak = currentWinningStreak
+            this.currentWinningStreak++
+            this.currentLossesStreak = 0
+            if (this.longestWinningStreak < this.currentWinningStreak) {
+                this.longestWinningStreak = this.currentWinningStreak
             }
         } else {
-            currentLossesStreak++
-            currentWinningStreak = 0
-            if (longestLossesStreak < currentLossesStreak) {
-                longestLossesStreak = currentLossesStreak
+            this.currentLossesStreak++
+            this.currentWinningStreak = 0
+            if (this.longestLossesStreak < this.currentLossesStreak) {
+                this.longestLossesStreak = this.currentLossesStreak
             }
         }
     }
